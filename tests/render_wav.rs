@@ -521,3 +521,71 @@ fn stab_fm_fifth_is_hollow_c_and_g_only() {
         "5th harmonic (E) leaked (h5={fifth_h}, cg={cg})"
     );
 }
+
+#[test]
+fn lead_fm_pluck_fundamental_is_c3_not_c4() {
+    let preset = load_factory("lead-fm-pluck").unwrap();
+    assert_eq!(preset.default_note, 48, "MIDI 48 = C3 ≈ 130.8 Hz, not C4");
+    let sr = 48_000u32;
+    let f0 = midi_to_hz(48) as f32;
+    assert!((f0 - 130.81).abs() < 0.05);
+    let buf = render(
+        &preset,
+        &RenderParams {
+            frequency_hz: f64::from(f0),
+            duration_secs: preset.default_duration,
+            velocity: 0.9,
+            sample_rate: sr,
+        },
+    )
+    .unwrap();
+
+    let start = (sr as usize) / 20;
+    let end = ((sr as usize) / 5).min(buf.len());
+    let body = hann_window(&buf[start..end]);
+    let c3 = goertzel_power(&body, sr as f32, f0);
+    let c4 = goertzel_power(&body, sr as f32, f0 * 2.0);
+    assert!(
+        c3 > c4 * 2.0,
+        "lead-fm-pluck fundamental should be C3 not C4 (c3={c3}, c4={c4})"
+    );
+}
+
+#[test]
+fn cp_house_has_1khz_body_without_sub() {
+    let preset = load_factory("cp-house").unwrap();
+    let sr = 48_000u32;
+    let buf = render(
+        &preset,
+        &RenderParams {
+            frequency_hz: midi_to_hz(preset.default_note),
+            duration_secs: preset.default_duration,
+            velocity: 0.9,
+            sample_rate: sr,
+        },
+    )
+    .unwrap();
+    let body = hann_window(&buf);
+    let sr_f = sr as f32;
+    let sub = goertzel_power(&body, sr_f, 80.0)
+        + goertzel_power(&body, sr_f, 120.0)
+        + goertzel_power(&body, sr_f, 180.0);
+    let mid = goertzel_power(&body, sr_f, 900.0)
+        + goertzel_power(&body, sr_f, 1020.0)
+        + goertzel_power(&body, sr_f, 1150.0);
+    let air = goertzel_power(&body, sr_f, 2600.0)
+        + goertzel_power(&body, sr_f, 3200.0)
+        + goertzel_power(&body, sr_f, 4000.0);
+    assert!(
+        mid > sub * 8.0,
+        "cp-house should have 1 kHz body, not sub (mid={mid}, sub={sub})"
+    );
+    assert!(
+        mid > 0.0 && air > 0.0,
+        "cp-house needs both 1 kHz body and high slap (mid={mid}, air={air})"
+    );
+    assert!(
+        air > mid * 0.15,
+        "cp-house high slap disappeared (mid={mid}, air={air})"
+    );
+}

@@ -402,8 +402,17 @@ mod tests {
 
         for id in ["lead-fm-pluck", "stab-fm-fifth", "reese-mid"] {
             let p = load_factory(id).unwrap();
-            assert_eq!(p.default_note, 48, "{id} pitch reference must be MIDI 48");
+            assert_eq!(
+                p.default_note, 48,
+                "{id} pitch reference must be MIDI 48 (C3)"
+            );
         }
+        let lead = load_factory("lead-fm-pluck").unwrap();
+        assert!(
+            (lead.operators[0].ratio - 1.0).abs() < 1e-9,
+            "lead carrier ratio must be 1 (C3), got {}",
+            lead.operators[0].ratio
+        );
 
         let stab = load_factory("stab-fm-fifth").unwrap();
         assert_eq!(stab.feedback, 0.0);
