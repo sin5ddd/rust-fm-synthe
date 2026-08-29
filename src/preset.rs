@@ -254,6 +254,36 @@ fn normalize_id(id: &str) -> String {
     id.trim().to_ascii_lowercase().replace('_', "-")
 }
 
+fn path_stem(path: &Path) -> String {
+    path.file_stem()
+        .map(|s| s.to_string_lossy().into_owned())
+        .filter(|s| !s.is_empty())
+        .unwrap_or_else(|| "preset".into())
+}
+
+/// Filename stem for a default WAV (`dist/<id>.wav`).
+///
+/// Factory ids win over display names. A TOML path uses its file stem.
+pub fn output_preset_id(preset_name: Option<&str>, preset_file: Option<&Path>) -> String {
+    if let Some(path) = preset_file {
+        return path_stem(path);
+    }
+    let Some(name) = preset_name else {
+        return "preset".into();
+    };
+    let as_path = Path::new(name);
+    if name.ends_with(".toml") || as_path.is_file() {
+        return path_stem(as_path);
+    }
+    let key = normalize_id(name);
+    for (fid, _) in FACTORY {
+        if normalize_id(fid) == key {
+            return (*fid).to_string();
+        }
+    }
+    key
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -269,5 +299,16 @@ mod tests {
     fn unknown_preset_errors() {
         let err = load_factory("not-a-real-preset").unwrap_err();
         assert!(matches!(err, Error::PresetNotFound { .. }));
+    }
+
+    #[test]
+    fn output_id_uses_factory_id_not_toml_path() {
+        assert_eq!(output_preset_id(Some("sub-bass"), None), "sub-bass");
+        assert_eq!(output_preset_id(Some("SUB_BASS"), None), "sub-bass");
+        assert_eq!(
+            output_preset_id(None, Some(Path::new("presets/zap.toml"))),
+            "zap"
+        );
+        assert_eq!(output_preset_id(Some("custom.toml"), None), "custom");
     }
 }

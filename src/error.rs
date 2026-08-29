@@ -21,6 +21,10 @@ pub enum Error {
         path: Option<PathBuf>,
         source: io::Error,
     },
+    /// One or more factory presets failed during `render-all`.
+    BatchFailed {
+        failures: Vec<(String, String)>,
+    },
 }
 
 impl fmt::Display for Error {
@@ -42,6 +46,18 @@ impl fmt::Display for Error {
                 Some(p) => write!(f, "io error ({}): {source}", p.display()),
                 None => write!(f, "io error: {source}"),
             },
+            Error::BatchFailed { failures } => {
+                let detail = failures
+                    .iter()
+                    .map(|(id, msg)| format!("`{id}`: {msg}"))
+                    .collect::<Vec<_>>()
+                    .join("; ");
+                write!(
+                    f,
+                    "render-all failed for {} preset(s): {detail}",
+                    failures.len()
+                )
+            }
         }
     }
 }
