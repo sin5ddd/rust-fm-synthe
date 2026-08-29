@@ -40,43 +40,43 @@ cargo run -- algos
 サブのワンショット（C2、約1.35秒、16-bit / 44.1 kHz）:
 
 ```bash
-cargo run -- render --preset sub-bass --output /tmp/sub-bass.wav
+cargo run -- render --preset sub-bass --output dist/sub-bass.wav
 ```
 
 MIDIと長さを指定してグロウル:
 
 ```bash
-cargo run -- render --preset growl-bass --output /tmp/growl.wav --note 36 --duration 1.8 --velocity 0.95
+cargo run -- render --preset growl-bass --output dist/growl.wav --note 36 --duration 1.8 --velocity 0.95
 ```
 
 周波数指定の金属ヒット（48 kHz / 24-bit）:
 
 ```bash
-cargo run -- render --preset metallic-hit --output /tmp/metallic.wav --hz 880 --duration 0.5 --sample-rate 48000 --bit-depth 24
+cargo run -- render --preset metallic-hit --output dist/metallic.wav --hz 880 --duration 0.5 --sample-rate 48000 --bit-depth 24
 ```
 
 ライザー（ビルド用、2.4秒）:
 
 ```bash
-cargo run -- render --preset fm-riser --output /tmp/riser.wav
+cargo run -- render --preset fm-riser --output dist/riser.wav
 ```
 
 短いスタブ:
 
 ```bash
-cargo run -- render --preset stab-pluck --output /tmp/stab.wav --note 64 --duration 0.4
+cargo run -- render --preset stab-pluck --output dist/stab.wav --note 64 --duration 0.4
 ```
 
 自作TOML:
 
 ```bash
-cargo run -- render --preset-file presets/zap.toml --output /tmp/zap.wav
+cargo run -- render --preset-file presets/zap.toml --output dist/zap.wav
 ```
 
 `release` ビルドのほうが速い（ライザーなど長めのレンダー向け）:
 
 ```bash
-cargo run --release -- render --preset fm-riser --output /tmp/riser.wav
+cargo run --release -- render --preset fm-riser --output dist/riser.wav
 ```
 
 成功すると stderr にパス、サンプル数、PCMバイト数が出る。ファイルが「全部ゼロ」ならバグなので issue にしてほしい。
@@ -129,7 +129,7 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 5. 試す:
 
 ```bash
-cargo run -- render --preset-file presets/my-shot.toml --output /tmp/my-shot.wav --note 48
+cargo run -- render --preset-file presets/my-shot.toml --output dist/my-shot.wav --note 48
 ```
 
 工場バンクに入れるなら:
