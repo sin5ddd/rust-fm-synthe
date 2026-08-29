@@ -1,0 +1,68 @@
+name = "ld-trance-gate"
+description = "トランスのゲート風。アンプLFOは無いのでフィルタADSRで開閉する。"
+algorithm = 8
+feedback = 0.08
+feedback_op = 4
+gain = 0.95
+default_note = 48
+default_duration = 1.2
+
+[filter]
+type = "lowpass"
+cutoff = 280.0
+resonance = 0.42
+env_amount = 4.8
+attack = 0.002
+decay = 0.09
+sustain = 0.04
+release = 0.05
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -4
+level = 1.0
+attack = 0.004
+decay = 0.12
+sustain = 0.08
+release = 0.06
+vel_sens = 0.3
+waveform = "super-saw"
+unison = 7
+unison_detune = 16.0
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 5
+level = 0.72
+attack = 0.004
+decay = 0.11
+sustain = 0.07
+release = 0.055
+vel_sens = 0.28
+waveform = "saw"
+
+# OP3
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.28
+attack = 0.002
+decay = 0.08
+sustain = 0.04
+release = 0.04
+vel_sens = 0.4
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 1.0
+detune_cents = -7
+level = 0.45
+attack = 0.003
+decay = 0.1
+sustain = 0.06
+release = 0.05
+vel_sens = 0.3
+waveform = "saw"

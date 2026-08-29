@@ -1,0 +1,70 @@
+name = "ld-ethereal"
+description = "空気感のあるパッドリード。遅いアタック、HP。ソフトなロングノート。"
+algorithm = 8
+feedback = 0.04
+feedback_op = 4
+gain = 0.92
+default_note = 48
+default_duration = 2.0
+
+[lfo]
+rate_hz = 0.18
+depth_cents = 10.0
+
+[filter]
+type = "highpass"
+cutoff = 260.0
+resonance = 0.1
+env_amount = 0.8
+attack = 0.18
+decay = 0.7
+sustain = 0.5
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -7
+level = 0.85
+attack = 0.14
+decay = 0.9
+sustain = 0.5
+release = 0.38
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 8
+level = 0.78
+attack = 0.16
+decay = 0.85
+sustain = 0.46
+release = 0.35
+vel_sens = 0.16
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 2.0
+detune_cents = 3
+level = 0.22
+attack = 0.2
+decay = 0.7
+sustain = 0.28
+release = 0.3
+vel_sens = 0.14
+waveform = "half-sine"
+
+# OP4
+[[operators]]
+ratio = 3.0
+detune_cents = -4
+level = 0.1
+attack = 0.22
+decay = 0.6
+sustain = 0.18
+release = 0.26
+vel_sens = 0.14
+waveform = "sine"

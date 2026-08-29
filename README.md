@@ -12,7 +12,7 @@ EDM / drum & bass 向けの **オフライン4オペFMシンセ**。プリセッ
 - ボイス末尾の SVF フィルタ（`lowpass` / `bandpass` / `highpass`）とカットオフ ADSR
 - 1オペへのフィードバック、ピッチエンベロープ、簡易LFO、変調量スイープ
 - 44.1 / 48 kHz、16 / 24-bit PCM（`hound`）
-- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**、**スネア20種（`sd-*`）**
+- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**、**スネア20種（`sd-*`）**、**リード50種（`ld-*`）**
 
 VA / スーパーソー専用エンジンは足していない。4オペFMのまま、波形とボイスフィルタだけ増やしている。
 
@@ -47,12 +47,14 @@ cargo run -- algos
 
 ```bash
 cargo run -- render-all
-# → dist/sub-bass.wav, dist/supersaw-bass.wav, dist/bd-808-boom.wav, dist/sd-808-snap.wav, …
+# → dist/sub-bass.wav, dist/supersaw-bass.wav, dist/bd-808-boom.wav, dist/sd-808-snap.wav, dist/ld-fm-pluck.wav, …
 ```
 
 `bd-*` キックバンク（808、909、フレンチコア、ガバなど20種）も同じコマンドに含まれる。出力は `dist/bd-….wav`。各プリセットの `default_note` / `default_duration` でワンショット向きの音高・長さになる。`cp-house` / `lead-fm-pluck` / `stab-fm-fifth` / `reese-mid` も `render-all` に含まれる（16-bit / 48 kHz のワンショット想定）。
 
 `sd-*` スネアバンク（808、909、DnB、ジャングル、フレンチコア、ガバなど20種）も同じ。出力は `dist/sd-….wav`。尾は意図的に長め（DAW側で切る前提）。
+
+`ld-*` リードバンク（プラック、スーパーソー、フーバー、フレンチコア、303風、クワイアなど50種）も同じ。出力は `dist/ld-….wav`。トーンリードの既定は C3（MIDI 48）。高いキャラだけ C4（60）。既存の `lead-fm-pluck` / `stab-fm-fifth` はそのまま（リネームしない追加バンク）。
 
 出力ディレクトリや長さを全プリセットに上書き:
 
@@ -247,6 +249,56 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | `lead-fm-pluck` | C3（MIDI 48、約130.8 Hz）の短いFMプラック（メロディ用。C4ではない） |
 | `stab-fm-fifth` | C3の中空5度スタブ（C–Gのみ。長3度なし） |
 | `reese-mid` | C3ミッドReeseの糊（800–1200 Hz。サブなし） |
+| `ld-fm-pluck` | 短いFMプラック（C3。既存 `lead-fm-pluck` とは別パッチ） |
+| `ld-hollow-fifth` | 中空5度リード（C–Gのみ。長3度なし） |
+| `ld-house-pluck` | ドライなハウスプラック |
+| `ld-dnb-stab` | タイトなDnBスタブ |
+| `ld-supersaw-stab` | 広いスーパーソースタブ |
+| `ld-nylon` | ミュートしたナイロン寄り |
+| `ld-bell-pluck` | ベルプラック（C4） |
+| `ld-mallet` | マレット／木琴 |
+| `ld-perc` | パーカッション寄りのリード |
+| `ld-supersaw` | クラシックなスーパーソーリード |
+| `ld-unison-saw` | ユニゾンソー（デチューン控え） |
+| `ld-trance-gate` | トランスのゲート風（フィルタエンベ） |
+| `ld-hoover` | フーバー／アルファレーン寄り |
+| `ld-sync-fm` | シンク風FM（高比モジュレータ） |
+| `ld-formant` | フォルマント寄りアブサイン |
+| `ld-pulse` | スクエア／パルスリード |
+| `ld-anthem` | アンセムソー |
+| `ld-growl` | ミッドグロウルリード |
+| `ld-metallic` | 金属FMリード |
+| `ld-industrial` | インダストリアル |
+| `ld-frenchcore` | フレンチコアスクリーム（HP/BP。サブなし） |
+| `ld-gabber` | ガバリード |
+| `ld-acid` | 303風ジェスチャ（LP＋レゾ＋エンベ） |
+| `ld-dist-pulse` | 歪んだパルス |
+| `ld-sine` | クリーンなサインリード |
+| `ld-half-sine` | ハーフサインの柔らかいリード |
+| `ld-choir` | クワイア寄りの重ねサイン |
+| `ld-glass` | ガラス／クリスタル |
+| `ld-music-box` | オルゴール（C4） |
+| `ld-flute` | フルート寄り |
+| `ld-organ` | オルガン（並列ドローバー） |
+| `ld-fifth-pad` | 5度パッドリード |
+| `ld-octave` | オクターブスタック |
+| `ld-zap` | ザップリード |
+| `ld-drop-pluck` | ドロッププラック |
+| `ld-laser` | レーザー（C4） |
+| `ld-vowel` | 母音FM |
+| `ld-noisy-bp` | ノイズ寄りのBPリード |
+| `ld-reverse` | リバース風ピッチエンベ |
+| `ld-cinematic` | 長いシネマティックリード |
+| `ld-crystal` | クリスタル（C4） |
+| `ld-brass` | ブラス寄りのFMスタブ |
+| `ld-reed` | リード／クラリネット寄り |
+| `ld-chip` | チップチューンパルス（C4） |
+| `ld-wobble` | ミッドウォブル |
+| `ld-hardstyle` | ハードスタイルスクリーチ寄り（C4） |
+| `ld-arp-pluck` | アルペジオ用プラック（C4） |
+| `ld-saw-pluck` | ドライな単ソープラック |
+| `ld-ethereal` | 空気感のあるパッドリード |
+| `ld-harpsi` | ハープシコード寄り |
 
 データは `presets/*.toml`。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。
 
@@ -345,4 +397,4 @@ write_wav(
 cargo test
 ```
 
-エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。
+エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`ld-*` リードがちょうど50個で非無音、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。

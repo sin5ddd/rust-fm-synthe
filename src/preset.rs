@@ -135,6 +135,86 @@ const FACTORY: &[(&str, &str)] = &[
         include_str!("../presets/stab-fm-fifth.toml"),
     ),
     ("reese-mid", include_str!("../presets/reese-mid.toml")),
+    ("ld-fm-pluck", include_str!("../presets/ld-fm-pluck.toml")),
+    (
+        "ld-hollow-fifth",
+        include_str!("../presets/ld-hollow-fifth.toml"),
+    ),
+    (
+        "ld-house-pluck",
+        include_str!("../presets/ld-house-pluck.toml"),
+    ),
+    ("ld-dnb-stab", include_str!("../presets/ld-dnb-stab.toml")),
+    (
+        "ld-supersaw-stab",
+        include_str!("../presets/ld-supersaw-stab.toml"),
+    ),
+    ("ld-nylon", include_str!("../presets/ld-nylon.toml")),
+    (
+        "ld-bell-pluck",
+        include_str!("../presets/ld-bell-pluck.toml"),
+    ),
+    ("ld-mallet", include_str!("../presets/ld-mallet.toml")),
+    ("ld-perc", include_str!("../presets/ld-perc.toml")),
+    ("ld-supersaw", include_str!("../presets/ld-supersaw.toml")),
+    (
+        "ld-unison-saw",
+        include_str!("../presets/ld-unison-saw.toml"),
+    ),
+    (
+        "ld-trance-gate",
+        include_str!("../presets/ld-trance-gate.toml"),
+    ),
+    ("ld-hoover", include_str!("../presets/ld-hoover.toml")),
+    ("ld-sync-fm", include_str!("../presets/ld-sync-fm.toml")),
+    ("ld-formant", include_str!("../presets/ld-formant.toml")),
+    ("ld-pulse", include_str!("../presets/ld-pulse.toml")),
+    ("ld-anthem", include_str!("../presets/ld-anthem.toml")),
+    ("ld-growl", include_str!("../presets/ld-growl.toml")),
+    ("ld-metallic", include_str!("../presets/ld-metallic.toml")),
+    (
+        "ld-industrial",
+        include_str!("../presets/ld-industrial.toml"),
+    ),
+    (
+        "ld-frenchcore",
+        include_str!("../presets/ld-frenchcore.toml"),
+    ),
+    ("ld-gabber", include_str!("../presets/ld-gabber.toml")),
+    ("ld-acid", include_str!("../presets/ld-acid.toml")),
+    (
+        "ld-dist-pulse",
+        include_str!("../presets/ld-dist-pulse.toml"),
+    ),
+    ("ld-sine", include_str!("../presets/ld-sine.toml")),
+    ("ld-half-sine", include_str!("../presets/ld-half-sine.toml")),
+    ("ld-choir", include_str!("../presets/ld-choir.toml")),
+    ("ld-glass", include_str!("../presets/ld-glass.toml")),
+    ("ld-music-box", include_str!("../presets/ld-music-box.toml")),
+    ("ld-flute", include_str!("../presets/ld-flute.toml")),
+    ("ld-organ", include_str!("../presets/ld-organ.toml")),
+    ("ld-fifth-pad", include_str!("../presets/ld-fifth-pad.toml")),
+    ("ld-octave", include_str!("../presets/ld-octave.toml")),
+    ("ld-zap", include_str!("../presets/ld-zap.toml")),
+    (
+        "ld-drop-pluck",
+        include_str!("../presets/ld-drop-pluck.toml"),
+    ),
+    ("ld-laser", include_str!("../presets/ld-laser.toml")),
+    ("ld-vowel", include_str!("../presets/ld-vowel.toml")),
+    ("ld-noisy-bp", include_str!("../presets/ld-noisy-bp.toml")),
+    ("ld-reverse", include_str!("../presets/ld-reverse.toml")),
+    ("ld-cinematic", include_str!("../presets/ld-cinematic.toml")),
+    ("ld-crystal", include_str!("../presets/ld-crystal.toml")),
+    ("ld-brass", include_str!("../presets/ld-brass.toml")),
+    ("ld-reed", include_str!("../presets/ld-reed.toml")),
+    ("ld-chip", include_str!("../presets/ld-chip.toml")),
+    ("ld-wobble", include_str!("../presets/ld-wobble.toml")),
+    ("ld-hardstyle", include_str!("../presets/ld-hardstyle.toml")),
+    ("ld-arp-pluck", include_str!("../presets/ld-arp-pluck.toml")),
+    ("ld-saw-pluck", include_str!("../presets/ld-saw-pluck.toml")),
+    ("ld-ethereal", include_str!("../presets/ld-ethereal.toml")),
+    ("ld-harpsi", include_str!("../presets/ld-harpsi.toml")),
 ];
 
 #[derive(Clone, Debug, Deserialize)]
@@ -425,6 +505,7 @@ mod tests {
         assert_eq!(output_preset_id(Some("custom.toml"), None), "custom");
         assert_eq!(output_preset_id(Some("bd-808-boom"), None), "bd-808-boom");
         assert_eq!(output_preset_id(Some("sd-808-snap"), None), "sd-808-snap");
+        assert_eq!(output_preset_id(Some("ld-fm-pluck"), None), "ld-fm-pluck");
     }
 
     #[test]
@@ -454,6 +535,23 @@ mod tests {
             ids.len(),
             20,
             "expected exactly 20 sd-* factory snares, got {}: {ids:?}",
+            ids.len()
+        );
+        for id in &ids {
+            load_factory(id).expect(id);
+        }
+    }
+
+    #[test]
+    fn factory_ld_lead_bank_has_fifty_ids() {
+        let ids: Vec<_> = factory_ids()
+            .into_iter()
+            .filter(|id| id.starts_with("ld-"))
+            .collect();
+        assert_eq!(
+            ids.len(),
+            50,
+            "expected exactly 50 ld-* factory leads, got {}: {ids:?}",
             ids.len()
         );
         for id in &ids {

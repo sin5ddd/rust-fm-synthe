@@ -1,0 +1,66 @@
+name = "ld-music-box"
+description = "オルゴール。高いベル＋短い減衰。C4ワンショット。"
+algorithm = 6
+feedback = 0.06
+feedback_op = 4
+gain = 1.0
+default_note = 60
+default_duration = 1.1
+
+[filter]
+type = "lowpass"
+cutoff = 6200.0
+resonance = 0.12
+env_amount = 0.0
+attack = 0.0
+decay = 0.0
+sustain = 1.0
+release = 0.05
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.9
+attack = 0.0005
+decay = 0.55
+sustain = 0.0
+release = 0.16
+vel_sens = 0.35
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 4.0
+detune_cents = 3
+level = 0.35
+attack = 0.0003
+decay = 0.22
+sustain = 0.0
+release = 0.08
+vel_sens = 0.45
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 8.0
+detune_cents = -4
+level = 0.18
+attack = 0.0002
+decay = 0.1
+sustain = 0.0
+release = 0.04
+vel_sens = 0.5
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 12.0
+detune_cents = 0
+level = 0.08
+attack = 0.0002
+decay = 0.04
+sustain = 0.0
+release = 0.02
+vel_sens = 0.55
+waveform = "sine"

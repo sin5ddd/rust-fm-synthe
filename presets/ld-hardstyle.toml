@@ -1,0 +1,70 @@
+name = "ld-hardstyle"
+description = "ハードスタイルのスクリーチ寄り。HP、高いモジュレータ。C4。"
+algorithm = 1
+feedback = 0.4
+feedback_op = 4
+gain = 1.0
+default_note = 60
+default_duration = 0.9
+
+[mod_sweep]
+start = 1.45
+end = 0.5
+
+[filter]
+type = "highpass"
+cutoff = 520.0
+resonance = 0.32
+env_amount = 1.6
+attack = 0.002
+decay = 0.16
+sustain = 0.25
+release = 0.1
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.003
+decay = 0.4
+sustain = 0.26
+release = 0.12
+vel_sens = 0.38
+waveform = "saw"
+
+# OP2 高い比
+[[operators]]
+ratio = 8.0
+detune_cents = 4
+level = 0.58
+attack = 0.001
+decay = 0.1
+sustain = 0.08
+release = 0.05
+vel_sens = 0.5
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 12.0
+detune_cents = -6
+level = 0.32
+attack = 0.0006
+decay = 0.06
+sustain = 0.04
+release = 0.03
+vel_sens = 0.55
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.22
+attack = 0.002
+decay = 0.2
+sustain = 0.1
+release = 0.08
+vel_sens = 0.45
+waveform = "pulse"

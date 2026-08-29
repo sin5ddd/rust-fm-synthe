@@ -1,0 +1,70 @@
+name = "ld-octave"
+description = "オクターブスタック。比1と2のソー／サイン。シンプルな厚いリード。"
+algorithm = 5
+feedback = 0.08
+feedback_op = 4
+gain = 1.0
+default_note = 48
+default_duration = 1.35
+
+[lfo]
+rate_hz = 5.1
+depth_cents = 6.0
+
+[filter]
+type = "highpass"
+cutoff = 200.0
+resonance = 0.08
+env_amount = 0.4
+attack = 0.01
+decay = 0.3
+sustain = 0.5
+release = 0.16
+
+# OP1 基音
+[[operators]]
+ratio = 1.0
+detune_cents = -3
+level = 1.0
+attack = 0.012
+decay = 0.7
+sustain = 0.4
+release = 0.2
+vel_sens = 0.28
+waveform = "saw"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 2
+level = 0.18
+attack = 0.008
+decay = 0.3
+sustain = 0.12
+release = 0.1
+vel_sens = 0.35
+waveform = "sine"
+
+# OP3 オクターブ
+[[operators]]
+ratio = 2.0
+detune_cents = 4
+level = 0.78
+attack = 0.014
+decay = 0.65
+sustain = 0.36
+release = 0.18
+vel_sens = 0.26
+waveform = "saw"
+
+# OP4
+[[operators]]
+ratio = 4.0
+detune_cents = -2
+level = 0.1
+attack = 0.006
+decay = 0.2
+sustain = 0.06
+release = 0.08
+vel_sens = 0.4
+waveform = "sine"

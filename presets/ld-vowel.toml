@@ -1,0 +1,74 @@
+name = "ld-vowel"
+description = "母音FM。非整数モジュレータでアー／オー。BPが口。"
+algorithm = 2
+feedback = 0.24
+feedback_op = 4
+gain = 1.0
+default_note = 48
+default_duration = 1.25
+
+[lfo]
+rate_hz = 2.6
+depth_cents = 9.0
+
+[mod_sweep]
+start = 0.7
+end = 1.2
+
+[filter]
+type = "bandpass"
+cutoff = 760.0
+resonance = 0.52
+env_amount = 1.6
+attack = 0.03
+decay = 0.4
+sustain = 0.32
+release = 0.18
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.02
+decay = 0.7
+sustain = 0.38
+release = 0.2
+vel_sens = 0.28
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 5
+level = 0.55
+attack = 0.016
+decay = 0.5
+sustain = 0.25
+release = 0.16
+vel_sens = 0.35
+waveform = "sine"
+
+# OP3 母音
+[[operators]]
+ratio = 1.68
+detune_cents = -10
+level = 0.52
+attack = 0.01
+decay = 0.35
+sustain = 0.18
+release = 0.12
+vel_sens = 0.42
+waveform = "abs-sine"
+
+# OP4
+[[operators]]
+ratio = 2.24
+detune_cents = 8
+level = 0.38
+attack = 0.008
+decay = 0.28
+sustain = 0.12
+release = 0.1
+vel_sens = 0.45
+waveform = "half-sine"

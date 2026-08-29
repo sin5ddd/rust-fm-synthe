@@ -1,0 +1,66 @@
+name = "ld-saw-pluck"
+description = "ドライな単ソーのプラック。飾りなし。ハウス／テクノの基本。"
+algorithm = 8
+feedback = 0.0
+feedback_op = 4
+gain = 1.0
+default_note = 48
+default_duration = 0.5
+
+[filter]
+type = "lowpass"
+cutoff = 480.0
+resonance = 0.16
+env_amount = 3.0
+attack = 0.001
+decay = 0.18
+sustain = 0.05
+release = 0.1
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.0012
+decay = 0.2
+sustain = 0.0
+release = 0.07
+vel_sens = 0.38
+waveform = "saw"
+
+# OP2 無音
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.0
+attack = 0.001
+decay = 0.05
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+waveform = "sine"
+
+# OP3 無音
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.0
+attack = 0.001
+decay = 0.05
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+waveform = "sine"
+
+# OP4 無音
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.0
+attack = 0.001
+decay = 0.05
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+waveform = "sine"

@@ -1,0 +1,66 @@
+name = "ld-acid"
+description = "303風のジェスチャ。ソー＋LP＋レゾ＋カットオフエンベ。完全な303ではない。"
+algorithm = 8
+feedback = 0.0
+feedback_op = 4
+gain = 1.1
+default_note = 48
+default_duration = 0.85
+
+[filter]
+type = "lowpass"
+cutoff = 240.0
+resonance = 0.78
+env_amount = 4.4
+attack = 0.002
+decay = 0.16
+sustain = 0.08
+release = 0.1
+
+# OP1 303胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.004
+decay = 0.45
+sustain = 0.22
+release = 0.12
+vel_sens = 0.35
+waveform = "saw"
+
+# OP2 薄い重ね
+[[operators]]
+ratio = 1.0
+detune_cents = 3
+level = 0.15
+attack = 0.004
+decay = 0.4
+sustain = 0.18
+release = 0.1
+vel_sens = 0.3
+waveform = "saw"
+
+# OP3 無音
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.0
+attack = 0.001
+decay = 0.05
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+waveform = "sine"
+
+# OP4 無音
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.0
+attack = 0.001
+decay = 0.05
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+waveform = "sine"

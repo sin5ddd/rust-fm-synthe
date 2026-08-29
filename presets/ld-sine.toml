@@ -1,0 +1,70 @@
+name = "ld-sine"
+description = "クリーンなサインリード。薄いビブラート。メロディの芯。"
+algorithm = 8
+feedback = 0.0
+feedback_op = 4
+gain = 1.15
+default_note = 48
+default_duration = 1.4
+
+[lfo]
+rate_hz = 5.0
+depth_cents = 6.0
+
+[filter]
+type = "lowpass"
+cutoff = 4200.0
+resonance = 0.05
+env_amount = 0.0
+attack = 0.0
+decay = 0.0
+sustain = 1.0
+release = 0.05
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.012
+decay = 0.6
+sustain = 0.55
+release = 0.22
+vel_sens = 0.22
+waveform = "sine"
+
+# OP2 ごく薄い2倍
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.08
+attack = 0.02
+decay = 0.4
+sustain = 0.2
+release = 0.16
+vel_sens = 0.2
+waveform = "sine"
+
+# OP3 無音
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.0
+attack = 0.01
+decay = 0.2
+sustain = 0.0
+release = 0.05
+vel_sens = 0.0
+waveform = "sine"
+
+# OP4 無音
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.0
+attack = 0.01
+decay = 0.2
+sustain = 0.0
+release = 0.05
+vel_sens = 0.0
+waveform = "sine"

@@ -1,0 +1,66 @@
+name = "ld-dist-pulse"
+description = "歪んだパルスリード。高FBで砂状。HPでサブを切る。"
+algorithm = 1
+feedback = 0.7
+feedback_op = 4
+gain = 0.88
+default_note = 48
+default_duration = 1.0
+
+[filter]
+type = "highpass"
+cutoff = 300.0
+resonance = 0.26
+env_amount = 1.1
+attack = 0.002
+decay = 0.2
+sustain = 0.28
+release = 0.12
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.003
+decay = 0.4
+sustain = 0.24
+release = 0.12
+vel_sens = 0.38
+waveform = "pulse"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 7
+level = 0.55
+attack = 0.002
+decay = 0.22
+sustain = 0.12
+release = 0.08
+vel_sens = 0.45
+waveform = "pulse"
+
+# OP3
+[[operators]]
+ratio = 2.0
+detune_cents = -5
+level = 0.38
+attack = 0.001
+decay = 0.12
+sustain = 0.06
+release = 0.05
+vel_sens = 0.5
+waveform = "half-sine"
+
+# OP4 FB
+[[operators]]
+ratio = 3.0
+detune_cents = 0
+level = 0.42
+attack = 0.0008
+decay = 0.1
+sustain = 0.05
+release = 0.04
+vel_sens = 0.55
+waveform = "pulse"
