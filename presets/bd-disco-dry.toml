@@ -14,58 +14,58 @@ curve = -7.0
 
 [filter]
 type = "lowpass"
-cutoff = 2400.0
-resonance = 0.1
-env_amount = 0.8
-attack = 0.0004
-decay = 0.07
-sustain = 0.12
-release = 0.05
+cutoff = 4200.0
+resonance = 0.12
+env_amount = 0.9
+attack = 0.0003
+decay = 0.055
+sustain = 0.1
+release = 0.04
 
 # OP1 乾いた胴
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
 level = 1.0
-attack = 0.0007
-decay = 0.2
+attack = 0.0006
+decay = 0.18
 sustain = 0.0
-release = 0.06
+release = 0.055
 vel_sens = 0.35
 waveform = "sine"
 
-# OP2 アタックの皮
+# OP2 アタックの皮（ビーター）
 [[operators]]
-ratio = 2.5
+ratio = 3.0
 detune_cents = 8.0
-level = 0.42
-attack = 0.00025
-decay = 0.028
+level = 0.62
+attack = 0.0002
+decay = 0.022
 sustain = 0.0
-release = 0.018
-vel_sens = 0.55
+release = 0.016
+vel_sens = 0.58
 waveform = "pulse"
 
 # OP3 短いボディスタック
 [[operators]]
 ratio = 1.0
 detune_cents = -4.0
-level = 0.7
+level = 0.68
 attack = 0.0005
-decay = 0.14
+decay = 0.12
 sustain = 0.0
-release = 0.05
+release = 0.045
 vel_sens = 0.35
 waveform = "sine"
 
-# OP4 ソフトクリック
+# OP4 ビーターのクリック
 [[operators]]
-ratio = 4.0
+ratio = 6.0
 detune_cents = -6.0
-level = 0.24
-attack = 0.0002
-decay = 0.012
+level = 0.34
+attack = 0.00015
+decay = 0.009
 sustain = 0.0
-release = 0.01
-vel_sens = 0.6
-waveform = "sine"
+release = 0.008
+vel_sens = 0.65
+waveform = "pulse"

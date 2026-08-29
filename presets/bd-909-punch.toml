@@ -14,12 +14,12 @@ curve = -10.0
 
 [filter]
 type = "lowpass"
-cutoff = 420.0
-resonance = 0.22
-env_amount = 3.4
-attack = 0.0004
-decay = 0.07
-sustain = 0.08
+cutoff = 580.0
+resonance = 0.2
+env_amount = 2.8
+attack = 0.0003
+decay = 0.09
+sustain = 0.1
 release = 0.06
 
 # OP1 短い胴
@@ -27,10 +27,10 @@ release = 0.06
 ratio = 1.0
 detune_cents = -2.0
 level = 1.0
-attack = 0.0006
-decay = 0.26
+attack = 0.0005
+decay = 0.3
 sustain = 0.0
-release = 0.07
+release = 0.075
 vel_sens = 0.3
 waveform = "sine"
 
