@@ -1,0 +1,71 @@
+name = "tone layer"
+description = "胴／トーンだけのレイヤースネア。ノイズはごく薄い。他スネアの下に重ねる。"
+algorithm = 7
+feedback = 0.06
+feedback_op = 4
+gain = 1.02
+default_note = 38
+default_duration = 0.7
+
+[pitch]
+start_semitones = 2.0
+end_semitones = 0.0
+curve = -6.0
+
+[filter]
+type = "lowpass"
+cutoff = 2200.0
+resonance = 0.12
+env_amount = 0.8
+attack = 0.0004
+decay = 0.2
+sustain = 0.15
+release = 0.14
+
+# OP1 素のトーン胴
+[[operators]]
+ratio = 2.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.0005
+decay = 0.32
+sustain = 0.0
+release = 0.16
+vel_sens = 0.26
+waveform = "sine"
+
+# OP2 上トーン
+[[operators]]
+ratio = 3.5
+detune_cents = 5.0
+level = 0.38
+attack = 0.0004
+decay = 0.22
+sustain = 0.0
+release = 0.12
+vel_sens = 0.3
+waveform = "sine"
+
+# OP3 わずかな厚み
+[[operators]]
+ratio = 1.0
+detune_cents = -4.0
+level = 0.55
+attack = 0.00045
+decay = 0.28
+sustain = 0.0
+release = 0.14
+vel_sens = 0.28
+waveform = "sine"
+
+# OP4 ごく短いクリック（ノイズではない）
+[[operators]]
+ratio = 4.0
+detune_cents = 0.0
+level = 0.12
+attack = 0.0002
+decay = 0.018
+sustain = 0.0
+release = 0.014
+vel_sens = 0.5
+waveform = "sine"

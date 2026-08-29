@@ -1,0 +1,75 @@
+name = "909 snappy"
+description = "TR-909風スネア。スナップが強く胴もある。ノイズボディに余韻。"
+algorithm = 5
+feedback = 0.36
+feedback_op = 4
+gain = 1.05
+default_note = 42
+default_duration = 0.9
+
+[pitch]
+start_semitones = 4.5
+end_semitones = 0.0
+curve = -9.0
+
+[mod_sweep]
+start = 1.2
+end = 0.45
+
+[filter]
+type = "bandpass"
+cutoff = 2200.0
+resonance = 0.18
+env_amount = 1.4
+attack = 0.0002
+decay = 0.22
+sustain = 0.22
+release = 0.16
+
+# OP1 胴キャリア
+[[operators]]
+ratio = 1.8
+detune_cents = -3.0
+level = 0.88
+attack = 0.00035
+decay = 0.32
+sustain = 0.0
+release = 0.16
+vel_sens = 0.3
+waveform = "sine"
+
+# OP2 胴の厚み
+[[operators]]
+ratio = 3.2
+detune_cents = 8.0
+level = 0.42
+attack = 0.00025
+decay = 0.12
+sustain = 0.0
+release = 0.08
+vel_sens = 0.45
+waveform = "half-sine"
+
+# OP3 スナップ／ノイズキャリア
+[[operators]]
+ratio = 6.0
+detune_cents = 12.0
+level = 1.0
+attack = 0.00015
+decay = 0.48
+sustain = 0.0
+release = 0.22
+vel_sens = 0.55
+waveform = "pulse"
+
+# OP4 砂状ノイズ源
+[[operators]]
+ratio = 13.5
+detune_cents = -28.0
+level = 0.62
+attack = 0.00012
+decay = 0.36
+sustain = 0.0
+release = 0.18
+vel_sens = 0.68
+waveform = "abs-sine"

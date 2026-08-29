@@ -1,0 +1,71 @@
+name = "fat backbeat"
+description = "太いバックビート。低ミッドの胴が長く、ノイズは後ろで余韻。"
+algorithm = 7
+feedback = 0.14
+feedback_op = 4
+gain = 1.02
+default_note = 38
+default_duration = 1.15
+
+[pitch]
+start_semitones = 2.5
+end_semitones = -0.3
+curve = -6.0
+
+[filter]
+type = "lowpass"
+cutoff = 2800.0
+resonance = 0.16
+env_amount = 1.6
+attack = 0.0004
+decay = 0.28
+sustain = 0.2
+release = 0.2
+
+# OP1 太い胴
+[[operators]]
+ratio = 1.5
+detune_cents = -2.0
+level = 1.0
+attack = 0.0006
+decay = 0.55
+sustain = 0.0
+release = 0.22
+vel_sens = 0.26
+waveform = "sine"
+
+# OP2 デチューンの厚み
+[[operators]]
+ratio = 1.5
+detune_cents = 11.0
+level = 0.42
+attack = 0.0008
+decay = 0.42
+sustain = 0.0
+release = 0.18
+vel_sens = 0.28
+waveform = "sine"
+
+# OP3 ミッドの胴スタック
+[[operators]]
+ratio = 2.8
+detune_cents = 4.0
+level = 0.62
+attack = 0.00045
+decay = 0.36
+sustain = 0.0
+release = 0.16
+vel_sens = 0.35
+waveform = "half-sine"
+
+# OP4 遅いノイズ尾
+[[operators]]
+ratio = 7.5
+detune_cents = -14.0
+level = 0.32
+attack = 0.0003
+decay = 0.62
+sustain = 0.0
+release = 0.24
+vel_sens = 0.5
+waveform = "pulse"

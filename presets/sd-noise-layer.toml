@@ -1,0 +1,70 @@
+name = "noise layer"
+description = "ノイズだけのレイヤースネア。胴なし。他スネアの上に重ねる砂／ヒス。"
+algorithm = 8
+feedback = 0.58
+feedback_op = 4
+gain = 1.06
+default_note = 44
+default_duration = 0.82
+
+[filter]
+type = "highpass"
+cutoff = 1400.0
+resonance = 0.28
+env_amount = 1.5
+attack = 0.0002
+decay = 0.24
+sustain = 0.12
+release = 0.18
+
+# OP1 高域ヒス
+[[operators]]
+ratio = 8.0
+detune_cents = 12.0
+level = 0.85
+attack = 0.0002
+decay = 0.36
+sustain = 0.0
+release = 0.2
+vel_sens = 0.5
+waveform = "pulse"
+
+# OP2 砂状
+[[operators]]
+ratio = 11.5
+detune_cents = -20.0
+level = 0.72
+attack = 0.00018
+decay = 0.44
+sustain = 0.0
+release = 0.22
+vel_sens = 0.55
+waveform = "abs-sine"
+
+# OP3 固定ヒス
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.55
+attack = 0.00015
+decay = 0.5
+sustain = 0.0
+release = 0.24
+vel_sens = 0.52
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 3850.0
+
+# OP4 高FBノイズ源
+[[operators]]
+ratio = 1.0
+detune_cents = 18.0
+level = 0.48
+attack = 0.00012
+decay = 0.55
+sustain = 0.0
+release = 0.26
+vel_sens = 0.65
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 5120.0

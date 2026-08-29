@@ -1,0 +1,71 @@
+name = "trap crisp"
+description = "トラップスネア。クリスプな割れと少し長めの尾。808スネアより明るい。"
+algorithm = 7
+feedback = 0.38
+feedback_op = 4
+gain = 1.04
+default_note = 40
+default_duration = 0.95
+
+[pitch]
+start_semitones = 2.5
+end_semitones = 0.0
+curve = -8.0
+
+[filter]
+type = "highpass"
+cutoff = 240.0
+resonance = 0.14
+env_amount = 0.7
+attack = 0.0002
+decay = 0.2
+sustain = 0.2
+release = 0.16
+
+# OP1 トラップ胴
+[[operators]]
+ratio = 2.3
+detune_cents = 0.0
+level = 0.7
+attack = 0.00035
+decay = 0.2
+sustain = 0.0
+release = 0.14
+vel_sens = 0.3
+waveform = "sine"
+
+# OP2 明るい上トーン
+[[operators]]
+ratio = 4.6
+detune_cents = 7.0
+level = 0.4
+attack = 0.00028
+decay = 0.14
+sustain = 0.0
+release = 0.1
+vel_sens = 0.36
+waveform = "sine"
+
+# OP3 クリスプなノイズ
+[[operators]]
+ratio = 8.0
+detune_cents = 16.0
+level = 0.95
+attack = 0.00018
+decay = 0.52
+sustain = 0.0
+release = 0.24
+vel_sens = 0.55
+waveform = "pulse"
+
+# OP4 長いヒス尾
+[[operators]]
+ratio = 13.0
+detune_cents = -22.0
+level = 0.5
+attack = 0.00015
+decay = 0.65
+sustain = 0.0
+release = 0.28
+vel_sens = 0.62
+waveform = "abs-sine"

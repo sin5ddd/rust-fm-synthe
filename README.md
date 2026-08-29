@@ -12,7 +12,7 @@ EDM / drum & bass 向けの **オフライン4オペFMシンセ**。プリセッ
 - ボイス末尾の SVF フィルタ（`lowpass` / `bandpass` / `highpass`）とカットオフ ADSR
 - 1オペへのフィードバック、ピッチエンベロープ、簡易LFO、変調量スイープ
 - 44.1 / 48 kHz、16 / 24-bit PCM（`hound`）
-- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**
+- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**、**スネア20種（`sd-*`）**
 
 VA / スーパーソー専用エンジンは足していない。4オペFMのまま、波形とボイスフィルタだけ増やしている。
 
@@ -47,10 +47,12 @@ cargo run -- algos
 
 ```bash
 cargo run -- render-all
-# → dist/sub-bass.wav, dist/supersaw-bass.wav, dist/bd-808-boom.wav, …
+# → dist/sub-bass.wav, dist/supersaw-bass.wav, dist/bd-808-boom.wav, dist/sd-808-snap.wav, …
 ```
 
 `bd-*` キックバンク（808、909、フレンチコア、ガバなど20種）も同じコマンドに含まれる。出力は `dist/bd-….wav`。各プリセットの `default_note` / `default_duration` でワンショット向きの音高・長さになる。
+
+`sd-*` スネアバンク（808、909、DnB、ジャングル、フレンチコア、ガバなど20種）も同じ。出力は `dist/sd-….wav`。尾は意図的に長め（DAW側で切る前提）。
 
 出力ディレクトリや長さを全プリセットに上書き:
 
@@ -221,6 +223,26 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | `bd-disco-dry` | ファンキー／ディスコのドライキック |
 | `bd-jungle-round` | ブレイクビーツ／ジャングルの丸いキック |
 | `bd-fm-noise` | 実験的なFMノイズキック（使える砂状） |
+| `sd-808-snap` | TR-808風（短いトーン＋ノイズ、尾あり） |
+| `sd-909-snappy` | TR-909風（スナップ強め、胴あり） |
+| `sd-pop-tight` | タイトなアコースティック／ポップ |
+| `sd-fat-backbeat` | 太いバックビート |
+| `sd-rimshot` | リムショット（クリック＋リン） |
+| `sd-clap-snare` | クラップ寄りのスネア（純クラップではない） |
+| `sd-gated-80s` | 80年代ゲート（長いノイズ。後で切る） |
+| `sd-brush-dust` | ブラシ／ダストのローファイ |
+| `sd-piccolo` | ピッコロ／ハイクラック |
+| `sd-dnb-tight` | DnBのタイトスネア（使える尾） |
+| `sd-jungle-round` | ジャングルの丸いスネア |
+| `sd-neuro-growl` | ニューロ／グロウルのFMスネア |
+| `sd-frenchcore` | フレンチコア／ハードコアの割れ |
+| `sd-gabber-indust` | ガバ／インダストリアル |
+| `sd-trap-crisp` | トラップ（クリスプ、少し長め） |
+| `sd-house-disco` | ハウス／ディスコのドライ |
+| `sd-metal-ping` | 金属的なFMピンスネア |
+| `sd-noise-layer` | ノイズだけのレイヤー用 |
+| `sd-tone-layer` | 胴／トーンだけのレイヤー用 |
+| `sd-fm-long` | 実験的な長いFMスネア（使える尾） |
 
 データは `presets/*.toml`。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。
 
@@ -319,4 +341,4 @@ write_wav(
 cargo test
 ```
 
-エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックがちょうど20個でそれぞれ非無音、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。
+エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。

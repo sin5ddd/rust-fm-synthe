@@ -1,0 +1,70 @@
+name = "brush dust"
+description = "ブラシ／ダストのローファイ。柔らかいアタックと砂状の尾。テープっぽい揺れ。"
+algorithm = 8
+feedback = 0.1
+feedback_op = 4
+gain = 0.94
+default_note = 39
+default_duration = 1.25
+
+[lfo]
+rate_hz = 0.7
+depth_cents = 14.0
+
+[filter]
+type = "lowpass"
+cutoff = 2400.0
+resonance = 0.18
+env_amount = 0.6
+attack = 0.004
+decay = 0.45
+sustain = 0.2
+release = 0.28
+
+# OP1 柔らかい胴
+[[operators]]
+ratio = 1.8
+detune_cents = -8.0
+level = 0.72
+attack = 0.012
+decay = 0.48
+sustain = 0.0
+release = 0.22
+vel_sens = 0.22
+waveform = "sine"
+
+# OP2 デチューンのほこり
+[[operators]]
+ratio = 2.1
+detune_cents = 16.0
+level = 0.4
+attack = 0.018
+decay = 0.55
+sustain = 0.0
+release = 0.24
+vel_sens = 0.25
+waveform = "sine"
+
+# OP3 ブラシの擦れ
+[[operators]]
+ratio = 6.5
+detune_cents = -12.0
+level = 0.55
+attack = 0.008
+decay = 0.7
+sustain = 0.0
+release = 0.3
+vel_sens = 0.4
+waveform = "abs-sine"
+
+# OP4 薄いダスト
+[[operators]]
+ratio = 9.5
+detune_cents = 22.0
+level = 0.28
+attack = 0.006
+decay = 0.85
+sustain = 0.0
+release = 0.32
+vel_sens = 0.45
+waveform = "half-sine"

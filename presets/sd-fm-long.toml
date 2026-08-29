@@ -1,0 +1,74 @@
+name = "fm long"
+description = "実験的な長いFMスネア。使えるリンとヒスの尾。ドローンにはしない。"
+algorithm = 2
+feedback = 0.44
+feedback_op = 4
+gain = 0.98
+default_note = 42
+default_duration = 1.75
+
+[lfo]
+rate_hz = 1.8
+depth_cents = 8.0
+
+[mod_sweep]
+start = 1.25
+end = 0.28
+
+[filter]
+type = "bandpass"
+cutoff = 1400.0
+resonance = 0.22
+env_amount = 1.8
+attack = 0.0005
+decay = 0.7
+sustain = 0.18
+release = 0.4
+
+# OP1 ピッチのある胴
+[[operators]]
+ratio = 1.9
+detune_cents = -4.0
+level = 0.88
+attack = 0.0005
+decay = 0.55
+sustain = 0.0
+release = 0.28
+vel_sens = 0.3
+waveform = "sine"
+
+# OP2 金属の変調
+[[operators]]
+ratio = 2.73
+detune_cents = 14.0
+level = 0.52
+attack = 0.0004
+decay = 0.85
+sustain = 0.0
+release = 0.35
+vel_sens = 0.4
+waveform = "abs-sine"
+
+# OP3 並列のリン
+[[operators]]
+ratio = 4.11
+detune_cents = -18.0
+level = 0.46
+attack = 0.00035
+decay = 1.05
+sustain = 0.0
+release = 0.4
+vel_sens = 0.45
+waveform = "half-sine"
+
+# OP4 遅いヒス（無限ドローンにはしない）
+[[operators]]
+ratio = 9.07
+detune_cents = 22.0
+level = 0.4
+attack = 0.00025
+decay = 1.15
+sustain = 0.0
+release = 0.42
+vel_sens = 0.52
+waveform = "pulse"

@@ -1,0 +1,79 @@
+name = "gabber indust"
+description = "ガバ／インダストリアル。金属の踏み込みと歪んだミッド。工場っぽい尾。"
+algorithm = 5
+feedback = 0.55
+feedback_op = 4
+gain = 1.05
+default_note = 46
+default_duration = 0.78
+
+[pitch]
+start_semitones = 4.0
+end_semitones = -0.4
+curve = -8.0
+
+[mod_sweep]
+start = 1.28
+end = 0.38
+
+[filter]
+type = "highpass"
+cutoff = 260.0
+resonance = 0.22
+env_amount = 0.7
+attack = 0.0
+decay = 0.1
+sustain = 0.28
+release = 0.12
+
+# OP1 歪んだ胴
+[[operators]]
+ratio = 2.0
+detune_cents = -5.0
+level = 0.92
+attack = 0.0003
+decay = 0.2
+sustain = 0.0
+release = 0.12
+vel_sens = 0.34
+waveform = "pulse"
+
+# OP2 金属変調
+[[operators]]
+ratio = 2.73
+detune_cents = 12.0
+level = 0.5
+attack = 0.0002
+decay = 0.08
+sustain = 0.0
+release = 0.05
+vel_sens = 0.5
+waveform = "abs-sine"
+
+# OP3 インダストリアルのノイズ
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.85
+attack = 0.0002
+decay = 0.42
+sustain = 0.0
+release = 0.2
+vel_sens = 0.48
+waveform = "saw"
+freq_mode = "fixed"
+fixed_hz = 1640.0
+
+# OP4 工場ヒス
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.4
+attack = 0.00015
+decay = 0.5
+sustain = 0.0
+release = 0.22
+vel_sens = 0.62
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 3120.0

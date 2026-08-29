@@ -1,0 +1,71 @@
+name = "jungle round"
+description = "ジャングルの丸いスネア。胴が温かく、スナップは控えめ。ブレイク向き。"
+algorithm = 7
+feedback = 0.16
+feedback_op = 4
+gain = 1.02
+default_note = 40
+default_duration = 1.0
+
+[pitch]
+start_semitones = 1.8
+end_semitones = 0.0
+curve = -5.0
+
+[filter]
+type = "lowpass"
+cutoff = 3600.0
+resonance = 0.14
+env_amount = 1.0
+attack = 0.0004
+decay = 0.26
+sustain = 0.22
+release = 0.18
+
+# OP1 丸い胴
+[[operators]]
+ratio = 1.7
+detune_cents = -3.0
+level = 1.0
+attack = 0.0007
+decay = 0.48
+sustain = 0.0
+release = 0.2
+vel_sens = 0.28
+waveform = "sine"
+
+# OP2 温かい厚み
+[[operators]]
+ratio = 2.0
+detune_cents = 9.0
+level = 0.46
+attack = 0.001
+decay = 0.38
+sustain = 0.0
+release = 0.16
+vel_sens = 0.3
+waveform = "half-sine"
+
+# OP3 柔らかいスナップ
+[[operators]]
+ratio = 4.2
+detune_cents = 5.0
+level = 0.4
+attack = 0.00035
+decay = 0.12
+sustain = 0.0
+release = 0.08
+vel_sens = 0.48
+waveform = "sine"
+
+# OP4 丸いノイズ尾
+[[operators]]
+ratio = 7.2
+detune_cents = -10.0
+level = 0.3
+attack = 0.0003
+decay = 0.55
+sustain = 0.0
+release = 0.22
+vel_sens = 0.5
+waveform = "abs-sine"

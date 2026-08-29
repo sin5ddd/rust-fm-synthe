@@ -1,0 +1,75 @@
+name = "rimshot"
+description = "リムショット。鋭いクリックと金属のリン。短い胴、リンの尾は残す。"
+algorithm = 6
+feedback = 0.28
+feedback_op = 4
+gain = 1.06
+default_note = 48
+default_duration = 0.7
+
+[pitch]
+start_semitones = 6.0
+end_semitones = 0.0
+curve = -12.0
+
+[filter]
+type = "highpass"
+cutoff = 420.0
+resonance = 0.22
+env_amount = 0.8
+attack = 0.00015
+decay = 0.06
+sustain = 0.25
+release = 0.1
+
+# OP1 短いリム胴
+[[operators]]
+ratio = 2.5
+detune_cents = 0.0
+level = 0.85
+attack = 0.0002
+decay = 0.09
+sustain = 0.0
+release = 0.08
+vel_sens = 0.4
+waveform = "sine"
+
+# OP2 高域クリック
+[[operators]]
+ratio = 6.0
+detune_cents = 10.0
+level = 0.7
+attack = 0.00012
+decay = 0.045
+sustain = 0.0
+release = 0.035
+vel_sens = 0.6
+waveform = "pulse"
+
+# OP3 金属リン
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.58
+attack = 0.00018
+decay = 0.38
+sustain = 0.0
+release = 0.2
+vel_sens = 0.45
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1980.0
+
+# OP4 共通モジュレータ（クリック＋リン）
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.4
+attack = 0.0001
+decay = 0.055
+sustain = 0.0
+release = 0.04
+vel_sens = 0.65
+waveform = "abs-sine"
+freq_mode = "fixed"
+fixed_hz = 2750.0

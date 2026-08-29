@@ -1,0 +1,71 @@
+name = "808 snap"
+description = "TR-808風スネア。短いトーン2本とノイズ。胴は短め、ノイズに尾を残す。"
+algorithm = 7
+feedback = 0.42
+feedback_op = 4
+gain = 1.04
+default_note = 40
+default_duration = 0.75
+
+[pitch]
+start_semitones = 3.0
+end_semitones = 0.0
+curve = -8.0
+
+[filter]
+type = "highpass"
+cutoff = 180.0
+resonance = 0.12
+env_amount = 0.35
+attack = 0.0
+decay = 0.08
+sustain = 0.35
+release = 0.12
+
+# OP1 808トーン下（加算キャリア）
+[[operators]]
+ratio = 2.2
+detune_cents = 0.0
+level = 0.72
+attack = 0.0004
+decay = 0.22
+sustain = 0.0
+release = 0.14
+vel_sens = 0.28
+waveform = "sine"
+
+# OP2 808トーン上
+[[operators]]
+ratio = 4.0
+detune_cents = 6.0
+level = 0.48
+attack = 0.00035
+decay = 0.16
+sustain = 0.0
+release = 0.1
+vel_sens = 0.32
+waveform = "sine"
+
+# OP3 ノイズ胴（スタックキャリア）
+[[operators]]
+ratio = 5.5
+detune_cents = 18.0
+level = 0.82
+attack = 0.0002
+decay = 0.38
+sustain = 0.0
+release = 0.18
+vel_sens = 0.5
+waveform = "pulse"
+
+# OP4 高比FMノイズ源
+[[operators]]
+ratio = 11.0
+detune_cents = -22.0
+level = 0.55
+attack = 0.00015
+decay = 0.28
+sustain = 0.0
+release = 0.14
+vel_sens = 0.62
+waveform = "pulse"
