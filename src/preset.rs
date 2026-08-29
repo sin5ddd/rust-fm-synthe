@@ -66,6 +66,65 @@ const FACTORY: &[(&str, &str)] = &[
         include_str!("../presets/bd-jungle-round.toml"),
     ),
     ("bd-fm-noise", include_str!("../presets/bd-fm-noise.toml")),
+    ("sd-808-snap", include_str!("../presets/sd-808-snap.toml")),
+    (
+        "sd-909-snappy",
+        include_str!("../presets/sd-909-snappy.toml"),
+    ),
+    ("sd-pop-tight", include_str!("../presets/sd-pop-tight.toml")),
+    (
+        "sd-fat-backbeat",
+        include_str!("../presets/sd-fat-backbeat.toml"),
+    ),
+    ("sd-rimshot", include_str!("../presets/sd-rimshot.toml")),
+    (
+        "sd-clap-snare",
+        include_str!("../presets/sd-clap-snare.toml"),
+    ),
+    ("sd-gated-80s", include_str!("../presets/sd-gated-80s.toml")),
+    (
+        "sd-brush-dust",
+        include_str!("../presets/sd-brush-dust.toml"),
+    ),
+    ("sd-piccolo", include_str!("../presets/sd-piccolo.toml")),
+    ("sd-dnb-tight", include_str!("../presets/sd-dnb-tight.toml")),
+    (
+        "sd-jungle-round",
+        include_str!("../presets/sd-jungle-round.toml"),
+    ),
+    (
+        "sd-neuro-growl",
+        include_str!("../presets/sd-neuro-growl.toml"),
+    ),
+    (
+        "sd-frenchcore",
+        include_str!("../presets/sd-frenchcore.toml"),
+    ),
+    (
+        "sd-gabber-indust",
+        include_str!("../presets/sd-gabber-indust.toml"),
+    ),
+    (
+        "sd-trap-crisp",
+        include_str!("../presets/sd-trap-crisp.toml"),
+    ),
+    (
+        "sd-house-disco",
+        include_str!("../presets/sd-house-disco.toml"),
+    ),
+    (
+        "sd-metal-ping",
+        include_str!("../presets/sd-metal-ping.toml"),
+    ),
+    (
+        "sd-noise-layer",
+        include_str!("../presets/sd-noise-layer.toml"),
+    ),
+    (
+        "sd-tone-layer",
+        include_str!("../presets/sd-tone-layer.toml"),
+    ),
+    ("sd-fm-long", include_str!("../presets/sd-fm-long.toml")),
     ("cp-house", include_str!("../presets/cp-house.toml")),
     (
         "lead-fm-pluck",
@@ -365,6 +424,7 @@ mod tests {
         );
         assert_eq!(output_preset_id(Some("custom.toml"), None), "custom");
         assert_eq!(output_preset_id(Some("bd-808-boom"), None), "bd-808-boom");
+        assert_eq!(output_preset_id(Some("sd-808-snap"), None), "sd-808-snap");
     }
 
     #[test]
@@ -385,6 +445,20 @@ mod tests {
     }
 
     #[test]
+    fn factory_sd_snare_bank_has_twenty_ids() {
+        let ids: Vec<_> = factory_ids()
+            .into_iter()
+            .filter(|id| id.starts_with("sd-"))
+            .collect();
+        assert_eq!(
+            ids.len(),
+            20,
+            "expected exactly 20 sd-* factory snares, got {}: {ids:?}",
+            ids.len()
+        );
+        for id in &ids {
+            load_factory(id).expect(id);
+        }
     fn factory_strudel_oneshots_parse() {
         const IDS: [&str; 4] = ["cp-house", "lead-fm-pluck", "stab-fm-fifth", "reese-mid"];
         for id in IDS {

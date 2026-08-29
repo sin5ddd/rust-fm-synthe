@@ -1,0 +1,74 @@
+name = "neuro growl"
+description = "ニューロ／グロウルのFMスネア。喉声ミッドと砂状の尾。"
+algorithm = 1
+feedback = 0.62
+feedback_op = 4
+gain = 1.0
+default_note = 41
+default_duration = 1.05
+
+[lfo]
+rate_hz = 6.4
+depth_cents = 11.0
+
+[mod_sweep]
+start = 1.35
+end = 0.4
+
+[filter]
+type = "bandpass"
+cutoff = 620.0
+resonance = 0.42
+env_amount = 2.2
+attack = 0.0008
+decay = 0.28
+sustain = 0.16
+release = 0.18
+
+# OP1 グロウルキャリア
+[[operators]]
+ratio = 1.8
+detune_cents = -6.0
+level = 1.0
+attack = 0.0005
+decay = 0.42
+sustain = 0.0
+release = 0.18
+vel_sens = 0.32
+waveform = "saw"
+
+# OP2 フォルマント
+[[operators]]
+ratio = 1.47
+detune_cents = 10.0
+level = 0.58
+attack = 0.0004
+decay = 0.26
+sustain = 0.0
+release = 0.12
+vel_sens = 0.42
+waveform = "half-sine"
+
+# OP3 非整数
+[[operators]]
+ratio = 2.11
+detune_cents = -16.0
+level = 0.5
+attack = 0.00035
+decay = 0.2
+sustain = 0.0
+release = 0.1
+vel_sens = 0.5
+waveform = "abs-sine"
+
+# OP4 高FBノイズ／喉
+[[operators]]
+ratio = 3.07
+detune_cents = 18.0
+level = 0.48
+attack = 0.0003
+decay = 0.55
+sustain = 0.0
+release = 0.22
+vel_sens = 0.55
+waveform = "pulse"

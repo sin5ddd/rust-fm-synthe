@@ -1,0 +1,71 @@
+name = "gated 80s"
+description = "80年代ゲートスネア。長いノイズボディ。DAW側でゲートする前提で尾を残す。"
+algorithm = 5
+feedback = 0.4
+feedback_op = 4
+gain = 1.02
+default_note = 40
+default_duration = 1.55
+
+[pitch]
+start_semitones = 1.5
+end_semitones = 0.0
+curve = -5.0
+
+[filter]
+type = "highpass"
+cutoff = 280.0
+resonance = 0.16
+env_amount = 0.9
+attack = 0.0003
+decay = 0.55
+sustain = 0.28
+release = 0.35
+
+# OP1 短い80s胴
+[[operators]]
+ratio = 2.0
+detune_cents = -2.0
+level = 0.7
+attack = 0.0004
+decay = 0.18
+sustain = 0.0
+release = 0.12
+vel_sens = 0.28
+waveform = "sine"
+
+# OP2 胴のクリック
+[[operators]]
+ratio = 5.0
+detune_cents = 9.0
+level = 0.36
+attack = 0.0002
+decay = 0.05
+sustain = 0.0
+release = 0.04
+vel_sens = 0.5
+waveform = "pulse"
+
+# OP3 長い部屋ノイズ
+[[operators]]
+ratio = 6.8
+detune_cents = 15.0
+level = 1.0
+attack = 0.00025
+decay = 0.95
+sustain = 0.0
+release = 0.4
+vel_sens = 0.45
+waveform = "pulse"
+
+# OP4 ヒス源（フィルタが開いたまま）
+[[operators]]
+ratio = 14.0
+detune_cents = -24.0
+level = 0.58
+attack = 0.0002
+decay = 0.82
+sustain = 0.0
+release = 0.36
+vel_sens = 0.58
+waveform = "abs-sine"

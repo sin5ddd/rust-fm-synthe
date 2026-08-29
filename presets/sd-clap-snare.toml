@@ -1,0 +1,66 @@
+name = "clap snare"
+description = "クラップ寄りのスネア。重ねノイズの粒だが、短いトーン芯は残す（純クラップではない）。"
+algorithm = 8
+feedback = 0.48
+feedback_op = 4
+gain = 1.04
+default_note = 42
+default_duration = 0.85
+
+[filter]
+type = "highpass"
+cutoff = 520.0
+resonance = 0.2
+env_amount = 1.2
+attack = 0.0003
+decay = 0.18
+sustain = 0.15
+release = 0.16
+
+# OP1 わずかなトーン芯
+[[operators]]
+ratio = 2.4
+detune_cents = 0.0
+level = 0.38
+attack = 0.0004
+decay = 0.14
+sustain = 0.0
+release = 0.1
+vel_sens = 0.3
+waveform = "sine"
+
+# OP2 クラップ粒1
+[[operators]]
+ratio = 7.0
+detune_cents = 14.0
+level = 0.78
+attack = 0.0012
+decay = 0.22
+sustain = 0.0
+release = 0.16
+vel_sens = 0.55
+waveform = "pulse"
+
+# OP3 クラップ粒2（少し遅れ）
+[[operators]]
+ratio = 8.5
+detune_cents = -18.0
+level = 0.7
+attack = 0.008
+decay = 0.32
+sustain = 0.0
+release = 0.2
+vel_sens = 0.52
+waveform = "abs-sine"
+
+# OP4 高FBノイズ尾
+[[operators]]
+ratio = 12.0
+detune_cents = 26.0
+level = 0.55
+attack = 0.016
+decay = 0.48
+sustain = 0.0
+release = 0.24
+vel_sens = 0.6
+waveform = "pulse"

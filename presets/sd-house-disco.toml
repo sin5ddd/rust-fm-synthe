@@ -1,0 +1,71 @@
+name = "house disco"
+description = "ハウス／ディスコのドライスネア。ブーム無し、乾いた割れ。部屋ヒスは薄く残す。"
+algorithm = 7
+feedback = 0.14
+feedback_op = 4
+gain = 1.03
+default_note = 38
+default_duration = 0.58
+
+[pitch]
+start_semitones = 1.5
+end_semitones = 0.0
+curve = -6.0
+
+[filter]
+type = "lowpass"
+cutoff = 6800.0
+resonance = 0.1
+env_amount = 0.7
+attack = 0.00025
+decay = 0.09
+sustain = 0.12
+release = 0.08
+
+# OP1 乾いた胴
+[[operators]]
+ratio = 2.1
+detune_cents = 0.0
+level = 0.88
+attack = 0.0004
+decay = 0.16
+sustain = 0.0
+release = 0.1
+vel_sens = 0.34
+waveform = "sine"
+
+# OP2 皮のクリック
+[[operators]]
+ratio = 4.8
+detune_cents = 6.0
+level = 0.55
+attack = 0.00018
+decay = 0.04
+sustain = 0.0
+release = 0.03
+vel_sens = 0.56
+waveform = "pulse"
+
+# OP3 短いボディ
+[[operators]]
+ratio = 1.9
+detune_cents = -5.0
+level = 0.58
+attack = 0.00035
+decay = 0.12
+sustain = 0.0
+release = 0.08
+vel_sens = 0.32
+waveform = "sine"
+
+# OP4 薄い部屋ヒス
+[[operators]]
+ratio = 8.5
+detune_cents = 12.0
+level = 0.28
+attack = 0.0002
+decay = 0.32
+sustain = 0.0
+release = 0.16
+vel_sens = 0.5
+waveform = "abs-sine"

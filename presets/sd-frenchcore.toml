@@ -1,0 +1,75 @@
+name = "frenchcore"
+description = "フレンチコア／ハードコアの割れ。攻撃的なミッド。サブは削って裂けるように。"
+algorithm = 2
+feedback = 0.5
+feedback_op = 4
+gain = 1.06
+default_note = 45
+default_duration = 0.68
+
+[pitch]
+start_semitones = 5.0
+end_semitones = 0.0
+curve = -7.0
+
+[mod_sweep]
+start = 1.4
+end = 0.35
+
+[filter]
+type = "highpass"
+cutoff = 220.0
+resonance = 0.2
+env_amount = 1.1
+attack = 0.0
+decay = 0.08
+sustain = 0.22
+release = 0.1
+
+# OP1 攻撃的ミッド
+[[operators]]
+ratio = 2.4
+detune_cents = 0.0
+level = 1.0
+attack = 0.0002
+decay = 0.22
+sustain = 0.0
+release = 0.12
+vel_sens = 0.36
+waveform = "pulse"
+
+# OP2 歪みスタック
+[[operators]]
+ratio = 3.0
+detune_cents = -8.0
+level = 0.72
+attack = 0.00018
+decay = 0.1
+sustain = 0.0
+release = 0.06
+vel_sens = 0.48
+waveform = "saw"
+
+# OP3 並列モジュレータ
+[[operators]]
+ratio = 4.5
+detune_cents = 14.0
+level = 0.52
+attack = 0.00015
+decay = 0.06
+sustain = 0.0
+release = 0.04
+vel_sens = 0.55
+waveform = "half-sine"
+
+# OP4 高域クラック＋FB
+[[operators]]
+ratio = 9.5
+detune_cents = -20.0
+level = 0.46
+attack = 0.00012
+decay = 0.36
+sustain = 0.0
+release = 0.18
+vel_sens = 0.68
+waveform = "pulse"
