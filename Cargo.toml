@@ -1,0 +1,29 @@
+[package]
+name = "fm_synth"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.83"
+description = "オフライン4オペFMシンセ。EDM / DnB向けサンプルとFXをWAVに書き出す。"
+license = "MIT"
+readme = "README.md"
+keywords = ["fm", "synthesizer", "wav", "edm", "audio"]
+categories = ["multimedia::audio"]
+
+[lib]
+name = "fm_synth"
+path = "src/lib.rs"
+
+[[bin]]
+name = "fm-synth"
+path = "src/main.rs"
+
+[dependencies]
+# Exact pins: newer clap/toml stacks need rustc 1.85+ (edition 2024).
+clap = { version = "=4.5.32", features = ["derive"] }
+hound = "=3.5.1"
+serde = { version = "=1.0.219", features = ["derive"] }
+toml = "=0.5.11"
+
+[profile.release]
+lto = true
+codegen-units = 1

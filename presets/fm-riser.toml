@@ -1,0 +1,69 @@
+name = "fm-riser"
+description = "ノイズ寄りのFMライザー。ピッチ上昇と変調量スイープ。ビルドのFX。"
+algorithm = 2
+feedback = 0.92
+feedback_op = 4
+gain = 0.9
+default_note = 48
+default_duration = 2.4
+
+[pitch]
+start_semitones = -19.0
+end_semitones = 31.0
+curve = 1.6
+
+[lfo]
+rate_hz = 0.35
+depth_cents = 22.0
+
+[mod_sweep]
+start = 0.22
+end = 1.55
+
+# OP1 キャリア
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.08
+decay = 2.1
+sustain = 0.35
+release = 0.25
+vel_sens = 0.2
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.71
+detune_cents = -15.0
+level = 0.7
+attack = 0.05
+decay = 1.8
+sustain = 0.28
+release = 0.2
+vel_sens = 0.25
+waveform = "abs-sine"
+
+# OP3
+[[operators]]
+ratio = 5.13
+detune_cents = 27.0
+level = 0.55
+attack = 0.12
+decay = 1.6
+sustain = 0.22
+release = 0.18
+vel_sens = 0.3
+waveform = "half-sine"
+
+# OP4 高フィードバックで砂状の帯域
+[[operators]]
+ratio = 8.07
+detune_cents = -33.0
+level = 0.48
+attack = 0.04
+decay = 1.4
+sustain = 0.2
+release = 0.15
+vel_sens = 0.35
+waveform = "pulse"
