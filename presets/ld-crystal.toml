@@ -1,0 +1,66 @@
+name = "ld-crystal"
+description = "クリスタルのキラキラリード。高い部分音。C4。"
+algorithm = 6
+feedback = 0.1
+feedback_op = 4
+gain = 1.0
+default_note = 60
+default_duration = 0.95
+
+[filter]
+type = "highpass"
+cutoff = 360.0
+resonance = 0.16
+env_amount = 0.5
+attack = 0.0008
+decay = 0.22
+sustain = 0.12
+release = 0.12
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.8
+attack = 0.001
+decay = 0.5
+sustain = 0.1
+release = 0.16
+vel_sens = 0.35
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 3.01
+detune_cents = 6
+level = 0.45
+attack = 0.0006
+decay = 0.32
+sustain = 0.05
+release = 0.1
+vel_sens = 0.42
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 6.17
+detune_cents = -8
+level = 0.28
+attack = 0.0004
+decay = 0.18
+sustain = 0.02
+release = 0.06
+vel_sens = 0.48
+waveform = "abs-sine"
+
+# OP4
+[[operators]]
+ratio = 9.4
+detune_cents = 0
+level = 0.14
+attack = 0.0003
+decay = 0.07
+sustain = 0.0
+release = 0.03
+vel_sens = 0.55
+waveform = "sine"

@@ -1,0 +1,66 @@
+name = "ld-nylon"
+description = "ミュートしたナイロン寄りのプラック。ハーフサイン＋低いLP。柔らかいメロディ用。"
+algorithm = 3
+feedback = 0.05
+feedback_op = 4
+gain = 1.0
+default_note = 48
+default_duration = 0.7
+
+[filter]
+type = "lowpass"
+cutoff = 280.0
+resonance = 0.18
+env_amount = 2.4
+attack = 0.002
+decay = 0.22
+sustain = 0.05
+release = 0.12
+
+# OP1 ミュート胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.003
+decay = 0.28
+sustain = 0.0
+release = 0.1
+vel_sens = 0.3
+waveform = "half-sine"
+
+# OP2 弱い倍音
+[[operators]]
+ratio = 2.0
+detune_cents = 2
+level = 0.16
+attack = 0.001
+decay = 0.08
+sustain = 0.0
+release = 0.04
+vel_sens = 0.4
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 3.0
+detune_cents = -3
+level = 0.08
+attack = 0.0008
+decay = 0.05
+sustain = 0.0
+release = 0.025
+vel_sens = 0.45
+waveform = "sine"
+
+# OP4 爪のクリック
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.05
+attack = 0.0004
+decay = 0.02
+sustain = 0.0
+release = 0.012
+vel_sens = 0.5
+waveform = "pulse"

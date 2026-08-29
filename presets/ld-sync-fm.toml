@@ -1,0 +1,70 @@
+name = "ld-sync-fm"
+description = "シンク風FM。高い比のモジュレータでオシレータシンクっぽい倍音。"
+algorithm = 1
+feedback = 0.32
+feedback_op = 4
+gain = 1.0
+default_note = 48
+default_duration = 1.1
+
+[mod_sweep]
+start = 1.35
+end = 0.45
+
+[filter]
+type = "highpass"
+cutoff = 260.0
+resonance = 0.16
+env_amount = 1.4
+attack = 0.004
+decay = 0.22
+sustain = 0.25
+release = 0.12
+
+# OP1 キャリア
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.006
+decay = 0.55
+sustain = 0.28
+release = 0.16
+vel_sens = 0.32
+waveform = "saw"
+
+# OP2 高比シンク
+[[operators]]
+ratio = 11.0
+detune_cents = 0
+level = 0.55
+attack = 0.002
+decay = 0.18
+sustain = 0.08
+release = 0.06
+vel_sens = 0.45
+waveform = "sine"
+
+# OP3 さらに高い
+[[operators]]
+ratio = 15.0
+detune_cents = 7
+level = 0.28
+attack = 0.001
+decay = 0.08
+sustain = 0.02
+release = 0.03
+vel_sens = 0.5
+waveform = "sine"
+
+# OP4 FB源
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.18
+attack = 0.004
+decay = 0.3
+sustain = 0.1
+release = 0.08
+vel_sens = 0.4
+waveform = "pulse"

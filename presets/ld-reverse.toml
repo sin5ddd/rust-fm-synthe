@@ -1,0 +1,75 @@
+name = "ld-reverse"
+description = "リバース風。遅いアタック＋上昇ピッチエンベ。スイープ兼ノート。"
+algorithm = 5
+feedback = 0.14
+feedback_op = 4
+gain = 1.0
+default_note = 48
+default_duration = 1.6
+
+[pitch]
+start_semitones = -12.0
+end_semitones = 5.0
+curve = -0.6
+
+[mod_sweep]
+start = 0.4
+end = 1.3
+
+[filter]
+type = "lowpass"
+cutoff = 400.0
+resonance = 0.22
+env_amount = 3.2
+attack = 0.4
+decay = 0.3
+sustain = 0.55
+release = 0.2
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -3
+level = 1.0
+attack = 0.35
+decay = 0.4
+sustain = 0.35
+release = 0.18
+vel_sens = 0.22
+waveform = "saw"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 4
+level = 0.22
+attack = 0.28
+decay = 0.3
+sustain = 0.15
+release = 0.12
+vel_sens = 0.3
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 1.0
+detune_cents = 6
+level = 0.7
+attack = 0.4
+decay = 0.35
+sustain = 0.3
+release = 0.16
+vel_sens = 0.2
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 3.0
+detune_cents = 0
+level = 0.18
+attack = 0.22
+decay = 0.2
+sustain = 0.1
+release = 0.1
+vel_sens = 0.35
+waveform = "abs-sine"

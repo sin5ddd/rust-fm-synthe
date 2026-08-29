@@ -1,0 +1,70 @@
+name = "ld-pulse"
+description = "スクエア／パルスリード。奇数倍音。ハウスやテクノのメロディ。"
+algorithm = 8
+feedback = 0.14
+feedback_op = 4
+gain = 1.0
+default_note = 48
+default_duration = 1.2
+
+[lfo]
+rate_hz = 5.8
+depth_cents = 7.0
+
+[filter]
+type = "lowpass"
+cutoff = 1800.0
+resonance = 0.18
+env_amount = 1.6
+attack = 0.006
+decay = 0.28
+sustain = 0.4
+release = 0.14
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -3
+level = 1.0
+attack = 0.008
+decay = 0.5
+sustain = 0.36
+release = 0.16
+vel_sens = 0.3
+waveform = "pulse"
+
+# OP2 薄いデチューン
+[[operators]]
+ratio = 1.0
+detune_cents = 4
+level = 0.55
+attack = 0.01
+decay = 0.45
+sustain = 0.3
+release = 0.14
+vel_sens = 0.28
+waveform = "pulse"
+
+# OP3 オクターブ
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.18
+attack = 0.006
+decay = 0.3
+sustain = 0.15
+release = 0.1
+vel_sens = 0.4
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 3.0
+detune_cents = 0
+level = 0.08
+attack = 0.004
+decay = 0.2
+sustain = 0.08
+release = 0.08
+vel_sens = 0.4
+waveform = "sine"

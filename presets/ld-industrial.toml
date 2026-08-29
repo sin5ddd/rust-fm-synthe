@@ -1,0 +1,66 @@
+name = "ld-industrial"
+description = "インダストリアルリード。パルス＋高FB。HPで羊毛のようなサブを切る。"
+algorithm = 2
+feedback = 0.62
+feedback_op = 4
+gain = 0.95
+default_note = 48
+default_duration = 0.9
+
+[filter]
+type = "highpass"
+cutoff = 420.0
+resonance = 0.28
+env_amount = 1.2
+attack = 0.001
+decay = 0.16
+sustain = 0.18
+release = 0.1
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.003
+decay = 0.4
+sustain = 0.2
+release = 0.12
+vel_sens = 0.4
+waveform = "pulse"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 11
+level = 0.7
+attack = 0.002
+decay = 0.28
+sustain = 0.12
+release = 0.08
+vel_sens = 0.45
+waveform = "pulse"
+
+# OP3
+[[operators]]
+ratio = 2.31
+detune_cents = -7
+level = 0.45
+attack = 0.001
+decay = 0.14
+sustain = 0.05
+release = 0.05
+vel_sens = 0.55
+waveform = "abs-sine"
+
+# OP4 FB砂
+[[operators]]
+ratio = 5.0
+detune_cents = 0
+level = 0.35
+attack = 0.0006
+decay = 0.08
+sustain = 0.02
+release = 0.03
+vel_sens = 0.6
+waveform = "pulse"

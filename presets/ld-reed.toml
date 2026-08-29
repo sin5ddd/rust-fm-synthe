@@ -1,0 +1,70 @@
+name = "ld-reed"
+description = "リード／クラリネット寄り。奇数倍音のパルス＋サイン。"
+algorithm = 7
+feedback = 0.12
+feedback_op = 4
+gain = 1.0
+default_note = 48
+default_duration = 1.3
+
+[lfo]
+rate_hz = 4.9
+depth_cents = 7.0
+
+[filter]
+type = "lowpass"
+cutoff = 2100.0
+resonance = 0.16
+env_amount = 0.9
+attack = 0.04
+decay = 0.35
+sustain = 0.45
+release = 0.16
+
+# OP1 奇数倍音
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.03
+decay = 0.6
+sustain = 0.45
+release = 0.18
+vel_sens = 0.24
+waveform = "pulse"
+
+# OP2
+[[operators]]
+ratio = 3.0
+detune_cents = 2
+level = 0.22
+attack = 0.04
+decay = 0.45
+sustain = 0.22
+release = 0.14
+vel_sens = 0.28
+waveform = "sine"
+
+# OP3 芯
+[[operators]]
+ratio = 1.0
+detune_cents = 3
+level = 0.4
+attack = 0.035
+decay = 0.5
+sustain = 0.35
+release = 0.16
+vel_sens = 0.22
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 5.0
+detune_cents = 0
+level = 0.08
+attack = 0.05
+decay = 0.3
+sustain = 0.12
+release = 0.1
+vel_sens = 0.3
+waveform = "sine"

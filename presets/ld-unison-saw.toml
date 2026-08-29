@@ -1,0 +1,74 @@
+name = "ld-unison-saw"
+description = "ユニゾンソー（デチューン控え）。スーパーソーより締まったリード。"
+algorithm = 5
+feedback = 0.04
+feedback_op = 4
+gain = 0.92
+default_note = 48
+default_duration = 1.5
+
+[lfo]
+rate_hz = 4.6
+depth_cents = 5.0
+
+[filter]
+type = "lowpass"
+cutoff = 2800.0
+resonance = 0.12
+env_amount = 0.8
+attack = 0.01
+decay = 0.35
+sustain = 0.55
+release = 0.16
+
+# OP1 狭いユニゾン
+[[operators]]
+ratio = 1.0
+detune_cents = -2
+level = 1.0
+attack = 0.014
+decay = 0.7
+sustain = 0.38
+release = 0.2
+vel_sens = 0.28
+waveform = "super-saw"
+unison = 5
+unison_detune = 8.0
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 1
+level = 0.1
+attack = 0.008
+decay = 0.25
+sustain = 0.1
+release = 0.08
+vel_sens = 0.35
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 1.0
+detune_cents = 3
+level = 0.7
+attack = 0.016
+decay = 0.65
+sustain = 0.34
+release = 0.18
+vel_sens = 0.26
+waveform = "super-saw"
+unison = 5
+unison_detune = 7.0
+
+# OP4
+[[operators]]
+ratio = 3.0
+detune_cents = -2
+level = 0.06
+attack = 0.006
+decay = 0.18
+sustain = 0.05
+release = 0.06
+vel_sens = 0.4
+waveform = "sine"

@@ -1,0 +1,74 @@
+name = "ld-supersaw"
+description = "クラシックなトランス／EDMスーパーソーリード。長め。HPでサブを抑える。"
+algorithm = 5
+feedback = 0.06
+feedback_op = 4
+gain = 0.86
+default_note = 48
+default_duration = 1.8
+
+[lfo]
+rate_hz = 5.2
+depth_cents = 8.0
+
+[filter]
+type = "highpass"
+cutoff = 220.0
+resonance = 0.08
+env_amount = 0.4
+attack = 0.02
+decay = 0.4
+sustain = 0.7
+release = 0.2
+
+# OP1 メイン
+[[operators]]
+ratio = 1.0
+detune_cents = -5
+level = 1.0
+attack = 0.018
+decay = 0.9
+sustain = 0.42
+release = 0.28
+vel_sens = 0.28
+waveform = "super-saw"
+unison = 7
+unison_detune = 22.0
+
+# OP2 薄いFM
+[[operators]]
+ratio = 2.0
+detune_cents = 2
+level = 0.12
+attack = 0.01
+decay = 0.4
+sustain = 0.12
+release = 0.12
+vel_sens = 0.35
+waveform = "sine"
+
+# OP3 レイヤー
+[[operators]]
+ratio = 1.0
+detune_cents = 8
+level = 0.78
+attack = 0.022
+decay = 0.8
+sustain = 0.38
+release = 0.24
+vel_sens = 0.26
+waveform = "super-saw"
+unison = 7
+unison_detune = 18.0
+
+# OP4
+[[operators]]
+ratio = 1.0
+detune_cents = -3
+level = 0.08
+attack = 0.008
+decay = 0.3
+sustain = 0.08
+release = 0.1
+vel_sens = 0.4
+waveform = "sine"

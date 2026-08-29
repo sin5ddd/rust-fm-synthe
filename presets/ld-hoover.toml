@@ -1,0 +1,74 @@
+name = "ld-hoover"
+description = "フーバー／アルファレーン寄り。デチューンソー＋アブサイン。ミッドのうねり。"
+algorithm = 2
+feedback = 0.28
+feedback_op = 4
+gain = 0.9
+default_note = 48
+default_duration = 1.6
+
+[lfo]
+rate_hz = 0.55
+depth_cents = 18.0
+
+[mod_sweep]
+start = 1.15
+end = 0.7
+
+[filter]
+type = "bandpass"
+cutoff = 640.0
+resonance = 0.38
+env_amount = 1.2
+attack = 0.03
+decay = 0.5
+sustain = 0.4
+release = 0.2
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -14
+level = 1.0
+attack = 0.02
+decay = 0.8
+sustain = 0.35
+release = 0.22
+vel_sens = 0.3
+waveform = "saw"
+
+# OP2 厚いデチューン
+[[operators]]
+ratio = 1.01
+detune_cents = 16
+level = 0.85
+attack = 0.018
+decay = 0.7
+sustain = 0.3
+release = 0.2
+vel_sens = 0.32
+waveform = "saw"
+
+# OP3 フォルマント
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 0.22
+attack = 0.03
+decay = 0.6
+sustain = 0.2
+release = 0.18
+vel_sens = 0.25
+waveform = "abs-sine"
+
+# OP4
+[[operators]]
+ratio = 2.02
+detune_cents = -8
+level = 0.4
+attack = 0.01
+decay = 0.45
+sustain = 0.15
+release = 0.12
+vel_sens = 0.4
+waveform = "half-sine"

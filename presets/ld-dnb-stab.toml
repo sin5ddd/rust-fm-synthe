@@ -1,0 +1,66 @@
+name = "ld-dnb-stab"
+description = "タイトなDnBスタブ。ミッドBP、短い減衰。Amen隣接のメロディワンショット。"
+algorithm = 7
+feedback = 0.18
+feedback_op = 4
+gain = 1.05
+default_note = 48
+default_duration = 0.4
+
+[filter]
+type = "bandpass"
+cutoff = 720.0
+resonance = 0.32
+env_amount = 1.6
+attack = 0.0005
+decay = 0.08
+sustain = 0.05
+release = 0.06
+
+# OP1 芯
+[[operators]]
+ratio = 1.0
+detune_cents = -2
+level = 1.0
+attack = 0.0006
+decay = 0.11
+sustain = 0.0
+release = 0.04
+vel_sens = 0.45
+waveform = "pulse"
+
+# OP2 ソー層
+[[operators]]
+ratio = 1.0
+detune_cents = 5
+level = 0.7
+attack = 0.0006
+decay = 0.1
+sustain = 0.0
+release = 0.035
+vel_sens = 0.4
+waveform = "saw"
+
+# OP3 スタック
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.35
+attack = 0.0003
+decay = 0.04
+sustain = 0.0
+release = 0.018
+vel_sens = 0.5
+waveform = "sine"
+
+# OP4 アタック
+[[operators]]
+ratio = 4.0
+detune_cents = 8
+level = 0.22
+attack = 0.0002
+decay = 0.018
+sustain = 0.0
+release = 0.01
+vel_sens = 0.55
+waveform = "half-sine"

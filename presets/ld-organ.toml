@@ -1,0 +1,66 @@
+name = "ld-organ"
+description = "オルガン寄り。並列オペ（ドローバー風 1+2+3）。加算＋薄いFB。"
+algorithm = 8
+feedback = 0.08
+feedback_op = 4
+gain = 1.0
+default_note = 48
+default_duration = 1.4
+
+[filter]
+type = "lowpass"
+cutoff = 3800.0
+resonance = 0.08
+env_amount = 0.3
+attack = 0.004
+decay = 0.2
+sustain = 0.7
+release = 0.12
+
+# OP1 8'
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.95
+attack = 0.006
+decay = 0.5
+sustain = 0.62
+release = 0.14
+vel_sens = 0.22
+waveform = "sine"
+
+# OP2 4'
+[[operators]]
+ratio = 2.0
+detune_cents = 1
+level = 0.7
+attack = 0.006
+decay = 0.5
+sustain = 0.58
+release = 0.14
+vel_sens = 0.22
+waveform = "sine"
+
+# OP3 2 2/3'
+[[operators]]
+ratio = 3.0
+detune_cents = -1
+level = 0.38
+attack = 0.006
+decay = 0.45
+sustain = 0.5
+release = 0.12
+vel_sens = 0.22
+waveform = "sine"
+
+# OP4 2'
+[[operators]]
+ratio = 4.0
+detune_cents = 0
+level = 0.22
+attack = 0.006
+decay = 0.4
+sustain = 0.42
+release = 0.12
+vel_sens = 0.22
+waveform = "sine"

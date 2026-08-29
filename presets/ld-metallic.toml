@@ -1,0 +1,68 @@
+name = "ld-metallic"
+description = "金属FMリード。インハーモニック比＋固定周波数のリン。攻撃的ミッド。"
+algorithm = 4
+feedback = 0.36
+feedback_op = 4
+gain = 1.0
+default_note = 48
+default_duration = 0.95
+
+[filter]
+type = "highpass"
+cutoff = 320.0
+resonance = 0.24
+env_amount = 1.0
+attack = 0.002
+decay = 0.2
+sustain = 0.2
+release = 0.1
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.004
+decay = 0.45
+sustain = 0.18
+release = 0.12
+vel_sens = 0.4
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.73
+detune_cents = 14
+level = 0.55
+attack = 0.002
+decay = 0.16
+sustain = 0.04
+release = 0.06
+vel_sens = 0.5
+waveform = "abs-sine"
+
+# OP3 固定リン
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.42
+attack = 0.001
+decay = 0.2
+sustain = 0.06
+release = 0.08
+vel_sens = 0.4
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1420.0
+
+# OP4
+[[operators]]
+ratio = 3.17
+detune_cents = -10
+level = 0.3
+attack = 0.0008
+decay = 0.1
+sustain = 0.03
+release = 0.05
+vel_sens = 0.55
+waveform = "pulse"

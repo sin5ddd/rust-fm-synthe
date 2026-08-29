@@ -1,0 +1,70 @@
+name = "ld-perc"
+description = "パーカッション寄りのリード。クリックアタック＋短いトーン。HPでサブを切る。"
+algorithm = 4
+feedback = 0.22
+feedback_op = 4
+gain = 1.0
+default_note = 60
+default_duration = 0.4
+
+[filter]
+type = "highpass"
+cutoff = 380.0
+resonance = 0.22
+env_amount = 1.1
+attack = 0.0003
+decay = 0.07
+sustain = 0.04
+release = 0.05
+
+# OP1 短いトーン
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.85
+attack = 0.0004
+decay = 0.14
+sustain = 0.0
+release = 0.05
+vel_sens = 0.45
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.4
+attack = 0.0002
+decay = 0.03
+sustain = 0.0
+release = 0.015
+vel_sens = 0.5
+waveform = "pulse"
+
+# OP3 固定リン
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.55
+attack = 0.0002
+decay = 0.05
+sustain = 0.0
+release = 0.02
+vel_sens = 0.55
+waveform = "abs-sine"
+freq_mode = "fixed"
+fixed_hz = 1680.0
+
+# OP4 クリック
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.28
+attack = 0.00015
+decay = 0.018
+sustain = 0.0
+release = 0.01
+vel_sens = 0.65
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 2800.0
