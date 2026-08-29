@@ -567,15 +567,18 @@ fn cp_house_has_1khz_body_without_sub() {
     .unwrap();
     let body = hann_window(&buf);
     let sr_f = sr as f32;
-    let sub = goertzel_power(&body, sr_f, 80.0)
-        + goertzel_power(&body, sr_f, 120.0)
-        + goertzel_power(&body, sr_f, 180.0);
-    let mid = goertzel_power(&body, sr_f, 900.0)
-        + goertzel_power(&body, sr_f, 1020.0)
-        + goertzel_power(&body, sr_f, 1150.0);
-    let air = goertzel_power(&body, sr_f, 2600.0)
-        + goertzel_power(&body, sr_f, 3200.0)
-        + goertzel_power(&body, sr_f, 4000.0);
+    let band = |lo, hi| {
+        let mut e = 0.0;
+        let mut f = lo;
+        while f < hi {
+            e += goertzel_power(&body, sr_f, f);
+            f += 40.0;
+        }
+        e
+    };
+    let sub = band(20.0, 200.0);
+    let mid = band(800.0, 1400.0);
+    let air = band(2000.0, 4500.0);
     assert!(
         mid > sub * 8.0,
         "cp-house should have 1 kHz body, not sub (mid={mid}, sub={sub})"
