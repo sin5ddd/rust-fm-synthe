@@ -1,0 +1,72 @@
+name = "fx-riser-filter"
+description = "フィルタ開放のライザー。ピッチは控えめ、カットオフが主役。"
+algorithm = 2
+feedback = 0.8
+feedback_op = 4
+gain = 0.96
+default_note = 60
+default_duration = 2.6
+
+[pitch]
+start_semitones = -4.0
+end_semitones = 8.0
+curve = 1.0
+
+[lfo]
+rate_hz = 0.5
+depth_cents = 16.0
+
+[mod_sweep]
+start = 0.3
+end = 1.45
+
+[filter]
+type = "lowpass"
+cutoff = 160.0
+resonance = 0.32
+env_amount = 6.0
+attack = 2.0
+decay = 0.25
+sustain = 0.72
+release = 0.14
+
+[[operators]]
+ratio = 2.0
+detune_cents = -8
+level = 1.0
+attack = 0.08
+decay = 2.1
+sustain = 0.4
+release = 0.2
+vel_sens = 0.2
+waveform = "pulse"
+[[operators]]
+ratio = 3.4
+detune_cents = 10
+level = 0.68
+attack = 0.06
+decay = 1.8
+sustain = 0.3
+release = 0.16
+vel_sens = 0.28
+waveform = "abs-sine"
+[[operators]]
+ratio = 5.1
+detune_cents = -14
+level = 0.48
+attack = 0.1
+decay = 1.6
+sustain = 0.22
+release = 0.14
+vel_sens = 0.32
+waveform = "half-sine"
+[[operators]]
+ratio = 8.0
+detune_cents = 18
+level = 0.38
+attack = 0.05
+decay = 1.4
+sustain = 0.18
+release = 0.12
+vel_sens = 0.38
+waveform = "pulse"

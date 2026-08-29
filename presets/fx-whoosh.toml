@@ -1,0 +1,70 @@
+name = "fx-whoosh"
+description = "ウーシュ。BPが横切る風切り。"
+algorithm = 7
+feedback = 0.7
+feedback_op = 4
+gain = 1.05
+default_note = 67
+default_duration = 1.4
+
+[pitch]
+start_semitones = -6.0
+end_semitones = 8.0
+curve = 0.0
+
+[mod_sweep]
+start = 0.6
+end = 1.1
+
+[filter]
+type = "bandpass"
+cutoff = 500.0
+resonance = 0.42
+env_amount = 3.8
+attack = 0.35
+decay = 0.7
+sustain = 0.15
+release = 0.16
+
+[[operators]]
+ratio = 7.0
+detune_cents = -10
+level = 1.0
+attack = 0.04
+decay = 0.9
+sustain = 0.12
+release = 0.16
+vel_sens = 0.22
+waveform = "pulse"
+[[operators]]
+ratio = 4.2
+detune_cents = 12
+level = 0.7
+attack = 0.05
+decay = 0.7
+sustain = 0.08
+release = 0.12
+vel_sens = 0.28
+waveform = "saw"
+[[operators]]
+ratio = 10.5
+detune_cents = -16
+level = 0.45
+attack = 0.03
+decay = 0.5
+sustain = 0.05
+release = 0.1
+vel_sens = 0.35
+waveform = "abs-sine"
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.35
+attack = 0.02
+decay = 0.4
+sustain = 0.0
+release = 0.08
+vel_sens = 0.4
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 1900

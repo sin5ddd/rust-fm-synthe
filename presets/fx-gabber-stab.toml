@@ -1,0 +1,64 @@
+name = "fx-gabber-stab"
+description = "ガバのスタブFX。リードではなく短い歪みヒット。"
+algorithm = 1
+feedback = 0.48
+feedback_op = 4
+gain = 1.12
+default_note = 55
+default_duration = 0.38
+
+[pitch]
+start_semitones = 9.0
+end_semitones = -3.0
+curve = -4.0
+
+[filter]
+type = "highpass"
+cutoff = 200.0
+resonance = 0.2
+env_amount = 1.0
+attack = 0.0003
+decay = 0.08
+sustain = 0.12
+release = 0.06
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.0004
+decay = 0.2
+sustain = 0.0
+release = 0.07
+vel_sens = 0.4
+waveform = "pulse"
+[[operators]]
+ratio = 2.0
+detune_cents = -5
+level = 0.7
+attack = 0.0003
+decay = 0.1
+sustain = 0.0
+release = 0.05
+vel_sens = 0.48
+waveform = "saw"
+[[operators]]
+ratio = 3.0
+detune_cents = 8
+level = 0.45
+attack = 0.00025
+decay = 0.06
+sustain = 0.0
+release = 0.03
+vel_sens = 0.55
+waveform = "half-sine"
+[[operators]]
+ratio = 6.0
+detune_cents = -12
+level = 0.32
+attack = 0.0002
+decay = 0.04
+sustain = 0.0
+release = 0.02
+vel_sens = 0.6
+waveform = "pulse"

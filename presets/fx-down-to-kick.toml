@@ -1,0 +1,68 @@
+name = "fx-down-to-kick"
+description = "ダウンリフターからキックへ。後半でピッチが落ちミッドが残る。"
+algorithm = 3
+feedback = 0.22
+feedback_op = 4
+gain = 1.08
+default_note = 48
+default_duration = 1.4
+
+[pitch]
+start_semitones = 16.0
+end_semitones = -22.0
+curve = 1.6
+
+[mod_sweep]
+start = 1.2
+end = 0.35
+
+[filter]
+type = "lowpass"
+cutoff = 3500.0
+resonance = 0.2
+env_amount = -3.4
+attack = 0.15
+decay = 1.0
+sustain = 0.12
+release = 0.12
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.01
+decay = 1.0
+sustain = 0.08
+release = 0.14
+vel_sens = 0.28
+waveform = "sine"
+[[operators]]
+ratio = 2.0
+detune_cents = -4
+level = 0.5
+attack = 0.008
+decay = 0.45
+sustain = 0.0
+release = 0.1
+vel_sens = 0.36
+waveform = "saw"
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 0.7
+attack = 0.35
+decay = 0.4
+sustain = 0.15
+release = 0.16
+vel_sens = 0.22
+waveform = "sine"
+[[operators]]
+ratio = 4.5
+detune_cents = 10
+level = 0.32
+attack = 0.004
+decay = 0.2
+sustain = 0.0
+release = 0.06
+vel_sens = 0.48
+waveform = "pulse"

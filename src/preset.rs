@@ -215,6 +215,131 @@ const FACTORY: &[(&str, &str)] = &[
     ("ld-saw-pluck", include_str!("../presets/ld-saw-pluck.toml")),
     ("ld-ethereal", include_str!("../presets/ld-ethereal.toml")),
     ("ld-harpsi", include_str!("../presets/ld-harpsi.toml")),
+    ("fx-rev-cym", include_str!("../presets/fx-rev-cym.toml")),
+    ("fx-rev-crash", include_str!("../presets/fx-rev-crash.toml")),
+    ("fx-rev-hat", include_str!("../presets/fx-rev-hat.toml")),
+    (
+        "fx-rev-cym-long",
+        include_str!("../presets/fx-rev-cym-long.toml"),
+    ),
+    (
+        "fx-rev-cym-bright",
+        include_str!("../presets/fx-rev-cym-bright.toml"),
+    ),
+    (
+        "fx-rev-cym-dark",
+        include_str!("../presets/fx-rev-cym-dark.toml"),
+    ),
+    (
+        "fx-rev-crash-metal",
+        include_str!("../presets/fx-rev-crash-metal.toml"),
+    ),
+    ("fx-rev-air", include_str!("../presets/fx-rev-air.toml")),
+    (
+        "fx-rev-cym-noise",
+        include_str!("../presets/fx-rev-cym-noise.toml"),
+    ),
+    (
+        "fx-rev-splash",
+        include_str!("../presets/fx-rev-splash.toml"),
+    ),
+    ("fx-noise-hit", include_str!("../presets/fx-noise-hit.toml")),
+    (
+        "fx-noise-burst",
+        include_str!("../presets/fx-noise-burst.toml"),
+    ),
+    (
+        "fx-metal-crash",
+        include_str!("../presets/fx-metal-crash.toml"),
+    ),
+    (
+        "fx-glass-smash",
+        include_str!("../presets/fx-glass-smash.toml"),
+    ),
+    ("fx-impact", include_str!("../presets/fx-impact.toml")),
+    ("fx-boom", include_str!("../presets/fx-boom.toml")),
+    ("fx-sub-drop", include_str!("../presets/fx-sub-drop.toml")),
+    (
+        "fx-impact-mid",
+        include_str!("../presets/fx-impact-mid.toml"),
+    ),
+    ("fx-uplifter", include_str!("../presets/fx-uplifter.toml")),
+    (
+        "fx-riser-noise",
+        include_str!("../presets/fx-riser-noise.toml"),
+    ),
+    (
+        "fx-riser-pitch",
+        include_str!("../presets/fx-riser-pitch.toml"),
+    ),
+    ("fx-riser-saw", include_str!("../presets/fx-riser-saw.toml")),
+    (
+        "fx-downlifter",
+        include_str!("../presets/fx-downlifter.toml"),
+    ),
+    ("fx-fall", include_str!("../presets/fx-fall.toml")),
+    (
+        "fx-downlifter-noise",
+        include_str!("../presets/fx-downlifter-noise.toml"),
+    ),
+    ("fx-whoosh", include_str!("../presets/fx-whoosh.toml")),
+    ("fx-wind", include_str!("../presets/fx-wind.toml")),
+    ("fx-passby", include_str!("../presets/fx-passby.toml")),
+    ("fx-laser", include_str!("../presets/fx-laser.toml")),
+    ("fx-zap", include_str!("../presets/fx-zap.toml")),
+    ("fx-blip", include_str!("../presets/fx-blip.toml")),
+    (
+        "fx-laser-fall",
+        include_str!("../presets/fx-laser-fall.toml"),
+    ),
+    ("fx-sweep-bp", include_str!("../presets/fx-sweep-bp.toml")),
+    (
+        "fx-formant-ah",
+        include_str!("../presets/fx-formant-ah.toml"),
+    ),
+    (
+        "fx-formant-oh",
+        include_str!("../presets/fx-formant-oh.toml"),
+    ),
+    ("fx-tape-stop", include_str!("../presets/fx-tape-stop.toml")),
+    ("fx-rev-verb", include_str!("../presets/fx-rev-verb.toml")),
+    ("fx-clang", include_str!("../presets/fx-clang.toml")),
+    (
+        "fx-frenchcore-ns",
+        include_str!("../presets/fx-frenchcore-ns.toml"),
+    ),
+    (
+        "fx-gabber-stab",
+        include_str!("../presets/fx-gabber-stab.toml"),
+    ),
+    ("fx-crackle", include_str!("../presets/fx-crackle.toml")),
+    (
+        "fx-radio-stab",
+        include_str!("../presets/fx-radio-stab.toml"),
+    ),
+    ("fx-alarm", include_str!("../presets/fx-alarm.toml")),
+    ("fx-siren", include_str!("../presets/fx-siren.toml")),
+    (
+        "fx-down-to-kick",
+        include_str!("../presets/fx-down-to-kick.toml"),
+    ),
+    (
+        "fx-trans-fill",
+        include_str!("../presets/fx-trans-fill.toml"),
+    ),
+    (
+        "fx-impact-dnb",
+        include_str!("../presets/fx-impact-dnb.toml"),
+    ),
+    ("fx-whoosh-hp", include_str!("../presets/fx-whoosh-hp.toml")),
+    (
+        "fx-riser-filter",
+        include_str!("../presets/fx-riser-filter.toml"),
+    ),
+    (
+        "fx-hoover-fall",
+        include_str!("../presets/fx-hoover-fall.toml"),
+    ),
 ];
 
 #[derive(Clone, Debug, Deserialize)]
@@ -506,6 +631,7 @@ mod tests {
         assert_eq!(output_preset_id(Some("bd-808-boom"), None), "bd-808-boom");
         assert_eq!(output_preset_id(Some("sd-808-snap"), None), "sd-808-snap");
         assert_eq!(output_preset_id(Some("ld-fm-pluck"), None), "ld-fm-pluck");
+        assert_eq!(output_preset_id(Some("fx-rev-cym"), None), "fx-rev-cym");
     }
 
     #[test]
@@ -552,6 +678,23 @@ mod tests {
             ids.len(),
             50,
             "expected exactly 50 ld-* factory leads, got {}: {ids:?}",
+            ids.len()
+        );
+        for id in &ids {
+            load_factory(id).expect(id);
+        }
+    }
+
+    #[test]
+    fn factory_fx_bank_has_fifty_ids() {
+        let ids: Vec<_> = factory_ids()
+            .into_iter()
+            .filter(|id| id.starts_with("fx-"))
+            .collect();
+        assert_eq!(
+            ids.len(),
+            50,
+            "expected exactly 50 fx-* factory FX, got {}: {ids:?}",
             ids.len()
         );
         for id in &ids {

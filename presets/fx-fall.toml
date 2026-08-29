@@ -1,0 +1,68 @@
+name = "fx-fall"
+description = "急なフォール。レーザー寄りの落下。短め。"
+algorithm = 1
+feedback = 0.3
+feedback_op = 4
+gain = 1.05
+default_note = 67
+default_duration = 1.2
+
+[pitch]
+start_semitones = 22.0
+end_semitones = -32.0
+curve = 1.2
+
+[mod_sweep]
+start = 1.4
+end = 0.2
+
+[filter]
+type = "lowpass"
+cutoff = 6000.0
+resonance = 0.18
+env_amount = -3.8
+attack = 0.002
+decay = 0.9
+sustain = 0.05
+release = 0.1
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.002
+decay = 0.85
+sustain = 0.0
+release = 0.12
+vel_sens = 0.32
+waveform = "sine"
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.7
+attack = 0.0015
+decay = 0.45
+sustain = 0.0
+release = 0.08
+vel_sens = 0.4
+waveform = "sine"
+[[operators]]
+ratio = 4.0
+detune_cents = 8
+level = 0.45
+attack = 0.001
+decay = 0.2
+sustain = 0.0
+release = 0.05
+vel_sens = 0.48
+waveform = "half-sine"
+[[operators]]
+ratio = 7.0
+detune_cents = -12
+level = 0.3
+attack = 0.0008
+decay = 0.1
+sustain = 0.0
+release = 0.04
+vel_sens = 0.55
+waveform = "pulse"

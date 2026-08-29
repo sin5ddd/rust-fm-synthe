@@ -1,0 +1,76 @@
+name = "fx-riser-saw"
+description = "スーパーソーのライザー。厚みのある上昇。"
+algorithm = 8
+feedback = 0.2
+feedback_op = 4
+gain = 0.92
+default_note = 48
+default_duration = 3.0
+
+[pitch]
+start_semitones = -14.0
+end_semitones = 20.0
+curve = 1.4
+
+[lfo]
+rate_hz = 0.28
+depth_cents = 14.0
+
+[mod_sweep]
+start = 0.5
+end = 1.2
+
+[filter]
+type = "lowpass"
+cutoff = 260.0
+resonance = 0.2
+env_amount = 4.8
+attack = 2.2
+decay = 0.3
+sustain = 0.7
+release = 0.16
+
+[[operators]]
+ratio = 1.0
+detune_cents = -5
+level = 1.0
+attack = 0.07
+decay = 2.4
+sustain = 0.45
+release = 0.2
+vel_sens = 0.18
+waveform = "super-saw"
+unison = 7
+unison_detune = 26.0
+[[operators]]
+ratio = 1.01
+detune_cents = 6
+level = 0.7
+attack = 0.08
+decay = 2.2
+sustain = 0.38
+release = 0.18
+vel_sens = 0.2
+waveform = "super-saw"
+unison = 5
+unison_detune = 18.0
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.35
+attack = 0.05
+decay = 1.8
+sustain = 0.22
+release = 0.14
+vel_sens = 0.3
+waveform = "saw"
+[[operators]]
+ratio = 3.5
+detune_cents = 12
+level = 0.22
+attack = 0.04
+decay = 1.4
+sustain = 0.12
+release = 0.1
+vel_sens = 0.36
+waveform = "pulse"

@@ -1,0 +1,64 @@
+name = "fx-formant-oh"
+description = "オー母音のFXヒット。低いフォルマント。"
+algorithm = 3
+feedback = 0.18
+feedback_op = 4
+gain = 1.06
+default_note = 55
+default_duration = 0.75
+
+[pitch]
+start_semitones = 2.0
+end_semitones = -2.0
+curve = -0.8
+
+[filter]
+type = "bandpass"
+cutoff = 520.0
+resonance = 0.5
+env_amount = 1.2
+attack = 0.012
+decay = 0.26
+sustain = 0.14
+release = 0.12
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.01
+decay = 0.48
+sustain = 0.0
+release = 0.12
+vel_sens = 0.3
+waveform = "sine"
+[[operators]]
+ratio = 1.42
+detune_cents = 5
+level = 0.58
+attack = 0.008
+decay = 0.32
+sustain = 0.0
+release = 0.09
+vel_sens = 0.38
+waveform = "abs-sine"
+[[operators]]
+ratio = 1.95
+detune_cents = -7
+level = 0.38
+attack = 0.006
+decay = 0.18
+sustain = 0.0
+release = 0.07
+vel_sens = 0.42
+waveform = "half-sine"
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 0.25
+attack = 0.012
+decay = 0.28
+sustain = 0.0
+release = 0.08
+vel_sens = 0.32
+waveform = "sine"

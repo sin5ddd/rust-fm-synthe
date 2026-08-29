@@ -1,0 +1,68 @@
+name = "fx-sweep-bp"
+description = "バンドパス掃引。カットオフが上へ開くFXスイープ。"
+algorithm = 7
+feedback = 0.35
+feedback_op = 4
+gain = 1.02
+default_note = 60
+default_duration = 1.6
+
+[pitch]
+start_semitones = -4.0
+end_semitones = 10.0
+curve = 0.5
+
+[mod_sweep]
+start = 0.7
+end = 1.25
+
+[filter]
+type = "bandpass"
+cutoff = 280.0
+resonance = 0.55
+env_amount = 4.6
+attack = 0.15
+decay = 1.1
+sustain = 0.2
+release = 0.16
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.02
+decay = 1.2
+sustain = 0.25
+release = 0.16
+vel_sens = 0.22
+waveform = "saw"
+[[operators]]
+ratio = 2.0
+detune_cents = -6
+level = 0.55
+attack = 0.016
+decay = 0.9
+sustain = 0.15
+release = 0.12
+vel_sens = 0.3
+waveform = "pulse"
+[[operators]]
+ratio = 3.5
+detune_cents = 10
+level = 0.4
+attack = 0.012
+decay = 0.6
+sustain = 0.08
+release = 0.1
+vel_sens = 0.36
+waveform = "abs-sine"
+[[operators]]
+ratio = 0.98
+detune_cents = 0
+level = 0.35
+attack = 0.02
+decay = 0.8
+sustain = 0.12
+release = 0.12
+vel_sens = 0.28
+waveform = "sine"

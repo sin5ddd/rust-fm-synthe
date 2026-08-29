@@ -1,0 +1,63 @@
+name = "fx-siren"
+description = "短いサイレン風。深いLFOピッチ。長いループではない。"
+algorithm = 5
+feedback = 0.1
+feedback_op = 4
+gain = 1.02
+default_note = 72
+default_duration = 1.15
+
+[lfo]
+rate_hz = 3.2
+depth_cents = 700.0
+
+[filter]
+type = "lowpass"
+cutoff = 2800.0
+resonance = 0.16
+env_amount = 1.0
+attack = 0.02
+decay = 0.4
+sustain = 0.3
+release = 0.12
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.02
+decay = 0.7
+sustain = 0.28
+release = 0.14
+vel_sens = 0.22
+waveform = "sine"
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.45
+attack = 0.016
+decay = 0.5
+sustain = 0.18
+release = 0.1
+vel_sens = 0.3
+waveform = "sine"
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.55
+attack = 0.02
+decay = 0.6
+sustain = 0.22
+release = 0.12
+vel_sens = 0.24
+waveform = "saw"
+[[operators]]
+ratio = 3.0
+detune_cents = 0
+level = 0.2
+attack = 0.012
+decay = 0.3
+sustain = 0.08
+release = 0.08
+vel_sens = 0.38
+waveform = "half-sine"

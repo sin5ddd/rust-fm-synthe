@@ -1,0 +1,64 @@
+name = "fx-impact"
+description = "ミッド寄りのインパクト。クリック＋胴。サブだけにしない。"
+algorithm = 3
+feedback = 0.28
+feedback_op = 4
+gain = 1.15
+default_note = 48
+default_duration = 0.55
+
+[pitch]
+start_semitones = 18.0
+end_semitones = -6.0
+curve = -4.5
+
+[filter]
+type = "lowpass"
+cutoff = 420.0
+resonance = 0.16
+env_amount = 3.2
+attack = 0.0003
+decay = 0.14
+sustain = 0.15
+release = 0.1
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.0004
+decay = 0.28
+sustain = 0.0
+release = 0.1
+vel_sens = 0.4
+waveform = "sine"
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.45
+attack = 0.0003
+decay = 0.12
+sustain = 0.0
+release = 0.06
+vel_sens = 0.5
+waveform = "sine"
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.7
+attack = 0.0002
+decay = 0.05
+sustain = 0.0
+release = 0.03
+vel_sens = 0.65
+waveform = "pulse"
+[[operators]]
+ratio = 7.0
+detune_cents = 10
+level = 0.35
+attack = 0.0002
+decay = 0.04
+sustain = 0.0
+release = 0.02
+vel_sens = 0.7
+waveform = "half-sine"

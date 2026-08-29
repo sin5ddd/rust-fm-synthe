@@ -1,0 +1,70 @@
+name = "fx-passby"
+description = "通過音。ピッチが落ち、BPが横切るドップラー風。"
+algorithm = 5
+feedback = 0.4
+feedback_op = 4
+gain = 1.06
+default_note = 60
+default_duration = 1.1
+
+[pitch]
+start_semitones = 12.0
+end_semitones = -16.0
+curve = 0.4
+
+[mod_sweep]
+start = 1.1
+end = 0.5
+
+[filter]
+type = "bandpass"
+cutoff = 700.0
+resonance = 0.36
+env_amount = 2.6
+attack = 0.15
+decay = 0.65
+sustain = 0.12
+release = 0.14
+
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 1.0
+attack = 0.03
+decay = 0.75
+sustain = 0.1
+release = 0.14
+vel_sens = 0.25
+waveform = "saw"
+[[operators]]
+ratio = 3.1
+detune_cents = -8
+level = 0.55
+attack = 0.025
+decay = 0.5
+sustain = 0.05
+release = 0.1
+vel_sens = 0.32
+waveform = "sine"
+[[operators]]
+ratio = 6.0
+detune_cents = 12
+level = 0.4
+attack = 0.02
+decay = 0.35
+sustain = 0.0
+release = 0.08
+vel_sens = 0.4
+waveform = "pulse"
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.35
+attack = 0.015
+decay = 0.28
+sustain = 0.0
+release = 0.07
+vel_sens = 0.42
+waveform = "abs-sine"
+freq_mode = "fixed"
+fixed_hz = 880

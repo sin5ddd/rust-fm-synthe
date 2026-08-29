@@ -239,6 +239,44 @@ fn factory_ld_leads_are_fifty_and_audible() {
 }
 
 #[test]
+fn factory_fx_are_fifty_and_audible() {
+    let ids: Vec<_> = factory_ids()
+        .into_iter()
+        .filter(|id| id.starts_with("fx-"))
+        .collect();
+    assert_eq!(
+        ids.len(),
+        50,
+        "expected exactly 50 fx-* factory FX, got {}: {ids:?}",
+        ids.len()
+    );
+
+    for id in ids {
+        let preset = load_factory(id).unwrap();
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: 22_050,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+        assert!(
+            rms(&buf) > 0.01,
+            "fx `{id}` rendered near-silence (rms={})",
+            rms(&buf)
+        );
+        assert!(
+            buf.iter().any(|&s| s.abs() > 1e-3),
+            "{id} effectively silent"
+        );
+    }
+}
+
+#[test]
 fn every_factory_preset_makes_sound() {
     for id in fm_synth::factory_ids() {
         let preset = load_factory(id).unwrap();
