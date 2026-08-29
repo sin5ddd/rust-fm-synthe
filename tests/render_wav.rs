@@ -134,3 +134,84 @@ fn every_factory_preset_makes_sound() {
         );
     }
 }
+
+#[test]
+fn supersaw_factory_is_audible_and_differs_from_sine() {
+    let saw = load_factory("supersaw-bass").expect("supersaw-bass");
+    let mut sine = saw.clone();
+    for op in &mut sine.operators {
+        op.waveform = fm_synth::Waveform::Sine;
+    }
+    let params = RenderParams {
+        frequency_hz: 82.41,
+        duration_secs: 0.3,
+        velocity: 0.95,
+        sample_rate: 22_050,
+    };
+    let xa = render(&saw, &params).unwrap();
+    let xb = render(&sine, &params).unwrap();
+    assert!(xa.iter().all(|s| s.is_finite()));
+    assert!(rms(&xa) > 0.02, "super-saw rms {}", rms(&xa));
+    assert!(peak(&xa) > 0.4, "super-saw peak {}", peak(&xa));
+    let diff: f32 = xa.iter().zip(&xb).map(|(l, r)| (l - r).abs()).sum();
+    assert!(
+        diff > 2.0,
+        "factory super-saw nearly identical to sine (diff={diff})"
+    );
+}
+
+fn brightness(buf: &[f32]) -> f32 {
+    let mut s = 0.0f32;
+    for w in buf.windows(2) {
+        let d = w[1] - w[0];
+        s += d * d;
+    }
+    (s / buf.len() as f32).sqrt()
+}
+
+#[test]
+fn factory_filter_pluck_and_modes_make_sound() {
+    for id in ["filter-pluck", "bp-growl", "hp-air"] {
+        let preset = load_factory(id).unwrap();
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: 110.0,
+                duration_secs: 0.25,
+                velocity: 0.9,
+                sample_rate: 22_050,
+            },
+        )
+        .expect(id);
+        assert!(rms(&buf) > 0.01, "{id} rms {}", rms(&buf));
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN");
+    }
+}
+
+#[test]
+fn lowpass_low_cutoff_is_darker_than_open() {
+    let mut closed = load_factory("metallic-hit").unwrap();
+    let mut open = closed.clone();
+    closed.filter.kind = fm_synth::FilterType::Lowpass;
+    closed.filter.cutoff = 200.0;
+    closed.filter.resonance = 0.15;
+    closed.filter.env_amount = 0.0;
+    open.filter.kind = fm_synth::FilterType::Lowpass;
+    open.filter.cutoff = 16_000.0;
+    open.filter.resonance = 0.15;
+    open.filter.env_amount = 0.0;
+    let params = RenderParams {
+        frequency_hz: 196.0,
+        duration_secs: 0.3,
+        velocity: 0.85,
+        sample_rate: 44_100,
+    };
+    let dark = render(&closed, &params).unwrap();
+    let bright = render(&open, &params).unwrap();
+    let b_dark = brightness(&dark);
+    let b_bright = brightness(&bright);
+    assert!(
+        b_dark < b_bright * 0.6,
+        "low cutoff should attenuate highs (closed={b_dark}, open={b_bright})"
+    );
+}

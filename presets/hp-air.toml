@@ -1,0 +1,70 @@
+name = "hp-air"
+description = "ハイパスで胴を切ったエア／ティック。トップやトランジションの短いワンショット。"
+algorithm = 4
+feedback = 0.42
+feedback_op = 4
+gain = 1.1
+default_note = 84
+default_duration = 0.5
+
+[filter]
+type = "highpass"
+cutoff = 2200.0
+resonance = 0.38
+env_amount = 1.4
+attack = 0.0008
+decay = 0.16
+sustain = 0.08
+release = 0.1
+
+# OP1 キャリア
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.0005
+decay = 0.28
+sustain = 0.0
+release = 0.08
+vel_sens = 0.45
+waveform = "pulse"
+
+# OP2 インハーモニック
+[[operators]]
+ratio = 2.73
+detune_cents = 16.0
+level = 0.6
+attack = 0.0004
+decay = 0.12
+sustain = 0.0
+release = 0.05
+vel_sens = 0.5
+waveform = "abs-sine"
+
+# OP3 固定周波数のリン
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.5
+attack = 0.0003
+decay = 0.2
+sustain = 0.0
+release = 0.06
+vel_sens = 0.4
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 2100.0
+
+# OP4 高域ノイズ源
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.38
+attack = 0.0002
+decay = 0.05
+sustain = 0.0
+release = 0.03
+vel_sens = 0.65
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 3550.0
