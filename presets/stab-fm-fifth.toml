@@ -1,0 +1,58 @@
+name = "stab-fm-fifth"
+description = "C3の中空DnBスタブ。完全5度（CとG、比1と3/2）の2パーシャルだけ。長3度（E / 5:4）は出さない。"
+algorithm = 8
+feedback = 0.0
+feedback_op = 4
+gain = 1.4
+default_note = 48
+default_duration = 0.3
+
+# フィルタなし（既定LPは素通り）。FMもFBもデチューンもしない。正弦2本だけ。
+
+# OP1 キャリア: C（比 1）
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.0007
+decay = 0.14
+sustain = 0.0
+release = 0.045
+vel_sens = 0.4
+waveform = "sine"
+
+# OP2 キャリア: G（比 3/2）
+[[operators]]
+ratio = 1.5
+detune_cents = 0.0
+level = 0.94
+attack = 0.0007
+decay = 0.12
+sustain = 0.0
+release = 0.04
+vel_sens = 0.4
+waveform = "sine"
+
+# OP3 無音 — 3度や倍音を足さない
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.0
+attack = 0.001
+decay = 0.05
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+waveform = "sine"
+
+# OP4 無音
+[[operators]]
+ratio = 1.5
+detune_cents = 0.0
+level = 0.0
+attack = 0.001
+decay = 0.05
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+waveform = "sine"

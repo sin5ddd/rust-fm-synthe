@@ -12,7 +12,7 @@ EDM / drum & bass 向けの **オフライン4オペFMシンセ**。プリセッ
 - ボイス末尾の SVF フィルタ（`lowpass` / `bandpass` / `highpass`）とカットオフ ADSR
 - 1オペへのフィードバック、ピッチエンベロープ、簡易LFO、変調量スイープ
 - 44.1 / 48 kHz、16 / 24-bit PCM（`hound`）
-- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**
+- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**。Strudel用ワンショット4種（`cp-house` / `lead-fm-pluck` / `stab-fm-fifth` / `reese-mid`）もあり、`render-all` に含まれる。
 
 VA / スーパーソー専用エンジンは足していない。4オペFMのまま、波形とボイスフィルタだけ増やしている。
 
@@ -50,7 +50,7 @@ cargo run -- render-all
 # → dist/sub-bass.wav, dist/supersaw-bass.wav, dist/bd-808-boom.wav, …
 ```
 
-`bd-*` キックバンク（808、909、フレンチコア、ガバなど20種）も同じコマンドに含まれる。出力は `dist/bd-….wav`。各プリセットの `default_note` / `default_duration` でワンショット向きの音高・長さになる。
+`bd-*` キックバンク（808、909、フレンチコア、ガバなど20種）も同じコマンドに含まれる。出力は `dist/bd-….wav`。各プリセットの `default_note` / `default_duration` でワンショット向きの音高・長さになる。`cp-house` / `lead-fm-pluck` / `stab-fm-fifth` / `reese-mid` も `render-all` に含まれる（16-bit / 48 kHz のワンショット想定）。
 
 出力ディレクトリや長さを全プリセットに上書き:
 
@@ -221,6 +221,10 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | `bd-disco-dry` | ファンキー／ディスコのドライキック |
 | `bd-jungle-round` | ブレイクビーツ／ジャングルの丸いキック |
 | `bd-fm-noise` | 実験的なFMノイズキック（使える砂状） |
+| `cp-house` | 短いドライなハウスクラップ（2/4専用。1 kHz付近の胴。スネア代用ではない） |
+| `lead-fm-pluck` | C3（MIDI 48、約130.8 Hz）の短いFMプラック（メロディ用。C4ではない） |
+| `stab-fm-fifth` | C3の中空5度スタブ（C–Gのみ。長3度なし） |
+| `reese-mid` | C3ミッドReeseの糊（800–1200 Hz。サブなし） |
 
 データは `presets/*.toml`。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。
 
