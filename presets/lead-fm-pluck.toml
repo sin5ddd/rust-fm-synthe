@@ -9,13 +9,13 @@ default_duration = 0.38
 
 [filter]
 type = "lowpass"
-cutoff = 260.0
-resonance = 0.3
-env_amount = 4.4
-attack = 0.001
-decay = 0.1
-sustain = 0.05
-release = 0.09
+cutoff = 320.0
+resonance = 0.34
+env_amount = 4.6
+attack = 0.0008
+decay = 0.14
+sustain = 0.12
+release = 0.1
 
 # OP1 キャリア
 [[operators]]
@@ -33,11 +33,11 @@ waveform = "sine"
 [[operators]]
 ratio = 2.0
 detune_cents = 3.0
-level = 0.52
+level = 0.62
 attack = 0.0004
-decay = 0.055
+decay = 0.07
 sustain = 0.0
-release = 0.028
+release = 0.03
 vel_sens = 0.5
 waveform = "sine"
 

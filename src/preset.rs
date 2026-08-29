@@ -407,12 +407,13 @@ mod tests {
 
         let stab = load_factory("stab-fm-fifth").unwrap();
         assert_eq!(stab.feedback, 0.0);
-        let live: Vec<_> = stab
-            .operators
-            .iter()
-            .filter(|op| op.level > 1e-6)
-            .collect();
-        assert_eq!(live.len(), 2, "hollow fifth is two partials, got {}", live.len());
+        let live: Vec<_> = stab.operators.iter().filter(|op| op.level > 1e-6).collect();
+        assert_eq!(
+            live.len(),
+            2,
+            "hollow fifth is two partials, got {}",
+            live.len()
+        );
         let mut ratios: Vec<f64> = live.iter().map(|op| op.ratio).collect();
         ratios.sort_by(|a, b| a.partial_cmp(b).unwrap());
         assert!((ratios[0] - 1.0).abs() < 1e-9, "root ratio {}", ratios[0]);

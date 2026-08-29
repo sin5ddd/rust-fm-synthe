@@ -453,8 +453,8 @@ fn goertzel_power(buf: &[f32], sr: f32, freq: f32) -> f64 {
     if n == 0 {
         return 0.0;
     }
-    let k = (f64::from(n) * f64::from(freq) / f64::from(sr)).round();
-    let w = 2.0 * std::f64::consts::PI * k / f64::from(n as u32);
+    let k = (n as f64 * f64::from(freq) / f64::from(sr)).round();
+    let w = 2.0 * std::f64::consts::PI * k / n as f64;
     let coeff = 2.0 * w.cos();
     let mut s1 = 0.0;
     let mut s2 = 0.0;
@@ -464,6 +464,17 @@ fn goertzel_power(buf: &[f32], sr: f32, freq: f32) -> f64 {
         s1 = s0;
     }
     s1 * s1 + s2 * s2 - coeff * s1 * s2
+}
+
+fn hann_window(buf: &[f32]) -> Vec<f32> {
+    let n = buf.len() as f32;
+    buf.iter()
+        .enumerate()
+        .map(|(i, &x)| {
+            let w = 0.5 - 0.5 * (std::f32::consts::TAU * i as f32 / n).cos();
+            x * w
+        })
+        .collect()
 }
 
 #[test]
@@ -483,17 +494,17 @@ fn stab_fm_fifth_is_hollow_c_and_g_only() {
     )
     .unwrap();
 
-    let skip = (sr as usize) / 200;
-    let body = if buf.len() > skip * 2 {
-        &buf[skip..]
-    } else {
-        &buf[..]
-    };
-    let c = goertzel_power(body, sr as f32, f0);
-    let g = goertzel_power(body, sr as f32, f0 * 1.5);
-    let e = goertzel_power(body, sr as f32, f0 * 1.25);
-    let e4 = goertzel_power(body, sr as f32, f0 * 2.5);
-    let fifth_h = goertzel_power(body, sr as f32, f0 * 5.0);
+    // Skip the attack transient (broadband click) and Hann-window the decay
+    // so a 5:4 bin is not filled by envelope smear.
+    let start = (sr as usize) / 25;
+    let end = ((sr as usize) * 3 / 20).min(buf.len());
+    assert!(end > start + 64, "not enough decay body to measure");
+    let body = hann_window(&buf[start..end]);
+    let c = goertzel_power(&body, sr as f32, f0);
+    let g = goertzel_power(&body, sr as f32, f0 * 1.5);
+    let e = goertzel_power(&body, sr as f32, f0 * 1.25);
+    let e4 = goertzel_power(&body, sr as f32, f0 * 2.5);
+    let fifth_h = goertzel_power(&body, sr as f32, f0 * 5.0);
 
     assert!(c > 0.0 && g > 0.0, "missing C or G (c={c}, g={g})");
     let cg = c.min(g);
