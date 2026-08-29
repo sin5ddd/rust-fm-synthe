@@ -1,0 +1,75 @@
+name = "click layer"
+description = "胴なしクリック。レイヤー用のアタックだけ。本体キックの上に重ねる。"
+algorithm = 4
+feedback = 0.22
+feedback_op = 4
+gain = 1.08
+default_note = 48
+default_duration = 0.28
+
+[pitch]
+start_semitones = 7.0
+end_semitones = 0.0
+curve = -11.0
+
+[filter]
+type = "highpass"
+cutoff = 980.0
+resonance = 0.3
+env_amount = 1.1
+attack = 0.0002
+decay = 0.04
+sustain = 0.05
+release = 0.04
+
+# OP1 クリックキャリア
+[[operators]]
+ratio = 2.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.0002
+decay = 0.07
+sustain = 0.0
+release = 0.035
+vel_sens = 0.5
+waveform = "pulse"
+
+# OP2 高域の粒
+[[operators]]
+ratio = 5.0
+detune_cents = 16.0
+level = 0.62
+attack = 0.00015
+decay = 0.028
+sustain = 0.0
+release = 0.02
+vel_sens = 0.6
+waveform = "abs-sine"
+
+# OP3 固定周波数のティック
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.48
+attack = 0.00015
+decay = 0.04
+sustain = 0.0
+release = 0.022
+vel_sens = 0.55
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 2450.0
+
+# OP4 短いノイズ源
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.36
+attack = 0.0001
+decay = 0.012
+sustain = 0.0
+release = 0.01
+vel_sens = 0.7
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 4100.0

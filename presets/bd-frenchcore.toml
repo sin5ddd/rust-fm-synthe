@@ -1,0 +1,75 @@
+name = "frenchcore"
+description = "フレンチコア／ハードコア。攻撃的なミッドとクリック。サブは削って裂けるように。"
+algorithm = 2
+feedback = 0.48
+feedback_op = 4
+gain = 1.05
+default_note = 45
+default_duration = 0.3
+
+[pitch]
+start_semitones = 18.0
+end_semitones = 0.0
+curve = -7.0
+
+[mod_sweep]
+start = 1.45
+end = 0.35
+
+[filter]
+type = "bandpass"
+cutoff = 360.0
+resonance = 0.42
+env_amount = 1.35
+attack = 0.0003
+decay = 0.055
+sustain = 0.18
+release = 0.04
+
+# OP1 ミッドの胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.0004
+decay = 0.2
+sustain = 0.0
+release = 0.05
+vel_sens = 0.35
+waveform = "pulse"
+
+# OP2 歪みスタック
+[[operators]]
+ratio = 1.0
+detune_cents = -7.0
+level = 0.7
+attack = 0.0003
+decay = 0.1
+sustain = 0.0
+release = 0.035
+vel_sens = 0.45
+waveform = "saw"
+
+# OP3 並列モジュレータ
+[[operators]]
+ratio = 2.0
+detune_cents = 12.0
+level = 0.55
+attack = 0.0002
+decay = 0.028
+sustain = 0.0
+release = 0.018
+vel_sens = 0.55
+waveform = "half-sine"
+
+# OP4 高域クリック＋FB
+[[operators]]
+ratio = 5.5
+detune_cents = -18.0
+level = 0.42
+attack = 0.00015
+decay = 0.01
+sustain = 0.0
+release = 0.008
+vel_sens = 0.7
+waveform = "pulse"

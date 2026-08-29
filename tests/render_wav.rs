@@ -1,8 +1,8 @@
 //! Integration: engine is audible, WAV headers match, factory preset smoke.
 
 use fm_synth::{
-    factory_ids, load_factory, pcm_data_bytes, peak, render, render_all_factory, rms, write_wav,
-    ExportParams, RenderParams, WavSettings, DEFAULT_OUTPUT_DIR,
+    factory_ids, load_factory, midi_to_hz, pcm_data_bytes, peak, render, render_all_factory, rms,
+    write_wav, ExportParams, RenderParams, WavSettings, DEFAULT_OUTPUT_DIR,
 };
 use hound::WavReader;
 use std::fs;
@@ -112,6 +112,49 @@ fn preset_render_smoke_writes_audible_wav() {
         "decoded WAV peak {abs_max} looks silent / empty"
     );
     assert!(decoded.iter().any(|&s| s != 0));
+}
+
+#[test]
+fn factory_bd_kicks_are_twenty_and_audible() {
+    let ids: Vec<_> = factory_ids()
+        .into_iter()
+        .filter(|id| id.starts_with("bd-"))
+        .collect();
+    assert_eq!(
+        ids.len(),
+        20,
+        "expected exactly 20 bd-* factory kicks, got {}: {ids:?}",
+        ids.len()
+    );
+
+    for id in ids {
+        let preset = load_factory(id).unwrap();
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: 22_050,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+        assert!(
+            rms(&buf) > 0.01,
+            "bd kick `{id}` rendered near-silence (rms={})",
+            rms(&buf)
+        );
+        assert!(
+            peak(&buf) > 0.4,
+            "bd kick `{id}` peak {} too low",
+            peak(&buf)
+        );
+        assert!(
+            buf.iter().any(|&s| s.abs() > 1e-3),
+            "{id} effectively silent"
+        );
+    }
 }
 
 #[test]

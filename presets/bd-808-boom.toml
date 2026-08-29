@@ -1,0 +1,65 @@
+name = "808 boom"
+description = "クラシックな808ブーム。長い正弦の胴と大きなピッチ落下。サブ寄りワンショット。"
+algorithm = 7
+feedback = 0.04
+feedback_op = 4
+gain = 1.0
+default_note = 32
+default_duration = 1.4
+
+[pitch]
+start_semitones = 24.0
+end_semitones = -0.4
+curve = -22.0
+
+[mod_sweep]
+start = 1.05
+end = 0.2
+
+# OP1 素の正弦サブ（加算キャリア）
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.001
+decay = 1.15
+sustain = 0.0
+release = 0.2
+vel_sens = 0.2
+waveform = "sine"
+
+# OP2 わずかな胴の厚み
+[[operators]]
+ratio = 1.0
+detune_cents = 3.0
+level = 0.22
+attack = 0.002
+decay = 0.55
+sustain = 0.0
+release = 0.1
+vel_sens = 0.25
+waveform = "sine"
+
+# OP3 スタックキャリア（ほぼ正弦）
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.72
+attack = 0.0008
+decay = 0.95
+sustain = 0.0
+release = 0.16
+vel_sens = 0.22
+waveform = "sine"
+
+# OP4 ごく短いクリック（変調）
+[[operators]]
+ratio = 4.0
+detune_cents = 0.0
+level = 0.12
+attack = 0.0003
+decay = 0.012
+sustain = 0.0
+release = 0.012
+vel_sens = 0.55
+waveform = "sine"

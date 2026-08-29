@@ -1,0 +1,75 @@
+name = "lo-fi dust"
+description = "柔らかいローファイ／ダスト。こもったワンショット。テープっぽい揺れ。"
+algorithm = 8
+feedback = 0.06
+feedback_op = 4
+gain = 0.92
+default_note = 38
+default_duration = 0.68
+
+[pitch]
+start_semitones = 6.0
+end_semitones = 0.0
+curve = -6.0
+
+[lfo]
+rate_hz = 0.85
+depth_cents = 11.0
+
+[filter]
+type = "lowpass"
+cutoff = 780.0
+resonance = 0.2
+env_amount = 0.7
+attack = 0.002
+decay = 0.18
+sustain = 0.15
+release = 0.12
+
+# OP1 こもった胴
+[[operators]]
+ratio = 1.0
+detune_cents = -8.0
+level = 1.0
+attack = 0.004
+decay = 0.5
+sustain = 0.0
+release = 0.12
+vel_sens = 0.22
+waveform = "sine"
+
+# OP2 わずかにデチューン
+[[operators]]
+ratio = 1.0
+detune_cents = 14.0
+level = 0.38
+attack = 0.006
+decay = 0.36
+sustain = 0.0
+release = 0.1
+vel_sens = 0.25
+waveform = "sine"
+
+# OP3 柔らかいアタック
+[[operators]]
+ratio = 2.0
+detune_cents = -6.0
+level = 0.18
+attack = 0.0015
+decay = 0.06
+sustain = 0.0
+release = 0.04
+vel_sens = 0.35
+waveform = "half-sine"
+
+# OP4 ダスト（ごく薄い）
+[[operators]]
+ratio = 4.0
+detune_cents = 22.0
+level = 0.08
+attack = 0.0008
+decay = 0.03
+sustain = 0.0
+release = 0.025
+vel_sens = 0.4
+waveform = "abs-sine"

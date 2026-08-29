@@ -22,6 +22,50 @@ const FACTORY: &[(&str, &str)] = &[
     ("filter-pluck", include_str!("../presets/filter-pluck.toml")),
     ("bp-growl", include_str!("../presets/bp-growl.toml")),
     ("hp-air", include_str!("../presets/hp-air.toml")),
+    ("bd-808-boom", include_str!("../presets/bd-808-boom.toml")),
+    ("bd-808-tight", include_str!("../presets/bd-808-tight.toml")),
+    ("bd-909-punch", include_str!("../presets/bd-909-punch.toml")),
+    (
+        "bd-house-floor",
+        include_str!("../presets/bd-house-floor.toml"),
+    ),
+    (
+        "bd-techno-thud",
+        include_str!("../presets/bd-techno-thud.toml"),
+    ),
+    ("bd-dnb-tight", include_str!("../presets/bd-dnb-tight.toml")),
+    (
+        "bd-neuro-growl",
+        include_str!("../presets/bd-neuro-growl.toml"),
+    ),
+    (
+        "bd-frenchcore",
+        include_str!("../presets/bd-frenchcore.toml"),
+    ),
+    (
+        "bd-gabber-stomp",
+        include_str!("../presets/bd-gabber-stomp.toml"),
+    ),
+    ("bd-hardstyle", include_str!("../presets/bd-hardstyle.toml")),
+    ("bd-lofi-dust", include_str!("../presets/bd-lofi-dust.toml")),
+    ("bd-click", include_str!("../presets/bd-click.toml")),
+    ("bd-sub", include_str!("../presets/bd-sub.toml")),
+    (
+        "bd-metal-ping",
+        include_str!("../presets/bd-metal-ping.toml"),
+    ),
+    ("bd-cinematic", include_str!("../presets/bd-cinematic.toml")),
+    (
+        "bd-electro-zap",
+        include_str!("../presets/bd-electro-zap.toml"),
+    ),
+    ("bd-808-dist", include_str!("../presets/bd-808-dist.toml")),
+    ("bd-disco-dry", include_str!("../presets/bd-disco-dry.toml")),
+    (
+        "bd-jungle-round",
+        include_str!("../presets/bd-jungle-round.toml"),
+    ),
+    ("bd-fm-noise", include_str!("../presets/bd-fm-noise.toml")),
 ];
 
 #[derive(Clone, Debug, Deserialize)]
@@ -310,5 +354,23 @@ mod tests {
             "zap"
         );
         assert_eq!(output_preset_id(Some("custom.toml"), None), "custom");
+        assert_eq!(output_preset_id(Some("bd-808-boom"), None), "bd-808-boom");
+    }
+
+    #[test]
+    fn factory_bd_kick_bank_has_twenty_ids() {
+        let ids: Vec<_> = factory_ids()
+            .into_iter()
+            .filter(|id| id.starts_with("bd-"))
+            .collect();
+        assert_eq!(
+            ids.len(),
+            20,
+            "expected exactly 20 bd-* factory kicks, got {}: {ids:?}",
+            ids.len()
+        );
+        for id in &ids {
+            load_factory(id).expect(id);
+        }
     }
 }

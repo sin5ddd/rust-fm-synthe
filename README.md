@@ -12,7 +12,7 @@ EDM / drum & bass 向けの **オフライン4オペFMシンセ**。プリセッ
 - ボイス末尾の SVF フィルタ（`lowpass` / `bandpass` / `highpass`）とカットオフ ADSR
 - 1オペへのフィードバック、ピッチエンベロープ、簡易LFO、変調量スイープ
 - 44.1 / 48 kHz、16 / 24-bit PCM（`hound`）
-- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア
+- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**
 
 VA / スーパーソー専用エンジンは足していない。4オペFMのまま、波形とボイスフィルタだけ増やしている。
 
@@ -47,8 +47,10 @@ cargo run -- algos
 
 ```bash
 cargo run -- render-all
-# → dist/sub-bass.wav, dist/supersaw-bass.wav, …
+# → dist/sub-bass.wav, dist/supersaw-bass.wav, dist/bd-808-boom.wav, …
 ```
+
+`bd-*` キックバンク（808、909、フレンチコア、ガバなど20種）も同じコマンドに含まれる。出力は `dist/bd-….wav`。各プリセットの `default_note` / `default_duration` でワンショット向きの音高・長さになる。
 
 出力ディレクトリや長さを全プリセットに上書き:
 
@@ -199,6 +201,26 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | `filter-pluck` | LP + カットオフ ADSR で開閉するプラック |
 | `bp-growl` | バンドパスのグロウル |
 | `hp-air` | ハイパスのエア／ティック |
+| `bd-808-boom` | クラシック808ブーム（長い正弦＋大きなピッチ落下） |
+| `bd-808-tight` | 短いトラップ寄り808 |
+| `bd-909-punch` | 909風パンチ（ミッドクリック＋短い胴） |
+| `bd-house-floor` | アナログハウスの4つ打ち |
+| `bd-techno-thud` | 深いテクノのドサッとした胴 |
+| `bd-dnb-tight` | Amen隣接のタイトなDnBキック |
+| `bd-neuro-growl` | フィルタFMのグロウルキック |
+| `bd-frenchcore` | フレンチコア／ハードコア（攻撃的ミッド） |
+| `bd-gabber-stomp` | ガバ／インダストリアルのストンプ |
+| `bd-hardstyle` | ハードスタイル（ピッチ感・逆再生っぽいスイープ） |
+| `bd-lofi-dust` | 柔らかいローファイ／ダスト |
+| `bd-click` | 胴なしクリック（レイヤー用） |
+| `bd-sub` | サブだけ（レイヤー用） |
+| `bd-metal-ping` | 金属的なFMピンキック |
+| `bd-cinematic` | 長いシネマティックブーム |
+| `bd-electro-zap` | 短いエレクトロのザップキック |
+| `bd-808-dist` | 歪んだ808（トラップ／EDM） |
+| `bd-disco-dry` | ファンキー／ディスコのドライキック |
+| `bd-jungle-round` | ブレイクビーツ／ジャングルの丸いキック |
+| `bd-fm-noise` | 実験的なFMノイズキック（使える砂状） |
 
 データは `presets/*.toml`。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。
 
@@ -297,4 +319,4 @@ write_wav(
 cargo test
 ```
 
-エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。
+エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックがちょうど20個でそれぞれ非無音、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。

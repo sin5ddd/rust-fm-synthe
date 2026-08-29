@@ -1,0 +1,75 @@
+name = "electro zap"
+description = "短いエレクトロのザップキック。レーザー気味のピッチ落下。フィル向き。"
+algorithm = 1
+feedback = 0.32
+feedback_op = 4
+gain = 1.04
+default_note = 48
+default_duration = 0.28
+
+[pitch]
+start_semitones = 24.0
+end_semitones = -8.0
+curve = -4.5
+
+[mod_sweep]
+start = 1.5
+end = 0.12
+
+[filter]
+type = "lowpass"
+cutoff = 1800.0
+resonance = 0.26
+env_amount = 2.2
+attack = 0.0002
+decay = 0.06
+sustain = 0.05
+release = 0.04
+
+# OP1 ザップ胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.0004
+decay = 0.2
+sustain = 0.0
+release = 0.05
+vel_sens = 0.35
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 4.0
+level = 0.62
+attack = 0.0003
+decay = 0.1
+sustain = 0.0
+release = 0.035
+vel_sens = 0.45
+waveform = "half-sine"
+
+# OP3
+[[operators]]
+ratio = 4.0
+detune_cents = 14.0
+level = 0.42
+attack = 0.00025
+decay = 0.045
+sustain = 0.0
+release = 0.025
+vel_sens = 0.55
+waveform = "pulse"
+
+# OP4
+[[operators]]
+ratio = 7.5
+detune_cents = -22.0
+level = 0.3
+attack = 0.0002
+decay = 0.016
+sustain = 0.0
+release = 0.012
+vel_sens = 0.65
+waveform = "pulse"

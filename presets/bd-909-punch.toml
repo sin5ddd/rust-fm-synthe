@@ -1,0 +1,71 @@
+name = "909 punch"
+description = "909風のパンチ。ミッドのクリックと短い胴。四つ打ちやブレイクの芯。"
+algorithm = 5
+feedback = 0.16
+feedback_op = 4
+gain = 1.02
+default_note = 36
+default_duration = 0.42
+
+[pitch]
+start_semitones = 11.0
+end_semitones = 0.0
+curve = -10.0
+
+[filter]
+type = "lowpass"
+cutoff = 420.0
+resonance = 0.22
+env_amount = 3.4
+attack = 0.0004
+decay = 0.07
+sustain = 0.08
+release = 0.06
+
+# OP1 短い胴
+[[operators]]
+ratio = 1.0
+detune_cents = -2.0
+level = 1.0
+attack = 0.0006
+decay = 0.26
+sustain = 0.0
+release = 0.07
+vel_sens = 0.3
+waveform = "sine"
+
+# OP2 胴の厚み（半波で少し歪ませる）
+[[operators]]
+ratio = 1.5
+detune_cents = 4.0
+level = 0.42
+attack = 0.0004
+decay = 0.055
+sustain = 0.0
+release = 0.03
+vel_sens = 0.45
+waveform = "half-sine"
+
+# OP3 ミッドクリック
+[[operators]]
+ratio = 2.0
+detune_cents = 0.0
+level = 0.7
+attack = 0.0002
+decay = 0.028
+sustain = 0.0
+release = 0.018
+vel_sens = 0.55
+waveform = "pulse"
+
+# OP4 クリック上のノイズ源
+[[operators]]
+ratio = 8.0
+detune_cents = 14.0
+level = 0.28
+attack = 0.00015
+decay = 0.008
+sustain = 0.0
+release = 0.008
+vel_sens = 0.7
+waveform = "pulse"

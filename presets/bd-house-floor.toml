@@ -1,0 +1,71 @@
+name = "house floor"
+description = "アナログハウスの4つ打ち。暖かく乾いたフロアキック。長いサブは出さない。"
+algorithm = 3
+feedback = 0.14
+feedback_op = 4
+gain = 1.0
+default_note = 36
+default_duration = 0.5
+
+[pitch]
+start_semitones = 8.5
+end_semitones = 0.0
+curve = -9.0
+
+[filter]
+type = "lowpass"
+cutoff = 2800.0
+resonance = 0.16
+env_amount = 0.9
+attack = 0.0005
+decay = 0.12
+sustain = 0.2
+release = 0.08
+
+# OP1 暖かい胴
+[[operators]]
+ratio = 1.0
+detune_cents = -3.0
+level = 1.0
+attack = 0.0012
+decay = 0.34
+sustain = 0.0
+release = 0.09
+vel_sens = 0.28
+waveform = "sine"
+
+# OP2 アナログ寄りの厚み
+[[operators]]
+ratio = 1.0
+detune_cents = 6.0
+level = 0.36
+attack = 0.0008
+decay = 0.09
+sustain = 0.0
+release = 0.04
+vel_sens = 0.4
+waveform = "half-sine"
+
+# OP3 短いアタック変調
+[[operators]]
+ratio = 2.0
+detune_cents = 0.0
+level = 0.4
+attack = 0.0004
+decay = 0.035
+sustain = 0.0
+release = 0.022
+vel_sens = 0.5
+waveform = "sine"
+
+# OP4 ソフトクリック
+[[operators]]
+ratio = 3.5
+detune_cents = -8.0
+level = 0.22
+attack = 0.0003
+decay = 0.014
+sustain = 0.0
+release = 0.012
+vel_sens = 0.55
+waveform = "saw"
