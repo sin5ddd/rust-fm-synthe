@@ -1,0 +1,74 @@
+name = "bp-growl"
+description = "バンドパスで喉のあたりを抉るミッドグロウル。カットオフADSRでフォルマントが動く。"
+algorithm = 1
+feedback = 0.55
+feedback_op = 4
+gain = 1.05
+default_note = 40
+default_duration = 1.5
+
+[lfo]
+rate_hz = 4.8
+depth_cents = 11.0
+
+[mod_sweep]
+start = 1.2
+end = 0.75
+
+[filter]
+type = "bandpass"
+cutoff = 520.0
+resonance = 0.52
+env_amount = 1.7
+attack = 0.018
+decay = 0.42
+sustain = 0.28
+release = 0.18
+
+# OP1 キャリア
+[[operators]]
+ratio = 1.0
+detune_cents = -4.0
+level = 1.0
+attack = 0.01
+decay = 0.8
+sustain = 0.2
+release = 0.2
+vel_sens = 0.35
+waveform = "saw"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 8.0
+level = 0.68
+attack = 0.008
+decay = 0.5
+sustain = 0.14
+release = 0.15
+vel_sens = 0.45
+waveform = "sine"
+
+# OP3 非整数でフォルマント
+[[operators]]
+ratio = 1.47
+detune_cents = -10.0
+level = 0.55
+attack = 0.004
+decay = 0.36
+sustain = 0.1
+release = 0.12
+vel_sens = 0.5
+waveform = "half-sine"
+
+# OP4 フィードバック源
+[[operators]]
+ratio = 2.03
+detune_cents = 9.0
+level = 0.46
+attack = 0.003
+decay = 0.26
+sustain = 0.08
+release = 0.1
+vel_sens = 0.55
+waveform = "sine"

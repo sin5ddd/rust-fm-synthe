@@ -5,6 +5,7 @@
 mod adsr;
 mod algorithm;
 mod error;
+mod filter;
 mod midi;
 mod operator;
 mod preset;
@@ -14,6 +15,7 @@ mod wav;
 
 pub use algorithm::Algorithm;
 pub use error::{Error, Result};
+pub use filter::{FilterParams, FilterType};
 pub use midi::{cents_to_ratio, hz_to_midi, midi_to_hz, semitones_to_ratio};
 pub use operator::{FreqMode, OperatorParams, Waveform};
 pub use preset::{

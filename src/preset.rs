@@ -1,5 +1,6 @@
 use crate::algorithm::Algorithm;
 use crate::error::{Error, Result};
+use crate::filter::FilterParams;
 use crate::operator::OperatorParams;
 use serde::Deserialize;
 use std::fs;
@@ -14,6 +15,13 @@ const FACTORY: &[(&str, &str)] = &[
     ("stab-pluck", include_str!("../presets/stab-pluck.toml")),
     ("zap", include_str!("../presets/zap.toml")),
     ("glass-hit", include_str!("../presets/glass-hit.toml")),
+    (
+        "supersaw-bass",
+        include_str!("../presets/supersaw-bass.toml"),
+    ),
+    ("filter-pluck", include_str!("../presets/filter-pluck.toml")),
+    ("bp-growl", include_str!("../presets/bp-growl.toml")),
+    ("hp-air", include_str!("../presets/hp-air.toml")),
 ];
 
 #[derive(Clone, Debug, Deserialize)]
@@ -91,6 +99,8 @@ pub struct Preset {
     pub lfo: LfoParams,
     #[serde(default)]
     pub mod_sweep: ModSweep,
+    #[serde(default)]
+    pub filter: FilterParams,
     pub operators: Vec<OperatorParams>,
 }
 

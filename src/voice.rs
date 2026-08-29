@@ -1,4 +1,6 @@
+use crate::adsr::Adsr;
 use crate::algorithm::Algorithm;
+use crate::filter::{FilterParams, Svf};
 use crate::midi::semitones_to_ratio;
 use crate::operator::Operator;
 use crate::preset::Preset;
@@ -18,6 +20,9 @@ pub struct Voice {
     lfo_depth_cents: f64,
     mod_start: f32,
     mod_end: f32,
+    filter: Svf,
+    filter_env: Adsr,
+    filter_params: FilterParams,
     note_hz: f64,
     sample_rate: f64,
     time: f64,
@@ -48,6 +53,9 @@ impl Voice {
             lfo_depth_cents: preset.lfo.depth_cents,
             mod_start: preset.mod_sweep.start,
             mod_end: preset.mod_sweep.end,
+            filter: Svf::new(sr),
+            filter_env: Adsr::new(preset.filter.adsr(), sr),
+            filter_params: preset.filter.clone(),
             note_hz: 440.0,
             sample_rate: f64::from(sample_rate),
             time: 0.0,
@@ -62,12 +70,15 @@ impl Voice {
     pub fn note_on(&mut self, note_hz: f64, velocity: f32) {
         self.note_hz = note_hz.max(0.01);
         self.time = 0.0;
+        self.filter.reset();
+        self.filter_env.note_on();
         for op in &mut self.ops {
             op.note_on(velocity);
         }
     }
 
     pub fn note_off(&mut self) {
+        self.filter_env.note_off();
         for op in &mut self.ops {
             op.note_off();
         }
@@ -82,6 +93,7 @@ impl Voice {
             .iter()
             .map(Operator::release_secs)
             .fold(0.0f32, f32::max)
+            .max(self.filter_env.release_secs())
     }
 
     pub fn max_sustain(&self) -> f32 {
@@ -115,8 +127,17 @@ impl Voice {
             self.feedback_op,
         );
 
+        let env = self.filter_env.tick();
+        let cutoff = self.filter_params.cutoff * 2f32.powf(env * self.filter_params.env_amount);
+        let filtered = self.filter.tick(
+            mix,
+            cutoff,
+            self.filter_params.resonance,
+            self.filter_params.kind,
+        );
+
         self.time += 1.0 / self.sample_rate;
-        mix * self.gain
+        filtered * self.gain
     }
 }
 

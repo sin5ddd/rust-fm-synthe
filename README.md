@@ -8,9 +8,13 @@ EDM / drum & bass 向けの **オフライン4オペFMシンセ**。プリセッ
 
 - 4オペレータ、Yamaha 4-op（TX81Z / DX21）系アルゴリズム 1–8
 - オペレータごとに ADSR・比・デチューン・レベル・波形・固定周波数
+- 波形: `sine` / `half-sine` / `abs-sine` / `pulse` / `saw`（帯域制限） / `super-saw`（1オペ内の擬似スーパーソー）
+- ボイス末尾の SVF フィルタ（`lowpass` / `bandpass` / `highpass`）とカットオフ ADSR
 - 1オペへのフィードバック、ピッチエンベロープ、簡易LFO、変調量スイープ
 - 44.1 / 48 kHz、16 / 24-bit PCM（`hound`）
-- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット
+- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア
+
+VA / スーパーソー専用エンジンは足していない。4オペFMのまま、波形とボイスフィルタだけ増やしている。
 
 ## ビルドと実行
 
@@ -67,6 +71,30 @@ cargo run -- render --preset fm-riser --output dist/riser.wav
 cargo run -- render --preset stab-pluck --output dist/stab.wav --note 64 --duration 0.4
 ```
 
+擬似スーパーソーのミッドベース:
+
+```bash
+cargo run -- render --preset supersaw-bass --output dist/supersaw-bass.wav --note 36 --duration 1.4
+```
+
+カットオフ ADSR で開閉するプラック:
+
+```bash
+cargo run -- render --preset filter-pluck --output dist/filter-pluck.wav --note 60 --duration 0.55
+```
+
+バンドパスのグロウル:
+
+```bash
+cargo run -- render --preset bp-growl --output dist/bp-growl.wav --note 40 --duration 1.5
+```
+
+ハイパスのエア／ティック:
+
+```bash
+cargo run -- render --preset hp-air --output dist/hp-air.wav --note 84 --duration 0.5
+```
+
 自作TOML:
 
 ```bash
@@ -104,7 +132,34 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | 7 | stack-plus-carriers | 4→3 + 2 + 1 |
 | 8 | all-carriers | 4+3+2+1（加算 + OP4 FB） |
 
-波形: `sine` / `half-sine` / `abs-sine` / `pulse`。後ろ三つはモジュレータ向き（倍音とDCが増える）。
+波形:
+
+| 値 | 内容 |
+|----|------|
+| `sine` | 正弦。既定。 |
+| `half-sine` | 正の半波。DCあり。モジュレータ向き。 |
+| `abs-sine` | 全波整流。金属／フォルマント寄り。 |
+| `pulse` | 正弦の符号。ヒット向き。 |
+| `saw` | 帯域制限した単鋸波（polyBLEP）。ナイーブな `phase/π-1` ではないのでベースでも使える。 |
+| `super-saw` | **1オペレータ内**の擬似スーパーソー。中心を少し大きく、他をセントで散らした約7本の鋸波を足す（JP-8000寄り）。 |
+
+`super-saw` は高い。1オペで鋸波を約7本、4オペ全部に載せると重い（オフラインなので上限は掛けていない）。`unison`（本数、既定 7）と `unison_detune`（広がりセント、既定 20）は super-saw だけが読む。古いTOMLは省略してよい。
+
+## フィルタ（ボイス1基）
+
+4オペのミックスの**あと**に SVF を1基だけ通す（オペごとではない）。LP / BP / HP は同じ状態から取り出す。レゾナンスを上げても NaN にしない。FXラックは無い。
+
+`[filter]` を省略するとローパス・カットオフ約 18 kHz・エンベロープ量 0 なので、既存プリセットの音はほぼそのまま。
+
+| キー | 意味 |
+|------|------|
+| `type` | `lowpass`（既定）/ `bandpass` / `highpass` |
+| `cutoff` | 基準カットオフ Hz |
+| `resonance` | 0–1。0 で Q≈0.7、1 で高め（発振手前でクランプ） |
+| `env_amount` | カットオフ ADSR の深さ（**オクターブ**、極性可）。0 なら固定カットオフ |
+| `attack` / `decay` / `sustain` / `release` | カットオフ ADSR（秒 / サステインは 0–1） |
+
+例: `cutoff = 200`、`env_amount = 4.6`、エンベロープが 1 のときカットオフは約 5.3 kHz（プラックが開く範囲）。負の量で閉じる。
 
 ## 工場プリセット
 
@@ -117,6 +172,10 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | `stab-pluck` | 短いスタブ / プラック |
 | `zap` | 下向きピッチのレーザー |
 | `glass-hit` | ガラス／ベルの短いヒット |
+| `supersaw-bass` | `super-saw` の厚みミッドベース |
+| `filter-pluck` | LP + カットオフ ADSR で開閉するプラック |
+| `bp-growl` | バンドパスのグロウル |
+| `hp-air` | ハイパスのエア／ティック |
 
 データは `presets/*.toml`。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。
 
@@ -159,6 +218,16 @@ depth_cents = 12.0
 start = 1.0            # 変調（キャリア音量ではない）の倍率
 end = 1.0
 
+[filter]
+type = "lowpass"       # lowpass | bandpass | highpass
+cutoff = 18000.0       # Hz
+resonance = 0.0        # 0–1
+env_amount = 0.0       # オクターブ。正で開く、負で閉じる。0 は固定
+attack = 0.0
+decay = 0.0
+sustain = 1.0
+release = 0.05
+
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
@@ -168,7 +237,9 @@ decay = 0.3
 sustain = 0.0
 release = 0.08
 vel_sens = 0.35
-waveform = "sine"      # sine | half-sine | abs-sine | pulse
+waveform = "sine"      # sine | half-sine | abs-sine | pulse | saw | super-saw
+unison = 7             # super-saw の本数（他波形は無視）
+unison_detune = 20.0   # super-saw の広がり（セント）
 freq_mode = "ratio"    # ratio | fixed
 fixed_hz = 440.0
 ```
@@ -203,4 +274,4 @@ write_wav(
 cargo test
 ```
 
-エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモークを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す。
+エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す。

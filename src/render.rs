@@ -175,4 +175,88 @@ mod tests {
         let diff: f32 = xa.iter().zip(&xb).map(|(l, r)| (l - r).abs()).sum();
         assert!(diff > 1.0, "algorithms produced nearly identical audio");
     }
+
+    fn brightness(buf: &[f32]) -> f32 {
+        if buf.len() < 2 {
+            return 0.0;
+        }
+        let mut s = 0.0f32;
+        for w in buf.windows(2) {
+            let d = w[1] - w[0];
+            s += d * d;
+        }
+        (s / buf.len() as f32).sqrt()
+    }
+
+    #[test]
+    fn supersaw_render_is_audible_and_not_a_sine() {
+        let mut saw = load_factory("sub-bass").unwrap();
+        let mut sine = saw.clone();
+        for op in &mut saw.operators {
+            op.waveform = crate::Waveform::SuperSaw;
+        }
+        for op in &mut sine.operators {
+            op.waveform = crate::Waveform::Sine;
+        }
+        let params = RenderParams {
+            frequency_hz: 55.0,
+            duration_secs: 0.35,
+            velocity: 1.0,
+            sample_rate: 22_050,
+        };
+        let xa = render(&saw, &params).unwrap();
+        let xb = render(&sine, &params).unwrap();
+        assert!(xa.iter().all(|x| x.is_finite()));
+        assert!(peak(&xa) > 0.4, "super-saw peak {}", peak(&xa));
+        assert!(rms(&xa) > 0.02, "super-saw rms {}", rms(&xa));
+        let diff: f32 = xa.iter().zip(&xb).map(|(l, r)| (l - r).abs()).sum();
+        assert!(
+            diff > 2.0,
+            "super-saw render nearly identical to sine (diff={diff})"
+        );
+    }
+
+    #[test]
+    fn lowpass_low_cutoff_attenuates_highs() {
+        let mut closed = load_factory("zap").unwrap();
+        let mut open = closed.clone();
+        closed.filter.kind = crate::FilterType::Lowpass;
+        closed.filter.cutoff = 220.0;
+        closed.filter.resonance = 0.1;
+        closed.filter.env_amount = 0.0;
+        open.filter.kind = crate::FilterType::Lowpass;
+        open.filter.cutoff = 16_000.0;
+        open.filter.resonance = 0.1;
+        open.filter.env_amount = 0.0;
+        let params = RenderParams {
+            frequency_hz: 110.0,
+            duration_secs: 0.25,
+            velocity: 0.9,
+            sample_rate: 22_050,
+        };
+        let dark = render(&closed, &params).unwrap();
+        let bright = render(&open, &params).unwrap();
+        let b_dark = brightness(&dark);
+        let b_bright = brightness(&bright);
+        assert!(
+            b_dark < b_bright * 0.55,
+            "low cutoff should be darker (closed={b_dark}, open={b_bright})"
+        );
+    }
+
+    #[test]
+    fn factory_filter_modes_parse() {
+        let saw = load_factory("supersaw-bass").unwrap();
+        assert!(saw
+            .operators
+            .iter()
+            .any(|o| o.waveform == crate::Waveform::SuperSaw));
+        let pluck = load_factory("filter-pluck").unwrap();
+        assert_eq!(pluck.filter.kind, crate::FilterType::Lowpass);
+        assert!(pluck.filter.env_amount > 1.0);
+        let bp = load_factory("bp-growl").unwrap();
+        assert_eq!(bp.filter.kind, crate::FilterType::Bandpass);
+        let hp = load_factory("hp-air").unwrap();
+        assert_eq!(hp.filter.kind, crate::FilterType::Highpass);
+    }
 }
