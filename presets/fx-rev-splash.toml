@@ -1,0 +1,72 @@
+name = "fx-rev-splash"
+description = "短いリバーススプラッシュ。明るいクラッシュの逆再生。1.5秒。"
+algorithm = 6
+feedback = 0.82
+feedback_op = 4
+gain = 1.14
+default_note = 84
+default_duration = 1.5
+
+[pitch]
+start_semitones = -1.0
+end_semitones = 9.0
+curve = 0.6
+
+[mod_sweep]
+start = 0.55
+end = 1.25
+
+[filter]
+type = "highpass"
+cutoff = 2200.0
+resonance = 0.3
+env_amount = 1.8
+attack = 0.95
+decay = 0.12
+sustain = 0.65
+release = 0.07
+
+[[operators]]
+ratio = 15.0
+detune_cents = 12
+level = 1.0
+attack = 0.22
+decay = 0.08
+sustain = 0.5
+release = 0.06
+vel_sens = 0.3
+waveform = "pulse"
+[[operators]]
+ratio = 10.5
+detune_cents = -18
+level = 0.72
+attack = 0.2
+decay = 0.07
+sustain = 0.42
+release = 0.05
+vel_sens = 0.35
+waveform = "abs-sine"
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.5
+attack = 0.26
+decay = 0.1
+sustain = 0.4
+release = 0.06
+vel_sens = 0.32
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 5800
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.42
+attack = 0.16
+decay = 0.05
+sustain = 0.32
+release = 0.04
+vel_sens = 0.4
+waveform = "half-sine"
+freq_mode = "fixed"
+fixed_hz = 8200

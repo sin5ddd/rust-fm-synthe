@@ -1,0 +1,59 @@
+name = "fx-noise-hit"
+description = "ホワイト寄りの短いノイズヒット。トップやグリッチ。"
+algorithm = 8
+feedback = 0.95
+feedback_op = 4
+gain = 1.2
+default_note = 72
+default_duration = 0.35
+
+[filter]
+type = "highpass"
+cutoff = 480.0
+resonance = 0.18
+env_amount = 0.8
+attack = 0.0004
+decay = 0.1
+sustain = 0.05
+release = 0.06
+
+[[operators]]
+ratio = 17.0
+detune_cents = 0
+level = 1.0
+attack = 0.0004
+decay = 0.12
+sustain = 0.0
+release = 0.06
+vel_sens = 0.5
+waveform = "pulse"
+[[operators]]
+ratio = 13.2
+detune_cents = -22
+level = 0.8
+attack = 0.0003
+decay = 0.08
+sustain = 0.0
+release = 0.04
+vel_sens = 0.55
+waveform = "pulse"
+[[operators]]
+ratio = 21.0
+detune_cents = 18
+level = 0.55
+attack = 0.0003
+decay = 0.05
+sustain = 0.0
+release = 0.03
+vel_sens = 0.6
+waveform = "abs-sine"
+[[operators]]
+ratio = 9.5
+detune_cents = -8
+level = 0.4
+attack = 0.0002
+decay = 0.18
+sustain = 0.0
+release = 0.08
+vel_sens = 0.45
+waveform = "pulse"

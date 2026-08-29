@@ -1,0 +1,68 @@
+name = "fx-metal-crash"
+description = "金属FMクラッシュ。固定周波数のリン＋高比。本物のシンバルではない。"
+algorithm = 4
+feedback = 0.42
+feedback_op = 4
+gain = 1.08
+default_note = 72
+default_duration = 1.1
+
+[pitch]
+start_semitones = 4.0
+end_semitones = -2.0
+curve = -1.2
+
+[filter]
+type = "highpass"
+cutoff = 280.0
+resonance = 0.22
+env_amount = 1.6
+attack = 0.0004
+decay = 0.18
+sustain = 0.12
+release = 0.1
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.0005
+decay = 0.55
+sustain = 0.0
+release = 0.14
+vel_sens = 0.4
+waveform = "sine"
+[[operators]]
+ratio = 2.71
+detune_cents = 19
+level = 0.68
+attack = 0.0004
+decay = 0.22
+sustain = 0.0
+release = 0.08
+vel_sens = 0.5
+waveform = "abs-sine"
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.58
+attack = 0.0003
+decay = 0.4
+sustain = 0.0
+release = 0.1
+vel_sens = 0.42
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1840
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.44
+attack = 0.0002
+decay = 0.12
+sustain = 0.0
+release = 0.05
+vel_sens = 0.6
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 3175

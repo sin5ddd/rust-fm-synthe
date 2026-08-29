@@ -1,0 +1,67 @@
+name = "fx-wind"
+description = "風。高FBの持続ノイズ＋遅いLFO。パッドではなくワンショット。"
+algorithm = 8
+feedback = 0.88
+feedback_op = 4
+gain = 1.0
+default_note = 72
+default_duration = 2.2
+
+[lfo]
+rate_hz = 0.35
+depth_cents = 80.0
+
+[mod_sweep]
+start = 0.7
+end = 1.15
+
+[filter]
+type = "bandpass"
+cutoff = 1100.0
+resonance = 0.18
+env_amount = 1.6
+attack = 0.4
+decay = 1.0
+sustain = 0.35
+release = 0.25
+
+[[operators]]
+ratio = 10.0
+detune_cents = 8
+level = 1.0
+attack = 0.12
+decay = 1.4
+sustain = 0.35
+release = 0.28
+vel_sens = 0.15
+waveform = "pulse"
+[[operators]]
+ratio = 7.4
+detune_cents = -14
+level = 0.75
+attack = 0.14
+decay = 1.2
+sustain = 0.3
+release = 0.24
+vel_sens = 0.18
+waveform = "abs-sine"
+[[operators]]
+ratio = 13.0
+detune_cents = 20
+level = 0.5
+attack = 0.1
+decay = 1.0
+sustain = 0.22
+release = 0.2
+vel_sens = 0.25
+waveform = "pulse"
+[[operators]]
+ratio = 5.6
+detune_cents = -6
+level = 0.4
+attack = 0.16
+decay = 1.1
+sustain = 0.28
+release = 0.22
+vel_sens = 0.2
+waveform = "half-sine"

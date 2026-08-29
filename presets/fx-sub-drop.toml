@@ -1,0 +1,64 @@
+name = "fx-sub-drop"
+description = "サブドロップ。ピッチが大きく落ちる。キック前のダウン。"
+algorithm = 8
+feedback = 0.08
+feedback_op = 4
+gain = 1.05
+default_note = 48
+default_duration = 1.1
+
+[pitch]
+start_semitones = 7.0
+end_semitones = -28.0
+curve = 0.9
+
+[filter]
+type = "lowpass"
+cutoff = 90.0
+resonance = 0.08
+env_amount = 2.2
+attack = 0.004
+decay = 0.35
+sustain = 0.15
+release = 0.12
+
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 1.0
+attack = 0.008
+decay = 0.85
+sustain = 0.12
+release = 0.16
+vel_sens = 0.22
+waveform = "sine"
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.55
+attack = 0.006
+decay = 0.4
+sustain = 0.05
+release = 0.1
+vel_sens = 0.3
+waveform = "sine"
+[[operators]]
+ratio = 0.5
+detune_cents = 3
+level = 0.35
+attack = 0.01
+decay = 0.5
+sustain = 0.08
+release = 0.12
+vel_sens = 0.25
+waveform = "sine"
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.18
+attack = 0.002
+decay = 0.08
+sustain = 0.0
+release = 0.04
+vel_sens = 0.45
+waveform = "half-sine"

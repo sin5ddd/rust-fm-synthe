@@ -1,0 +1,70 @@
+name = "fx-rev-crash"
+description = "明るいリバースクラッシュ。HPが開いて砂状のクラッシュで切れる。"
+algorithm = 2
+feedback = 0.9
+feedback_op = 4
+gain = 1.12
+default_note = 76
+default_duration = 2.1
+
+[pitch]
+start_semitones = -4.0
+end_semitones = 12.0
+curve = 1.1
+
+[mod_sweep]
+start = 0.4
+end = 1.4
+
+[filter]
+type = "highpass"
+cutoff = 520.0
+resonance = 0.28
+env_amount = 3.1
+attack = 1.55
+decay = 0.2
+sustain = 0.8
+release = 0.1
+
+[[operators]]
+ratio = 8.0
+detune_cents = 0
+level = 1.0
+attack = 0.3
+decay = 0.15
+sustain = 0.7
+release = 0.1
+vel_sens = 0.25
+waveform = "pulse"
+[[operators]]
+ratio = 12.4
+detune_cents = -20
+level = 0.78
+attack = 0.26
+decay = 0.12
+sustain = 0.62
+release = 0.08
+vel_sens = 0.32
+waveform = "pulse"
+[[operators]]
+ratio = 5.7
+detune_cents = 14
+level = 0.55
+attack = 0.34
+decay = 0.18
+sustain = 0.5
+release = 0.1
+vel_sens = 0.28
+waveform = "abs-sine"
+[[operators]]
+ratio = 15.2
+detune_cents = -27
+level = 0.5
+attack = 0.2
+decay = 0.1
+sustain = 0.45
+release = 0.07
+vel_sens = 0.4
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 5200

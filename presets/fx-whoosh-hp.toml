@@ -1,0 +1,66 @@
+name = "fx-whoosh-hp"
+description = "ハイパスのウーシュ。空気だけが横切る。"
+algorithm = 8
+feedback = 0.68
+feedback_op = 4
+gain = 1.08
+default_note = 80
+default_duration = 1.2
+
+[pitch]
+start_semitones = -4.0
+end_semitones = 6.0
+curve = 0.0
+
+[filter]
+type = "highpass"
+cutoff = 900.0
+resonance = 0.26
+env_amount = 2.6
+attack = 0.28
+decay = 0.6
+sustain = 0.12
+release = 0.14
+
+[[operators]]
+ratio = 9.0
+detune_cents = 10
+level = 1.0
+attack = 0.05
+decay = 0.75
+sustain = 0.1
+release = 0.14
+vel_sens = 0.22
+waveform = "pulse"
+[[operators]]
+ratio = 12.0
+detune_cents = -14
+level = 0.65
+attack = 0.04
+decay = 0.55
+sustain = 0.06
+release = 0.1
+vel_sens = 0.3
+waveform = "abs-sine"
+[[operators]]
+ratio = 6.5
+detune_cents = 6
+level = 0.45
+attack = 0.06
+decay = 0.6
+sustain = 0.08
+release = 0.12
+vel_sens = 0.26
+waveform = "saw"
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.38
+attack = 0.03
+decay = 0.4
+sustain = 0.0
+release = 0.08
+vel_sens = 0.36
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 3200

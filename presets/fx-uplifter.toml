@@ -1,0 +1,72 @@
+name = "fx-uplifter"
+description = "アップリフター。ピッチ上昇＋フィルタ開放。ビルド用。"
+algorithm = 2
+feedback = 0.72
+feedback_op = 4
+gain = 0.95
+default_note = 60
+default_duration = 2.8
+
+[pitch]
+start_semitones = -16.0
+end_semitones = 28.0
+curve = 1.5
+
+[lfo]
+rate_hz = 0.45
+depth_cents = 20.0
+
+[mod_sweep]
+start = 0.25
+end = 1.5
+
+[filter]
+type = "lowpass"
+cutoff = 220.0
+resonance = 0.28
+env_amount = 5.2
+attack = 2.1
+decay = 0.3
+sustain = 0.7
+release = 0.15
+
+[[operators]]
+ratio = 1.0
+detune_cents = -6
+level = 1.0
+attack = 0.06
+decay = 2.2
+sustain = 0.4
+release = 0.2
+vel_sens = 0.2
+waveform = "saw"
+[[operators]]
+ratio = 2.07
+detune_cents = 8
+level = 0.65
+attack = 0.05
+decay = 1.8
+sustain = 0.3
+release = 0.16
+vel_sens = 0.28
+waveform = "abs-sine"
+[[operators]]
+ratio = 3.11
+detune_cents = -14
+level = 0.48
+attack = 0.08
+decay = 1.6
+sustain = 0.22
+release = 0.14
+vel_sens = 0.32
+waveform = "half-sine"
+[[operators]]
+ratio = 5.5
+detune_cents = 20
+level = 0.4
+attack = 0.04
+decay = 1.4
+sustain = 0.18
+release = 0.12
+vel_sens = 0.38
+waveform = "pulse"

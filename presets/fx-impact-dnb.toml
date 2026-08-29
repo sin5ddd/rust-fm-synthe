@@ -1,0 +1,64 @@
+name = "fx-impact-dnb"
+description = "DnBインパクト。タイトなミッドヒット＋短い砂。"
+algorithm = 3
+feedback = 0.4
+feedback_op = 4
+gain = 1.14
+default_note = 52
+default_duration = 0.5
+
+[pitch]
+start_semitones = 16.0
+end_semitones = -5.0
+curve = -5.5
+
+[filter]
+type = "highpass"
+cutoff = 140.0
+resonance = 0.16
+env_amount = 1.8
+attack = 0.0003
+decay = 0.08
+sustain = 0.1
+release = 0.08
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.0004
+decay = 0.2
+sustain = 0.0
+release = 0.08
+vel_sens = 0.42
+waveform = "sine"
+[[operators]]
+ratio = 2.4
+detune_cents = -6
+level = 0.55
+attack = 0.0003
+decay = 0.08
+sustain = 0.0
+release = 0.04
+vel_sens = 0.52
+waveform = "saw"
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.8
+attack = 0.0002
+decay = 0.035
+sustain = 0.0
+release = 0.02
+vel_sens = 0.68
+waveform = "pulse"
+[[operators]]
+ratio = 8.0
+detune_cents = 14
+level = 0.38
+attack = 0.0002
+decay = 0.12
+sustain = 0.0
+release = 0.06
+vel_sens = 0.6
+waveform = "pulse"

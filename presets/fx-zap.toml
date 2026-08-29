@@ -1,0 +1,68 @@
+name = "fx-zap"
+description = "ノイズ寄りの落下ザップ。ld-zap / zap より砂が多く、FX専用。"
+algorithm = 2
+feedback = 0.55
+feedback_op = 4
+gain = 1.1
+default_note = 76
+default_duration = 0.32
+
+[pitch]
+start_semitones = 16.0
+end_semitones = -24.0
+curve = 1.5
+
+[mod_sweep]
+start = 1.45
+end = 0.2
+
+[filter]
+type = "highpass"
+cutoff = 320.0
+resonance = 0.2
+env_amount = 0.9
+attack = 0.0004
+decay = 0.1
+sustain = 0.08
+release = 0.05
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.0006
+decay = 0.22
+sustain = 0.0
+release = 0.05
+vel_sens = 0.4
+waveform = "pulse"
+[[operators]]
+ratio = 3.4
+detune_cents = -10
+level = 0.7
+attack = 0.0004
+decay = 0.12
+sustain = 0.0
+release = 0.04
+vel_sens = 0.48
+waveform = "abs-sine"
+[[operators]]
+ratio = 7.2
+detune_cents = 14
+level = 0.48
+attack = 0.0003
+decay = 0.06
+sustain = 0.0
+release = 0.03
+vel_sens = 0.55
+waveform = "pulse"
+[[operators]]
+ratio = 12.0
+detune_cents = -20
+level = 0.36
+attack = 0.0002
+decay = 0.04
+sustain = 0.0
+release = 0.02
+vel_sens = 0.62
+waveform = "half-sine"

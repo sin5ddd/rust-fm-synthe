@@ -1,0 +1,63 @@
+name = "fx-alarm"
+description = "アラーム。2音の交互に近いLFOピッチ。短め。"
+algorithm = 5
+feedback = 0.12
+feedback_op = 4
+gain = 1.05
+default_note = 76
+default_duration = 0.9
+
+[lfo]
+rate_hz = 7.5
+depth_cents = 400.0
+
+[filter]
+type = "bandpass"
+cutoff = 1400.0
+resonance = 0.28
+env_amount = 0.6
+attack = 0.004
+decay = 0.2
+sustain = 0.25
+release = 0.1
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.004
+decay = 0.55
+sustain = 0.2
+release = 0.1
+vel_sens = 0.28
+waveform = "sine"
+[[operators]]
+ratio = 1.5
+detune_cents = 0
+level = 0.7
+attack = 0.004
+decay = 0.5
+sustain = 0.18
+release = 0.1
+vel_sens = 0.3
+waveform = "sine"
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.35
+attack = 0.003
+decay = 0.3
+sustain = 0.1
+release = 0.08
+vel_sens = 0.36
+waveform = "pulse"
+[[operators]]
+ratio = 4.0
+detune_cents = 0
+level = 0.18
+attack = 0.002
+decay = 0.15
+sustain = 0.0
+release = 0.05
+vel_sens = 0.45
+waveform = "half-sine"

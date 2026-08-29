@@ -1,0 +1,72 @@
+name = "fx-downlifter-noise"
+description = "ノイズのダウンリフター。砂が落ちて閉じる。"
+algorithm = 2
+feedback = 0.9
+feedback_op = 4
+gain = 1.02
+default_note = 60
+default_duration = 2.0
+
+[pitch]
+start_semitones = 8.0
+end_semitones = -18.0
+curve = 0.7
+
+[lfo]
+rate_hz = 0.55
+depth_cents = 24.0
+
+[mod_sweep]
+start = 1.5
+end = 0.22
+
+[filter]
+type = "bandpass"
+cutoff = 2800.0
+resonance = 0.24
+env_amount = -3.2
+attack = 0.01
+decay = 1.5
+sustain = 0.1
+release = 0.14
+
+[[operators]]
+ratio = 9.0
+detune_cents = -18
+level = 1.0
+attack = 0.01
+decay = 1.6
+sustain = 0.12
+release = 0.16
+vel_sens = 0.22
+waveform = "pulse"
+[[operators]]
+ratio = 13.0
+detune_cents = 14
+level = 0.7
+attack = 0.008
+decay = 1.2
+sustain = 0.08
+release = 0.12
+vel_sens = 0.3
+waveform = "pulse"
+[[operators]]
+ratio = 6.5
+detune_cents = -6
+level = 0.48
+attack = 0.012
+decay = 1.0
+sustain = 0.05
+release = 0.1
+vel_sens = 0.32
+waveform = "abs-sine"
+[[operators]]
+ratio = 16.0
+detune_cents = 22
+level = 0.38
+attack = 0.006
+decay = 0.7
+sustain = 0.0
+release = 0.08
+vel_sens = 0.4
+waveform = "half-sine"

@@ -1,0 +1,74 @@
+name = "fx-rev-air"
+description = "エア寄りのリバースハット。スーパーソーの砂＋HPスウェル。"
+algorithm = 8
+feedback = 0.55
+feedback_op = 4
+gain = 1.1
+default_note = 84
+default_duration = 1.8
+
+[pitch]
+start_semitones = -2.0
+end_semitones = 7.0
+curve = 0.7
+
+[mod_sweep]
+start = 0.5
+end = 1.2
+
+[filter]
+type = "highpass"
+cutoff = 1600.0
+resonance = 0.24
+env_amount = 2.4
+attack = 1.25
+decay = 0.16
+sustain = 0.72
+release = 0.08
+
+[[operators]]
+ratio = 8.0
+detune_cents = 0
+level = 1.0
+attack = 0.28
+decay = 0.12
+sustain = 0.62
+release = 0.09
+vel_sens = 0.22
+waveform = "super-saw"
+unison = 7
+unison_detune = 28.0
+[[operators]]
+ratio = 12.0
+detune_cents = -10
+level = 0.55
+attack = 0.24
+decay = 0.1
+sustain = 0.5
+release = 0.07
+vel_sens = 0.3
+waveform = "pulse"
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.4
+attack = 0.32
+decay = 0.14
+sustain = 0.45
+release = 0.08
+vel_sens = 0.28
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 4500
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.35
+attack = 0.18
+decay = 0.08
+sustain = 0.4
+release = 0.06
+vel_sens = 0.36
+waveform = "half-sine"
+freq_mode = "fixed"
+fixed_hz = 7100

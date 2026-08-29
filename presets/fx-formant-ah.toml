@@ -1,0 +1,64 @@
+name = "fx-formant-ah"
+description = "アー母音のFXヒット。リードではなくワンショットの声。"
+algorithm = 3
+feedback = 0.22
+feedback_op = 4
+gain = 1.08
+default_note = 60
+default_duration = 0.7
+
+[pitch]
+start_semitones = 3.0
+end_semitones = -1.0
+curve = -1.0
+
+[filter]
+type = "bandpass"
+cutoff = 780.0
+resonance = 0.52
+env_amount = 1.4
+attack = 0.01
+decay = 0.22
+sustain = 0.12
+release = 0.1
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.008
+decay = 0.42
+sustain = 0.0
+release = 0.1
+vel_sens = 0.32
+waveform = "abs-sine"
+[[operators]]
+ratio = 1.68
+detune_cents = -8
+level = 0.62
+attack = 0.006
+decay = 0.28
+sustain = 0.0
+release = 0.08
+vel_sens = 0.4
+waveform = "abs-sine"
+[[operators]]
+ratio = 2.24
+detune_cents = 6
+level = 0.4
+attack = 0.005
+decay = 0.16
+sustain = 0.0
+release = 0.06
+vel_sens = 0.45
+waveform = "half-sine"
+[[operators]]
+ratio = 0.99
+detune_cents = 0
+level = 0.28
+attack = 0.01
+decay = 0.22
+sustain = 0.0
+release = 0.07
+vel_sens = 0.35
+waveform = "sine"

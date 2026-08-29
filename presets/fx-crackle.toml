@@ -1,0 +1,63 @@
+name = "fx-crackle"
+description = "ビニールクラックルのバースト。短い砂粒。"
+algorithm = 8
+feedback = 0.97
+feedback_op = 4
+gain = 1.18
+default_note = 84
+default_duration = 0.45
+
+[lfo]
+rate_hz = 42.0
+depth_cents = 90.0
+
+[filter]
+type = "highpass"
+cutoff = 1200.0
+resonance = 0.12
+env_amount = 0.8
+attack = 0.0003
+decay = 0.08
+sustain = 0.05
+release = 0.05
+
+[[operators]]
+ratio = 19.0
+detune_cents = 30
+level = 1.0
+attack = 0.0003
+decay = 0.06
+sustain = 0.0
+release = 0.04
+vel_sens = 0.55
+waveform = "pulse"
+[[operators]]
+ratio = 15.0
+detune_cents = -28
+level = 0.8
+attack = 0.0004
+decay = 0.09
+sustain = 0.0
+release = 0.05
+vel_sens = 0.5
+waveform = "pulse"
+[[operators]]
+ratio = 23.0
+detune_cents = 12
+level = 0.5
+attack = 0.0002
+decay = 0.04
+sustain = 0.0
+release = 0.03
+vel_sens = 0.62
+waveform = "abs-sine"
+[[operators]]
+ratio = 11.0
+detune_cents = -16
+level = 0.4
+attack = 0.0005
+decay = 0.22
+sustain = 0.0
+release = 0.08
+vel_sens = 0.45
+waveform = "half-sine"
