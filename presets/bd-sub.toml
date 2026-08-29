@@ -1,0 +1,71 @@
+name = "sub layer"
+description = "サブだけ。レイヤー用の正弦ブーム。クリック無し、胴の下に置く。"
+algorithm = 8
+feedback = 0.0
+feedback_op = 4
+gain = 1.0
+default_note = 24
+default_duration = 1.25
+
+[pitch]
+start_semitones = 18.0
+end_semitones = 0.0
+curve = -24.0
+
+[filter]
+type = "lowpass"
+cutoff = 130.0
+resonance = 0.08
+env_amount = 0.4
+attack = 0.0
+decay = 0.25
+sustain = 0.35
+release = 0.15
+
+# OP1 純粋な正弦サブ
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.002
+decay = 1.05
+sustain = 0.0
+release = 0.18
+vel_sens = 0.15
+waveform = "sine"
+
+# OP2 ごく薄い倍音（LPでほぼ消える）
+[[operators]]
+ratio = 1.0
+detune_cents = 2.0
+level = 0.12
+attack = 0.003
+decay = 0.45
+sustain = 0.0
+release = 0.1
+vel_sens = 0.15
+waveform = "sine"
+
+# OP3 未使用に近い
+[[operators]]
+ratio = 2.0
+detune_cents = 0.0
+level = 0.02
+attack = 0.0
+decay = 0.02
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+waveform = "sine"
+
+# OP4 未使用に近い
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+vel_sens = 0.0
+waveform = "sine"

@@ -1,0 +1,79 @@
+name = "neuro growl"
+description = "フィルタしたFMのグロウルキック。ニューロ寄りの喉声ミッド。"
+algorithm = 1
+feedback = 0.58
+feedback_op = 4
+gain = 1.0
+default_note = 35
+default_duration = 0.58
+
+[pitch]
+start_semitones = 15.0
+end_semitones = 0.0
+curve = -10.0
+
+[lfo]
+rate_hz = 7.2
+depth_cents = 9.0
+
+[mod_sweep]
+start = 1.35
+end = 0.45
+
+[filter]
+type = "bandpass"
+cutoff = 190.0
+resonance = 0.48
+env_amount = 2.0
+attack = 0.001
+decay = 0.16
+sustain = 0.12
+release = 0.1
+
+# OP1 キャリア
+[[operators]]
+ratio = 1.0
+detune_cents = -5.0
+level = 1.0
+attack = 0.001
+decay = 0.42
+sustain = 0.0
+release = 0.1
+vel_sens = 0.3
+waveform = "saw"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 8.0
+level = 0.62
+attack = 0.0008
+decay = 0.22
+sustain = 0.0
+release = 0.07
+vel_sens = 0.4
+waveform = "sine"
+
+# OP3 非整数フォルマント
+[[operators]]
+ratio = 1.47
+detune_cents = -14.0
+level = 0.55
+attack = 0.0005
+decay = 0.12
+sustain = 0.0
+release = 0.05
+vel_sens = 0.5
+waveform = "half-sine"
+
+# OP4 フィードバック源
+[[operators]]
+ratio = 2.11
+detune_cents = 11.0
+level = 0.46
+attack = 0.0004
+decay = 0.08
+sustain = 0.0
+release = 0.04
+vel_sens = 0.55
+waveform = "sine"

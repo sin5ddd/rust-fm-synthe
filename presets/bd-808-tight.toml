@@ -1,0 +1,65 @@
+name = "808 tight"
+description = "短いトラップ寄り808。クリック多め、胴は短め。ハイハットの下に置く用。"
+algorithm = 5
+feedback = 0.1
+feedback_op = 4
+gain = 1.0
+default_note = 36
+default_duration = 0.52
+
+[pitch]
+start_semitones = 18.0
+end_semitones = 0.0
+curve = -14.0
+
+[mod_sweep]
+start = 1.2
+end = 0.25
+
+# OP1 胴キャリア
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.0008
+decay = 0.38
+sustain = 0.0
+release = 0.08
+vel_sens = 0.28
+waveform = "sine"
+
+# OP2 胴のFM（短い倍音）
+[[operators]]
+ratio = 2.0
+detune_cents = 2.0
+level = 0.38
+attack = 0.0004
+decay = 0.04
+sustain = 0.0
+release = 0.025
+vel_sens = 0.45
+waveform = "sine"
+
+# OP3 クリックキャリア
+[[operators]]
+ratio = 1.0
+detune_cents = 8.0
+level = 0.55
+attack = 0.0003
+decay = 0.055
+sustain = 0.0
+release = 0.03
+vel_sens = 0.5
+waveform = "sine"
+
+# OP4 クリック変調（パルスでアタック）
+[[operators]]
+ratio = 6.0
+detune_cents = -10.0
+level = 0.32
+attack = 0.0002
+decay = 0.01
+sustain = 0.0
+release = 0.01
+vel_sens = 0.65
+waveform = "pulse"

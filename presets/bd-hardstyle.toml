@@ -1,0 +1,77 @@
+name = "hardstyle"
+description = "ハードスタイルのピッチ感あるキック。逆再生っぽいスイープとミッドのパンチ。"
+algorithm = 6
+feedback = 0.28
+feedback_op = 4
+gain = 1.03
+default_note = 46
+default_duration = 0.4
+
+[pitch]
+start_semitones = 21.0
+end_semitones = 2.5
+curve = -3.6
+
+[mod_sweep]
+start = 1.25
+end = 0.5
+
+[filter]
+type = "bandpass"
+cutoff = 260.0
+resonance = 0.36
+env_amount = 1.6
+attack = 0.004
+decay = 0.08
+sustain = 0.22
+release = 0.06
+
+# OP1 ピッチの効いた胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.0008
+decay = 0.26
+sustain = 0.0
+release = 0.07
+vel_sens = 0.3
+waveform = "sine"
+
+# OP2 ミッドの厚み
+[[operators]]
+ratio = 1.0
+detune_cents = 7.0
+level = 0.68
+attack = 0.0006
+decay = 0.14
+sustain = 0.0
+release = 0.05
+vel_sens = 0.4
+waveform = "half-sine"
+
+# OP3 クリックキャリア
+[[operators]]
+ratio = 2.0
+detune_cents = -5.0
+level = 0.55
+attack = 0.00025
+decay = 0.03
+sustain = 0.0
+release = 0.02
+vel_sens = 0.55
+waveform = "pulse"
+
+# OP4 共通モジュレータ（少し super-saw で逆再生感）
+[[operators]]
+ratio = 3.0
+detune_cents = 10.0
+level = 0.34
+attack = 0.0012
+decay = 0.05
+sustain = 0.0
+release = 0.03
+vel_sens = 0.5
+waveform = "super-saw"
+unison = 5
+unison_detune = 14.0

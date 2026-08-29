@@ -1,0 +1,75 @@
+name = "cinematic boom"
+description = "長いシネマティックブーム。低い余韻と大きなピッチ落下。トレーラー向き。"
+algorithm = 7
+feedback = 0.05
+feedback_op = 4
+gain = 0.98
+default_note = 24
+default_duration = 1.5
+
+[pitch]
+start_semitones = 28.0
+end_semitones = -1.2
+curve = -26.0
+
+[mod_sweep]
+start = 1.1
+end = 0.15
+
+[filter]
+type = "lowpass"
+cutoff = 380.0
+resonance = 0.14
+env_amount = 1.2
+attack = 0.001
+decay = 0.35
+sustain = 0.12
+release = 0.2
+
+# OP1 深いサブ
+[[operators]]
+ratio = 0.5
+detune_cents = 0.0
+level = 1.0
+attack = 0.003
+decay = 1.25
+sustain = 0.0
+release = 0.22
+vel_sens = 0.15
+waveform = "sine"
+
+# OP2 基音の胴
+[[operators]]
+ratio = 1.0
+detune_cents = 3.0
+level = 0.55
+attack = 0.002
+decay = 0.85
+sustain = 0.0
+release = 0.16
+vel_sens = 0.2
+waveform = "sine"
+
+# OP3 スタック胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.7
+attack = 0.0015
+decay = 1.05
+sustain = 0.0
+release = 0.18
+vel_sens = 0.18
+waveform = "sine"
+
+# OP4 遠いクリック
+[[operators]]
+ratio = 3.0
+detune_cents = 0.0
+level = 0.14
+attack = 0.0004
+decay = 0.018
+sustain = 0.0
+release = 0.015
+vel_sens = 0.45
+waveform = "sine"
