@@ -459,6 +459,9 @@ mod tests {
         for id in &ids {
             load_factory(id).expect(id);
         }
+    }
+
+    #[test]
     fn factory_strudel_oneshots_parse() {
         const IDS: [&str; 4] = ["cp-house", "lead-fm-pluck", "stab-fm-fifth", "reese-mid"];
         for id in IDS {
