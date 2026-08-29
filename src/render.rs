@@ -68,13 +68,17 @@ pub fn render(preset: &Preset, params: &RenderParams) -> Result<Vec<f32>> {
     voice.set_duration(params.duration_secs);
     voice.note_on(params.frequency_hz, params.velocity.clamp(0.0, 1.0));
 
+    // One-shots (sustain ≈ 0): leave the gate open; the AD already dies.
+    // Sustained patches: lift the gate so release fits in the buffer, but
+    // never on sample 0 (that would release from amplitude 0 → silence).
     let release = f64::from(voice.max_release_secs());
     let hold = if voice.max_sustain() > 0.02 {
-        (params.duration_secs - release).max(0.0)
+        let room = (params.duration_secs - release).max(params.duration_secs * 0.2);
+        room.clamp(0.01, params.duration_secs)
     } else {
         params.duration_secs
     };
-    let note_off_at = (hold * f64::from(params.sample_rate)).round() as usize;
+    let note_off_at = ((hold * f64::from(params.sample_rate)).round() as usize).clamp(1, n);
 
     let mut buf = vec![0.0f32; n];
     for (i, sample) in buf.iter_mut().enumerate() {
@@ -136,6 +140,22 @@ mod tests {
         assert!(peak(&buf) > 0.5, "peak {}", peak(&buf));
         assert!(rms(&buf) > 0.02, "rms {}", rms(&buf));
         assert!(!buf.iter().all(|&x| x == 0.0));
+    }
+
+    #[test]
+    fn short_sustained_note_is_audible() {
+        let preset = load_factory("growl-bass").unwrap();
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: 110.0,
+                duration_secs: 0.2,
+                velocity: 0.9,
+                sample_rate: 22_050,
+            },
+        )
+        .unwrap();
+        assert!(rms(&buf) > 0.02, "rms {}", rms(&buf));
     }
 
     #[test]
