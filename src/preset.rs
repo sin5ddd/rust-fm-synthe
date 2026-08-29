@@ -125,6 +125,16 @@ const FACTORY: &[(&str, &str)] = &[
         include_str!("../presets/sd-tone-layer.toml"),
     ),
     ("sd-fm-long", include_str!("../presets/sd-fm-long.toml")),
+    ("cp-house", include_str!("../presets/cp-house.toml")),
+    (
+        "lead-fm-pluck",
+        include_str!("../presets/lead-fm-pluck.toml"),
+    ),
+    (
+        "stab-fm-fifth",
+        include_str!("../presets/stab-fm-fifth.toml"),
+    ),
+    ("reese-mid", include_str!("../presets/reese-mid.toml")),
 ];
 
 #[derive(Clone, Debug, Deserialize)]
@@ -449,5 +459,57 @@ mod tests {
         for id in &ids {
             load_factory(id).expect(id);
         }
+    fn factory_strudel_oneshots_parse() {
+        const IDS: [&str; 4] = ["cp-house", "lead-fm-pluck", "stab-fm-fifth", "reese-mid"];
+        for id in IDS {
+            let p = load_factory(id).expect(id);
+            assert_eq!(output_preset_id(Some(id), None), id);
+            assert!(!p.operators.is_empty());
+        }
+
+        let clap = load_factory("cp-house").unwrap();
+        assert!(
+            (0.2..=0.35).contains(&clap.default_duration),
+            "cp-house duration {}",
+            clap.default_duration
+        );
+
+        for id in ["lead-fm-pluck", "stab-fm-fifth", "reese-mid"] {
+            let p = load_factory(id).unwrap();
+            assert_eq!(
+                p.default_note, 48,
+                "{id} pitch reference must be MIDI 48 (C3)"
+            );
+        }
+        let lead = load_factory("lead-fm-pluck").unwrap();
+        assert!(
+            (lead.operators[0].ratio - 1.0).abs() < 1e-9,
+            "lead carrier ratio must be 1 (C3), got {}",
+            lead.operators[0].ratio
+        );
+
+        let stab = load_factory("stab-fm-fifth").unwrap();
+        assert_eq!(stab.feedback, 0.0);
+        let live: Vec<_> = stab.operators.iter().filter(|op| op.level > 1e-6).collect();
+        assert_eq!(
+            live.len(),
+            2,
+            "hollow fifth is two partials, got {}",
+            live.len()
+        );
+        let mut ratios: Vec<f64> = live.iter().map(|op| op.ratio).collect();
+        ratios.sort_by(|a, b| a.partial_cmp(b).unwrap());
+        assert!((ratios[0] - 1.0).abs() < 1e-9, "root ratio {}", ratios[0]);
+        assert!((ratios[1] - 1.5).abs() < 1e-9, "fifth ratio {}", ratios[1]);
+        for op in &live {
+            assert_eq!(op.waveform, crate::operator::Waveform::Sine);
+            assert!((op.detune_cents).abs() < 1e-9, "no detune on hollow fifth");
+        }
+        assert!(
+            stab.operators
+                .iter()
+                .all(|op| (op.ratio - 1.25).abs() > 0.05),
+            "no 5:4 / major-third ratio"
+        );
     }
 }

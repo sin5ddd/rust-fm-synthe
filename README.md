@@ -50,7 +50,7 @@ cargo run -- render-all
 # → dist/sub-bass.wav, dist/supersaw-bass.wav, dist/bd-808-boom.wav, dist/sd-808-snap.wav, …
 ```
 
-`bd-*` キックバンク（808、909、フレンチコア、ガバなど20種）も同じコマンドに含まれる。出力は `dist/bd-….wav`。各プリセットの `default_note` / `default_duration` でワンショット向きの音高・長さになる。
+`bd-*` キックバンク（808、909、フレンチコア、ガバなど20種）も同じコマンドに含まれる。出力は `dist/bd-….wav`。各プリセットの `default_note` / `default_duration` でワンショット向きの音高・長さになる。`cp-house` / `lead-fm-pluck` / `stab-fm-fifth` / `reese-mid` も `render-all` に含まれる（16-bit / 48 kHz のワンショット想定）。
 
 `sd-*` スネアバンク（808、909、DnB、ジャングル、フレンチコア、ガバなど20種）も同じ。出力は `dist/sd-….wav`。尾は意図的に長め（DAW側で切る前提）。
 
@@ -243,6 +243,10 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | `sd-noise-layer` | ノイズだけのレイヤー用 |
 | `sd-tone-layer` | 胴／トーンだけのレイヤー用 |
 | `sd-fm-long` | 実験的な長いFMスネア（使える尾） |
+| `cp-house` | 短いドライなハウスクラップ（2/4専用。1 kHz付近の胴。スネア代用ではない） |
+| `lead-fm-pluck` | C3（MIDI 48、約130.8 Hz）の短いFMプラック（メロディ用。C4ではない） |
+| `stab-fm-fifth` | C3の中空5度スタブ（C–Gのみ。長3度なし） |
+| `reese-mid` | C3ミッドReeseの糊（800–1200 Hz。サブなし） |
 
 データは `presets/*.toml`。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。
 

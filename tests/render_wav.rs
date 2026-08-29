@@ -432,3 +432,206 @@ fn render_all_names_failed_presets() {
     assert!(msg.contains("sub-bass"), "{msg}");
     assert!(msg.contains("supersaw-bass"), "{msg}");
 }
+
+const STRUDEL_ONESHOT_IDS: [&str; 4] = ["cp-house", "lead-fm-pluck", "stab-fm-fifth", "reese-mid"];
+
+#[test]
+fn strudel_oneshot_ids_parse() {
+    for id in STRUDEL_ONESHOT_IDS {
+        load_factory(id).expect(id);
+        assert!(
+            factory_ids().iter().any(|fid| *fid == id),
+            "{id} missing from factory table"
+        );
+    }
+}
+
+#[test]
+fn strudel_oneshots_render_nonsilent_48k_16bit() {
+    for id in STRUDEL_ONESHOT_IDS {
+        let preset = load_factory(id).expect(id);
+        let sr = 48_000u32;
+        let bit_depth = 16u16;
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: sr,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+        assert!(
+            rms(&buf) > 0.01,
+            "{id} rendered near-silence (rms={})",
+            rms(&buf)
+        );
+        assert!(peak(&buf) > 0.4, "{id} peak {} too low", peak(&buf));
+
+        let path = scratch_wav(&format!("{id}-48k16.wav"));
+        write_wav(&path, &buf, WavSettings::new(sr, bit_depth).unwrap()).unwrap();
+
+        let mut reader = WavReader::open(&path).unwrap();
+        let spec = reader.spec();
+        assert_eq!(spec.channels, 1, "{id}");
+        assert_eq!(spec.sample_rate, sr, "{id}");
+        assert_eq!(spec.bits_per_sample, bit_depth, "{id}");
+        assert_eq!(spec.sample_format, hound::SampleFormat::Int, "{id}");
+
+        let decoded: Vec<i16> = reader.samples::<i16>().map(|s| s.unwrap()).collect();
+        assert_eq!(decoded.len(), buf.len(), "{id}");
+        let abs_max = decoded.iter().map(|s| s.unsigned_abs()).max().unwrap();
+        assert!(
+            abs_max > 1000,
+            "{id} decoded peak {abs_max} looks silent / empty"
+        );
+        assert!(decoded.iter().any(|&s| s != 0), "{id} all-zero PCM");
+    }
+}
+
+fn goertzel_power(buf: &[f32], sr: f32, freq: f32) -> f64 {
+    let n = buf.len();
+    if n == 0 {
+        return 0.0;
+    }
+    let k = (n as f64 * f64::from(freq) / f64::from(sr)).round();
+    let w = 2.0 * std::f64::consts::PI * k / n as f64;
+    let coeff = 2.0 * w.cos();
+    let mut s1 = 0.0;
+    let mut s2 = 0.0;
+    for &x in buf {
+        let s0 = f64::from(x) + coeff * s1 - s2;
+        s2 = s1;
+        s1 = s0;
+    }
+    s1 * s1 + s2 * s2 - coeff * s1 * s2
+}
+
+fn hann_window(buf: &[f32]) -> Vec<f32> {
+    let n = buf.len() as f32;
+    buf.iter()
+        .enumerate()
+        .map(|(i, &x)| {
+            let w = 0.5 - 0.5 * (std::f32::consts::TAU * i as f32 / n).cos();
+            x * w
+        })
+        .collect()
+}
+
+#[test]
+fn stab_fm_fifth_is_hollow_c_and_g_only() {
+    let preset = load_factory("stab-fm-fifth").unwrap();
+    assert_eq!(preset.default_note, 48);
+    let sr = 48_000u32;
+    let f0 = midi_to_hz(48) as f32;
+    let buf = render(
+        &preset,
+        &RenderParams {
+            frequency_hz: f64::from(f0),
+            duration_secs: preset.default_duration,
+            velocity: 0.9,
+            sample_rate: sr,
+        },
+    )
+    .unwrap();
+
+    // Skip the attack transient (broadband click) and Hann-window the decay
+    // so a 5:4 bin is not filled by envelope smear.
+    let start = (sr as usize) / 25;
+    let end = ((sr as usize) * 3 / 20).min(buf.len());
+    assert!(end > start + 64, "not enough decay body to measure");
+    let body = hann_window(&buf[start..end]);
+    let c = goertzel_power(&body, sr as f32, f0);
+    let g = goertzel_power(&body, sr as f32, f0 * 1.5);
+    let e = goertzel_power(&body, sr as f32, f0 * 1.25);
+    let e4 = goertzel_power(&body, sr as f32, f0 * 2.5);
+    let fifth_h = goertzel_power(&body, sr as f32, f0 * 5.0);
+
+    assert!(c > 0.0 && g > 0.0, "missing C or G (c={c}, g={g})");
+    let cg = c.min(g);
+    assert!(
+        e < cg * 0.08,
+        "major third (5:4) leaked through (e={e}, cg={cg})"
+    );
+    assert!(
+        e4 < cg * 0.08,
+        "E an octave up (2.5×) leaked (e4={e4}, cg={cg})"
+    );
+    assert!(
+        fifth_h < cg * 0.08,
+        "5th harmonic (E) leaked (h5={fifth_h}, cg={cg})"
+    );
+}
+
+#[test]
+fn lead_fm_pluck_fundamental_is_c3_not_c4() {
+    let preset = load_factory("lead-fm-pluck").unwrap();
+    assert_eq!(preset.default_note, 48, "MIDI 48 = C3 ≈ 130.8 Hz, not C4");
+    let sr = 48_000u32;
+    let f0 = midi_to_hz(48) as f32;
+    assert!((f0 - 130.81).abs() < 0.05);
+    let buf = render(
+        &preset,
+        &RenderParams {
+            frequency_hz: f64::from(f0),
+            duration_secs: preset.default_duration,
+            velocity: 0.9,
+            sample_rate: sr,
+        },
+    )
+    .unwrap();
+
+    let start = (sr as usize) / 20;
+    let end = ((sr as usize) / 5).min(buf.len());
+    let body = hann_window(&buf[start..end]);
+    let c3 = goertzel_power(&body, sr as f32, f0);
+    let c4 = goertzel_power(&body, sr as f32, f0 * 2.0);
+    assert!(
+        c3 > c4 * 2.0,
+        "lead-fm-pluck fundamental should be C3 not C4 (c3={c3}, c4={c4})"
+    );
+}
+
+#[test]
+fn cp_house_has_1khz_body_without_sub() {
+    let preset = load_factory("cp-house").unwrap();
+    let sr = 48_000u32;
+    let buf = render(
+        &preset,
+        &RenderParams {
+            frequency_hz: midi_to_hz(preset.default_note),
+            duration_secs: preset.default_duration,
+            velocity: 0.9,
+            sample_rate: sr,
+        },
+    )
+    .unwrap();
+    let body = hann_window(&buf);
+    let sr_f = sr as f32;
+    let band = |lo, hi| {
+        let mut e = 0.0;
+        let mut f = lo;
+        while f < hi {
+            e += goertzel_power(&body, sr_f, f);
+            f += 40.0;
+        }
+        e
+    };
+    let sub = band(20.0, 200.0);
+    let mid = band(800.0, 1400.0);
+    let air = band(2000.0, 4500.0);
+    assert!(
+        mid > sub * 8.0,
+        "cp-house should have 1 kHz body, not sub (mid={mid}, sub={sub})"
+    );
+    assert!(
+        mid > 0.0 && air > 0.0,
+        "cp-house needs both 1 kHz body and high slap (mid={mid}, air={air})"
+    );
+    assert!(
+        air > mid * 0.15,
+        "cp-house high slap disappeared (mid={mid}, air={air})"
+    );
+}

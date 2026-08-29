@@ -1,0 +1,69 @@
+name = "cp-house"
+description = "短いドライなハウスクラップ。2/4専用。1 kHz付近の短い胴＋ハイのスラップ。スネア代用でもサブでもない。"
+algorithm = 5
+feedback = 0.78
+feedback_op = 4
+gain = 1.16
+default_note = 60
+default_duration = 0.28
+
+# HP を 1 kHz 手前に置き、レゾナンスで胴を出す。サブとスネア帯（〜400 Hz）は切る。
+[filter]
+type = "highpass"
+cutoff = 820.0
+resonance = 0.38
+env_amount = 0.45
+attack = 0.0002
+decay = 0.055
+sustain = 0.06
+release = 0.05
+
+# 1層目: 1 kHz 付近の短い胴（ハットに負けないミッド）
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.0003
+decay = 0.09
+sustain = 0.0
+release = 0.04
+vel_sens = 0.45
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1020.0
+
+[[operators]]
+ratio = 6.11
+detune_cents = 14.0
+level = 0.42
+attack = 0.0002
+decay = 0.028
+sustain = 0.0
+release = 0.016
+vel_sens = 0.55
+waveform = "abs-sine"
+
+# 2層目: 約22ms遅れのハイ・スラップ（2–4 kHz）
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.86
+attack = 0.022
+decay = 0.08
+sustain = 0.0
+release = 0.038
+vel_sens = 0.5
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 2760.0
+
+[[operators]]
+ratio = 11.31
+detune_cents = -18.0
+level = 0.48
+attack = 0.021
+decay = 0.028
+sustain = 0.0
+release = 0.016
+vel_sens = 0.7
+waveform = "pulse"
