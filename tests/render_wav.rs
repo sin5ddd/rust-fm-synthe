@@ -389,3 +389,124 @@ fn render_all_names_failed_presets() {
     assert!(msg.contains("sub-bass"), "{msg}");
     assert!(msg.contains("supersaw-bass"), "{msg}");
 }
+
+const STRUDEL_ONESHOT_IDS: [&str; 4] = ["cp-house", "lead-fm-pluck", "stab-fm-fifth", "reese-mid"];
+
+#[test]
+fn strudel_oneshot_ids_parse() {
+    for id in STRUDEL_ONESHOT_IDS {
+        load_factory(id).expect(id);
+        assert!(
+            factory_ids().iter().any(|fid| *fid == id),
+            "{id} missing from factory table"
+        );
+    }
+}
+
+#[test]
+fn strudel_oneshots_render_nonsilent_48k_16bit() {
+    for id in STRUDEL_ONESHOT_IDS {
+        let preset = load_factory(id).expect(id);
+        let sr = 48_000u32;
+        let bit_depth = 16u16;
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: sr,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+        assert!(
+            rms(&buf) > 0.01,
+            "{id} rendered near-silence (rms={})",
+            rms(&buf)
+        );
+        assert!(peak(&buf) > 0.4, "{id} peak {} too low", peak(&buf));
+
+        let path = scratch_wav(&format!("{id}-48k16.wav"));
+        write_wav(&path, &buf, WavSettings::new(sr, bit_depth).unwrap()).unwrap();
+
+        let mut reader = WavReader::open(&path).unwrap();
+        let spec = reader.spec();
+        assert_eq!(spec.channels, 1, "{id}");
+        assert_eq!(spec.sample_rate, sr, "{id}");
+        assert_eq!(spec.bits_per_sample, bit_depth, "{id}");
+        assert_eq!(spec.sample_format, hound::SampleFormat::Int, "{id}");
+
+        let decoded: Vec<i16> = reader.samples::<i16>().map(|s| s.unwrap()).collect();
+        assert_eq!(decoded.len(), buf.len(), "{id}");
+        let abs_max = decoded.iter().map(|s| s.unsigned_abs()).max().unwrap();
+        assert!(
+            abs_max > 1000,
+            "{id} decoded peak {abs_max} looks silent / empty"
+        );
+        assert!(decoded.iter().any(|&s| s != 0), "{id} all-zero PCM");
+    }
+}
+
+fn goertzel_power(buf: &[f32], sr: f32, freq: f32) -> f64 {
+    let n = buf.len();
+    if n == 0 {
+        return 0.0;
+    }
+    let k = (f64::from(n) * f64::from(freq) / f64::from(sr)).round();
+    let w = 2.0 * std::f64::consts::PI * k / f64::from(n as u32);
+    let coeff = 2.0 * w.cos();
+    let mut s1 = 0.0;
+    let mut s2 = 0.0;
+    for &x in buf {
+        let s0 = f64::from(x) + coeff * s1 - s2;
+        s2 = s1;
+        s1 = s0;
+    }
+    s1 * s1 + s2 * s2 - coeff * s1 * s2
+}
+
+#[test]
+fn stab_fm_fifth_is_hollow_c_and_g_only() {
+    let preset = load_factory("stab-fm-fifth").unwrap();
+    assert_eq!(preset.default_note, 48);
+    let sr = 48_000u32;
+    let f0 = midi_to_hz(48) as f32;
+    let buf = render(
+        &preset,
+        &RenderParams {
+            frequency_hz: f64::from(f0),
+            duration_secs: preset.default_duration,
+            velocity: 0.9,
+            sample_rate: sr,
+        },
+    )
+    .unwrap();
+
+    let skip = (sr as usize) / 200;
+    let body = if buf.len() > skip * 2 {
+        &buf[skip..]
+    } else {
+        &buf[..]
+    };
+    let c = goertzel_power(body, sr as f32, f0);
+    let g = goertzel_power(body, sr as f32, f0 * 1.5);
+    let e = goertzel_power(body, sr as f32, f0 * 1.25);
+    let e4 = goertzel_power(body, sr as f32, f0 * 2.5);
+    let fifth_h = goertzel_power(body, sr as f32, f0 * 5.0);
+
+    assert!(c > 0.0 && g > 0.0, "missing C or G (c={c}, g={g})");
+    let cg = c.min(g);
+    assert!(
+        e < cg * 0.08,
+        "major third (5:4) leaked through (e={e}, cg={cg})"
+    );
+    assert!(
+        e4 < cg * 0.08,
+        "E an octave up (2.5×) leaked (e4={e4}, cg={cg})"
+    );
+    assert!(
+        fifth_h < cg * 0.08,
+        "5th harmonic (E) leaked (h5={fifth_h}, cg={cg})"
+    );
+}

@@ -1,0 +1,66 @@
+name = "lead-fm-pluck"
+description = "C3の短いFMプラック。速いアンプとフィルタADSR。アタック明瞭、テール短め。メロディ用。"
+algorithm = 1
+feedback = 0.14
+feedback_op = 4
+gain = 1.0
+default_note = 48
+default_duration = 0.38
+
+[filter]
+type = "lowpass"
+cutoff = 260.0
+resonance = 0.3
+env_amount = 4.4
+attack = 0.001
+decay = 0.1
+sustain = 0.05
+release = 0.09
+
+# OP1 キャリア
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.0009
+decay = 0.2
+sustain = 0.0
+release = 0.065
+vel_sens = 0.4
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 3.0
+level = 0.52
+attack = 0.0004
+decay = 0.055
+sustain = 0.0
+release = 0.028
+vel_sens = 0.5
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 3.0
+detune_cents = -4.0
+level = 0.28
+attack = 0.0003
+decay = 0.035
+sustain = 0.0
+release = 0.02
+vel_sens = 0.55
+waveform = "sine"
+
+# OP4 短いキラッと
+[[operators]]
+ratio = 4.0
+detune_cents = 0.0
+level = 0.16
+attack = 0.0002
+decay = 0.018
+sustain = 0.0
+release = 0.012
+vel_sens = 0.6
+waveform = "sine"

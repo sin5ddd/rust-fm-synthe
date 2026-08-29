@@ -1,0 +1,70 @@
+name = "reese-mid"
+description = "C3ミッドReeseの糊だけ。800–1200 Hzのバンドパス。サブなし。軽いデチューンと弱いFM。"
+algorithm = 5
+feedback = 0.06
+feedback_op = 4
+gain = 1.12
+default_note = 48
+default_duration = 1.1
+
+[lfo]
+rate_hz = 0.48
+depth_cents = 8.0
+
+[filter]
+type = "bandpass"
+cutoff = 1000.0
+resonance = 0.26
+env_amount = 0.12
+attack = 0.012
+decay = 0.35
+sustain = 0.65
+release = 0.16
+
+# OP1 下側キャリア（デチューン）
+[[operators]]
+ratio = 1.0
+detune_cents = -8.0
+level = 1.0
+attack = 0.012
+decay = 0.55
+sustain = 0.42
+release = 0.18
+vel_sens = 0.3
+waveform = "saw"
+
+# OP2 弱いFM
+[[operators]]
+ratio = 1.0
+detune_cents = 4.0
+level = 0.14
+attack = 0.008
+decay = 0.35
+sustain = 0.18
+release = 0.1
+vel_sens = 0.4
+waveform = "sine"
+
+# OP3 上側キャリア（逆デチューン）
+[[operators]]
+ratio = 1.0
+detune_cents = 11.0
+level = 0.9
+attack = 0.014
+decay = 0.5
+sustain = 0.4
+release = 0.16
+vel_sens = 0.3
+waveform = "saw"
+
+# OP4 弱いFM
+[[operators]]
+ratio = 2.0
+detune_cents = -3.0
+level = 0.1
+attack = 0.006
+decay = 0.25
+sustain = 0.12
+release = 0.08
+vel_sens = 0.45
+waveform = "sine"

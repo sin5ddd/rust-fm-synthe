@@ -1,0 +1,68 @@
+name = "cp-house"
+description = "短いドライなハウスクラップ。2/4専用。ノイズFM＋ハイパス。胴なし。スネア代用でも4つ打ちレイヤーでもない。"
+algorithm = 5
+feedback = 0.82
+feedback_op = 4
+gain = 1.18
+default_note = 60
+default_duration = 0.28
+
+[filter]
+type = "highpass"
+cutoff = 2600.0
+resonance = 0.26
+env_amount = 0.7
+attack = 0.0002
+decay = 0.045
+sustain = 0.04
+release = 0.05
+
+# 1層目: 最初のスラップ（非ピッチ、パルス＋高比FM）
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.0002
+decay = 0.05
+sustain = 0.0
+release = 0.028
+vel_sens = 0.55
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 2480.0
+
+[[operators]]
+ratio = 8.17
+detune_cents = 21.0
+level = 0.7
+attack = 0.00015
+decay = 0.022
+sustain = 0.0
+release = 0.014
+vel_sens = 0.65
+waveform = "abs-sine"
+
+# 2層目: 約22ms遅れの2打目（ハウスクラップの重ね）
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.88
+attack = 0.022
+decay = 0.085
+sustain = 0.0
+release = 0.04
+vel_sens = 0.5
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 2920.0
+
+[[operators]]
+ratio = 11.31
+detune_cents = -18.0
+level = 0.52
+attack = 0.021
+decay = 0.03
+sustain = 0.0
+release = 0.018
+vel_sens = 0.7
+waveform = "pulse"
