@@ -1,0 +1,64 @@
+name = "growl-bass"
+description = "ミッドのグロウル。フィードバックと非整数比で喉声っぽい歪み。Reeseの下地。"
+algorithm = 1
+feedback = 0.62
+feedback_op = 4
+gain = 0.95
+default_note = 40
+default_duration = 1.6
+
+[lfo]
+rate_hz = 5.4
+depth_cents = 14.0
+
+[mod_sweep]
+start = 1.25
+end = 0.7
+
+# OP1 キャリア
+[[operators]]
+ratio = 1.0
+detune_cents = -3.0
+level = 1.0
+attack = 0.012
+decay = 0.85
+sustain = 0.18
+release = 0.22
+vel_sens = 0.35
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 7.0
+level = 0.72
+attack = 0.008
+decay = 0.55
+sustain = 0.12
+release = 0.16
+vel_sens = 0.45
+waveform = "sine"
+
+# OP3 非整数でフォルマント
+[[operators]]
+ratio = 1.47
+detune_cents = -11.0
+level = 0.58
+attack = 0.004
+decay = 0.38
+sustain = 0.08
+release = 0.12
+vel_sens = 0.5
+waveform = "half-sine"
+
+# OP4 フィードバック源
+[[operators]]
+ratio = 2.03
+detune_cents = 9.0
+level = 0.48
+attack = 0.003
+decay = 0.28
+sustain = 0.06
+release = 0.1
+vel_sens = 0.55
+waveform = "sine"

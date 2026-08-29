@@ -1,0 +1,65 @@
+name = "sub-bass"
+description = "キックの下に置くDnBサブ。短いクリックのあと正弦に近い胴が残るワンショット。"
+algorithm = 1
+feedback = 0.12
+feedback_op = 4
+gain = 1.0
+default_note = 36
+default_duration = 1.35
+
+[pitch]
+start_semitones = 3.0
+end_semitones = 0.0
+curve = 2.4
+
+[mod_sweep]
+start = 1.15
+end = 0.35
+
+# OP1 キャリア: サブ本体
+[[operators]]
+ratio = 0.5
+detune_cents = 0.0
+level = 1.0
+attack = 0.003
+decay = 1.05
+sustain = 0.0
+release = 0.18
+vel_sens = 0.25
+waveform = "sine"
+
+# OP2: 胴の厚み
+[[operators]]
+ratio = 0.5
+detune_cents = 4.0
+level = 0.55
+attack = 0.001
+decay = 0.22
+sustain = 0.0
+release = 0.08
+vel_sens = 0.4
+waveform = "sine"
+
+# OP3: アタックの倍音
+[[operators]]
+ratio = 2.0
+detune_cents = 0.0
+level = 0.42
+attack = 0.0008
+decay = 0.045
+sustain = 0.0
+release = 0.03
+vel_sens = 0.55
+waveform = "sine"
+
+# OP4: クリック / わずかなフィードバック
+[[operators]]
+ratio = 3.0
+detune_cents = -6.0
+level = 0.28
+attack = 0.0004
+decay = 0.018
+sustain = 0.0
+release = 0.02
+vel_sens = 0.6
+waveform = "sine"
