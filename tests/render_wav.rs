@@ -1,7 +1,8 @@
 //! Integration: engine is audible, WAV headers match, factory preset smoke.
 
 use fm_synth::{
-    load_factory, pcm_data_bytes, peak, render, rms, write_wav, RenderParams, WavSettings,
+    factory_ids, load_factory, pcm_data_bytes, peak, render, render_all_factory, rms, write_wav,
+    ExportParams, RenderParams, WavSettings, DEFAULT_OUTPUT_DIR,
 };
 use hound::WavReader;
 use std::fs;
@@ -214,4 +215,134 @@ fn lowpass_low_cutoff_is_darker_than_open() {
         b_dark < b_bright * 0.6,
         "low cutoff should attenuate highs (closed={b_dark}, open={b_bright})"
     );
+}
+
+fn scratch_dir(name: &str) -> std::path::PathBuf {
+    let dir = std::env::temp_dir().join("fm_synth_tests").join(name);
+    let _ = fs::remove_dir_all(&dir);
+    fs::create_dir_all(&dir).unwrap();
+    dir
+}
+
+fn wav_is_audible(path: &std::path::Path) {
+    assert!(path.is_file(), "missing {}", path.display());
+    let mut reader = WavReader::open(path).unwrap();
+    let decoded: Vec<i16> = reader.samples::<i16>().map(|s| s.unwrap()).collect();
+    assert!(!decoded.is_empty(), "{} empty", path.display());
+    let abs_max = decoded.iter().map(|s| s.unsigned_abs()).max().unwrap();
+    assert!(
+        abs_max > 1000,
+        "{} decoded peak {abs_max} looks silent / empty",
+        path.display()
+    );
+    assert!(decoded.iter().any(|&s| s != 0));
+}
+
+#[test]
+fn render_all_factory_writes_one_wav_per_preset() {
+    assert_eq!(DEFAULT_OUTPUT_DIR, "dist");
+    // Temp dir stands in for dist/ so tests never write the repo dest.
+    let dir = scratch_dir("render-all-factory");
+    let ids = factory_ids();
+    assert!(!ids.is_empty());
+
+    let batch = render_all_factory(
+        &dir,
+        &ExportParams {
+            note: None,
+            hz: None,
+            duration: Some(0.12),
+            velocity: 0.9,
+            sample_rate: 22_050,
+            bit_depth: 16,
+        },
+    )
+    .unwrap();
+
+    assert!(
+        batch.failures.is_empty(),
+        "factory render-all failures: {:?}",
+        batch.failures
+    );
+    assert_eq!(
+        batch.written.len(),
+        ids.len(),
+        "expected one WAV per factory id"
+    );
+
+    for id in &ids {
+        let path = dir.join(format!("{id}.wav"));
+        let report = batch
+            .written
+            .iter()
+            .find(|r| r.preset_id == *id)
+            .unwrap_or_else(|| panic!("no report for {id}"));
+        assert_eq!(report.path, path);
+        wav_is_audible(&path);
+    }
+
+    let wavs: Vec<_> = fs::read_dir(&dir)
+        .unwrap()
+        .filter_map(|e| e.ok())
+        .filter(|e| e.path().extension().and_then(|s| s.to_str()) == Some("wav"))
+        .collect();
+    assert_eq!(wavs.len(), ids.len());
+}
+
+#[test]
+fn render_all_factory_applies_shared_overrides() {
+    let dir = scratch_dir("render-all-overrides");
+    let batch = render_all_factory(
+        &dir,
+        &ExportParams {
+            note: Some(60),
+            hz: None,
+            duration: Some(0.08),
+            velocity: 0.8,
+            sample_rate: 22_050,
+            bit_depth: 16,
+        },
+    )
+    .unwrap()
+    .into_result()
+    .unwrap();
+
+    assert_eq!(batch.len(), factory_ids().len());
+    for report in &batch {
+        assert!(
+            (report.duration_secs - 0.08).abs() < 1e-9,
+            "{}",
+            report.preset_id
+        );
+        assert_eq!(report.sample_rate, 22_050);
+        // MIDI 60 ≈ 261.63 Hz
+        assert!(
+            (report.frequency_hz - 261.625565).abs() < 0.01,
+            "{} hz {}",
+            report.preset_id,
+            report.frequency_hz
+        );
+        wav_is_audible(&report.path);
+    }
+}
+
+#[test]
+fn render_all_names_failed_presets() {
+    let dir = scratch_dir("render-all-fail");
+    let batch = render_all_factory(
+        &dir,
+        &ExportParams {
+            bit_depth: 8,
+            duration: Some(0.05),
+            sample_rate: 22_050,
+            ..ExportParams::default()
+        },
+    )
+    .unwrap();
+    assert!(batch.written.is_empty());
+    assert_eq!(batch.failures.len(), factory_ids().len());
+    let err = batch.into_result().unwrap_err();
+    let msg = err.to_string();
+    assert!(msg.contains("sub-bass"), "{msg}");
+    assert!(msg.contains("supersaw-bass"), "{msg}");
 }

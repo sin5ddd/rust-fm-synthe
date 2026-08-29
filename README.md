@@ -25,7 +25,7 @@ cargo build --release
 cargo run -- --help
 ```
 
-サブコマンドなし、または `--help` で用法が出る。`cargo test` は一時ディレクトリにだけWAVを書く。生成WAVはコミットしない。
+サブコマンドなし、または `--help` で用法が出る。`cargo test` は一時ディレクトリにだけWAVを書く。生成WAVの既定先は `dist/`（gitignore済み。コミットしない）。
 
 ## コマンド例（実際にWAVが書き出される）
 
@@ -41,7 +41,30 @@ cargo run -- list
 cargo run -- algos
 ```
 
-サブのワンショット（C2、約1.35秒、16-bit / 44.1 kHz）:
+既定の出力先は **`dist/`**（無ければ作る）。`render` で `--output` を省略すると `dist/<preset-id>.wav`。`render-all` は工場バンク全部をそこに書く。
+
+工場バンクを一括書き出し（各プリセットの `default_note` / `default_duration`）:
+
+```bash
+cargo run -- render-all
+# → dist/sub-bass.wav, dist/supersaw-bass.wav, …
+```
+
+出力ディレクトリや長さを全プリセットに上書き:
+
+```bash
+cargo run -- render-all -o /tmp/shots --duration 0.4 --note 36
+```
+
+`--note` / `--duration` / `--hz` / `--velocity` / `--sample-rate` / `--bit-depth` は `render` と同じ。指定すると全プリセットに同じ値がかかる。
+
+サブのワンショット（C2、約1.35秒、16-bit / 44.1 kHz）。`--output` 省略時は `dist/sub-bass.wav`:
+
+```bash
+cargo run -- render --preset sub-bass
+```
+
+明示パス（既定の `dist/<id>.wav` 以外へ）:
 
 ```bash
 cargo run -- render --preset sub-bass --output dist/sub-bass.wav
@@ -107,7 +130,7 @@ cargo run -- render --preset-file presets/zap.toml --output dist/zap.wav
 cargo run --release -- render --preset fm-riser --output dist/riser.wav
 ```
 
-成功すると stderr にパス、サンプル数、PCMバイト数が出る。ファイルが「全部ゼロ」ならバグなので issue にしてほしい。
+成功すると stderr にパス、サンプル数、PCMバイト数が出る（`render-all` はプリセットごとに1行）。どれかが失敗したら非ゼロで終了し、失敗した ID を出す。ファイルが「全部ゼロ」ならバグなので issue にしてほしい。
 
 ## オペレータとアルゴリズム
 
@@ -266,7 +289,7 @@ write_wav(
 )?;
 ```
 
-公開APIの中心は `load_preset` / `load_factory` / `render` / `write_wav`。別ツールからエンジンだけ駆動する想定。
+公開APIの中心は `load_preset` / `load_factory` / `render` / `write_wav`。一括書き出しは `render_all_factory`（工場バンクがソース。`presets/` の重複TOMLは見ない）。別ツールからエンジンだけ駆動する想定。
 
 ## テスト
 
@@ -274,4 +297,4 @@ write_wav(
 cargo test
 ```
 
-エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す。
+エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。

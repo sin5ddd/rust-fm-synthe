@@ -1,6 +1,9 @@
 use crate::error::{Error, Result};
-use crate::preset::Preset;
+use crate::preset::{factory_ids, load_factory, Preset};
+use crate::resolve_frequency;
 use crate::voice::Voice;
+use crate::wav::{pcm_data_bytes, write_wav, WavSettings};
+use std::path::{Path, PathBuf};
 
 /// Offline render settings. Frequency is already resolved (Hz).
 #[derive(Clone, Debug)]
@@ -116,6 +119,130 @@ pub fn rms(buf: &[f32]) -> f32 {
 
 pub fn peak(buf: &[f32]) -> f32 {
     buf.iter().fold(0.0f32, |a, &x| a.max(x.abs()))
+}
+
+/// Default destination for CLI WAV output (`render` without `--output`, `render-all`).
+pub const DEFAULT_OUTPUT_DIR: &str = "dist";
+
+/// `dist/<preset-id>.wav`
+pub fn default_wav_path(preset_id: &str) -> PathBuf {
+    PathBuf::from(DEFAULT_OUTPUT_DIR).join(format!("{preset_id}.wav"))
+}
+
+/// CLI overrides applied to one or every factory preset.
+///
+/// `None` pitch/duration fields fall back to each preset's defaults.
+#[derive(Clone, Debug)]
+pub struct ExportParams {
+    pub note: Option<u8>,
+    pub hz: Option<f64>,
+    pub duration: Option<f64>,
+    pub velocity: f32,
+    pub sample_rate: u32,
+    pub bit_depth: u16,
+}
+
+impl Default for ExportParams {
+    fn default() -> Self {
+        Self {
+            note: None,
+            hz: None,
+            duration: None,
+            velocity: 0.9,
+            sample_rate: 44_100,
+            bit_depth: 16,
+        }
+    }
+}
+
+/// One successful WAV write (`render` or `render-all`).
+#[derive(Clone, Debug)]
+pub struct WavRenderReport {
+    pub preset_id: String,
+    pub preset_name: String,
+    pub path: PathBuf,
+    pub frequency_hz: f64,
+    pub duration_secs: f64,
+    pub sample_count: usize,
+    pub sample_rate: u32,
+    pub bit_depth: u16,
+}
+
+impl WavRenderReport {
+    pub fn pcm_bytes(&self) -> usize {
+        pcm_data_bytes(self.sample_count, self.bit_depth, 1)
+    }
+}
+
+/// Outcome of rendering the factory bank. Failures do not stop the rest.
+#[derive(Debug)]
+pub struct BatchRenderResult {
+    pub written: Vec<WavRenderReport>,
+    pub failures: Vec<(String, String)>,
+}
+
+impl BatchRenderResult {
+    pub fn into_result(self) -> Result<Vec<WavRenderReport>> {
+        if self.failures.is_empty() {
+            Ok(self.written)
+        } else {
+            Err(Error::BatchFailed {
+                failures: self.failures,
+            })
+        }
+    }
+}
+
+/// Render one loaded preset and write a WAV. Creates parent directories.
+pub fn render_preset_wav(
+    preset_id: &str,
+    preset: &Preset,
+    output: &Path,
+    export: &ExportParams,
+) -> Result<WavRenderReport> {
+    let frequency_hz = resolve_frequency(preset, export.note, export.hz)?;
+    let duration_secs = export.duration.unwrap_or(preset.default_duration);
+    let params = RenderParams {
+        frequency_hz,
+        duration_secs,
+        velocity: export.velocity,
+        sample_rate: export.sample_rate,
+    };
+    let samples = render(preset, &params)?;
+    let settings = WavSettings::new(export.sample_rate, export.bit_depth)?;
+    write_wav(output, &samples, settings)?;
+    Ok(WavRenderReport {
+        preset_id: preset_id.to_string(),
+        preset_name: preset.name.clone(),
+        path: output.to_path_buf(),
+        frequency_hz,
+        duration_secs,
+        sample_count: samples.len(),
+        sample_rate: export.sample_rate,
+        bit_depth: export.bit_depth,
+    })
+}
+
+/// Render every factory-bank preset to `<output_dir>/<preset-id>.wav`.
+///
+/// The embedded factory bank is the source of truth (not `presets/*.toml` on disk).
+/// Creates `output_dir` if missing. Continues after a per-preset failure.
+pub fn render_all_factory(output_dir: &Path, export: &ExportParams) -> Result<BatchRenderResult> {
+    std::fs::create_dir_all(output_dir).map_err(|e| Error::Io {
+        path: Some(output_dir.to_path_buf()),
+        source: e,
+    })?;
+
+    let mut written = Vec::new();
+    let mut failures = Vec::new();
+    for id in factory_ids() {
+        let path = output_dir.join(format!("{id}.wav"));
+        match load_factory(id).and_then(|preset| render_preset_wav(id, &preset, &path, export)) {
+            Ok(report) => written.push(report),
+            Err(err) => failures.push((id.to_string(), err.to_string())),
+        }
+    }
+    Ok(BatchRenderResult { written, failures })
 }
 
 #[cfg(test)]
@@ -241,6 +368,19 @@ mod tests {
         assert!(
             b_dark < b_bright * 0.55,
             "low cutoff should be darker (closed={b_dark}, open={b_bright})"
+        );
+    }
+
+    #[test]
+    fn default_wav_path_is_dist_plus_id() {
+        assert_eq!(DEFAULT_OUTPUT_DIR, "dist");
+        assert_eq!(
+            default_wav_path("sub-bass"),
+            PathBuf::from("dist/sub-bass.wav")
+        );
+        assert_eq!(
+            default_wav_path("supersaw-bass"),
+            PathBuf::from("dist/supersaw-bass.wav")
         );
     }
 

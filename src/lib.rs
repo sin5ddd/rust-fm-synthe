@@ -19,10 +19,13 @@ pub use filter::{FilterParams, FilterType};
 pub use midi::{cents_to_ratio, hz_to_midi, midi_to_hz, semitones_to_ratio};
 pub use operator::{FreqMode, OperatorParams, Waveform};
 pub use preset::{
-    factory_ids, factory_info, load_factory, load_preset, load_preset_file, LfoParams, ModSweep,
-    PitchEnv, Preset, PresetInfo,
+    factory_ids, factory_info, load_factory, load_preset, load_preset_file, output_preset_id,
+    LfoParams, ModSweep, PitchEnv, Preset, PresetInfo,
 };
-pub use render::{peak, render, rms, RenderParams, TARGET_PEAK};
+pub use render::{
+    default_wav_path, peak, render, render_all_factory, render_preset_wav, rms, BatchRenderResult,
+    ExportParams, RenderParams, WavRenderReport, DEFAULT_OUTPUT_DIR, TARGET_PEAK,
+};
 pub use wav::{pcm_data_bytes, write_wav, WavSettings};
 
 /// Resolve a note: explicit Hz wins, then MIDI, then the preset default.

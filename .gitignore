@@ -1,5 +1,6 @@
 /target
 **/*.rs.bk
+# Generated samples (render / render-all). Do not commit WAVs.
 *.wav
 *.pcm
 .idea/
