@@ -1,0 +1,67 @@
+name = "low tom"
+description = "ロータム。膜の胴。808ブームや bd-* キックではない（ピッチ落下は小さくサブなし）。"
+algorithm = 7
+feedback = 0.06
+feedback_op = 4
+gain = 1.04
+default_note = 48
+default_duration = 0.55
+
+[pitch]
+start_semitones = 5
+end_semitones = 0
+curve = 1.6
+
+[filter]
+type = "lowpass"
+cutoff = 700
+resonance = 0.14
+env_amount = 0.7
+attack = 0.0006
+decay = 0.16
+sustain = 0.14
+release = 0.1
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.0007
+decay = 0.36
+sustain = 0
+release = 0.12
+vel_sens = 0.3
+waveform = "sine"
+
+[[operators]]
+ratio = 1.35
+detune_cents = 2
+level = 0.26
+attack = 0.0005
+decay = 0.18
+sustain = 0
+release = 0.07
+vel_sens = 0.35
+waveform = "sine"
+
+[[operators]]
+ratio = 2
+detune_cents = 0
+level = 0.16
+attack = 0.00035
+decay = 0.04
+sustain = 0
+release = 0.025
+vel_sens = 0.45
+waveform = "sine"
+
+[[operators]]
+ratio = 3.2
+detune_cents = 0
+level = 0.08
+attack = 0.00025
+decay = 0.016
+sustain = 0
+release = 0.012
+vel_sens = 0.5
+waveform = "sine"

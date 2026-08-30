@@ -1,0 +1,64 @@
+name = "shaker"
+description = "シェイカー。粒状のハイノイズ。短いワンショット（ループ前提ではない）。"
+algorithm = 8
+feedback = 0.9
+feedback_op = 4
+gain = 1.15
+default_note = 84
+default_duration = 0.28
+
+[filter]
+type = "highpass"
+cutoff = 4200
+resonance = 0.18
+env_amount = 0.5
+attack = 0.004
+decay = 0.12
+sustain = 0.05
+release = 0.06
+
+[[operators]]
+ratio = 15
+detune_cents = 0
+level = 1
+attack = 0.006
+decay = 0.16
+sustain = 0
+release = 0.06
+vel_sens = 0.45
+waveform = "pulse"
+
+[[operators]]
+ratio = 19.3
+detune_cents = 22
+level = 0.7
+attack = 0.008
+decay = 0.14
+sustain = 0
+release = 0.05
+vel_sens = 0.5
+waveform = "pulse"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.5
+attack = 0.01
+decay = 0.12
+sustain = 0
+release = 0.04
+vel_sens = 0.55
+waveform = "abs-sine"
+freq_mode = "fixed"
+fixed_hz = 6400
+
+[[operators]]
+ratio = 11
+detune_cents = -16
+level = 0.38
+attack = 0.004
+decay = 0.18
+sustain = 0
+release = 0.07
+vel_sens = 0.4
+waveform = "pulse"

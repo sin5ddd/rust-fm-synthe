@@ -1,0 +1,64 @@
+name = "metal fm bass"
+description = "金属FMベース。非整数比のリンがミッドに乗る。サブは薄く、既存グロウルやスーパーソーとは別キャラ。"
+algorithm = 4
+feedback = 0.36
+feedback_op = 4
+gain = 1.02
+default_note = 43
+default_duration = 1.2
+
+[filter]
+type = "highpass"
+cutoff = 90
+resonance = 0.18
+env_amount = 0.8
+attack = 0.004
+decay = 0.28
+sustain = 0.22
+release = 0.12
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.006
+decay = 0.75
+sustain = 0.18
+release = 0.16
+vel_sens = 0.34
+waveform = "sine"
+
+[[operators]]
+ratio = 2.73
+detune_cents = 14
+level = 0.55
+attack = 0.003
+decay = 0.22
+sustain = 0.06
+release = 0.08
+vel_sens = 0.48
+waveform = "abs-sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.48
+attack = 0.004
+decay = 0.45
+sustain = 0.12
+release = 0.12
+vel_sens = 0.36
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 220
+
+[[operators]]
+ratio = 3.41
+detune_cents = -9
+level = 0.38
+attack = 0.002
+decay = 0.14
+sustain = 0.04
+release = 0.06
+vel_sens = 0.52
+waveform = "sine"

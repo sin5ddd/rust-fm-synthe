@@ -1,0 +1,70 @@
+name = "ride bell"
+description = "ライドベル。短い金属の芯。ライド本体よりタイト。"
+algorithm = 6
+feedback = 0.22
+feedback_op = 4
+gain = 1.06
+default_note = 84
+default_duration = 0.55
+
+[filter]
+type = "bandpass"
+cutoff = 2400
+resonance = 0.34
+env_amount = 0.8
+attack = 0.0003
+decay = 0.16
+sustain = 0.12
+release = 0.08
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.00025
+decay = 0.32
+sustain = 0
+release = 0.12
+vel_sens = 0.38
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 2480
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.55
+attack = 0.0002
+decay = 0.18
+sustain = 0
+release = 0.07
+vel_sens = 0.42
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 3720
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.35
+attack = 0.0002
+decay = 0.12
+sustain = 0
+release = 0.05
+vel_sens = 0.45
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1860
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.28
+attack = 0.00015
+decay = 0.03
+sustain = 0
+release = 0.02
+vel_sens = 0.58
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 5100

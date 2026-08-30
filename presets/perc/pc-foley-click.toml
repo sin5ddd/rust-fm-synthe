@@ -1,0 +1,68 @@
+name = "foley click"
+description = "フォリーのクリック。乾いたプラスチック／スイッチ。"
+algorithm = 8
+feedback = 0.2
+feedback_op = 4
+gain = 1.16
+default_note = 84
+default_duration = 0.12
+
+[filter]
+type = "highpass"
+cutoff = 1200
+resonance = 0.12
+env_amount = 0.25
+attack = 8e-05
+decay = 0.02
+sustain = 0.03
+release = 0.02
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 8e-05
+decay = 0.02
+sustain = 0
+release = 0.014
+vel_sens = 0.55
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1850
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.45
+attack = 8e-05
+decay = 0.012
+sustain = 0
+release = 0.01
+vel_sens = 0.6
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 3400
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.22
+attack = 8e-05
+decay = 0.03
+sustain = 0
+release = 0.016
+vel_sens = 0.45
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 920
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0
+attack = 0.001
+decay = 0.01
+sustain = 0
+release = 0.008
+vel_sens = 0
+waveform = "sine"

@@ -1,0 +1,66 @@
+name = "gated clap"
+description = "ゲートしたクラップ。胴のあと急に切れる。cp-house より短いゲート感。"
+algorithm = 5
+feedback = 0.66
+feedback_op = 4
+gain = 1.16
+default_note = 60
+default_duration = 0.2
+
+[filter]
+type = "highpass"
+cutoff = 800
+resonance = 0.3
+env_amount = 0.35
+attack = 0.00015
+decay = 0.025
+sustain = 0.02
+release = 0.02
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.0002
+decay = 0.048
+sustain = 0
+release = 0.018
+vel_sens = 0.48
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1250
+
+[[operators]]
+ratio = 6.8
+detune_cents = 0
+level = 0.4
+attack = 0.00015
+decay = 0.018
+sustain = 0
+release = 0.01
+vel_sens = 0.58
+waveform = "abs-sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.8
+attack = 0.01
+decay = 0.04
+sustain = 0
+release = 0.016
+vel_sens = 0.5
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 2800
+
+[[operators]]
+ratio = 11.5
+detune_cents = 0
+level = 0.4
+attack = 0.009
+decay = 0.016
+sustain = 0
+release = 0.01
+vel_sens = 0.62
+waveform = "pulse"

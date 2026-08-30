@@ -1,0 +1,67 @@
+name = "low conga"
+description = "ローコンガ。ハイより低く長い膜。キックの808ブームではない。"
+algorithm = 7
+feedback = 0.1
+feedback_op = 4
+gain = 1.06
+default_note = 53
+default_duration = 0.42
+
+[pitch]
+start_semitones = 4
+end_semitones = 0
+curve = 2.4
+
+[filter]
+type = "lowpass"
+cutoff = 1600
+resonance = 0.16
+env_amount = 1
+attack = 0.0004
+decay = 0.1
+sustain = 0.12
+release = 0.07
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.0005
+decay = 0.28
+sustain = 0
+release = 0.1
+vel_sens = 0.38
+waveform = "sine"
+
+[[operators]]
+ratio = 1.6
+detune_cents = 4
+level = 0.32
+attack = 0.0004
+decay = 0.14
+sustain = 0
+release = 0.05
+vel_sens = 0.42
+waveform = "sine"
+
+[[operators]]
+ratio = 2.8
+detune_cents = 0
+level = 0.22
+attack = 0.00025
+decay = 0.03
+sustain = 0
+release = 0.02
+vel_sens = 0.52
+waveform = "sine"
+
+[[operators]]
+ratio = 4.5
+detune_cents = 0
+level = 0.1
+attack = 0.0002
+decay = 0.014
+sustain = 0
+release = 0.012
+vel_sens = 0.58
+waveform = "pulse"

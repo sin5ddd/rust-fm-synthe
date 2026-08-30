@@ -1,0 +1,70 @@
+name = "chime hit"
+description = "短いチャイム。ガラスヒットより低く、ベルの粒。"
+algorithm = 6
+feedback = 0.1
+feedback_op = 4
+gain = 1.04
+default_note = 84
+default_duration = 0.55
+
+[filter]
+type = "highpass"
+cutoff = 600
+resonance = 0.12
+env_amount = 0.3
+attack = 0.0003
+decay = 0.16
+sustain = 0.12
+release = 0.08
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.95
+attack = 0.0004
+decay = 0.36
+sustain = 0
+release = 0.14
+vel_sens = 0.35
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1046
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.5
+attack = 0.0003
+decay = 0.24
+sustain = 0
+release = 0.1
+vel_sens = 0.38
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1568
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.32
+attack = 0.0003
+decay = 0.16
+sustain = 0
+release = 0.07
+vel_sens = 0.42
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 2093
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.18
+attack = 0.0002
+decay = 0.03
+sustain = 0
+release = 0.02
+vel_sens = 0.55
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 3136

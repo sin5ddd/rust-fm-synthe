@@ -1,0 +1,67 @@
+name = "high conga"
+description = "ハイコンガ。短い膜のトーン。キックではない。"
+algorithm = 7
+feedback = 0.12
+feedback_op = 4
+gain = 1.08
+default_note = 62
+default_duration = 0.35
+
+[pitch]
+start_semitones = 5
+end_semitones = 0
+curve = 3
+
+[filter]
+type = "lowpass"
+cutoff = 2400
+resonance = 0.18
+env_amount = 1.2
+attack = 0.0003
+decay = 0.08
+sustain = 0.1
+release = 0.06
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.0004
+decay = 0.2
+sustain = 0
+release = 0.08
+vel_sens = 0.4
+waveform = "sine"
+
+[[operators]]
+ratio = 1.7
+detune_cents = 6
+level = 0.35
+attack = 0.0003
+decay = 0.1
+sustain = 0
+release = 0.04
+vel_sens = 0.45
+waveform = "sine"
+
+[[operators]]
+ratio = 3.2
+detune_cents = 0
+level = 0.28
+attack = 0.0002
+decay = 0.025
+sustain = 0
+release = 0.02
+vel_sens = 0.55
+waveform = "sine"
+
+[[operators]]
+ratio = 5
+detune_cents = 0
+level = 0.12
+attack = 0.00015
+decay = 0.012
+sustain = 0
+release = 0.01
+vel_sens = 0.6
+waveform = "pulse"

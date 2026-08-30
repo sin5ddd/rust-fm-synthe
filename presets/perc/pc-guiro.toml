@@ -1,0 +1,64 @@
+name = "guiro scrape"
+description = "ギロの短いスクレイプ。ざらついた一擦り。"
+algorithm = 8
+feedback = 0.86
+feedback_op = 4
+gain = 1.12
+default_note = 67
+default_duration = 0.26
+
+[filter]
+type = "bandpass"
+cutoff = 1800
+resonance = 0.34
+env_amount = 1
+attack = 0.006
+decay = 0.1
+sustain = 0.05
+release = 0.05
+
+[[operators]]
+ratio = 8.5
+detune_cents = 0
+level = 1
+attack = 0.008
+decay = 0.14
+sustain = 0
+release = 0.05
+vel_sens = 0.42
+waveform = "pulse"
+
+[[operators]]
+ratio = 6.2
+detune_cents = 14
+level = 0.65
+attack = 0.01
+decay = 0.12
+sustain = 0
+release = 0.045
+vel_sens = 0.48
+waveform = "abs-sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.4
+attack = 0.006
+decay = 0.08
+sustain = 0
+release = 0.035
+vel_sens = 0.5
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 980
+
+[[operators]]
+ratio = 11
+detune_cents = -8
+level = 0.3
+attack = 0.005
+decay = 0.16
+sustain = 0
+release = 0.06
+vel_sens = 0.4
+waveform = "pulse"

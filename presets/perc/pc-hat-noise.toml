@@ -1,0 +1,66 @@
+name = "noise hat"
+description = "ノイズ寄りのハット。フィードバック最大付近。"
+algorithm = 8
+feedback = 0.96
+feedback_op = 4
+gain = 1.2
+default_note = 84
+default_duration = 0.2
+
+[filter]
+type = "highpass"
+cutoff = 5000
+resonance = 0.22
+env_amount = 0.7
+attack = 0.0002
+decay = 0.0405
+sustain = 0.04
+release = 0.04
+
+[[operators]]
+ratio = 20.5
+detune_cents = 0
+level = 1
+attack = 0.0002
+decay = 0.09
+sustain = 0
+release = 0.0315
+vel_sens = 0.5
+waveform = "pulse"
+
+[[operators]]
+ratio = 14.965
+detune_cents = -18
+level = 0.78
+attack = 0.00015
+decay = 0.063
+sustain = 0
+release = 0.0252
+vel_sens = 0.55
+waveform = "pulse"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.55
+attack = 0.00015
+decay = 0.0405
+sustain = 0
+release = 0.03
+vel_sens = 0.6
+waveform = "abs-sine"
+freq_mode = "fixed"
+fixed_hz = 6800
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.42
+attack = 0.0001
+decay = 0.0252
+sustain = 0
+release = 0.02
+vel_sens = 0.65
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 9996

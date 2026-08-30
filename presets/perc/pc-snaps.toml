@@ -1,0 +1,66 @@
+name = "snap cluster"
+description = "スナップの重ね。わずかに遅れた2粒。pc-snap より広い。"
+algorithm = 5
+feedback = 0.5
+feedback_op = 4
+gain = 1.12
+default_note = 72
+default_duration = 0.26
+
+[filter]
+type = "highpass"
+cutoff = 650
+resonance = 0.2
+env_amount = 0.45
+attack = 0.0002
+decay = 0.05
+sustain = 0.06
+release = 0.04
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.0002
+decay = 0.05
+sustain = 0
+release = 0.028
+vel_sens = 0.48
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1280
+
+[[operators]]
+ratio = 8
+detune_cents = 0
+level = 0.32
+attack = 0.00015
+decay = 0.018
+sustain = 0
+release = 0.012
+vel_sens = 0.6
+waveform = "abs-sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.78
+attack = 0.018
+decay = 0.055
+sustain = 0
+release = 0.03
+vel_sens = 0.5
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 2900
+
+[[operators]]
+ratio = 10
+detune_cents = 0
+level = 0.28
+attack = 0.017
+decay = 0.02
+sustain = 0
+release = 0.012
+vel_sens = 0.62
+waveform = "pulse"

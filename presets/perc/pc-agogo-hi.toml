@@ -1,0 +1,70 @@
+name = "high agogo"
+description = "アゴゴの高音。明るい金属ベル。"
+algorithm = 6
+feedback = 0.18
+feedback_op = 4
+gain = 1.08
+default_note = 84
+default_duration = 0.38
+
+[filter]
+type = "highpass"
+cutoff = 800
+resonance = 0.16
+env_amount = 0.4
+attack = 0.00025
+decay = 0.1
+sustain = 0.1
+release = 0.06
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.00025
+decay = 0.22
+sustain = 0
+release = 0.1
+vel_sens = 0.38
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1480
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.5
+attack = 0.0002
+decay = 0.14
+sustain = 0
+release = 0.06
+vel_sens = 0.42
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 2960
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.28
+attack = 0.0002
+decay = 0.1
+sustain = 0
+release = 0.05
+vel_sens = 0.45
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 2220
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.2
+attack = 0.00015
+decay = 0.025
+sustain = 0
+release = 0.016
+vel_sens = 0.55
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 4000

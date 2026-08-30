@@ -1,0 +1,70 @@
+name = "tambourine"
+description = "タンバリン。ジングルの金属＋短い皮。ハットよりリンが残る。"
+algorithm = 6
+feedback = 0.42
+feedback_op = 4
+gain = 1.12
+default_note = 84
+default_duration = 0.45
+
+[filter]
+type = "highpass"
+cutoff = 1800
+resonance = 0.28
+env_amount = 0.9
+attack = 0.0003
+decay = 0.12
+sustain = 0.08
+release = 0.08
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.7
+attack = 0.0003
+decay = 0.08
+sustain = 0
+release = 0.04
+vel_sens = 0.45
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 2100
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.85
+attack = 0.00025
+decay = 0.28
+sustain = 0
+release = 0.1
+vel_sens = 0.4
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 4450
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.55
+attack = 0.0002
+decay = 0.22
+sustain = 0
+release = 0.08
+vel_sens = 0.45
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 6720
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.4
+attack = 0.00015
+decay = 0.05
+sustain = 0
+release = 0.03
+vel_sens = 0.65
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 3100

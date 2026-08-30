@@ -173,6 +173,71 @@ const FACTORY: &[(&str, &str)] = &[
     factory_entry!("fx", "fx-whoosh-hp"),
     factory_entry!("fx", "fx-riser-filter"),
     factory_entry!("fx", "fx-hoover-fall"),
+    factory_entry!("bass", "bs-808-sub"),
+    factory_entry!("bass", "bs-reese-dark"),
+    factory_entry!("bass", "bs-reese-bright"),
+    factory_entry!("bass", "bs-reese-neuro"),
+    factory_entry!("bass", "bs-wobble"),
+    factory_entry!("bass", "bs-acid"),
+    factory_entry!("bass", "bs-frenchcore"),
+    factory_entry!("bass", "bs-gabber"),
+    factory_entry!("bass", "bs-hoover"),
+    factory_entry!("bass", "bs-dist-square"),
+    factory_entry!("bass", "bs-house-tight"),
+    factory_entry!("bass", "bs-amen-sub"),
+    factory_entry!("bass", "bs-growl-2"),
+    factory_entry!("bass", "bs-sine-sub"),
+    factory_entry!("bass", "bs-metal-fm"),
+    factory_entry!("perc", "pc-hat-closed"),
+    factory_entry!("perc", "pc-hat-open"),
+    factory_entry!("perc", "pc-hat-house"),
+    factory_entry!("perc", "pc-hat-dnb-cl"),
+    factory_entry!("perc", "pc-hat-dnb-op"),
+    factory_entry!("perc", "pc-hat-fc"),
+    factory_entry!("perc", "pc-hat-pedal"),
+    factory_entry!("perc", "pc-hat-tight"),
+    factory_entry!("perc", "pc-hat-dark"),
+    factory_entry!("perc", "pc-hat-noise"),
+    factory_entry!("perc", "pc-hat-chip"),
+    factory_entry!("perc", "pc-hat-fc-op"),
+    factory_entry!("perc", "pc-shaker"),
+    factory_entry!("perc", "pc-shaker-short"),
+    factory_entry!("perc", "pc-tamb"),
+    factory_entry!("perc", "pc-tamb-roll"),
+    factory_entry!("perc", "pc-cabasa"),
+    factory_entry!("perc", "pc-conga-hi"),
+    factory_entry!("perc", "pc-conga-lo"),
+    factory_entry!("perc", "pc-bongo-hi"),
+    factory_entry!("perc", "pc-bongo-lo"),
+    factory_entry!("perc", "pc-tom-hi"),
+    factory_entry!("perc", "pc-tom-mid"),
+    factory_entry!("perc", "pc-tom-lo"),
+    factory_entry!("perc", "pc-rim"),
+    factory_entry!("perc", "pc-cowbell"),
+    factory_entry!("perc", "pc-clave"),
+    factory_entry!("perc", "pc-snap"),
+    factory_entry!("perc", "pc-snaps"),
+    factory_entry!("perc", "pc-snap-lo"),
+    factory_entry!("perc", "pc-triangle"),
+    factory_entry!("perc", "pc-ride-fm"),
+    factory_entry!("perc", "pc-ride-bell"),
+    factory_entry!("perc", "pc-woodblock"),
+    factory_entry!("perc", "pc-agogo-hi"),
+    factory_entry!("perc", "pc-agogo-lo"),
+    factory_entry!("perc", "pc-tick-metal"),
+    factory_entry!("perc", "pc-tick-indust"),
+    factory_entry!("perc", "pc-tick-clock"),
+    factory_entry!("perc", "pc-clap-dry"),
+    factory_entry!("perc", "pc-clap-room"),
+    factory_entry!("perc", "pc-clap-gate"),
+    factory_entry!("perc", "pc-zap"),
+    factory_entry!("perc", "pc-zap-lo"),
+    factory_entry!("perc", "pc-foley-click"),
+    factory_entry!("perc", "pc-foley-thud"),
+    factory_entry!("perc", "pc-foley-scratch"),
+    factory_entry!("perc", "pc-chime"),
+    factory_entry!("perc", "pc-guiro"),
+    factory_entry!("perc", "pc-stick"),
 ];
 
 #[derive(Clone, Debug, Deserialize)]
@@ -500,6 +565,8 @@ mod tests {
         assert_eq!(output_preset_id(Some("sd-808-snap"), None), "sd-808-snap");
         assert_eq!(output_preset_id(Some("ld-fm-pluck"), None), "ld-fm-pluck");
         assert_eq!(output_preset_id(Some("fx-rev-cym"), None), "fx-rev-cym");
+        assert_eq!(output_preset_id(Some("bs-808-sub"), None), "bs-808-sub");
+        assert_eq!(output_preset_id(Some("pc-hat-closed"), None), "pc-hat-closed");
     }
 
     #[test]
@@ -563,6 +630,40 @@ mod tests {
             ids.len(),
             50,
             "expected exactly 50 fx-* factory FX, got {}: {ids:?}",
+            ids.len()
+        );
+        for id in &ids {
+            load_factory(id).expect(id);
+        }
+    }
+
+    #[test]
+    fn factory_bs_bass_bank_has_fifteen_ids() {
+        let ids: Vec<_> = factory_ids()
+            .into_iter()
+            .filter(|id| id.starts_with("bs-"))
+            .collect();
+        assert_eq!(
+            ids.len(),
+            15,
+            "expected exactly 15 bs-* factory basses, got {}: {ids:?}",
+            ids.len()
+        );
+        for id in &ids {
+            load_factory(id).expect(id);
+        }
+    }
+
+    #[test]
+    fn factory_pc_perc_bank_has_fifty_ids() {
+        let ids: Vec<_> = factory_ids()
+            .into_iter()
+            .filter(|id| id.starts_with("pc-"))
+            .collect();
+        assert_eq!(
+            ids.len(),
+            50,
+            "expected exactly 50 pc-* factory perc, got {}: {ids:?}",
             ids.len()
         );
         for id in &ids {

@@ -277,6 +277,82 @@ fn factory_fx_are_fifty_and_audible() {
 }
 
 #[test]
+fn factory_bs_basses_are_fifteen_and_audible() {
+    let ids: Vec<_> = factory_ids()
+        .into_iter()
+        .filter(|id| id.starts_with("bs-"))
+        .collect();
+    assert_eq!(
+        ids.len(),
+        15,
+        "expected exactly 15 bs-* factory basses, got {}: {ids:?}",
+        ids.len()
+    );
+
+    for id in ids {
+        let preset = load_factory(id).unwrap();
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: 22_050,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+        assert!(
+            rms(&buf) > 0.01,
+            "bs bass `{id}` rendered near-silence (rms={})",
+            rms(&buf)
+        );
+        assert!(
+            buf.iter().any(|&s| s.abs() > 1e-3),
+            "{id} effectively silent"
+        );
+    }
+}
+
+#[test]
+fn factory_pc_perc_are_fifty_and_audible() {
+    let ids: Vec<_> = factory_ids()
+        .into_iter()
+        .filter(|id| id.starts_with("pc-"))
+        .collect();
+    assert_eq!(
+        ids.len(),
+        50,
+        "expected exactly 50 pc-* factory perc, got {}: {ids:?}",
+        ids.len()
+    );
+
+    for id in ids {
+        let preset = load_factory(id).unwrap();
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: 22_050,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+        assert!(
+            rms(&buf) > 0.01,
+            "pc perc `{id}` rendered near-silence (rms={})",
+            rms(&buf)
+        );
+        assert!(
+            buf.iter().any(|&s| s.abs() > 1e-3),
+            "{id} effectively silent"
+        );
+    }
+}
+
+#[test]
 fn every_factory_preset_makes_sound() {
     for id in fm_synth::factory_ids() {
         let preset = load_factory(id).unwrap();

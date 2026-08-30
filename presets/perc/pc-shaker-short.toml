@@ -1,0 +1,64 @@
+name = "short shaker"
+description = "極短いシェイカーティック。16分の粒。"
+algorithm = 8
+feedback = 0.88
+feedback_op = 4
+gain = 1.18
+default_note = 88
+default_duration = 0.12
+
+[filter]
+type = "highpass"
+cutoff = 5000
+resonance = 0.2
+env_amount = 0.4
+attack = 0.001
+decay = 0.04
+sustain = 0.02
+release = 0.03
+
+[[operators]]
+ratio = 18
+detune_cents = 0
+level = 1
+attack = 0.0008
+decay = 0.055
+sustain = 0
+release = 0.03
+vel_sens = 0.5
+waveform = "pulse"
+
+[[operators]]
+ratio = 22
+detune_cents = -14
+level = 0.72
+attack = 0.0006
+decay = 0.04
+sustain = 0
+release = 0.022
+vel_sens = 0.55
+waveform = "pulse"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.48
+attack = 0.0005
+decay = 0.035
+sustain = 0
+release = 0.02
+vel_sens = 0.6
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 7200
+
+[[operators]]
+ratio = 13
+detune_cents = 0
+level = 0.32
+attack = 0.0004
+decay = 0.07
+sustain = 0
+release = 0.03
+vel_sens = 0.45
+waveform = "abs-sine"

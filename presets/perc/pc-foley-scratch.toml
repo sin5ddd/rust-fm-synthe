@@ -1,0 +1,64 @@
+name = "foley scratch"
+description = "フォリーの短いスクラッチ。ざらついたノイズの一擦り。"
+algorithm = 8
+feedback = 0.88
+feedback_op = 4
+gain = 1.12
+default_note = 72
+default_duration = 0.2
+
+[filter]
+type = "bandpass"
+cutoff = 2200
+resonance = 0.3
+env_amount = 1.2
+attack = 0.002
+decay = 0.07
+sustain = 0.04
+release = 0.04
+
+[[operators]]
+ratio = 10
+detune_cents = 0
+level = 1
+attack = 0.003
+decay = 0.1
+sustain = 0
+release = 0.04
+vel_sens = 0.45
+waveform = "pulse"
+
+[[operators]]
+ratio = 14.5
+detune_cents = 18
+level = 0.7
+attack = 0.004
+decay = 0.08
+sustain = 0
+release = 0.035
+vel_sens = 0.5
+waveform = "abs-sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.45
+attack = 0.002
+decay = 0.06
+sustain = 0
+release = 0.03
+vel_sens = 0.55
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 1750
+
+[[operators]]
+ratio = 8
+detune_cents = -10
+level = 0.32
+attack = 0.002
+decay = 0.12
+sustain = 0
+release = 0.05
+vel_sens = 0.4
+waveform = "pulse"

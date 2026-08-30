@@ -1,0 +1,68 @@
+name = "stick click"
+description = "スティックのクリック。リムより乾いて短い。"
+algorithm = 8
+feedback = 0.12
+feedback_op = 4
+gain = 1.16
+default_note = 76
+default_duration = 0.14
+
+[filter]
+type = "highpass"
+cutoff = 1500
+resonance = 0.14
+env_amount = 0.3
+attack = 0.0001
+decay = 0.025
+sustain = 0.04
+release = 0.025
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.0001
+decay = 0.028
+sustain = 0
+release = 0.018
+vel_sens = 0.52
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 2100
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.42
+attack = 0.0001
+decay = 0.016
+sustain = 0
+release = 0.012
+vel_sens = 0.58
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 3600
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.2
+attack = 0.0001
+decay = 0.04
+sustain = 0
+release = 0.02
+vel_sens = 0.45
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1250
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0
+attack = 0.001
+decay = 0.01
+sustain = 0
+release = 0.008
+vel_sens = 0
+waveform = "sine"
