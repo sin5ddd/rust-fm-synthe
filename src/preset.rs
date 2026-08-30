@@ -72,6 +72,7 @@ const FACTORY: &[(&str, &str)] = &[
     factory_entry!("perc", "cp-house"),
     factory_entry!("ld", "lead-fm-pluck"),
     factory_entry!("ld", "stab-fm-fifth"),
+    factory_entry!("ld", "stab-fm-major"),
     factory_entry!("bass", "reese-mid"),
     factory_entry!("ld", "ld-fm-pluck"),
     factory_entry!("ld", "ld-hollow-fifth"),
@@ -604,7 +605,13 @@ mod tests {
 
     #[test]
     fn factory_strudel_oneshots_parse() {
-        const IDS: [&str; 4] = ["cp-house", "lead-fm-pluck", "stab-fm-fifth", "reese-mid"];
+        const IDS: [&str; 5] = [
+            "cp-house",
+            "lead-fm-pluck",
+            "stab-fm-fifth",
+            "stab-fm-major",
+            "reese-mid",
+        ];
         for id in IDS {
             let p = load_factory(id).expect(id);
             assert_eq!(output_preset_id(Some(id), None), id);
@@ -618,7 +625,12 @@ mod tests {
             clap.default_duration
         );
 
-        for id in ["lead-fm-pluck", "stab-fm-fifth", "reese-mid"] {
+        for id in [
+            "lead-fm-pluck",
+            "stab-fm-fifth",
+            "stab-fm-major",
+            "reese-mid",
+        ] {
             let p = load_factory(id).unwrap();
             assert_eq!(
                 p.default_note, 48,
@@ -654,6 +666,45 @@ mod tests {
                 .iter()
                 .all(|op| (op.ratio - 1.25).abs() > 0.05),
             "no 5:4 / major-third ratio"
+        );
+
+        let major = load_factory("stab-fm-major").unwrap();
+        assert_eq!(major.feedback, 0.0);
+        assert!(
+            (0.3..=0.6).contains(&major.default_duration),
+            "stab-fm-major duration {}",
+            major.default_duration
+        );
+        let live: Vec<_> = major
+            .operators
+            .iter()
+            .filter(|op| op.level > 1e-6)
+            .collect();
+        assert_eq!(
+            live.len(),
+            3,
+            "major triad is three partials, got {}",
+            live.len()
+        );
+        let mut ratios: Vec<f64> = live.iter().map(|op| op.ratio).collect();
+        ratios.sort_by(|a, b| a.partial_cmp(b).unwrap());
+        assert!((ratios[0] - 1.0).abs() < 1e-9, "root ratio {}", ratios[0]);
+        assert!(
+            (ratios[1] - 1.25).abs() < 1e-9,
+            "major-third ratio {}",
+            ratios[1]
+        );
+        assert!((ratios[2] - 1.5).abs() < 1e-9, "fifth ratio {}", ratios[2]);
+        for op in &live {
+            assert_eq!(op.waveform, crate::operator::Waveform::Sine);
+            assert!((op.detune_cents).abs() < 1e-9, "no detune on major triad");
+        }
+        assert!(
+            major
+                .operators
+                .iter()
+                .all(|op| op.level < 1e-6 || (op.ratio - 1.2).abs() > 0.02),
+            "no 6:5 / minor-third ratio"
         );
     }
 }
