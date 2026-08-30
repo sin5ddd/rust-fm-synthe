@@ -200,6 +200,25 @@ fn factory_sd_snares_are_twenty_and_audible() {
     }
 }
 
+/// Factory ids whose TOML lives in `presets/ld/` (the `ld-*` bank plus
+/// the older lead/stab/pluck shots that were not renamed).
+fn factory_ld_folder_ids() -> Vec<&'static str> {
+    factory_ids()
+        .into_iter()
+        .filter(|id| {
+            id.starts_with("ld-")
+                || matches!(
+                    *id,
+                    "lead-fm-pluck"
+                        | "stab-fm-fifth"
+                        | "stab-fm-major"
+                        | "filter-pluck"
+                        | "stab-pluck"
+                )
+        })
+        .collect()
+}
+
 #[test]
 fn factory_ld_leads_are_fifty_and_audible() {
     let ids: Vec<_> = factory_ids()
@@ -215,11 +234,13 @@ fn factory_ld_leads_are_fifty_and_audible() {
 
     for id in ids {
         let preset = load_factory(id).unwrap();
+        // Bank-count / audible smoke. Hold length is checked in
+        // `factory_ld_folder_holds_four_bars_at_120bpm` (default ~8 s).
         let buf = render(
             &preset,
             &RenderParams {
                 frequency_hz: midi_to_hz(preset.default_note),
-                duration_secs: preset.default_duration,
+                duration_secs: 0.25,
                 velocity: 0.9,
                 sample_rate: 22_050,
             },
@@ -234,6 +255,73 @@ fn factory_ld_leads_are_fifty_and_audible() {
         assert!(
             buf.iter().any(|&s| s.abs() > 1e-3),
             "{id} effectively silent"
+        );
+    }
+}
+
+/// 120 BPM, 4/4 → 1 bar = 2 s → 4 bars = 8 s held note.
+/// Short `default_duration` is not enough if amp ADSR dies in 0.4 s:
+/// the last 0.5 s of the default render must still have energy.
+#[test]
+fn factory_ld_folder_holds_four_bars_at_120bpm() {
+    let ids = factory_ld_folder_ids();
+    assert!(
+        ids.len() >= 55,
+        "expected ld-* bank plus presets/ld extras, got {}: {ids:?}",
+        ids.len()
+    );
+
+    const SR: u32 = 22_050;
+    const TAIL_SECS: f64 = 0.5;
+    let tail_n = ((TAIL_SECS * f64::from(SR)).round() as usize).max(1);
+
+    for id in ids {
+        let preset = load_factory(id).unwrap();
+        assert!(
+            (8.0..=8.5).contains(&preset.default_duration),
+            "{id} default_duration {} must be ~8 s (4 bars @ 120 BPM)",
+            preset.default_duration
+        );
+
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: SR,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+
+        let expected = (preset.default_duration * f64::from(SR)).round() as usize;
+        assert_eq!(
+            buf.len(),
+            expected,
+            "{id} sample count {} != duration*sr {}",
+            buf.len(),
+            expected
+        );
+        assert!(
+            buf.len() >= tail_n,
+            "{id} buffer shorter than tail window"
+        );
+
+        let tail = &buf[buf.len() - tail_n..];
+        let tail_rms = rms(tail);
+        assert!(
+            tail_rms > 0.01,
+            "{id} last {TAIL_SECS}s is silence (rms={tail_rms}); \
+             carrier sustain must hold for the full 8 s key-down"
+        );
+
+        // Tone still audible at t=7 s (well before the release tail).
+        let t7 = ((7.0 * f64::from(SR)).round() as usize).min(buf.len().saturating_sub(tail_n));
+        let at7 = rms(&buf[t7..t7 + tail_n]);
+        assert!(
+            at7 > 0.01,
+            "{id} silent at t=7s (rms={at7}); filter/amp env died too early"
         );
     }
 }

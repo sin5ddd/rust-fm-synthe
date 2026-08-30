@@ -5,7 +5,7 @@ feedback = 0.0
 feedback_op = 4
 gain = 1.15
 default_note = 48
-default_duration = 0.35
+default_duration = 8.2
 
 # フィルタなし。FMもFBもデチューンもしない。正弦3本の長三和音。短3度は足さない。
 
@@ -16,8 +16,8 @@ detune_cents = 0.0
 level = 1.0
 attack = 0.0007
 decay = 0.15
-sustain = 0.0
-release = 0.045
+sustain = 0.75
+release = 0.2
 vel_sens = 0.4
 waveform = "sine"
 
@@ -28,8 +28,8 @@ detune_cents = 0.0
 level = 0.92
 attack = 0.0007
 decay = 0.13
-sustain = 0.0
-release = 0.04
+sustain = 0.75
+release = 0.2
 vel_sens = 0.4
 waveform = "sine"
 
@@ -40,8 +40,8 @@ detune_cents = 0.0
 level = 0.88
 attack = 0.0007
 decay = 0.12
-sustain = 0.0
-release = 0.04
+sustain = 0.75
+release = 0.2
 vel_sens = 0.4
 waveform = "sine"
 
@@ -52,7 +52,7 @@ detune_cents = 0.0
 level = 0.0
 attack = 0.001
 decay = 0.05
-sustain = 0.0
+sustain = 0
 release = 0.02
 vel_sens = 0.0
 waveform = "sine"

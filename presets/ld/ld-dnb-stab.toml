@@ -5,7 +5,7 @@ feedback = 0.18
 feedback_op = 4
 gain = 1.05
 default_note = 48
-default_duration = 0.4
+default_duration = 8.2
 
 [filter]
 type = "bandpass"
@@ -14,8 +14,8 @@ resonance = 0.32
 env_amount = 1.6
 attack = 0.0005
 decay = 0.08
-sustain = 0.05
-release = 0.06
+sustain = 0.22
+release = 0.2
 
 # OP1 芯
 [[operators]]
@@ -24,8 +24,8 @@ detune_cents = -2
 level = 1.0
 attack = 0.0006
 decay = 0.11
-sustain = 0.0
-release = 0.04
+sustain = 0.75
+release = 0.2
 vel_sens = 0.45
 waveform = "pulse"
 
@@ -36,8 +36,8 @@ detune_cents = 5
 level = 0.7
 attack = 0.0006
 decay = 0.1
-sustain = 0.0
-release = 0.035
+sustain = 0.75
+release = 0.2
 vel_sens = 0.4
 waveform = "saw"
 
@@ -48,8 +48,8 @@ detune_cents = 0
 level = 0.35
 attack = 0.0003
 decay = 0.04
-sustain = 0.0
-release = 0.018
+sustain = 0.75
+release = 0.2
 vel_sens = 0.5
 waveform = "sine"
 
@@ -60,7 +60,7 @@ detune_cents = 8
 level = 0.22
 attack = 0.0002
 decay = 0.018
-sustain = 0.0
+sustain = 0
 release = 0.01
 vel_sens = 0.55
 waveform = "half-sine"

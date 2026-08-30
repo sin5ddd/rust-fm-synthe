@@ -772,8 +772,8 @@ mod tests {
         let major = load_factory("stab-fm-major").unwrap();
         assert_eq!(major.feedback, 0.0);
         assert!(
-            (0.3..=0.6).contains(&major.default_duration),
-            "stab-fm-major duration {}",
+            (8.0..=8.5).contains(&major.default_duration),
+            "stab-fm-major duration {} (held 4 bars @ 120 BPM)",
             major.default_duration
         );
         let live: Vec<_> = major

@@ -5,7 +5,7 @@ feedback = 0.1
 feedback_op = 4
 gain = 1.0
 default_note = 48
-default_duration = 0.38
+default_duration = 8.2
 
 [filter]
 type = "lowpass"
@@ -14,8 +14,8 @@ resonance = 0.34
 env_amount = 4.6
 attack = 0.0008
 decay = 0.14
-sustain = 0.12
-release = 0.1
+sustain = 0.22
+release = 0.2
 
 # OP1 キャリア: 比 1 = C3 基音（約130.8 Hz）。オクターブ上にしない。
 [[operators]]
@@ -24,8 +24,8 @@ detune_cents = 0.0
 level = 1.0
 attack = 0.0009
 decay = 0.22
-sustain = 0.0
-release = 0.07
+sustain = 0.75
+release = 0.2
 vel_sens = 0.4
 waveform = "sine"
 
@@ -36,7 +36,7 @@ detune_cents = 3.0
 level = 0.28
 attack = 0.0004
 decay = 0.05
-sustain = 0.0
+sustain = 0
 release = 0.025
 vel_sens = 0.5
 waveform = "sine"
@@ -48,7 +48,7 @@ detune_cents = -4.0
 level = 0.14
 attack = 0.0003
 decay = 0.03
-sustain = 0.0
+sustain = 0
 release = 0.018
 vel_sens = 0.55
 waveform = "sine"
@@ -60,7 +60,7 @@ detune_cents = 0.0
 level = 0.08
 attack = 0.0002
 decay = 0.016
-sustain = 0.0
+sustain = 0
 release = 0.01
 vel_sens = 0.6
 waveform = "sine"

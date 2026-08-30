@@ -5,7 +5,7 @@ feedback = 0.24
 feedback_op = 4
 gain = 1.0
 default_note = 48
-default_duration = 1.25
+default_duration = 8.2
 
 [lfo]
 rate_hz = 2.6
@@ -32,7 +32,7 @@ detune_cents = 0
 level = 1.0
 attack = 0.02
 decay = 0.7
-sustain = 0.38
+sustain = 0.82
 release = 0.2
 vel_sens = 0.28
 waveform = "sine"
