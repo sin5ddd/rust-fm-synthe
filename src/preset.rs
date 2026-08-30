@@ -7,339 +7,172 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 /// Factory bank, embedded so `cargo run` works without the presets/ directory.
+/// Disk layout is `presets/<category>/<id>.toml` (bass, bd, sd, ld, fx, perc).
+macro_rules! factory_entry {
+    ($dir:literal, $id:literal) => {
+        (
+            $id,
+            include_str!(concat!("../presets/", $dir, "/", $id, ".toml")),
+        )
+    };
+}
+
 const FACTORY: &[(&str, &str)] = &[
-    ("sub-bass", include_str!("../presets/sub-bass.toml")),
-    ("growl-bass", include_str!("../presets/growl-bass.toml")),
-    ("metallic-hit", include_str!("../presets/metallic-hit.toml")),
-    ("fm-riser", include_str!("../presets/fm-riser.toml")),
-    ("stab-pluck", include_str!("../presets/stab-pluck.toml")),
-    ("zap", include_str!("../presets/zap.toml")),
-    ("glass-hit", include_str!("../presets/glass-hit.toml")),
-    (
-        "supersaw-bass",
-        include_str!("../presets/supersaw-bass.toml"),
-    ),
-    ("filter-pluck", include_str!("../presets/filter-pluck.toml")),
-    ("bp-growl", include_str!("../presets/bp-growl.toml")),
-    ("hp-air", include_str!("../presets/hp-air.toml")),
-    ("bd-808-boom", include_str!("../presets/bd-808-boom.toml")),
-    ("bd-808-tight", include_str!("../presets/bd-808-tight.toml")),
-    ("bd-909-punch", include_str!("../presets/bd-909-punch.toml")),
-    (
-        "bd-house-floor",
-        include_str!("../presets/bd-house-floor.toml"),
-    ),
-    (
-        "bd-techno-thud",
-        include_str!("../presets/bd-techno-thud.toml"),
-    ),
-    ("bd-dnb-tight", include_str!("../presets/bd-dnb-tight.toml")),
-    (
-        "bd-neuro-growl",
-        include_str!("../presets/bd-neuro-growl.toml"),
-    ),
-    (
-        "bd-frenchcore",
-        include_str!("../presets/bd-frenchcore.toml"),
-    ),
-    (
-        "bd-gabber-stomp",
-        include_str!("../presets/bd-gabber-stomp.toml"),
-    ),
-    ("bd-hardstyle", include_str!("../presets/bd-hardstyle.toml")),
-    ("bd-lofi-dust", include_str!("../presets/bd-lofi-dust.toml")),
-    ("bd-click", include_str!("../presets/bd-click.toml")),
-    ("bd-sub", include_str!("../presets/bd-sub.toml")),
-    (
-        "bd-metal-ping",
-        include_str!("../presets/bd-metal-ping.toml"),
-    ),
-    ("bd-cinematic", include_str!("../presets/bd-cinematic.toml")),
-    (
-        "bd-electro-zap",
-        include_str!("../presets/bd-electro-zap.toml"),
-    ),
-    ("bd-808-dist", include_str!("../presets/bd-808-dist.toml")),
-    ("bd-disco-dry", include_str!("../presets/bd-disco-dry.toml")),
-    (
-        "bd-jungle-round",
-        include_str!("../presets/bd-jungle-round.toml"),
-    ),
-    ("bd-fm-noise", include_str!("../presets/bd-fm-noise.toml")),
-    ("sd-808-snap", include_str!("../presets/sd-808-snap.toml")),
-    (
-        "sd-909-snappy",
-        include_str!("../presets/sd-909-snappy.toml"),
-    ),
-    ("sd-pop-tight", include_str!("../presets/sd-pop-tight.toml")),
-    (
-        "sd-fat-backbeat",
-        include_str!("../presets/sd-fat-backbeat.toml"),
-    ),
-    ("sd-rimshot", include_str!("../presets/sd-rimshot.toml")),
-    (
-        "sd-clap-snare",
-        include_str!("../presets/sd-clap-snare.toml"),
-    ),
-    ("sd-gated-80s", include_str!("../presets/sd-gated-80s.toml")),
-    (
-        "sd-brush-dust",
-        include_str!("../presets/sd-brush-dust.toml"),
-    ),
-    ("sd-piccolo", include_str!("../presets/sd-piccolo.toml")),
-    ("sd-dnb-tight", include_str!("../presets/sd-dnb-tight.toml")),
-    (
-        "sd-jungle-round",
-        include_str!("../presets/sd-jungle-round.toml"),
-    ),
-    (
-        "sd-neuro-growl",
-        include_str!("../presets/sd-neuro-growl.toml"),
-    ),
-    (
-        "sd-frenchcore",
-        include_str!("../presets/sd-frenchcore.toml"),
-    ),
-    (
-        "sd-gabber-indust",
-        include_str!("../presets/sd-gabber-indust.toml"),
-    ),
-    (
-        "sd-trap-crisp",
-        include_str!("../presets/sd-trap-crisp.toml"),
-    ),
-    (
-        "sd-house-disco",
-        include_str!("../presets/sd-house-disco.toml"),
-    ),
-    (
-        "sd-metal-ping",
-        include_str!("../presets/sd-metal-ping.toml"),
-    ),
-    (
-        "sd-noise-layer",
-        include_str!("../presets/sd-noise-layer.toml"),
-    ),
-    (
-        "sd-tone-layer",
-        include_str!("../presets/sd-tone-layer.toml"),
-    ),
-    ("sd-fm-long", include_str!("../presets/sd-fm-long.toml")),
-    ("cp-house", include_str!("../presets/cp-house.toml")),
-    (
-        "lead-fm-pluck",
-        include_str!("../presets/lead-fm-pluck.toml"),
-    ),
-    (
-        "stab-fm-fifth",
-        include_str!("../presets/stab-fm-fifth.toml"),
-    ),
-    ("reese-mid", include_str!("../presets/reese-mid.toml")),
-    ("ld-fm-pluck", include_str!("../presets/ld-fm-pluck.toml")),
-    (
-        "ld-hollow-fifth",
-        include_str!("../presets/ld-hollow-fifth.toml"),
-    ),
-    (
-        "ld-house-pluck",
-        include_str!("../presets/ld-house-pluck.toml"),
-    ),
-    ("ld-dnb-stab", include_str!("../presets/ld-dnb-stab.toml")),
-    (
-        "ld-supersaw-stab",
-        include_str!("../presets/ld-supersaw-stab.toml"),
-    ),
-    ("ld-nylon", include_str!("../presets/ld-nylon.toml")),
-    (
-        "ld-bell-pluck",
-        include_str!("../presets/ld-bell-pluck.toml"),
-    ),
-    ("ld-mallet", include_str!("../presets/ld-mallet.toml")),
-    ("ld-perc", include_str!("../presets/ld-perc.toml")),
-    ("ld-supersaw", include_str!("../presets/ld-supersaw.toml")),
-    (
-        "ld-unison-saw",
-        include_str!("../presets/ld-unison-saw.toml"),
-    ),
-    (
-        "ld-trance-gate",
-        include_str!("../presets/ld-trance-gate.toml"),
-    ),
-    ("ld-hoover", include_str!("../presets/ld-hoover.toml")),
-    ("ld-sync-fm", include_str!("../presets/ld-sync-fm.toml")),
-    ("ld-formant", include_str!("../presets/ld-formant.toml")),
-    ("ld-pulse", include_str!("../presets/ld-pulse.toml")),
-    ("ld-anthem", include_str!("../presets/ld-anthem.toml")),
-    ("ld-growl", include_str!("../presets/ld-growl.toml")),
-    ("ld-metallic", include_str!("../presets/ld-metallic.toml")),
-    (
-        "ld-industrial",
-        include_str!("../presets/ld-industrial.toml"),
-    ),
-    (
-        "ld-frenchcore",
-        include_str!("../presets/ld-frenchcore.toml"),
-    ),
-    ("ld-gabber", include_str!("../presets/ld-gabber.toml")),
-    ("ld-acid", include_str!("../presets/ld-acid.toml")),
-    (
-        "ld-dist-pulse",
-        include_str!("../presets/ld-dist-pulse.toml"),
-    ),
-    ("ld-sine", include_str!("../presets/ld-sine.toml")),
-    ("ld-half-sine", include_str!("../presets/ld-half-sine.toml")),
-    ("ld-choir", include_str!("../presets/ld-choir.toml")),
-    ("ld-glass", include_str!("../presets/ld-glass.toml")),
-    ("ld-music-box", include_str!("../presets/ld-music-box.toml")),
-    ("ld-flute", include_str!("../presets/ld-flute.toml")),
-    ("ld-organ", include_str!("../presets/ld-organ.toml")),
-    ("ld-fifth-pad", include_str!("../presets/ld-fifth-pad.toml")),
-    ("ld-octave", include_str!("../presets/ld-octave.toml")),
-    ("ld-zap", include_str!("../presets/ld-zap.toml")),
-    (
-        "ld-drop-pluck",
-        include_str!("../presets/ld-drop-pluck.toml"),
-    ),
-    ("ld-laser", include_str!("../presets/ld-laser.toml")),
-    ("ld-vowel", include_str!("../presets/ld-vowel.toml")),
-    ("ld-noisy-bp", include_str!("../presets/ld-noisy-bp.toml")),
-    ("ld-reverse", include_str!("../presets/ld-reverse.toml")),
-    ("ld-cinematic", include_str!("../presets/ld-cinematic.toml")),
-    ("ld-crystal", include_str!("../presets/ld-crystal.toml")),
-    ("ld-brass", include_str!("../presets/ld-brass.toml")),
-    ("ld-reed", include_str!("../presets/ld-reed.toml")),
-    ("ld-chip", include_str!("../presets/ld-chip.toml")),
-    ("ld-wobble", include_str!("../presets/ld-wobble.toml")),
-    ("ld-hardstyle", include_str!("../presets/ld-hardstyle.toml")),
-    ("ld-arp-pluck", include_str!("../presets/ld-arp-pluck.toml")),
-    ("ld-saw-pluck", include_str!("../presets/ld-saw-pluck.toml")),
-    ("ld-ethereal", include_str!("../presets/ld-ethereal.toml")),
-    ("ld-harpsi", include_str!("../presets/ld-harpsi.toml")),
-    ("fx-rev-cym", include_str!("../presets/fx-rev-cym.toml")),
-    ("fx-rev-crash", include_str!("../presets/fx-rev-crash.toml")),
-    ("fx-rev-hat", include_str!("../presets/fx-rev-hat.toml")),
-    (
-        "fx-rev-cym-long",
-        include_str!("../presets/fx-rev-cym-long.toml"),
-    ),
-    (
-        "fx-rev-cym-bright",
-        include_str!("../presets/fx-rev-cym-bright.toml"),
-    ),
-    (
-        "fx-rev-cym-dark",
-        include_str!("../presets/fx-rev-cym-dark.toml"),
-    ),
-    (
-        "fx-rev-crash-metal",
-        include_str!("../presets/fx-rev-crash-metal.toml"),
-    ),
-    ("fx-rev-air", include_str!("../presets/fx-rev-air.toml")),
-    (
-        "fx-rev-cym-noise",
-        include_str!("../presets/fx-rev-cym-noise.toml"),
-    ),
-    (
-        "fx-rev-splash",
-        include_str!("../presets/fx-rev-splash.toml"),
-    ),
-    ("fx-noise-hit", include_str!("../presets/fx-noise-hit.toml")),
-    (
-        "fx-noise-burst",
-        include_str!("../presets/fx-noise-burst.toml"),
-    ),
-    (
-        "fx-metal-crash",
-        include_str!("../presets/fx-metal-crash.toml"),
-    ),
-    (
-        "fx-glass-smash",
-        include_str!("../presets/fx-glass-smash.toml"),
-    ),
-    ("fx-impact", include_str!("../presets/fx-impact.toml")),
-    ("fx-boom", include_str!("../presets/fx-boom.toml")),
-    ("fx-sub-drop", include_str!("../presets/fx-sub-drop.toml")),
-    (
-        "fx-impact-mid",
-        include_str!("../presets/fx-impact-mid.toml"),
-    ),
-    ("fx-uplifter", include_str!("../presets/fx-uplifter.toml")),
-    (
-        "fx-riser-noise",
-        include_str!("../presets/fx-riser-noise.toml"),
-    ),
-    (
-        "fx-riser-pitch",
-        include_str!("../presets/fx-riser-pitch.toml"),
-    ),
-    ("fx-riser-saw", include_str!("../presets/fx-riser-saw.toml")),
-    (
-        "fx-downlifter",
-        include_str!("../presets/fx-downlifter.toml"),
-    ),
-    ("fx-fall", include_str!("../presets/fx-fall.toml")),
-    (
-        "fx-downlifter-noise",
-        include_str!("../presets/fx-downlifter-noise.toml"),
-    ),
-    ("fx-whoosh", include_str!("../presets/fx-whoosh.toml")),
-    ("fx-wind", include_str!("../presets/fx-wind.toml")),
-    ("fx-passby", include_str!("../presets/fx-passby.toml")),
-    ("fx-laser", include_str!("../presets/fx-laser.toml")),
-    ("fx-zap", include_str!("../presets/fx-zap.toml")),
-    ("fx-blip", include_str!("../presets/fx-blip.toml")),
-    (
-        "fx-laser-fall",
-        include_str!("../presets/fx-laser-fall.toml"),
-    ),
-    ("fx-sweep-bp", include_str!("../presets/fx-sweep-bp.toml")),
-    (
-        "fx-formant-ah",
-        include_str!("../presets/fx-formant-ah.toml"),
-    ),
-    (
-        "fx-formant-oh",
-        include_str!("../presets/fx-formant-oh.toml"),
-    ),
-    ("fx-tape-stop", include_str!("../presets/fx-tape-stop.toml")),
-    ("fx-rev-verb", include_str!("../presets/fx-rev-verb.toml")),
-    ("fx-clang", include_str!("../presets/fx-clang.toml")),
-    (
-        "fx-frenchcore-ns",
-        include_str!("../presets/fx-frenchcore-ns.toml"),
-    ),
-    (
-        "fx-gabber-stab",
-        include_str!("../presets/fx-gabber-stab.toml"),
-    ),
-    ("fx-crackle", include_str!("../presets/fx-crackle.toml")),
-    (
-        "fx-radio-stab",
-        include_str!("../presets/fx-radio-stab.toml"),
-    ),
-    ("fx-alarm", include_str!("../presets/fx-alarm.toml")),
-    ("fx-siren", include_str!("../presets/fx-siren.toml")),
-    (
-        "fx-down-to-kick",
-        include_str!("../presets/fx-down-to-kick.toml"),
-    ),
-    (
-        "fx-trans-fill",
-        include_str!("../presets/fx-trans-fill.toml"),
-    ),
-    (
-        "fx-impact-dnb",
-        include_str!("../presets/fx-impact-dnb.toml"),
-    ),
-    ("fx-whoosh-hp", include_str!("../presets/fx-whoosh-hp.toml")),
-    (
-        "fx-riser-filter",
-        include_str!("../presets/fx-riser-filter.toml"),
-    ),
-    (
-        "fx-hoover-fall",
-        include_str!("../presets/fx-hoover-fall.toml"),
-    ),
+    factory_entry!("bass", "sub-bass"),
+    factory_entry!("bass", "growl-bass"),
+    factory_entry!("perc", "metallic-hit"),
+    factory_entry!("fx", "fm-riser"),
+    factory_entry!("ld", "stab-pluck"),
+    factory_entry!("fx", "zap"),
+    factory_entry!("perc", "glass-hit"),
+    factory_entry!("bass", "supersaw-bass"),
+    factory_entry!("ld", "filter-pluck"),
+    factory_entry!("bass", "bp-growl"),
+    factory_entry!("fx", "hp-air"),
+    factory_entry!("bd", "bd-808-boom"),
+    factory_entry!("bd", "bd-808-tight"),
+    factory_entry!("bd", "bd-909-punch"),
+    factory_entry!("bd", "bd-house-floor"),
+    factory_entry!("bd", "bd-techno-thud"),
+    factory_entry!("bd", "bd-dnb-tight"),
+    factory_entry!("bd", "bd-neuro-growl"),
+    factory_entry!("bd", "bd-frenchcore"),
+    factory_entry!("bd", "bd-gabber-stomp"),
+    factory_entry!("bd", "bd-hardstyle"),
+    factory_entry!("bd", "bd-lofi-dust"),
+    factory_entry!("bd", "bd-click"),
+    factory_entry!("bd", "bd-sub"),
+    factory_entry!("bd", "bd-metal-ping"),
+    factory_entry!("bd", "bd-cinematic"),
+    factory_entry!("bd", "bd-electro-zap"),
+    factory_entry!("bd", "bd-808-dist"),
+    factory_entry!("bd", "bd-disco-dry"),
+    factory_entry!("bd", "bd-jungle-round"),
+    factory_entry!("bd", "bd-fm-noise"),
+    factory_entry!("sd", "sd-808-snap"),
+    factory_entry!("sd", "sd-909-snappy"),
+    factory_entry!("sd", "sd-pop-tight"),
+    factory_entry!("sd", "sd-fat-backbeat"),
+    factory_entry!("sd", "sd-rimshot"),
+    factory_entry!("sd", "sd-clap-snare"),
+    factory_entry!("sd", "sd-gated-80s"),
+    factory_entry!("sd", "sd-brush-dust"),
+    factory_entry!("sd", "sd-piccolo"),
+    factory_entry!("sd", "sd-dnb-tight"),
+    factory_entry!("sd", "sd-jungle-round"),
+    factory_entry!("sd", "sd-neuro-growl"),
+    factory_entry!("sd", "sd-frenchcore"),
+    factory_entry!("sd", "sd-gabber-indust"),
+    factory_entry!("sd", "sd-trap-crisp"),
+    factory_entry!("sd", "sd-house-disco"),
+    factory_entry!("sd", "sd-metal-ping"),
+    factory_entry!("sd", "sd-noise-layer"),
+    factory_entry!("sd", "sd-tone-layer"),
+    factory_entry!("sd", "sd-fm-long"),
+    factory_entry!("perc", "cp-house"),
+    factory_entry!("ld", "lead-fm-pluck"),
+    factory_entry!("ld", "stab-fm-fifth"),
+    factory_entry!("bass", "reese-mid"),
+    factory_entry!("ld", "ld-fm-pluck"),
+    factory_entry!("ld", "ld-hollow-fifth"),
+    factory_entry!("ld", "ld-house-pluck"),
+    factory_entry!("ld", "ld-dnb-stab"),
+    factory_entry!("ld", "ld-supersaw-stab"),
+    factory_entry!("ld", "ld-nylon"),
+    factory_entry!("ld", "ld-bell-pluck"),
+    factory_entry!("ld", "ld-mallet"),
+    factory_entry!("ld", "ld-perc"),
+    factory_entry!("ld", "ld-supersaw"),
+    factory_entry!("ld", "ld-unison-saw"),
+    factory_entry!("ld", "ld-trance-gate"),
+    factory_entry!("ld", "ld-hoover"),
+    factory_entry!("ld", "ld-sync-fm"),
+    factory_entry!("ld", "ld-formant"),
+    factory_entry!("ld", "ld-pulse"),
+    factory_entry!("ld", "ld-anthem"),
+    factory_entry!("ld", "ld-growl"),
+    factory_entry!("ld", "ld-metallic"),
+    factory_entry!("ld", "ld-industrial"),
+    factory_entry!("ld", "ld-frenchcore"),
+    factory_entry!("ld", "ld-gabber"),
+    factory_entry!("ld", "ld-acid"),
+    factory_entry!("ld", "ld-dist-pulse"),
+    factory_entry!("ld", "ld-sine"),
+    factory_entry!("ld", "ld-half-sine"),
+    factory_entry!("ld", "ld-choir"),
+    factory_entry!("ld", "ld-glass"),
+    factory_entry!("ld", "ld-music-box"),
+    factory_entry!("ld", "ld-flute"),
+    factory_entry!("ld", "ld-organ"),
+    factory_entry!("ld", "ld-fifth-pad"),
+    factory_entry!("ld", "ld-octave"),
+    factory_entry!("ld", "ld-zap"),
+    factory_entry!("ld", "ld-drop-pluck"),
+    factory_entry!("ld", "ld-laser"),
+    factory_entry!("ld", "ld-vowel"),
+    factory_entry!("ld", "ld-noisy-bp"),
+    factory_entry!("ld", "ld-reverse"),
+    factory_entry!("ld", "ld-cinematic"),
+    factory_entry!("ld", "ld-crystal"),
+    factory_entry!("ld", "ld-brass"),
+    factory_entry!("ld", "ld-reed"),
+    factory_entry!("ld", "ld-chip"),
+    factory_entry!("ld", "ld-wobble"),
+    factory_entry!("ld", "ld-hardstyle"),
+    factory_entry!("ld", "ld-arp-pluck"),
+    factory_entry!("ld", "ld-saw-pluck"),
+    factory_entry!("ld", "ld-ethereal"),
+    factory_entry!("ld", "ld-harpsi"),
+    factory_entry!("fx", "fx-rev-cym"),
+    factory_entry!("fx", "fx-rev-crash"),
+    factory_entry!("fx", "fx-rev-hat"),
+    factory_entry!("fx", "fx-rev-cym-long"),
+    factory_entry!("fx", "fx-rev-cym-bright"),
+    factory_entry!("fx", "fx-rev-cym-dark"),
+    factory_entry!("fx", "fx-rev-crash-metal"),
+    factory_entry!("fx", "fx-rev-air"),
+    factory_entry!("fx", "fx-rev-cym-noise"),
+    factory_entry!("fx", "fx-rev-splash"),
+    factory_entry!("fx", "fx-noise-hit"),
+    factory_entry!("fx", "fx-noise-burst"),
+    factory_entry!("fx", "fx-metal-crash"),
+    factory_entry!("fx", "fx-glass-smash"),
+    factory_entry!("fx", "fx-impact"),
+    factory_entry!("fx", "fx-boom"),
+    factory_entry!("fx", "fx-sub-drop"),
+    factory_entry!("fx", "fx-impact-mid"),
+    factory_entry!("fx", "fx-uplifter"),
+    factory_entry!("fx", "fx-riser-noise"),
+    factory_entry!("fx", "fx-riser-pitch"),
+    factory_entry!("fx", "fx-riser-saw"),
+    factory_entry!("fx", "fx-downlifter"),
+    factory_entry!("fx", "fx-fall"),
+    factory_entry!("fx", "fx-downlifter-noise"),
+    factory_entry!("fx", "fx-whoosh"),
+    factory_entry!("fx", "fx-wind"),
+    factory_entry!("fx", "fx-passby"),
+    factory_entry!("fx", "fx-laser"),
+    factory_entry!("fx", "fx-zap"),
+    factory_entry!("fx", "fx-blip"),
+    factory_entry!("fx", "fx-laser-fall"),
+    factory_entry!("fx", "fx-sweep-bp"),
+    factory_entry!("fx", "fx-formant-ah"),
+    factory_entry!("fx", "fx-formant-oh"),
+    factory_entry!("fx", "fx-tape-stop"),
+    factory_entry!("fx", "fx-rev-verb"),
+    factory_entry!("fx", "fx-clang"),
+    factory_entry!("fx", "fx-frenchcore-ns"),
+    factory_entry!("fx", "fx-gabber-stab"),
+    factory_entry!("fx", "fx-crackle"),
+    factory_entry!("fx", "fx-radio-stab"),
+    factory_entry!("fx", "fx-alarm"),
+    factory_entry!("fx", "fx-siren"),
+    factory_entry!("fx", "fx-down-to-kick"),
+    factory_entry!("fx", "fx-trans-fill"),
+    factory_entry!("fx", "fx-impact-dnb"),
+    factory_entry!("fx", "fx-whoosh-hp"),
+    factory_entry!("fx", "fx-riser-filter"),
+    factory_entry!("fx", "fx-hoover-fall"),
 ];
 
 #[derive(Clone, Debug, Deserialize)]
@@ -524,8 +357,8 @@ pub fn load_preset_file(path: &Path) -> Result<Preset> {
     Preset::from_toml_str(&path.display().to_string(), &text)
 }
 
-/// Resolve a preset name: exact factory id, `presets/<name>.toml` next to cwd,
-/// or a path to a TOML file.
+/// Resolve a preset name: exact factory id, `presets/<category>/<name>.toml`
+/// (or a nested path under `presets/`), or a path to a TOML file.
 pub fn load_preset(name: &str) -> Result<Preset> {
     let as_path = Path::new(name);
     if as_path.is_file() {
@@ -563,9 +396,44 @@ fn preset_file_candidates(name: &str) -> Vec<PathBuf> {
     } else {
         PathBuf::from(format!("{name}.toml"))
     };
-    out.push(PathBuf::from("presets").join(&file));
-    out.push(file);
+    push_unique(&mut out, PathBuf::from("presets").join(&file));
+    push_unique(&mut out, file.clone());
+
+    if let Some(want) = file.file_name() {
+        let mut found = Vec::new();
+        collect_toml_files(Path::new("presets"), &mut found);
+        for path in found {
+            if path.file_name() == Some(want) {
+                push_unique(&mut out, path);
+            }
+        }
+    }
     out
+}
+
+fn push_unique(out: &mut Vec<PathBuf>, path: PathBuf) {
+    if !out.iter().any(|p| p == &path) {
+        out.push(path);
+    }
+}
+
+fn collect_toml_files(dir: &Path, out: &mut Vec<PathBuf>) {
+    let Ok(entries) = fs::read_dir(dir) else {
+        return;
+    };
+    let mut dirs = Vec::new();
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.is_dir() {
+            dirs.push(path);
+        } else if path.extension().and_then(|e| e.to_str()) == Some("toml") {
+            out.push(path);
+        }
+    }
+    dirs.sort();
+    for nested in dirs {
+        collect_toml_files(&nested, out);
+    }
 }
 
 fn normalize_id(id: &str) -> String {
@@ -624,7 +492,7 @@ mod tests {
         assert_eq!(output_preset_id(Some("sub-bass"), None), "sub-bass");
         assert_eq!(output_preset_id(Some("SUB_BASS"), None), "sub-bass");
         assert_eq!(
-            output_preset_id(None, Some(Path::new("presets/zap.toml"))),
+            output_preset_id(None, Some(Path::new("presets/fx/zap.toml"))),
             "zap"
         );
         assert_eq!(output_preset_id(Some("custom.toml"), None), "custom");
@@ -699,6 +567,38 @@ mod tests {
         );
         for id in &ids {
             load_factory(id).expect(id);
+        }
+    }
+
+    #[test]
+    fn load_preset_file_from_category_folder() {
+        let p =
+            load_preset_file(Path::new("presets/bass/sub-bass.toml")).expect("nested factory toml");
+        assert!(!p.name.is_empty());
+        let nested = load_preset("presets/bd/bd-808-boom.toml").expect("nested path");
+        assert!(!nested.operators.is_empty());
+    }
+
+    #[test]
+    fn factory_toml_files_live_in_category_folders() {
+        for id in factory_ids() {
+            let matches: Vec<_> = preset_file_candidates(id)
+                .into_iter()
+                .filter(|p| p.is_file())
+                .collect();
+            assert!(
+                !matches.is_empty(),
+                "factory `{id}` has no presets/<category>/{id}.toml on disk"
+            );
+            for path in &matches {
+                let parent = path.parent().and_then(|p| p.file_name());
+                assert_ne!(
+                    parent.map(|s| s.to_string_lossy().into_owned()).as_deref(),
+                    Some("presets"),
+                    "`{id}` still lives at presets root: {}",
+                    path.display()
+                );
+            }
         }
     }
 

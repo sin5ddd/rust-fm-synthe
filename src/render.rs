@@ -225,7 +225,7 @@ pub fn render_preset_wav(
 
 /// Render every factory-bank preset to `<output_dir>/<preset-id>.wav`.
 ///
-/// The embedded factory bank is the source of truth (not `presets/*.toml` on disk).
+/// The embedded factory bank is the source of truth (not `presets/<category>/*.toml` on disk).
 /// Creates `output_dir` if missing. Continues after a per-preset failure.
 pub fn render_all_factory(output_dir: &Path, export: &ExportParams) -> Result<BatchRenderResult> {
     std::fs::create_dir_all(output_dir).map_err(|e| Error::Io {

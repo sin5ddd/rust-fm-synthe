@@ -129,7 +129,7 @@ cargo run -- render --preset hp-air --output dist/hp-air.wav --note 84 --duratio
 自作TOML:
 
 ```bash
-cargo run -- render --preset-file presets/zap.toml --output dist/zap.wav
+cargo run -- render --preset-file presets/fx/zap.toml --output dist/zap.wav
 ```
 
 `release` ビルドのほうが速い（ライザーなど長めのレンダー向け）:
@@ -352,24 +352,24 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | `fx-riser-filter` | フィルタ開放のライザー |
 | `fx-hoover-fall` | フーバー寄りのフォールFX |
 
-データは `presets/*.toml`。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。
+データは `presets/<category>/*.toml`（`bass` / `bd` / `sd` / `ld` / `fx` / `perc`）。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。 `--preset <id>` の ID はファイル名のまま（フォルダ名は含まない）。
 
 ## プリセットの足し方
 
-1. `presets/stab-pluck.toml` をコピーする。
+1. `presets/ld/stab-pluck.toml` をコピーする。
 2. `name` / `description` / `algorithm`（1–8 または `serial` など）を変える。
 3. `[[operators]]` を **必ず4つ**。上から OP1…OP4。
 4. ワンショットは `sustain = 0`。ライザーは ` [pitch] ` と `[mod_sweep]`。
 5. 試す:
 
 ```bash
-cargo run -- render --preset-file presets/my-shot.toml --output dist/my-shot.wav --note 48
+cargo run -- render --preset-file presets/ld/my-shot.toml --output dist/my-shot.wav --note 48
 ```
 
 工場バンクに入れるなら:
 
-- ファイルを `presets/<id>.toml` に置く
-- `src/preset.rs` の `FACTORY` に `("<id>", include_str!("../presets/<id>.toml"))` を足す
+- ファイルを `presets/<category>/<id>.toml` に置く（`bass` / `bd` / `sd` / `ld` / `fx` / `perc`）
+- `src/preset.rs` の `FACTORY` に `factory_entry!("<category>", "<id>")` を足す
 
 主なキー:
 
@@ -441,7 +441,7 @@ write_wav(
 )?;
 ```
 
-公開APIの中心は `load_preset` / `load_factory` / `render` / `write_wav`。一括書き出しは `render_all_factory`（工場バンクがソース。`presets/` の重複TOMLは見ない）。別ツールからエンジンだけ駆動する想定。
+公開APIの中心は `load_preset` / `load_factory` / `render` / `write_wav`。一括書き出しは `render_all_factory`（工場バンクがソース。`presets/<category>/` の重複TOMLは見ない）。別ツールからエンジンだけ駆動する想定。
 
 ## テスト
 
