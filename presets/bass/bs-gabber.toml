@@ -1,0 +1,67 @@
+name = "gabber bass"
+description = "ガバの歪みミッドベース。短いパンチ、パルス＋フィードバック。ストンプキックではなくベースワンショット。"
+algorithm = 3
+feedback = 0.72
+feedback_op = 4
+gain = 1
+default_note = 41
+default_duration = 0.95
+
+[pitch]
+start_semitones = 4
+end_semitones = 0
+curve = 1.8
+
+[filter]
+type = "lowpass"
+cutoff = 1400
+resonance = 0.32
+env_amount = 1.4
+attack = 0.001
+decay = 0.12
+sustain = 0.18
+release = 0.08
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.002
+decay = 0.42
+sustain = 0.1
+release = 0.1
+vel_sens = 0.4
+waveform = "pulse"
+
+[[operators]]
+ratio = 1
+detune_cents = 8
+level = 0.48
+attack = 0.0015
+decay = 0.2
+sustain = 0.05
+release = 0.06
+vel_sens = 0.45
+waveform = "saw"
+
+[[operators]]
+ratio = 3
+detune_cents = -6
+level = 0.4
+attack = 0.0008
+decay = 0.09
+sustain = 0
+release = 0.04
+vel_sens = 0.55
+waveform = "abs-sine"
+
+[[operators]]
+ratio = 4
+detune_cents = 0
+level = 0.36
+attack = 0.0005
+decay = 0.06
+sustain = 0
+release = 0.03
+vel_sens = 0.6
+waveform = "pulse"

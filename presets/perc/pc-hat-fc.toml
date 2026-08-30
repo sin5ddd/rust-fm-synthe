@@ -1,0 +1,66 @@
+name = "frenchcore hat"
+description = "フレンチコアの攻撃的クローズハット。硬いハイ、短い。"
+algorithm = 8
+feedback = 0.94
+feedback_op = 4
+gain = 1.22
+default_note = 86
+default_duration = 0.12
+
+[filter]
+type = "highpass"
+cutoff = 7500
+resonance = 0.22
+env_amount = 0.7
+attack = 0.0002
+decay = 0.018
+sustain = 0.04
+release = 0.04
+
+[[operators]]
+ratio = 23
+detune_cents = 0
+level = 1
+attack = 0.0002
+decay = 0.04
+sustain = 0
+release = 0.014
+vel_sens = 0.5
+waveform = "pulse"
+
+[[operators]]
+ratio = 16.79
+detune_cents = -18
+level = 0.78
+attack = 0.00015
+decay = 0.028
+sustain = 0
+release = 0.0112
+vel_sens = 0.55
+waveform = "pulse"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.55
+attack = 0.00015
+decay = 0.018
+sustain = 0
+release = 0.03
+vel_sens = 0.6
+waveform = "abs-sine"
+freq_mode = "fixed"
+fixed_hz = 9000
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.42
+attack = 0.0001
+decay = 0.0112
+sustain = 0
+release = 0.02
+vel_sens = 0.65
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 13230

@@ -1,0 +1,70 @@
+name = "low agogo"
+description = "アゴゴの低音。ハイより丸い金属。"
+algorithm = 6
+feedback = 0.16
+feedback_op = 4
+gain = 1.08
+default_note = 76
+default_duration = 0.42
+
+[filter]
+type = "highpass"
+cutoff = 500
+resonance = 0.14
+env_amount = 0.35
+attack = 0.0003
+decay = 0.12
+sustain = 0.12
+release = 0.07
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.0003
+decay = 0.26
+sustain = 0
+release = 0.11
+vel_sens = 0.36
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 980
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.48
+attack = 0.00025
+decay = 0.16
+sustain = 0
+release = 0.07
+vel_sens = 0.4
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1960
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.26
+attack = 0.00022
+decay = 0.12
+sustain = 0
+release = 0.05
+vel_sens = 0.44
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1470
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.18
+attack = 0.00018
+decay = 0.028
+sustain = 0
+release = 0.018
+vel_sens = 0.52
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 2800

@@ -1,0 +1,67 @@
+name = "mid tom"
+description = "ミッドタム。フロアより高くキックより明るい。"
+algorithm = 7
+feedback = 0.07
+feedback_op = 4
+gain = 1.04
+default_note = 55
+default_duration = 0.45
+
+[pitch]
+start_semitones = 6
+end_semitones = 0
+curve = 2
+
+[filter]
+type = "lowpass"
+cutoff = 1200
+resonance = 0.18
+env_amount = 0.9
+attack = 0.0005
+decay = 0.12
+sustain = 0.12
+release = 0.08
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.0006
+decay = 0.28
+sustain = 0
+release = 0.1
+vel_sens = 0.32
+waveform = "sine"
+
+[[operators]]
+ratio = 1.4
+detune_cents = 2
+level = 0.28
+attack = 0.0005
+decay = 0.14
+sustain = 0
+release = 0.06
+vel_sens = 0.38
+waveform = "sine"
+
+[[operators]]
+ratio = 2.2
+detune_cents = 0
+level = 0.18
+attack = 0.0003
+decay = 0.035
+sustain = 0
+release = 0.02
+vel_sens = 0.48
+waveform = "sine"
+
+[[operators]]
+ratio = 3.5
+detune_cents = 0
+level = 0.09
+attack = 0.0002
+decay = 0.014
+sustain = 0
+release = 0.012
+vel_sens = 0.52
+waveform = "sine"

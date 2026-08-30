@@ -1,0 +1,67 @@
+name = "low bongo"
+description = "ローボンゴ。ハイより丸い膜。"
+algorithm = 6
+feedback = 0.14
+feedback_op = 4
+gain = 1.08
+default_note = 60
+default_duration = 0.32
+
+[pitch]
+start_semitones = 5
+end_semitones = 0
+curve = 3
+
+[filter]
+type = "lowpass"
+cutoff = 2200
+resonance = 0.18
+env_amount = 1.1
+attack = 0.0003
+decay = 0.07
+sustain = 0.09
+release = 0.05
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.00035
+decay = 0.18
+sustain = 0
+release = 0.07
+vel_sens = 0.4
+waveform = "sine"
+
+[[operators]]
+ratio = 1.85
+detune_cents = 0
+level = 0.36
+attack = 0.0003
+decay = 0.09
+sustain = 0
+release = 0.04
+vel_sens = 0.45
+waveform = "sine"
+
+[[operators]]
+ratio = 3.1
+detune_cents = 0
+level = 0.24
+attack = 0.0002
+decay = 0.024
+sustain = 0
+release = 0.016
+vel_sens = 0.52
+waveform = "sine"
+
+[[operators]]
+ratio = 6
+detune_cents = 0
+level = 0.12
+attack = 0.00015
+decay = 0.011
+sustain = 0
+release = 0.01
+vel_sens = 0.58
+waveform = "pulse"

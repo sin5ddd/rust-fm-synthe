@@ -1,0 +1,66 @@
+name = "tight hat"
+description = "極短いタイトハット。16分の隙間向き。"
+algorithm = 8
+feedback = 0.9
+feedback_op = 4
+gain = 1.24
+default_note = 88
+default_duration = 0.1
+
+[filter]
+type = "highpass"
+cutoff = 7800
+resonance = 0.22
+env_amount = 0.7
+attack = 0.0002
+decay = 0.0144
+sustain = 0.04
+release = 0.04
+
+[[operators]]
+ratio = 24
+detune_cents = 0
+level = 1
+attack = 0.0002
+decay = 0.032
+sustain = 0
+release = 0.0112
+vel_sens = 0.5
+waveform = "pulse"
+
+[[operators]]
+ratio = 17.52
+detune_cents = -18
+level = 0.78
+attack = 0.00015
+decay = 0.0224
+sustain = 0
+release = 0.00896
+vel_sens = 0.55
+waveform = "pulse"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.55
+attack = 0.00015
+decay = 0.0144
+sustain = 0
+release = 0.03
+vel_sens = 0.6
+waveform = "abs-sine"
+freq_mode = "fixed"
+fixed_hz = 9500
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.42
+attack = 0.0001
+decay = 0.00896
+sustain = 0
+release = 0.02
+vel_sens = 0.65
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 13965

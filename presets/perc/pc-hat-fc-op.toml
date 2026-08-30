@@ -1,0 +1,66 @@
+name = "frenchcore open hat"
+description = "フレンチコアのオープンハット。硬いハイ＋少し長い尾。"
+algorithm = 8
+feedback = 0.93
+feedback_op = 4
+gain = 1.14
+default_note = 86
+default_duration = 0.95
+
+[filter]
+type = "highpass"
+cutoff = 6800
+resonance = 0.22
+env_amount = 0.7
+attack = 0.0002
+decay = 0.2475
+sustain = 0.04
+release = 0.04
+
+[[operators]]
+ratio = 22
+detune_cents = 0
+level = 1
+attack = 0.0002
+decay = 0.55
+sustain = 0
+release = 0.1925
+vel_sens = 0.5
+waveform = "pulse"
+
+[[operators]]
+ratio = 16.06
+detune_cents = -18
+level = 0.78
+attack = 0.00015
+decay = 0.385
+sustain = 0
+release = 0.154
+vel_sens = 0.55
+waveform = "pulse"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.55
+attack = 0.00015
+decay = 0.2475
+sustain = 0
+release = 0.03
+vel_sens = 0.6
+waveform = "abs-sine"
+freq_mode = "fixed"
+fixed_hz = 8600
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.42
+attack = 0.0001
+decay = 0.154
+sustain = 0
+release = 0.02
+vel_sens = 0.65
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 12642

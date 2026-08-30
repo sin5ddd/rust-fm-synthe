@@ -1,0 +1,62 @@
+name = "clean sine sub"
+description = "クリーンな正弦サブ。クリックも歪みもほぼなし。レイヤー用の純粋な低域。808ブームや既存 sub-bass より単純。"
+algorithm = 8
+feedback = 0
+feedback_op = 4
+gain = 1.1
+default_note = 36
+default_duration = 1.8
+
+[filter]
+type = "lowpass"
+cutoff = 140
+resonance = 0
+env_amount = 0
+attack = 0
+decay = 0
+sustain = 1
+release = 0.05
+
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 1
+attack = 0.008
+decay = 1.4
+sustain = 0
+release = 0.3
+vel_sens = 0.15
+waveform = "sine"
+
+[[operators]]
+ratio = 0.5
+detune_cents = 1.5
+level = 0.18
+attack = 0.01
+decay = 1.1
+sustain = 0
+release = 0.22
+vel_sens = 0.15
+waveform = "sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0
+attack = 0.001
+decay = 0.05
+sustain = 0
+release = 0.02
+vel_sens = 0
+waveform = "sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0
+attack = 0.001
+decay = 0.05
+sustain = 0
+release = 0.02
+vel_sens = 0
+waveform = "sine"

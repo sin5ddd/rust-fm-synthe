@@ -1,0 +1,67 @@
+name = "tight house bass"
+description = "タイトなハウスベース。短い減衰でサイドチェイン向き。サブの芯＋短いミッドクリック。長いReeseや808ではない。"
+algorithm = 7
+feedback = 0.1
+feedback_op = 4
+gain = 1.08
+default_note = 36
+default_duration = 0.85
+
+[pitch]
+start_semitones = 3.5
+end_semitones = 0
+curve = 2
+
+[filter]
+type = "lowpass"
+cutoff = 520
+resonance = 0.16
+env_amount = 1.2
+attack = 0.001
+decay = 0.1
+sustain = 0.08
+release = 0.08
+
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 1
+attack = 0.002
+decay = 0.38
+sustain = 0
+release = 0.1
+vel_sens = 0.25
+waveform = "sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 3
+level = 0.42
+attack = 0.0015
+decay = 0.14
+sustain = 0
+release = 0.05
+vel_sens = 0.35
+waveform = "sine"
+
+[[operators]]
+ratio = 2
+detune_cents = 0
+level = 0.28
+attack = 0.0006
+decay = 0.035
+sustain = 0
+release = 0.025
+vel_sens = 0.5
+waveform = "saw"
+
+[[operators]]
+ratio = 4
+detune_cents = 0
+level = 0.16
+attack = 0.0003
+decay = 0.012
+sustain = 0
+release = 0.012
+vel_sens = 0.55
+waveform = "sine"

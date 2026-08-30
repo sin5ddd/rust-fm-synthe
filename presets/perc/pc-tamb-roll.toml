@@ -1,0 +1,68 @@
+name = "tambourine roll hit"
+description = "タンバリンの短いロール風ヒット。粒を重ねたワンショット。"
+algorithm = 8
+feedback = 0.7
+feedback_op = 4
+gain = 1.1
+default_note = 84
+default_duration = 0.38
+
+[filter]
+type = "highpass"
+cutoff = 2200
+resonance = 0.2
+env_amount = 0.6
+attack = 0.002
+decay = 0.14
+sustain = 0.06
+release = 0.06
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.9
+attack = 0.0004
+decay = 0.06
+sustain = 0
+release = 0.03
+vel_sens = 0.5
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 4300
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.7
+attack = 0.012
+decay = 0.07
+sustain = 0
+release = 0.03
+vel_sens = 0.5
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 5100
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.55
+attack = 0.024
+decay = 0.08
+sustain = 0
+release = 0.04
+vel_sens = 0.5
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 3900
+
+[[operators]]
+ratio = 16
+detune_cents = 0
+level = 0.35
+attack = 0.0003
+decay = 0.2
+sustain = 0
+release = 0.08
+vel_sens = 0.45
+waveform = "pulse"

@@ -1,0 +1,70 @@
+name = "metallic tick"
+description = "金属ティック。極短いリン。ハットよりピッチがある。"
+algorithm = 6
+feedback = 0.28
+feedback_op = 4
+gain = 1.14
+default_note = 96
+default_duration = 0.14
+
+[filter]
+type = "highpass"
+cutoff = 2000
+resonance = 0.2
+env_amount = 0.4
+attack = 0.0001
+decay = 0.03
+sustain = 0.04
+release = 0.03
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.0001
+decay = 0.04
+sustain = 0
+release = 0.025
+vel_sens = 0.5
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 4200
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.45
+attack = 0.0001
+decay = 0.07
+sustain = 0
+release = 0.03
+vel_sens = 0.45
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 6300
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.3
+attack = 8e-05
+decay = 0.018
+sustain = 0
+release = 0.012
+vel_sens = 0.6
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 2800
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.2
+attack = 8e-05
+decay = 0.012
+sustain = 0
+release = 0.01
+vel_sens = 0.6
+waveform = "abs-sine"
+freq_mode = "fixed"
+fixed_hz = 8400

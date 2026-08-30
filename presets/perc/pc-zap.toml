@@ -1,0 +1,67 @@
+name = "perc zap"
+description = "パーカッションのザップ。短い下降ピッチ。リードやFXのレーザーとは別の短いヒット。"
+algorithm = 1
+feedback = 0.35
+feedback_op = 4
+gain = 1.12
+default_note = 72
+default_duration = 0.22
+
+[pitch]
+start_semitones = 14
+end_semitones = -8
+curve = 2.5
+
+[filter]
+type = "highpass"
+cutoff = 400
+resonance = 0.18
+env_amount = 0.8
+attack = 0.0002
+decay = 0.06
+sustain = 0.05
+release = 0.04
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.0003
+decay = 0.1
+sustain = 0
+release = 0.04
+vel_sens = 0.45
+waveform = "sine"
+
+[[operators]]
+ratio = 3
+detune_cents = 0
+level = 0.45
+attack = 0.0002
+decay = 0.04
+sustain = 0
+release = 0.02
+vel_sens = 0.55
+waveform = "pulse"
+
+[[operators]]
+ratio = 6
+detune_cents = 0
+level = 0.28
+attack = 0.00015
+decay = 0.025
+sustain = 0
+release = 0.015
+vel_sens = 0.6
+waveform = "half-sine"
+
+[[operators]]
+ratio = 9
+detune_cents = 0
+level = 0.2
+attack = 0.00012
+decay = 0.018
+sustain = 0
+release = 0.012
+vel_sens = 0.62
+waveform = "pulse"

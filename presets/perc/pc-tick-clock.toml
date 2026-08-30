@@ -1,0 +1,68 @@
+name = "clock tick"
+description = "時計のティック。乾いた短いクリック。"
+algorithm = 8
+feedback = 0.15
+feedback_op = 4
+gain = 1.18
+default_note = 88
+default_duration = 0.11
+
+[filter]
+type = "highpass"
+cutoff = 1800
+resonance = 0.14
+env_amount = 0.25
+attack = 8e-05
+decay = 0.02
+sustain = 0.03
+release = 0.02
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 8e-05
+decay = 0.022
+sustain = 0
+release = 0.015
+vel_sens = 0.52
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 2600
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.4
+attack = 8e-05
+decay = 0.014
+sustain = 0
+release = 0.01
+vel_sens = 0.58
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 3900
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.22
+attack = 8e-05
+decay = 0.01
+sustain = 0
+release = 0.008
+vel_sens = 0.6
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1500
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0
+attack = 0.001
+decay = 0.01
+sustain = 0
+release = 0.008
+vel_sens = 0
+waveform = "sine"

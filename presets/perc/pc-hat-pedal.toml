@@ -1,0 +1,66 @@
+name = "pedal hat"
+description = "ペダル／フットハット。クローズより暗く短いチック。"
+algorithm = 8
+feedback = 0.8
+feedback_op = 4
+gain = 1.14
+default_note = 72
+default_duration = 0.15
+
+[filter]
+type = "highpass"
+cutoff = 3800
+resonance = 0.22
+env_amount = 0.7
+attack = 0.0002
+decay = 0.027
+sustain = 0.04
+release = 0.04
+
+[[operators]]
+ratio = 14
+detune_cents = 0
+level = 1
+attack = 0.0002
+decay = 0.06
+sustain = 0
+release = 0.021
+vel_sens = 0.5
+waveform = "pulse"
+
+[[operators]]
+ratio = 10.22
+detune_cents = -18
+level = 0.78
+attack = 0.00015
+decay = 0.042
+sustain = 0
+release = 0.0168
+vel_sens = 0.55
+waveform = "pulse"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.55
+attack = 0.00015
+decay = 0.027
+sustain = 0
+release = 0.03
+vel_sens = 0.6
+waveform = "abs-sine"
+freq_mode = "fixed"
+fixed_hz = 5200
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.42
+attack = 0.0001
+decay = 0.0168
+sustain = 0
+release = 0.02
+vel_sens = 0.65
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 7644

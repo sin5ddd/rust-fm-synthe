@@ -1,0 +1,71 @@
+name = "808 sub bass"
+description = "長い正弦の808サブ。キック用ブームではなくベースワンショット。クリックほぼなし、大きなピッチ落下。既存 sub-bass より胴が長くクリックが薄い。"
+algorithm = 8
+feedback = 0.02
+feedback_op = 4
+gain = 1.05
+default_note = 36
+default_duration = 1.85
+
+[pitch]
+start_semitones = 18
+end_semitones = 0
+curve = -18
+
+[mod_sweep]
+start = 0.4
+end = 0.08
+
+[filter]
+type = "lowpass"
+cutoff = 180
+resonance = 0.08
+env_amount = 0.4
+attack = 0.001
+decay = 0.35
+sustain = 0.15
+release = 0.2
+
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 1
+attack = 0.004
+decay = 1.45
+sustain = 0
+release = 0.28
+vel_sens = 0.18
+waveform = "sine"
+
+[[operators]]
+ratio = 0.5
+detune_cents = 2
+level = 0.28
+attack = 0.006
+decay = 0.85
+sustain = 0
+release = 0.16
+vel_sens = 0.2
+waveform = "sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.12
+attack = 0.002
+decay = 0.12
+sustain = 0
+release = 0.05
+vel_sens = 0.3
+waveform = "sine"
+
+[[operators]]
+ratio = 3
+detune_cents = 0
+level = 0.06
+attack = 0.0004
+decay = 0.01
+sustain = 0
+release = 0.01
+vel_sens = 0.5
+waveform = "sine"

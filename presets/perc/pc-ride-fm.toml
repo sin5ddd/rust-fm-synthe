@@ -1,0 +1,68 @@
+name = "fm ride"
+description = "ライド寄りのFM。長いベル＋砂。オープンハットより金属。最大約1.2秒。"
+algorithm = 4
+feedback = 0.4
+feedback_op = 4
+gain = 1
+default_note = 80
+default_duration = 1.18
+
+[filter]
+type = "highpass"
+cutoff = 1600
+resonance = 0.24
+env_amount = 1.1
+attack = 0.0005
+decay = 0.35
+sustain = 0.12
+release = 0.16
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.85
+attack = 0.0004
+decay = 0.85
+sustain = 0
+release = 0.22
+vel_sens = 0.35
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1480
+
+[[operators]]
+ratio = 2.73
+detune_cents = 0
+level = 0.5
+attack = 0.0003
+decay = 0.28
+sustain = 0
+release = 0.1
+vel_sens = 0.45
+waveform = "abs-sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.55
+attack = 0.0003
+decay = 0.7
+sustain = 0
+release = 0.18
+vel_sens = 0.38
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 2960
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.38
+attack = 0.0002
+decay = 0.16
+sustain = 0
+release = 0.08
+vel_sens = 0.55
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 5400

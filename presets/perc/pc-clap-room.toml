@@ -1,0 +1,66 @@
+name = "room clap"
+description = "ルーム寄りのクラップ。遅れた層で部屋感。cp-house より尾が長い。"
+algorithm = 5
+feedback = 0.62
+feedback_op = 4
+gain = 1.1
+default_note = 60
+default_duration = 0.42
+
+[filter]
+type = "highpass"
+cutoff = 700
+resonance = 0.22
+env_amount = 0.55
+attack = 0.0003
+decay = 0.08
+sustain = 0.1
+release = 0.08
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.0003
+decay = 0.1
+sustain = 0
+release = 0.05
+vel_sens = 0.45
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1100
+
+[[operators]]
+ratio = 6.5
+detune_cents = 0
+level = 0.38
+attack = 0.0002
+decay = 0.03
+sustain = 0
+release = 0.018
+vel_sens = 0.55
+waveform = "abs-sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.7
+attack = 0.028
+decay = 0.16
+sustain = 0
+release = 0.08
+vel_sens = 0.42
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 2400
+
+[[operators]]
+ratio = 10.5
+detune_cents = 0
+level = 0.36
+attack = 0.026
+decay = 0.12
+sustain = 0
+release = 0.06
+vel_sens = 0.55
+waveform = "pulse"

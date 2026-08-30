@@ -1,0 +1,66 @@
+name = "dry clap"
+description = "ドライなクラップ。cp-house より短く、1k胴を薄くしてスラップ寄り。2/4用。"
+algorithm = 5
+feedback = 0.7
+feedback_op = 4
+gain = 1.18
+default_note = 60
+default_duration = 0.18
+
+[filter]
+type = "highpass"
+cutoff = 900
+resonance = 0.28
+env_amount = 0.4
+attack = 0.0002
+decay = 0.04
+sustain = 0.05
+release = 0.04
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.00025
+decay = 0.06
+sustain = 0
+release = 0.03
+vel_sens = 0.48
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1480
+
+[[operators]]
+ratio = 7.2
+detune_cents = 12
+level = 0.4
+attack = 0.00018
+decay = 0.022
+sustain = 0
+release = 0.014
+vel_sens = 0.58
+waveform = "abs-sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.82
+attack = 0.012
+decay = 0.055
+sustain = 0
+release = 0.028
+vel_sens = 0.5
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 3100
+
+[[operators]]
+ratio = 12
+detune_cents = -16
+level = 0.42
+attack = 0.011
+decay = 0.02
+sustain = 0
+release = 0.012
+vel_sens = 0.65
+waveform = "pulse"

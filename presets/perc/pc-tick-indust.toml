@@ -1,0 +1,68 @@
+name = "industrial tick"
+description = "インダストリアルなティック。暗い金属＋砂。"
+algorithm = 4
+feedback = 0.62
+feedback_op = 4
+gain = 1.12
+default_note = 72
+default_duration = 0.16
+
+[filter]
+type = "highpass"
+cutoff = 1400
+resonance = 0.26
+env_amount = 0.6
+attack = 0.00012
+decay = 0.035
+sustain = 0.05
+release = 0.03
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.00012
+decay = 0.05
+sustain = 0
+release = 0.028
+vel_sens = 0.5
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 2100
+
+[[operators]]
+ratio = 3.7
+detune_cents = 0
+level = 0.5
+attack = 0.0001
+decay = 0.03
+sustain = 0
+release = 0.018
+vel_sens = 0.55
+waveform = "abs-sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.4
+attack = 0.0001
+decay = 0.08
+sustain = 0
+release = 0.035
+vel_sens = 0.45
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1750
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.35
+attack = 8e-05
+decay = 0.02
+sustain = 0
+release = 0.014
+vel_sens = 0.62
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 4550

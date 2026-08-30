@@ -1,0 +1,70 @@
+name = "bright wide reese"
+description = "明るい広いReese。super-sawのデチューンを既存 supersaw-bass より広くし、ミッドハイを残す。糊帯のBPではない。"
+algorithm = 5
+feedback = 0.06
+feedback_op = 4
+gain = 0.88
+default_note = 40
+default_duration = 1.45
+
+[lfo]
+rate_hz = 0.42
+depth_cents = 7
+
+[filter]
+type = "lowpass"
+cutoff = 2800
+resonance = 0.14
+env_amount = 1.1
+attack = 0.008
+decay = 0.4
+sustain = 0.35
+release = 0.16
+
+[[operators]]
+ratio = 1
+detune_cents = -6
+level = 1
+attack = 0.01
+decay = 0.9
+sustain = 0.3
+release = 0.2
+vel_sens = 0.3
+waveform = "super-saw"
+unison = 7
+unison_detune = 34
+
+[[operators]]
+ratio = 2
+detune_cents = 4
+level = 0.16
+attack = 0.004
+decay = 0.22
+sustain = 0.06
+release = 0.07
+vel_sens = 0.4
+waveform = "sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 12
+level = 0.82
+attack = 0.014
+decay = 0.75
+sustain = 0.26
+release = 0.18
+vel_sens = 0.3
+waveform = "super-saw"
+unison = 5
+unison_detune = 28
+
+[[operators]]
+ratio = 1.5
+detune_cents = -3
+level = 0.12
+attack = 0.003
+decay = 0.16
+sustain = 0.04
+release = 0.05
+vel_sens = 0.42
+waveform = "sine"

@@ -1,0 +1,66 @@
+name = "distorted square bass"
+description = "歪んだスクエア／パルスベース。高いフィードバックで砂状。ミッドの芯。スーパーソーでもReeseでもない。"
+algorithm = 7
+feedback = 0.78
+feedback_op = 4
+gain = 0.96
+default_note = 36
+default_duration = 1.25
+
+[mod_sweep]
+start = 1.15
+end = 0.7
+
+[filter]
+type = "lowpass"
+cutoff = 900
+resonance = 0.24
+env_amount = 0.9
+attack = 0.006
+decay = 0.35
+sustain = 0.28
+release = 0.14
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.006
+decay = 0.8
+sustain = 0.25
+release = 0.16
+vel_sens = 0.32
+waveform = "pulse"
+
+[[operators]]
+ratio = 1
+detune_cents = 7
+level = 0.55
+attack = 0.008
+decay = 0.6
+sustain = 0.18
+release = 0.14
+vel_sens = 0.3
+waveform = "pulse"
+
+[[operators]]
+ratio = 2
+detune_cents = -4
+level = 0.22
+attack = 0.003
+decay = 0.2
+sustain = 0.06
+release = 0.08
+vel_sens = 0.45
+waveform = "saw"
+
+[[operators]]
+ratio = 3
+detune_cents = 0
+level = 0.4
+attack = 0.002
+decay = 0.16
+sustain = 0.05
+release = 0.06
+vel_sens = 0.5
+waveform = "pulse"

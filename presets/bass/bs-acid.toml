@@ -1,0 +1,62 @@
+name = "acid bass"
+description = "303風のベース。ソー＋LP＋高いレゾ＋カットオフエンベ。ld-acid より1オクターブ低く、胴を残す。"
+algorithm = 8
+feedback = 0.04
+feedback_op = 4
+gain = 1.12
+default_note = 36
+default_duration = 1.15
+
+[filter]
+type = "lowpass"
+cutoff = 160
+resonance = 0.82
+env_amount = 4.8
+attack = 0.002
+decay = 0.2
+sustain = 0.1
+release = 0.12
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.004
+decay = 0.7
+sustain = 0.2
+release = 0.14
+vel_sens = 0.32
+waveform = "saw"
+
+[[operators]]
+ratio = 1
+detune_cents = 4
+level = 0.22
+attack = 0.004
+decay = 0.55
+sustain = 0.14
+release = 0.1
+vel_sens = 0.28
+waveform = "saw"
+
+[[operators]]
+ratio = 2
+detune_cents = 0
+level = 0.08
+attack = 0.002
+decay = 0.12
+sustain = 0
+release = 0.04
+vel_sens = 0.4
+waveform = "sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0
+attack = 0.001
+decay = 0.05
+sustain = 0
+release = 0.02
+vel_sens = 0
+waveform = "sine"

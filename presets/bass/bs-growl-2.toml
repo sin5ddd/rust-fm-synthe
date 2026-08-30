@@ -1,0 +1,70 @@
+name = "growl bass 2"
+description = "2つ目のグロウル。既存 growl-bass / bp-growl よりソー寄りでフォルマント比が違う。ミッド。サブは薄く。"
+algorithm = 3
+feedback = 0.5
+feedback_op = 4
+gain = 1
+default_note = 43
+default_duration = 1.5
+
+[lfo]
+rate_hz = 4.2
+depth_cents = 12
+
+[mod_sweep]
+start = 1.18
+end = 0.72
+
+[filter]
+type = "bandpass"
+cutoff = 620
+resonance = 0.44
+env_amount = 1.5
+attack = 0.014
+decay = 0.36
+sustain = 0.26
+release = 0.16
+
+[[operators]]
+ratio = 1
+detune_cents = -6
+level = 1
+attack = 0.012
+decay = 0.85
+sustain = 0.2
+release = 0.2
+vel_sens = 0.34
+waveform = "saw"
+
+[[operators]]
+ratio = 1
+detune_cents = 10
+level = 0.42
+attack = 0.008
+decay = 0.4
+sustain = 0.1
+release = 0.12
+vel_sens = 0.42
+waveform = "sine"
+
+[[operators]]
+ratio = 1.31
+detune_cents = -14
+level = 0.52
+attack = 0.005
+decay = 0.34
+sustain = 0.08
+release = 0.1
+vel_sens = 0.48
+waveform = "abs-sine"
+
+[[operators]]
+ratio = 2.67
+detune_cents = 8
+level = 0.4
+attack = 0.003
+decay = 0.22
+sustain = 0.06
+release = 0.08
+vel_sens = 0.52
+waveform = "half-sine"

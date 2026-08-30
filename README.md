@@ -12,7 +12,7 @@ EDM / drum & bass 向けの **オフライン4オペFMシンセ**。プリセッ
 - ボイス末尾の SVF フィルタ（`lowpass` / `bandpass` / `highpass`）とカットオフ ADSR
 - 1オペへのフィードバック、ピッチエンベロープ、簡易LFO、変調量スイープ
 - 44.1 / 48 kHz、16 / 24-bit PCM（`hound`）
-- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**、**スネア20種（`sd-*`）**、**リード50種（`ld-*`）**、**FX50種（`fx-*`）**
+- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**、**スネア20種（`sd-*`）**、**リード50種（`ld-*`）**、**FX50種（`fx-*`）**、**ベース15種（`bs-*`）**、**パーカッション50種（`pc-*`）**
 
 VA / スーパーソー専用エンジンは足していない。4オペFMのまま、波形とボイスフィルタだけ増やしている。
 
@@ -57,6 +57,10 @@ cargo run -- render-all
 `ld-*` リードバンク（プラック、スーパーソー、フーバー、フレンチコア、303風、クワイアなど50種）も同じ。出力は `dist/ld-….wav`。トーンリードの既定は C3（MIDI 48）。高いキャラだけ C4（60）。既存の `lead-fm-pluck` / `stab-fm-fifth` はそのまま（リネームしない追加バンク）。
 
 `fx-*` FXバンク（リバースシンバル、ライザー、インパクト、ダウンリフター、レーザー、ウーシュなど50種）も同じ。出力は `dist/fx-….wav`。ピッチのないノイズ／スイープが多い。リバースシンバルとライザーは長め（1.5–4秒、後で切る前提）。インパクトやヒットは短い。
+
+`bs-*` ベースバンク（808サブ、暗い／明るい／ニューロReese、ウォブル、アシッド、フレンチコア、ガバ、フーバー、歪みスクエア、タイトハウス、Amenサブ、グロウル2、正弦サブ、金属FMなど15種）も同じ。出力は `dist/bs-….wav`。TOMLは `presets/bass/`。C3付近（MIDI 36–48）。既存の `sub-bass` / `growl-bass` / `reese-mid` / `supersaw-bass` はそのまま（リネームしない追加バンク）。`reese-mid` の800–1200 Hz糊とは別。
+
+`pc-*` パーカッションバンク（ハット、オープンハット、シェイカー、タンバ、コンガ／ボンゴ、タム、カウベル、クラべ、スナップ、トライアングル、ライドFM、ウッドブロック、クラップ変種、ザップ、フォリーなど50種）も同じ。出力は `dist/pc-….wav`。TOMLは `presets/perc/`。キックは `bd-*`、スネアは `sd-*` のまま（追加のフルキックは入れない）。短いワンショット（オープンハット／ライドだけ約1秒）。既存の `cp-house` / `glass-hit` / `metallic-hit` はそのまま。
 
 出力ディレクトリや長さを全プリセットに上書き:
 
@@ -352,8 +356,73 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | `fx-whoosh-hp` | ハイパスのウーシュ |
 | `fx-riser-filter` | フィルタ開放のライザー |
 | `fx-hoover-fall` | フーバー寄りのフォールFX |
+| `bs-808-sub` | 長い正弦の808サブ（ベース。キックブームではない） |
+| `bs-reese-dark` | 暗いフルレンジReese（サブ＋ミッド。`reese-mid` の糊ではない） |
+| `bs-reese-bright` | 明るい広いReese（super-saw。既存 `supersaw-bass` よりデチューン広め） |
+| `bs-reese-neuro` | ニューロReese（非整数比。BPは300–700付近） |
+| `bs-wobble` | ベース用ウォブル（低く、サブ〜ミッド） |
+| `bs-acid` | 303風ベース（`ld-acid` より低い） |
+| `bs-frenchcore` | フレンチコアのミッドベース（羊毛サブなし） |
+| `bs-gabber` | ガバの歪みミッドベース |
+| `bs-hoover` | フーバーベース（`ld-hoover` より低い） |
+| `bs-dist-square` | 歪んだスクエア／パルスベース |
+| `bs-house-tight` | タイトなハウスベース（短い、サイドチェイン向き） |
+| `bs-amen-sub` | Amen横のDnBサブ（`sub-bass` より短い） |
+| `bs-growl-2` | 2つ目のグロウル（既存 `growl-bass` / `bp-growl` とは別） |
+| `bs-sine-sub` | クリーンな正弦サブ（クリックほぼなし） |
+| `bs-metal-fm` | 金属FMベース |
+| `pc-hat-closed` | クローズドハット |
+| `pc-hat-open` | オープンハット（尾あり） |
+| `pc-hat-house` | ハウスのクローズドハット |
+| `pc-hat-dnb-cl` | DnBクローズドハット |
+| `pc-hat-dnb-op` | DnBオープンハット |
+| `pc-hat-fc` | フレンチコアハット |
+| `pc-hat-pedal` | ペダル／フットハット |
+| `pc-hat-tight` | 極短いタイトハット |
+| `pc-hat-dark` | 暗いクローズドハット |
+| `pc-hat-noise` | ノイズ寄りのハット |
+| `pc-hat-chip` | チップチューン寄りのハット |
+| `pc-hat-fc-op` | フレンチコアのオープンハット |
+| `pc-shaker` | シェイカー |
+| `pc-shaker-short` | 短いシェイカーティック |
+| `pc-tamb` | タンバリン |
+| `pc-tamb-roll` | タンバリンの短いロール風 |
+| `pc-cabasa` | カバサ |
+| `pc-conga-hi` | ハイコンガ |
+| `pc-conga-lo` | ローコンガ |
+| `pc-bongo-hi` | ハイボンゴ |
+| `pc-bongo-lo` | ローボンゴ |
+| `pc-tom-hi` | ハイタム（`bd-*` ではない） |
+| `pc-tom-mid` | ミッドタム |
+| `pc-tom-lo` | ロータム（キックブームではない） |
+| `pc-rim` | 木寄りのリム（`sd-rimshot` より金属が弱い） |
+| `pc-cowbell` | カウベル |
+| `pc-clave` | クラべ |
+| `pc-snap` | フィンガースナップ |
+| `pc-snaps` | スナップの重ね |
+| `pc-snap-lo` | 低いスナップ |
+| `pc-triangle` | トライアングル |
+| `pc-ride-fm` | ライド寄りのFM |
+| `pc-ride-bell` | ライドベル |
+| `pc-woodblock` | ウッドブロック |
+| `pc-agogo-hi` | アゴゴ高音 |
+| `pc-agogo-lo` | アゴゴ低音 |
+| `pc-tick-metal` | 金属ティック |
+| `pc-tick-indust` | インダストリアルなティック |
+| `pc-tick-clock` | 時計のティック |
+| `pc-clap-dry` | ドライなクラップ（`cp-house` とは別） |
+| `pc-clap-room` | ルーム寄りのクラップ |
+| `pc-clap-gate` | ゲートしたクラップ |
+| `pc-zap` | パーカッションのザップ |
+| `pc-zap-lo` | 低いパーカッションザップ |
+| `pc-foley-click` | フォリーのクリック |
+| `pc-foley-thud` | フォリーの短いドサッ（キックではない） |
+| `pc-foley-scratch` | フォリーのスクラッチ |
+| `pc-chime` | 短いチャイム |
+| `pc-guiro` | ギロの短いスクレイプ |
+| `pc-stick` | スティックのクリック |
 
-データは `presets/<category>/*.toml`（`bass` / `bd` / `sd` / `ld` / `fx` / `perc`）。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。 `--preset <id>` の ID はファイル名のまま（フォルダ名は含まない）。
+データは `presets/<category>/*.toml`（`bass` / `bd` / `sd` / `ld` / `fx` / `perc`）。`bs-*` は `presets/bass/`、`pc-*` は `presets/perc/`。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。 `--preset <id>` の ID はファイル名のまま（フォルダ名は含まない）。
 
 ## プリセットの足し方
 
@@ -450,4 +519,4 @@ write_wav(
 cargo test
 ```
 
-エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`ld-*` リードと `fx-*` FXがそれぞれちょうど50個で非無音、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。
+エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`ld-*` リードと `fx-*` FXがそれぞれちょうど50個で非無音、`bs-*` ベースがちょうど15個で非無音、`pc-*` パーカッションがちょうど50個で非無音、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。

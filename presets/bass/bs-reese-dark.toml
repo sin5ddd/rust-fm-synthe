@@ -1,0 +1,66 @@
+name = "dark reese bass"
+description = "暗いフルレンジReese。サブ＋ミッドの厚いデチューンソー。reese-mid（800–1200糊）とは別。LPでハイを抑える。"
+algorithm = 5
+feedback = 0.1
+feedback_op = 4
+gain = 0.95
+default_note = 36
+default_duration = 1.7
+
+[lfo]
+rate_hz = 0.32
+depth_cents = 10
+
+[filter]
+type = "lowpass"
+cutoff = 420
+resonance = 0.22
+env_amount = 0.8
+attack = 0.02
+decay = 0.55
+sustain = 0.45
+release = 0.2
+
+[[operators]]
+ratio = 0.5
+detune_cents = -11
+level = 1
+attack = 0.018
+decay = 1.1
+sustain = 0.38
+release = 0.24
+vel_sens = 0.28
+waveform = "saw"
+
+[[operators]]
+ratio = 1
+detune_cents = 5
+level = 0.18
+attack = 0.01
+decay = 0.45
+sustain = 0.15
+release = 0.12
+vel_sens = 0.35
+waveform = "sine"
+
+[[operators]]
+ratio = 0.5
+detune_cents = 14
+level = 0.92
+attack = 0.022
+decay = 1
+sustain = 0.35
+release = 0.22
+vel_sens = 0.28
+waveform = "saw"
+
+[[operators]]
+ratio = 1
+detune_cents = -4
+level = 0.12
+attack = 0.008
+decay = 0.3
+sustain = 0.1
+release = 0.1
+vel_sens = 0.4
+waveform = "sine"
