@@ -509,7 +509,13 @@ fn render_all_names_failed_presets() {
     assert!(msg.contains("supersaw-bass"), "{msg}");
 }
 
-const STRUDEL_ONESHOT_IDS: [&str; 4] = ["cp-house", "lead-fm-pluck", "stab-fm-fifth", "reese-mid"];
+const STRUDEL_ONESHOT_IDS: [&str; 5] = [
+    "cp-house",
+    "lead-fm-pluck",
+    "stab-fm-fifth",
+    "stab-fm-major",
+    "reese-mid",
+];
 
 #[test]
 fn strudel_oneshot_ids_parse() {
@@ -638,6 +644,46 @@ fn stab_fm_fifth_is_hollow_c_and_g_only() {
     assert!(
         fifth_h < cg * 0.08,
         "5th harmonic (E) leaked (h5={fifth_h}, cg={cg})"
+    );
+}
+
+#[test]
+fn stab_fm_major_has_e_unlike_hollow_fifth() {
+    let preset = load_factory("stab-fm-major").unwrap();
+    assert_eq!(preset.default_note, 48);
+    let sr = 48_000u32;
+    let f0 = midi_to_hz(48) as f32;
+    let buf = render(
+        &preset,
+        &RenderParams {
+            frequency_hz: f64::from(f0),
+            duration_secs: preset.default_duration,
+            velocity: 0.9,
+            sample_rate: sr,
+        },
+    )
+    .unwrap();
+    assert!(buf.iter().all(|s| s.is_finite()), "NaN/Inf");
+    assert!(rms(&buf) > 0.01, "near-silence (rms={})", rms(&buf));
+
+    // Same decay-body window as the hollow-fifth test so the 5:4 bin is
+    // comparable: hollow asserts E is absent; this asserts E is present.
+    let start = (sr as usize) / 25;
+    let end = ((sr as usize) * 3 / 20).min(buf.len());
+    assert!(end > start + 64, "not enough decay body to measure");
+    let body = hann_window(&buf[start..end]);
+    let c = goertzel_power(&body, sr as f32, f0);
+    let e = goertzel_power(&body, sr as f32, f0 * 1.25);
+    let g = goertzel_power(&body, sr as f32, f0 * 1.5);
+
+    assert!(
+        c > 0.0 && e > 0.0 && g > 0.0,
+        "missing C, E, or G (c={c}, e={e}, g={g})"
+    );
+    let cg = c.min(g);
+    assert!(
+        e > cg * 0.25,
+        "major third (5:4) should be present unlike stab-fm-fifth (e={e}, cg={cg})"
     );
 }
 
