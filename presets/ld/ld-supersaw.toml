@@ -5,7 +5,7 @@ feedback = 0.06
 feedback_op = 4
 gain = 0.86
 default_note = 48
-default_duration = 1.8
+default_duration = 8.2
 
 [lfo]
 rate_hz = 5.2
@@ -28,7 +28,7 @@ detune_cents = -5
 level = 1.0
 attack = 0.018
 decay = 0.9
-sustain = 0.42
+sustain = 0.82
 release = 0.28
 vel_sens = 0.28
 waveform = "super-saw"
@@ -54,7 +54,7 @@ detune_cents = 8
 level = 0.78
 attack = 0.022
 decay = 0.8
-sustain = 0.38
+sustain = 0.82
 release = 0.24
 vel_sens = 0.26
 waveform = "super-saw"

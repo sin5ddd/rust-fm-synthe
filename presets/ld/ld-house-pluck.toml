@@ -5,7 +5,7 @@ feedback = 0.06
 feedback_op = 4
 gain = 1.0
 default_note = 48
-default_duration = 0.45
+default_duration = 8.2
 
 [filter]
 type = "lowpass"
@@ -14,8 +14,8 @@ resonance = 0.22
 env_amount = 3.4
 attack = 0.001
 decay = 0.16
-sustain = 0.06
-release = 0.1
+sustain = 0.22
+release = 0.2
 
 # OP1 下側キャリア
 [[operators]]
@@ -24,8 +24,8 @@ detune_cents = -3
 level = 1.0
 attack = 0.0015
 decay = 0.16
-sustain = 0.0
-release = 0.05
+sustain = 0.75
+release = 0.2
 vel_sens = 0.4
 waveform = "saw"
 
@@ -36,7 +36,7 @@ detune_cents = 2
 level = 0.22
 attack = 0.0005
 decay = 0.04
-sustain = 0.0
+sustain = 0
 release = 0.02
 vel_sens = 0.45
 waveform = "sine"
@@ -48,8 +48,8 @@ detune_cents = 6
 level = 0.72
 attack = 0.0012
 decay = 0.14
-sustain = 0.0
-release = 0.045
+sustain = 0.75
+release = 0.2
 vel_sens = 0.38
 waveform = "sine"
 
@@ -60,7 +60,7 @@ detune_cents = -2
 level = 0.12
 attack = 0.0004
 decay = 0.03
-sustain = 0.0
+sustain = 0
 release = 0.015
 vel_sens = 0.5
 waveform = "sine"

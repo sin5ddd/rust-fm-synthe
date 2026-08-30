@@ -5,7 +5,7 @@ feedback = 0.4
 feedback_op = 4
 gain = 1.0
 default_note = 60
-default_duration = 0.9
+default_duration = 8.2
 
 [mod_sweep]
 start = 1.45
@@ -19,7 +19,7 @@ env_amount = 1.6
 attack = 0.002
 decay = 0.16
 sustain = 0.25
-release = 0.1
+release = 0.2
 
 # OP1
 [[operators]]
@@ -28,7 +28,7 @@ detune_cents = 0
 level = 1.0
 attack = 0.003
 decay = 0.4
-sustain = 0.26
+sustain = 0.82
 release = 0.12
 vel_sens = 0.38
 waveform = "saw"

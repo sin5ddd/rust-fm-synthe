@@ -5,7 +5,7 @@ feedback = 0.06
 feedback_op = 4
 gain = 1.0
 default_note = 60
-default_duration = 1.1
+default_duration = 8.2
 
 [filter]
 type = "lowpass"
@@ -14,8 +14,8 @@ resonance = 0.12
 env_amount = 0.0
 attack = 0.0
 decay = 0.0
-sustain = 1.0
-release = 0.05
+sustain = 1
+release = 0.2
 
 # OP1
 [[operators]]
@@ -24,7 +24,7 @@ detune_cents = 0
 level = 0.9
 attack = 0.0005
 decay = 0.55
-sustain = 0.0
+sustain = 0.75
 release = 0.16
 vel_sens = 0.35
 waveform = "sine"
@@ -36,8 +36,8 @@ detune_cents = 3
 level = 0.35
 attack = 0.0003
 decay = 0.22
-sustain = 0.0
-release = 0.08
+sustain = 0.75
+release = 0.2
 vel_sens = 0.45
 waveform = "sine"
 
@@ -48,8 +48,8 @@ detune_cents = -4
 level = 0.18
 attack = 0.0002
 decay = 0.1
-sustain = 0.0
-release = 0.04
+sustain = 0.75
+release = 0.2
 vel_sens = 0.5
 waveform = "sine"
 
@@ -60,7 +60,7 @@ detune_cents = 0
 level = 0.08
 attack = 0.0002
 decay = 0.04
-sustain = 0.0
+sustain = 0
 release = 0.02
 vel_sens = 0.55
 waveform = "sine"

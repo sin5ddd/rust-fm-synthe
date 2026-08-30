@@ -5,7 +5,7 @@ feedback = 0.16
 feedback_op = 4
 gain = 1.0
 default_note = 48
-default_duration = 0.7
+default_duration = 8.2
 
 [filter]
 type = "lowpass"
@@ -24,7 +24,7 @@ detune_cents = -2
 level = 1.0
 attack = 0.008
 decay = 0.35
-sustain = 0.18
+sustain = 0.75
 release = 0.12
 vel_sens = 0.35
 waveform = "saw"
@@ -60,7 +60,7 @@ detune_cents = 0
 level = 0.38
 attack = 0.001
 decay = 0.045
-sustain = 0.0
+sustain = 0
 release = 0.02
 vel_sens = 0.55
 waveform = "half-sine"

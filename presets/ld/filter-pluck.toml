@@ -5,7 +5,7 @@ feedback = 0.16
 feedback_op = 4
 gain = 1.0
 default_note = 60
-default_duration = 0.55
+default_duration = 8.2
 
 [pitch]
 start_semitones = 0.6
@@ -19,7 +19,7 @@ resonance = 0.34
 env_amount = 4.6
 attack = 0.0015
 decay = 0.2
-sustain = 0.1
+sustain = 0.22
 release = 0.14
 
 # OP1 下側キャリア
@@ -29,8 +29,8 @@ detune_cents = -5.0
 level = 1.0
 attack = 0.0012
 decay = 0.28
-sustain = 0.0
-release = 0.08
+sustain = 0.75
+release = 0.2
 vel_sens = 0.4
 waveform = "saw"
 
@@ -41,7 +41,7 @@ detune_cents = 4.0
 level = 0.42
 attack = 0.0006
 decay = 0.08
-sustain = 0.0
+sustain = 0
 release = 0.04
 vel_sens = 0.5
 waveform = "sine"
@@ -53,8 +53,8 @@ detune_cents = 7.0
 level = 0.82
 attack = 0.001
 decay = 0.22
-sustain = 0.0
-release = 0.07
+sustain = 0.75
+release = 0.2
 vel_sens = 0.4
 waveform = "sine"
 
@@ -65,7 +65,7 @@ detune_cents = -3.0
 level = 0.3
 attack = 0.0005
 decay = 0.05
-sustain = 0.0
+sustain = 0
 release = 0.03
 vel_sens = 0.55
 waveform = "sine"

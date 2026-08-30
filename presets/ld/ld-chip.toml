@@ -5,7 +5,7 @@ feedback = 0.0
 feedback_op = 4
 gain = 1.15
 default_note = 60
-default_duration = 0.6
+default_duration = 8.2
 
 [filter]
 type = "highpass"
@@ -14,8 +14,8 @@ resonance = 0.0
 env_amount = 0.0
 attack = 0.0
 decay = 0.0
-sustain = 1.0
-release = 0.05
+sustain = 1
+release = 0.2
 
 # OP1
 [[operators]]
@@ -24,8 +24,8 @@ detune_cents = 0
 level = 1.0
 attack = 0.002
 decay = 0.25
-sustain = 0.4
-release = 0.06
+sustain = 0.82
+release = 0.2
 vel_sens = 0.2
 waveform = "pulse"
 
@@ -36,7 +36,7 @@ detune_cents = 0
 level = 0.0
 attack = 0.001
 decay = 0.05
-sustain = 0.0
+sustain = 0
 release = 0.02
 vel_sens = 0.0
 waveform = "sine"
@@ -48,8 +48,8 @@ detune_cents = 0
 level = 0.12
 attack = 0.002
 decay = 0.18
-sustain = 0.15
-release = 0.05
+sustain = 0.75
+release = 0.2
 vel_sens = 0.25
 waveform = "pulse"
 
@@ -60,7 +60,7 @@ detune_cents = 0
 level = 0.0
 attack = 0.001
 decay = 0.05
-sustain = 0.0
+sustain = 0
 release = 0.02
 vel_sens = 0.0
 waveform = "sine"
