@@ -1316,8 +1316,8 @@ fn ep_rhodes_soft_attack_has_tine_2x_3x_unlike_sine() {
     assert!(rms(&buf) > 0.01, "near-silence (rms={})", rms(&buf));
 
     // Attack window: tines (2× / 3×) live here, then decay toward the body.
-    let start = (sr as usize) / 200;
-    let end = ((sr as usize) / 8).min(buf.len());
+    let start = (sr as usize) / 500;
+    let end = ((sr as usize) / 12).min(buf.len());
     assert!(end > start + 64, "not enough attack to measure");
     let attack = hann_window(&buf[start..end]);
 

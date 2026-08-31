@@ -17,25 +17,25 @@ decay = 0.45
 sustain = 0.22
 release = 0.4
 
-# OP1 キャリア: 胴（比1）。サステイン中庸、リリース長め。
+# OP1 キャリア: 胴（比1）。アタックを少し遅らせ、先にタインを出す。
 [[operators]]
 ratio = 1.0
 detune_cents = 0
-level = 1.0
-attack = 0.003
+level = 0.72
+attack = 0.012
 decay = 1.5
 sustain = 0.4
 release = 0.55
 vel_sens = 0.32
 waveform = "sine"
 
-# OP2 キャリア: タイン 2×（オクターブ）。短い減衰、サステイン0。
+# OP2 キャリア: タイン 2×（オクターブ）。アタックで胴より前に出す。
 [[operators]]
 ratio = 2.0
 detune_cents = 2
-level = 0.5
-attack = 0.0004
-decay = 0.26
+level = 1.0
+attack = 0.0003
+decay = 0.32
 sustain = 0.0
 release = 0.14
 vel_sens = 0.42
@@ -45,9 +45,9 @@ waveform = "sine"
 [[operators]]
 ratio = 3.0
 detune_cents = -1
-level = 0.38
-attack = 0.0005
-decay = 0.22
+level = 0.82
+attack = 0.0003
+decay = 0.26
 sustain = 0.0
 release = 0.12
 vel_sens = 0.4
