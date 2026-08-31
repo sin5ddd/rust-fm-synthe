@@ -1,0 +1,70 @@
+name = "light organ pad"
+description = "軽いオルガン（1・2・3・4）。ドローバーだがHPで床なし。"
+algorithm = 8
+feedback = 0.04
+feedback_op = 4
+gain = 0.94
+default_note = 55
+default_duration = 16.4
+
+[lfo]
+rate_hz = 0.1
+depth_cents = 4.0
+
+[filter]
+type = "highpass"
+cutoff = 175
+resonance = 0.06
+env_amount = 0.25
+attack = 3.0
+decay = 3.0
+sustain = 0.74
+release = 0.28
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -2
+level = 0.78
+attack = 0.05
+decay = 1.4
+sustain = 0.9
+release = 0.3
+vel_sens = 0.12
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 2
+level = 0.7
+attack = 0.05
+decay = 1.3
+sustain = 0.88
+release = 0.28
+vel_sens = 0.12
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 3.0
+detune_cents = 0
+level = 0.36
+attack = 0.06
+decay = 1.2
+sustain = 0.86
+release = 0.26
+vel_sens = 0.12
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 4.0
+detune_cents = 1
+level = 0.2
+attack = 0.06
+decay = 1.1
+sustain = 0.84
+release = 0.24
+vel_sens = 0.12
+waveform = "sine"

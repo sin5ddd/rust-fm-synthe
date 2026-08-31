@@ -1,0 +1,70 @@
+name = "harp air pad"
+description = "ハープの空気。アタックは少し立つが16秒ホールド。"
+algorithm = 6
+feedback = 0.07
+feedback_op = 4
+gain = 0.97
+default_note = 67
+default_duration = 16.7
+
+[lfo]
+rate_hz = 0.16
+depth_cents = 7.0
+
+[filter]
+type = "highpass"
+cutoff = 220
+resonance = 0.1
+env_amount = 0.45
+attack = 2.8
+decay = 4.0
+sustain = 0.64
+release = 0.26
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.88
+attack = 0.03
+decay = 1.6
+sustain = 0.84
+release = 0.28
+vel_sens = 0.22
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 4
+level = 0.32
+attack = 0.025
+decay = 1.1
+sustain = 0.82
+release = 0.22
+vel_sens = 0.24
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 3.0
+detune_cents = -3
+level = 0.16
+attack = 0.03
+decay = 0.9
+sustain = 0.8
+release = 0.2
+vel_sens = 0.24
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 1.5
+detune_cents = 2
+level = 0.22
+attack = 0.04
+decay = 1.2
+sustain = 0.82
+release = 0.22
+vel_sens = 0.2
+waveform = "sine"

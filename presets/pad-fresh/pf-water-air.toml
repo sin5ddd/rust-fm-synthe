@@ -1,0 +1,74 @@
+name = "water air pad"
+description = "水の空気。遅いLFO、薄いモジュレーション。泥なし。"
+algorithm = 3
+feedback = 0.1
+feedback_op = 4
+gain = 0.95
+default_note = 60
+default_duration = 17.1
+
+[lfo]
+rate_hz = 0.09
+depth_cents = 10.0
+
+[mod_sweep]
+start = 0.7
+end = 1.15
+
+[filter]
+type = "highpass"
+cutoff = 180
+resonance = 0.09
+env_amount = 0.7
+attack = 6.5
+decay = 5.0
+sustain = 0.7
+release = 0.32
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -4
+level = 0.9
+attack = 0.08
+decay = 2.0
+sustain = 0.88
+release = 0.34
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 5
+level = 0.28
+attack = 0.12
+decay = 2.4
+sustain = 0.7
+release = 0.26
+vel_sens = 0.16
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.18
+attack = 0.15
+decay = 2.8
+sustain = 0.62
+release = 0.22
+vel_sens = 0.16
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 3.01
+detune_cents = 0
+level = 0.1
+attack = 0.18
+decay = 3.0
+sustain = 0.55
+release = 0.2
+vel_sens = 0.16
+waveform = "sine"

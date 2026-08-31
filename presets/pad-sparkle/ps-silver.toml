@@ -1,0 +1,70 @@
+name = "silver pad"
+description = "銀。冷たい金属の層。キラキラ控えめのホールド。"
+algorithm = 5
+feedback = 0.1
+feedback_op = 4
+gain = 0.95
+default_note = 67
+default_duration = 16.7
+
+[lfo]
+rate_hz = 0.21
+depth_cents = 8.0
+
+[filter]
+type = "highpass"
+cutoff = 310
+resonance = 0.13
+env_amount = 0.45
+attack = 3.6
+decay = 4.0
+sustain = 0.66
+release = 0.26
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -4
+level = 0.78
+attack = 0.05
+decay = 1.5
+sustain = 0.86
+release = 0.28
+vel_sens = 0.18
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 5
+level = 0.4
+attack = 0.06
+decay = 1.3
+sustain = 0.84
+release = 0.26
+vel_sens = 0.2
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 5.0
+detune_cents = 3
+level = 0.22
+attack = 0.07
+decay = 1.1
+sustain = 0.8
+release = 0.22
+vel_sens = 0.22
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 3.0
+detune_cents = -3
+level = 0.18
+attack = 0.06
+decay = 1.2
+sustain = 0.82
+release = 0.22
+vel_sens = 0.2
+waveform = "abs-sine"

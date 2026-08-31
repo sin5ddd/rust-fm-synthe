@@ -1,0 +1,70 @@
+name = "held bell pad"
+description = "ベルのホールド。アタックは立つがサステインで16秒残る。"
+algorithm = 6
+feedback = 0.12
+feedback_op = 4
+gain = 0.98
+default_note = 72
+default_duration = 16.8
+
+[lfo]
+rate_hz = 0.12
+depth_cents = 5.0
+
+[filter]
+type = "highpass"
+cutoff = 320
+resonance = 0.13
+env_amount = 0.35
+attack = 2.4
+decay = 3.5
+sustain = 0.62
+release = 0.24
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.82
+attack = 0.02
+decay = 1.6
+sustain = 0.82
+release = 0.28
+vel_sens = 0.24
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 3.5
+detune_cents = 5
+level = 0.4
+attack = 0.015
+decay = 1.0
+sustain = 0.8
+release = 0.22
+vel_sens = 0.28
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 6.0
+detune_cents = -6
+level = 0.22
+attack = 0.012
+decay = 0.8
+sustain = 0.78
+release = 0.2
+vel_sens = 0.3
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 8.0
+detune_cents = 0
+level = 0.1
+attack = 0.02
+decay = 0.5
+sustain = 0.76
+release = 0.16
+vel_sens = 0.32
+waveform = "sine"

@@ -1,0 +1,70 @@
+name = "open ninth pad"
+description = "開いた9度（根音＋9度＋5度）。ワイドだがサブなし。"
+algorithm = 8
+feedback = 0.02
+feedback_op = 4
+gain = 0.96
+default_note = 48
+default_duration = 16.6
+
+[lfo]
+rate_hz = 0.17
+depth_cents = 8.0
+
+[filter]
+type = "highpass"
+cutoff = 170
+resonance = 0.09
+env_amount = 0.4
+attack = 4.0
+decay = 4.5
+sustain = 0.7
+release = 0.3
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -4
+level = 0.8
+attack = 0.06
+decay = 1.8
+sustain = 0.86
+release = 0.32
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.25
+detune_cents = 5
+level = 0.62
+attack = 0.08
+decay = 1.5
+sustain = 0.84
+release = 0.28
+vel_sens = 0.16
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 1.5
+detune_cents = 3
+level = 0.42
+attack = 0.09
+decay = 1.4
+sustain = 0.84
+release = 0.26
+vel_sens = 0.14
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 3.0
+detune_cents = -3
+level = 0.14
+attack = 0.11
+decay = 1.2
+sustain = 0.8
+release = 0.22
+vel_sens = 0.14
+waveform = "sine"

@@ -553,6 +553,152 @@ fn factory_dr_drones_hold_eight_bars_at_120bpm() {
 }
 
 #[test]
+fn factory_pf_pads_are_thirty_and_audible() {
+    let ids: Vec<_> = factory_ids()
+        .into_iter()
+        .filter(|id| id.starts_with("pf-"))
+        .collect();
+    assert_eq!(
+        ids.len(),
+        30,
+        "expected exactly 30 pf-* factory pads, got {}: {ids:?}",
+        ids.len()
+    );
+
+    for id in ids {
+        let preset = load_factory(id).unwrap();
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: 0.25,
+                velocity: 0.9,
+                sample_rate: 22_050,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+        assert!(
+            rms(&buf) > 0.01,
+            "pf pad `{id}` rendered near-silence (rms={})",
+            rms(&buf)
+        );
+        assert!(
+            buf.iter().any(|&s| s.abs() > 1e-3),
+            "{id} effectively silent"
+        );
+    }
+}
+
+#[test]
+fn factory_ps_pads_are_thirty_and_audible() {
+    let ids: Vec<_> = factory_ids()
+        .into_iter()
+        .filter(|id| id.starts_with("ps-"))
+        .collect();
+    assert_eq!(
+        ids.len(),
+        30,
+        "expected exactly 30 ps-* factory pads, got {}: {ids:?}",
+        ids.len()
+    );
+
+    for id in ids {
+        let preset = load_factory(id).unwrap();
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: 0.25,
+                velocity: 0.9,
+                sample_rate: 22_050,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+        assert!(
+            rms(&buf) > 0.01,
+            "ps pad `{id}` rendered near-silence (rms={})",
+            rms(&buf)
+        );
+        assert!(
+            buf.iter().any(|&s| s.abs() > 1e-3),
+            "{id} effectively silent"
+        );
+    }
+}
+
+/// 120 BPM, 4/4 → 1 bar = 2 s → 8 bars = 16 s held note.
+/// Pads are long-shot like drones, but not the sub/rumble bed.
+/// Last 1 s and t=14 s must still have energy.
+#[test]
+fn factory_pf_ps_pads_hold_eight_bars_at_120bpm() {
+    let ids: Vec<_> = factory_ids()
+        .into_iter()
+        .filter(|id| id.starts_with("pf-") || id.starts_with("ps-"))
+        .collect();
+    assert_eq!(
+        ids.len(),
+        60,
+        "expected exactly 30 pf-* + 30 ps-* factory pads, got {}: {ids:?}",
+        ids.len()
+    );
+
+    const SR: u32 = 22_050;
+    const TAIL_SECS: f64 = 1.0;
+    let tail_n = ((TAIL_SECS * f64::from(SR)).round() as usize).max(1);
+
+    for id in ids {
+        let preset = load_factory(id).unwrap();
+        assert!(
+            (16.2..=18.0).contains(&preset.default_duration),
+            "{id} default_duration {} must be ~16 s+ (8 bars @ 120 BPM)",
+            preset.default_duration
+        );
+
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: SR,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+
+        let expected = (preset.default_duration * f64::from(SR)).round() as usize;
+        assert_eq!(
+            buf.len(),
+            expected,
+            "{id} sample count {} != duration*sr {}",
+            buf.len(),
+            expected
+        );
+        assert!(
+            buf.len() >= tail_n,
+            "{id} buffer shorter than tail window"
+        );
+
+        let tail = &buf[buf.len() - tail_n..];
+        let tail_rms = rms(tail);
+        assert!(
+            tail_rms > 0.01,
+            "{id} last {TAIL_SECS}s is silence (rms={tail_rms}); \
+             carrier sustain must hold for the full 16 s key-down"
+        );
+
+        let t14 = ((14.0 * f64::from(SR)).round() as usize).min(buf.len().saturating_sub(tail_n));
+        let at14 = rms(&buf[t14..t14 + tail_n]);
+        assert!(
+            at14 > 0.01,
+            "{id} silent at t=14s (rms={at14}); filter/amp env died too early"
+        );
+    }
+}
+
+#[test]
 fn every_factory_preset_makes_sound() {
     for id in fm_synth::factory_ids() {
         let preset = load_factory(id).unwrap();

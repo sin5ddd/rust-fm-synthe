@@ -1,0 +1,70 @@
+name = "alpine pad"
+description = "高山の澄んだ5度。明るいが軽い。"
+algorithm = 8
+feedback = 0.02
+feedback_op = 4
+gain = 0.96
+default_note = 67
+default_duration = 16.5
+
+[lfo]
+rate_hz = 0.2
+depth_cents = 8.0
+
+[filter]
+type = "highpass"
+cutoff = 230
+resonance = 0.08
+env_amount = 0.4
+attack = 3.2
+decay = 3.6
+sustain = 0.7
+release = 0.28
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -5
+level = 0.84
+attack = 0.06
+decay = 1.5
+sustain = 0.86
+release = 0.3
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.5
+detune_cents = 6
+level = 0.8
+attack = 0.07
+decay = 1.4
+sustain = 0.86
+release = 0.28
+vel_sens = 0.16
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 2.0
+detune_cents = 3
+level = 0.24
+attack = 0.09
+decay = 1.2
+sustain = 0.82
+release = 0.24
+vel_sens = 0.14
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 3.0
+detune_cents = -3
+level = 0.12
+attack = 0.1
+decay = 1.0
+sustain = 0.8
+release = 0.2
+vel_sens = 0.14
+waveform = "sine"

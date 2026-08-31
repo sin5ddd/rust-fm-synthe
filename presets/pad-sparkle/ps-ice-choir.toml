@@ -1,0 +1,70 @@
+name = "ice choir pad"
+description = "氷のクワイア。冷たい重ねサイン＋輝き。"
+algorithm = 8
+feedback = 0.0
+feedback_op = 4
+gain = 0.94
+default_note = 67
+default_duration = 17.0
+
+[lfo]
+rate_hz = 0.18
+depth_cents = 9.0
+
+[filter]
+type = "highpass"
+cutoff = 300
+resonance = 0.09
+env_amount = 0.5
+attack = 4.8
+decay = 4.5
+sustain = 0.7
+release = 0.3
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -9
+level = 0.8
+attack = 0.08
+decay = 1.7
+sustain = 0.86
+release = 0.32
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 9
+level = 0.74
+attack = 0.09
+decay = 1.6
+sustain = 0.86
+release = 0.3
+vel_sens = 0.16
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 2.0
+detune_cents = 5
+level = 0.26
+attack = 0.1
+decay = 1.4
+sustain = 0.82
+release = 0.26
+vel_sens = 0.16
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 5.0
+detune_cents = -4
+level = 0.14
+attack = 0.11
+decay = 1.2
+sustain = 0.8
+release = 0.22
+vel_sens = 0.18
+waveform = "half-sine"

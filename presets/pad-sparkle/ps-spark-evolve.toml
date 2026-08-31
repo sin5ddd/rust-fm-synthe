@@ -1,0 +1,74 @@
+name = "evolving spark pad"
+description = "火花がゆっくり育つ。モジュレーションスイープ。"
+algorithm = 2
+feedback = 0.14
+feedback_op = 4
+gain = 0.96
+default_note = 67
+default_duration = 17.2
+
+[lfo]
+rate_hz = 0.1
+depth_cents = 7.0
+
+[mod_sweep]
+start = 0.45
+end = 1.22
+
+[filter]
+type = "highpass"
+cutoff = 290
+resonance = 0.12
+env_amount = 0.8
+attack = 7.2
+decay = 5.0
+sustain = 0.66
+release = 0.3
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -2
+level = 0.9
+attack = 0.05
+decay = 1.9
+sustain = 0.88
+release = 0.3
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 3.0
+detune_cents = 3
+level = 0.3
+attack = 0.12
+decay = 2.6
+sustain = 0.64
+release = 0.24
+vel_sens = 0.18
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 6.0
+detune_cents = 0
+level = 0.16
+attack = 0.18
+decay = 3.2
+sustain = 0.5
+release = 0.2
+vel_sens = 0.2
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 2.01
+detune_cents = 0
+level = 0.22
+attack = 0.1
+decay = 2.2
+sustain = 0.7
+release = 0.22
+vel_sens = 0.16
+waveform = "sine"

@@ -1,0 +1,70 @@
+name = "ice shine pad"
+description = "氷の輝き。冷たい高域。ホールド。"
+algorithm = 7
+feedback = 0.08
+feedback_op = 4
+gain = 0.96
+default_note = 72
+default_duration = 16.7
+
+[lfo]
+rate_hz = 0.2
+depth_cents = 8.0
+
+[filter]
+type = "highpass"
+cutoff = 380
+resonance = 0.14
+env_amount = 0.45
+attack = 3.6
+decay = 4.0
+sustain = 0.64
+release = 0.26
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -3
+level = 0.7
+attack = 0.05
+decay = 1.4
+sustain = 0.84
+release = 0.28
+vel_sens = 0.2
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 5.0
+detune_cents = 5
+level = 0.28
+attack = 0.06
+decay = 1.1
+sustain = 0.82
+release = 0.22
+vel_sens = 0.24
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 2.0
+detune_cents = 3
+level = 0.36
+attack = 0.06
+decay = 1.2
+sustain = 0.82
+release = 0.24
+vel_sens = 0.2
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 7.13
+detune_cents = 0
+level = 0.12
+attack = 0.08
+decay = 0.9
+sustain = 0.78
+release = 0.2
+vel_sens = 0.26
+waveform = "abs-sine"

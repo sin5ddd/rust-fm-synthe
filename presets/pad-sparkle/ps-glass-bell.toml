@@ -1,0 +1,70 @@
+name = "glass bell pad"
+description = "ガラスベルのパッド。高い非整数比を持続。"
+algorithm = 6
+feedback = 0.11
+feedback_op = 4
+gain = 0.97
+default_note = 72
+default_duration = 16.9
+
+[lfo]
+rate_hz = 0.14
+depth_cents = 6.0
+
+[filter]
+type = "highpass"
+cutoff = 330
+resonance = 0.14
+env_amount = 0.4
+attack = 3.0
+decay = 3.8
+sustain = 0.64
+release = 0.26
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.8
+attack = 0.03
+decay = 1.5
+sustain = 0.84
+release = 0.26
+vel_sens = 0.22
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.41
+detune_cents = 6
+level = 0.36
+attack = 0.025
+decay = 1.1
+sustain = 0.82
+release = 0.22
+vel_sens = 0.26
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 5.13
+detune_cents = -8
+level = 0.2
+attack = 0.03
+decay = 0.8
+sustain = 0.8
+release = 0.2
+vel_sens = 0.28
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 7.9
+detune_cents = 0
+level = 0.1
+attack = 0.04
+decay = 0.6
+sustain = 0.76
+release = 0.16
+vel_sens = 0.3
+waveform = "abs-sine"

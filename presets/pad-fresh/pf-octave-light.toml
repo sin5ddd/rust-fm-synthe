@@ -1,0 +1,70 @@
+name = "light octave pad"
+description = "軽いオクターブ重ね（1+2）。サブの0.5は使わない。"
+algorithm = 8
+feedback = 0.02
+feedback_op = 4
+gain = 0.96
+default_note = 60
+default_duration = 16.3
+
+[lfo]
+rate_hz = 0.18
+depth_cents = 9.0
+
+[filter]
+type = "highpass"
+cutoff = 175
+resonance = 0.07
+env_amount = 0.35
+attack = 4.0
+decay = 3.8
+sustain = 0.72
+release = 0.3
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -7
+level = 0.82
+attack = 0.06
+decay = 1.6
+sustain = 0.88
+release = 0.32
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 7
+level = 0.78
+attack = 0.07
+decay = 1.5
+sustain = 0.86
+release = 0.3
+vel_sens = 0.16
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 1.0
+detune_cents = 5
+level = 0.4
+attack = 0.08
+decay = 1.4
+sustain = 0.84
+release = 0.28
+vel_sens = 0.14
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 4.0
+detune_cents = -3
+level = 0.1
+attack = 0.11
+decay = 1.1
+sustain = 0.78
+release = 0.22
+vel_sens = 0.14
+waveform = "sine"
