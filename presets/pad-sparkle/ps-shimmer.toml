@@ -1,0 +1,70 @@
+name = "shimmer pad"
+description = "シマー。高い部分音がゆっくり揺れる。キラキラのホールド。"
+algorithm = 8
+feedback = 0.06
+feedback_op = 4
+gain = 0.94
+default_note = 67
+default_duration = 16.9
+
+[lfo]
+rate_hz = 0.28
+depth_cents = 11.0
+
+[filter]
+type = "highpass"
+cutoff = 300
+resonance = 0.12
+env_amount = 0.55
+attack = 4.5
+decay = 4.5
+sustain = 0.68
+release = 0.28
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -5
+level = 0.62
+attack = 0.07
+decay = 1.6
+sustain = 0.84
+release = 0.3
+vel_sens = 0.18
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 6
+level = 0.48
+attack = 0.08
+decay = 1.4
+sustain = 0.84
+release = 0.28
+vel_sens = 0.18
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 4.0
+detune_cents = 4
+level = 0.32
+attack = 0.09
+decay = 1.2
+sustain = 0.82
+release = 0.24
+vel_sens = 0.2
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 7.0
+detune_cents = -4
+level = 0.16
+attack = 0.1
+decay = 1.0
+sustain = 0.8
+release = 0.22
+vel_sens = 0.22
+waveform = "abs-sine"

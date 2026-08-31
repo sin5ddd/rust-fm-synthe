@@ -1,0 +1,70 @@
+name = "bell air pad"
+description = "ベルの空気。金属というより光。ホールド。"
+algorithm = 7
+feedback = 0.09
+feedback_op = 4
+gain = 0.96
+default_note = 72
+default_duration = 16.6
+
+[lfo]
+rate_hz = 0.18
+depth_cents = 7.0
+
+[filter]
+type = "highpass"
+cutoff = 340
+resonance = 0.12
+env_amount = 0.4
+attack = 3.0
+decay = 3.6
+sustain = 0.64
+release = 0.26
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.8
+attack = 0.04
+decay = 1.4
+sustain = 0.84
+release = 0.26
+vel_sens = 0.2
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 3.0
+detune_cents = 4
+level = 0.28
+attack = 0.05
+decay = 1.1
+sustain = 0.82
+release = 0.22
+vel_sens = 0.24
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 2.0
+detune_cents = 2
+level = 0.32
+attack = 0.05
+decay = 1.2
+sustain = 0.82
+release = 0.24
+vel_sens = 0.2
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 6.0
+detune_cents = 0
+level = 0.1
+attack = 0.06
+decay = 0.8
+sustain = 0.76
+release = 0.18
+vel_sens = 0.26
+waveform = "half-sine"

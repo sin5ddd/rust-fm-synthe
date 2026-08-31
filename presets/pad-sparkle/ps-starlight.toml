@@ -1,0 +1,74 @@
+name = "starlight pad"
+description = "星明かり。高い非整数比がゆっくり動く。"
+algorithm = 3
+feedback = 0.1
+feedback_op = 4
+gain = 0.95
+default_note = 69
+default_duration = 17.0
+
+[lfo]
+rate_hz = 0.11
+depth_cents = 9.0
+
+[mod_sweep]
+start = 0.65
+end = 1.2
+
+[filter]
+type = "highpass"
+cutoff = 310
+resonance = 0.12
+env_amount = 0.7
+attack = 6.0
+decay = 5.0
+sustain = 0.66
+release = 0.3
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.84
+attack = 0.06
+decay = 1.8
+sustain = 0.86
+release = 0.3
+vel_sens = 0.18
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.71
+detune_cents = 4
+level = 0.3
+attack = 0.1
+decay = 2.2
+sustain = 0.7
+release = 0.24
+vel_sens = 0.2
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 4.13
+detune_cents = -3
+level = 0.18
+attack = 0.14
+decay = 2.6
+sustain = 0.62
+release = 0.22
+vel_sens = 0.22
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 6.89
+detune_cents = 0
+level = 0.1
+attack = 0.16
+decay = 3.0
+sustain = 0.55
+release = 0.2
+vel_sens = 0.24
+waveform = "sine"

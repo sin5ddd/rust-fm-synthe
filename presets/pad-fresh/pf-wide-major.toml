@@ -1,0 +1,70 @@
+name = "wide major pad"
+description = "開いた長三和音（根音＋10度＋12度）。泥のないワイド。"
+algorithm = 8
+feedback = 0.0
+feedback_op = 4
+gain = 0.96
+default_note = 48
+default_duration = 16.6
+
+[lfo]
+rate_hz = 0.16
+depth_cents = 8.0
+
+[filter]
+type = "highpass"
+cutoff = 168
+resonance = 0.08
+env_amount = 0.4
+attack = 4.4
+decay = 4.2
+sustain = 0.72
+release = 0.3
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -4
+level = 0.8
+attack = 0.07
+decay = 1.7
+sustain = 0.88
+release = 0.32
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.5
+detune_cents = 5
+level = 0.62
+attack = 0.08
+decay = 1.5
+sustain = 0.86
+release = 0.3
+vel_sens = 0.16
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 3.0
+detune_cents = 3
+level = 0.5
+attack = 0.09
+decay = 1.4
+sustain = 0.84
+release = 0.28
+vel_sens = 0.14
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 2.0
+detune_cents = -3
+level = 0.2
+attack = 0.1
+decay = 1.2
+sustain = 0.8
+release = 0.24
+vel_sens = 0.14
+waveform = "sine"

@@ -1,0 +1,70 @@
+name = "ivory pad"
+description = "象牙／柔らかい鍵盤のパッド。倍音は薄い。ホールド。"
+algorithm = 7
+feedback = 0.1
+feedback_op = 4
+gain = 0.96
+default_note = 64
+default_duration = 16.5
+
+[lfo]
+rate_hz = 0.15
+depth_cents = 5.0
+
+[filter]
+type = "highpass"
+cutoff = 185
+resonance = 0.08
+env_amount = 0.4
+attack = 3.0
+decay = 3.5
+sustain = 0.68
+release = 0.28
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -2
+level = 0.9
+attack = 0.04
+decay = 1.8
+sustain = 0.86
+release = 0.3
+vel_sens = 0.18
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 3
+level = 0.28
+attack = 0.05
+decay = 1.2
+sustain = 0.82
+release = 0.24
+vel_sens = 0.2
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 3.0
+detune_cents = 0
+level = 0.1
+attack = 0.06
+decay = 0.9
+sustain = 0.78
+release = 0.2
+vel_sens = 0.22
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 4.0
+detune_cents = 0
+level = 0.06
+attack = 0.03
+decay = 0.6
+sustain = 0.76
+release = 0.16
+vel_sens = 0.24
+waveform = "sine"

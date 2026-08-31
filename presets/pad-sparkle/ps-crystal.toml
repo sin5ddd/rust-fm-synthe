@@ -1,0 +1,70 @@
+name = "crystal pad"
+description = "クリスタルパッド。高い部分音。ホールド（ワンショットベルではない）。"
+algorithm = 6
+feedback = 0.1
+feedback_op = 4
+gain = 0.97
+default_note = 72
+default_duration = 16.6
+
+[lfo]
+rate_hz = 0.18
+depth_cents = 7.0
+
+[filter]
+type = "highpass"
+cutoff = 360
+resonance = 0.14
+env_amount = 0.4
+attack = 3.0
+decay = 3.8
+sustain = 0.64
+release = 0.26
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.78
+attack = 0.04
+decay = 1.4
+sustain = 0.84
+release = 0.26
+vel_sens = 0.22
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 3.01
+detune_cents = 6
+level = 0.38
+attack = 0.05
+decay = 1.1
+sustain = 0.82
+release = 0.22
+vel_sens = 0.26
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 6.17
+detune_cents = -7
+level = 0.2
+attack = 0.04
+decay = 0.9
+sustain = 0.8
+release = 0.2
+vel_sens = 0.3
+waveform = "abs-sine"
+
+# OP4
+[[operators]]
+ratio = 9.4
+detune_cents = 0
+level = 0.1
+attack = 0.06
+decay = 0.7
+sustain = 0.76
+release = 0.18
+vel_sens = 0.32
+waveform = "sine"

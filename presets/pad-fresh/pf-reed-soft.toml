@@ -1,0 +1,70 @@
+name = "soft reed pad"
+description = "柔らかいリード／リード管。パルス芯＋サイン。HP。"
+algorithm = 5
+feedback = 0.14
+feedback_op = 4
+gain = 0.95
+default_note = 60
+default_duration = 16.6
+
+[lfo]
+rate_hz = 4.2
+depth_cents = 5.0
+
+[filter]
+type = "highpass"
+cutoff = 188
+resonance = 0.1
+env_amount = 0.4
+attack = 3.4
+decay = 3.8
+sustain = 0.68
+release = 0.28
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -3
+level = 0.82
+attack = 0.07
+decay = 1.5
+sustain = 0.86
+release = 0.3
+vel_sens = 0.18
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 3
+level = 0.22
+attack = 0.08
+decay = 1.2
+sustain = 0.82
+release = 0.24
+vel_sens = 0.18
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.18
+attack = 0.05
+decay = 1.0
+sustain = 0.8
+release = 0.22
+vel_sens = 0.22
+waveform = "pulse"
+
+# OP4
+[[operators]]
+ratio = 3.0
+detune_cents = 0
+level = 0.08
+attack = 0.09
+decay = 0.9
+sustain = 0.78
+release = 0.18
+vel_sens = 0.2
+waveform = "sine"

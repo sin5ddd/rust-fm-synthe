@@ -1,0 +1,70 @@
+name = "chime pad"
+description = "チャイムパッド。金属の高い層をホールド。"
+algorithm = 6
+feedback = 0.14
+feedback_op = 4
+gain = 0.97
+default_note = 72
+default_duration = 16.8
+
+[lfo]
+rate_hz = 0.16
+depth_cents = 6.0
+
+[filter]
+type = "highpass"
+cutoff = 350
+resonance = 0.16
+env_amount = 0.4
+attack = 2.8
+decay = 3.6
+sustain = 0.62
+release = 0.24
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.76
+attack = 0.03
+decay = 1.5
+sustain = 0.82
+release = 0.26
+vel_sens = 0.24
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.76
+detune_cents = 7
+level = 0.36
+attack = 0.025
+decay = 1.1
+sustain = 0.8
+release = 0.22
+vel_sens = 0.28
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 5.21
+detune_cents = -6
+level = 0.2
+attack = 0.03
+decay = 0.8
+sustain = 0.78
+release = 0.2
+vel_sens = 0.3
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 8.4
+detune_cents = 0
+level = 0.1
+attack = 0.04
+decay = 0.6
+sustain = 0.76
+release = 0.16
+vel_sens = 0.3
+waveform = "abs-sine"

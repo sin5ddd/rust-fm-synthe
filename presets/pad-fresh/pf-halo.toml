@@ -1,0 +1,70 @@
+name = "halo choir pad"
+description = "ハローのクワイア空気。広いデチューン、HP。"
+algorithm = 8
+feedback = 0.0
+feedback_op = 4
+gain = 0.94
+default_note = 60
+default_duration = 17.0
+
+[lfo]
+rate_hz = 0.14
+depth_cents = 12.0
+
+[filter]
+type = "highpass"
+cutoff = 200
+resonance = 0.07
+env_amount = 0.45
+attack = 5.2
+decay = 4.8
+sustain = 0.72
+release = 0.32
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -12
+level = 0.86
+attack = 0.09
+decay = 1.8
+sustain = 0.88
+release = 0.34
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 11
+level = 0.8
+attack = 0.1
+decay = 1.7
+sustain = 0.86
+release = 0.32
+vel_sens = 0.16
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 1.5
+detune_cents = 6
+level = 0.28
+attack = 0.11
+decay = 1.5
+sustain = 0.84
+release = 0.28
+vel_sens = 0.14
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 2.0
+detune_cents = -6
+level = 0.2
+attack = 0.12
+decay = 1.4
+sustain = 0.82
+release = 0.26
+vel_sens = 0.14
+waveform = "half-sine"

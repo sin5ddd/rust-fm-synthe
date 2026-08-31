@@ -1,0 +1,74 @@
+name = "quartz pad"
+description = "石英。硬い透明感。高い部分音のホールド。"
+algorithm = 4
+feedback = 0.12
+feedback_op = 4
+gain = 0.96
+default_note = 69
+default_duration = 16.7
+
+[lfo]
+rate_hz = 0.14
+depth_cents = 6.0
+
+[mod_sweep]
+start = 0.75
+end = 1.12
+
+[filter]
+type = "highpass"
+cutoff = 330
+resonance = 0.14
+env_amount = 0.5
+attack = 3.8
+decay = 4.0
+sustain = 0.64
+release = 0.26
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.84
+attack = 0.04
+decay = 1.5
+sustain = 0.86
+release = 0.28
+vel_sens = 0.2
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 3.14
+detune_cents = 5
+level = 0.3
+attack = 0.05
+decay = 1.2
+sustain = 0.8
+release = 0.24
+vel_sens = 0.22
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 5.0
+detune_cents = -4
+level = 0.18
+attack = 0.06
+decay = 1.0
+sustain = 0.78
+release = 0.2
+vel_sens = 0.24
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 7.07
+detune_cents = 0
+level = 0.1
+attack = 0.07
+decay = 0.8
+sustain = 0.76
+release = 0.18
+vel_sens = 0.26
+waveform = "sine"

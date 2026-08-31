@@ -7,7 +7,8 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 /// Factory bank, embedded so `cargo run` works without the presets/ directory.
-/// Disk layout is `presets/<category>/<id>.toml` (bass, bd, sd, ld, fx, perc, drone).
+/// Disk layout is `presets/<category>/<id>.toml`
+/// (bass, bd, sd, ld, fx, perc, drone, pad-fresh, pad-sparkle).
 macro_rules! factory_entry {
     ($dir:literal, $id:literal) => {
         (
@@ -289,6 +290,66 @@ const FACTORY: &[(&str, &str)] = &[
     factory_entry!("drone", "dr-tape-hum"),
     factory_entry!("drone", "dr-storm"),
     factory_entry!("drone", "dr-score-hold"),
+    factory_entry!("pad-fresh", "pf-morning"),
+    factory_entry!("pad-fresh", "pf-juno-air"),
+    factory_entry!("pad-fresh", "pf-chorus-wide"),
+    factory_entry!("pad-fresh", "pf-flute-pad"),
+    factory_entry!("pad-fresh", "pf-choir-air"),
+    factory_entry!("pad-fresh", "pf-fifth-open"),
+    factory_entry!("pad-fresh", "pf-ninth-open"),
+    factory_entry!("pad-fresh", "pf-lydian-sky"),
+    factory_entry!("pad-fresh", "pf-major-soft"),
+    factory_entry!("pad-fresh", "pf-glass-air"),
+    factory_entry!("pad-fresh", "pf-dawn"),
+    factory_entry!("pad-fresh", "pf-breeze"),
+    factory_entry!("pad-fresh", "pf-sky-open"),
+    factory_entry!("pad-fresh", "pf-cloud"),
+    factory_entry!("pad-fresh", "pf-horizon"),
+    factory_entry!("pad-fresh", "pf-meadow"),
+    factory_entry!("pad-fresh", "pf-clear-saw"),
+    factory_entry!("pad-fresh", "pf-pulse-air"),
+    factory_entry!("pad-fresh", "pf-octave-light"),
+    factory_entry!("pad-fresh", "pf-silk"),
+    factory_entry!("pad-fresh", "pf-ivory"),
+    factory_entry!("pad-fresh", "pf-harp-air"),
+    factory_entry!("pad-fresh", "pf-organ-light"),
+    factory_entry!("pad-fresh", "pf-reed-soft"),
+    factory_entry!("pad-fresh", "pf-water-air"),
+    factory_entry!("pad-fresh", "pf-alpine"),
+    factory_entry!("pad-fresh", "pf-spring"),
+    factory_entry!("pad-fresh", "pf-linen"),
+    factory_entry!("pad-fresh", "pf-halo"),
+    factory_entry!("pad-fresh", "pf-wide-major"),
+    factory_entry!("pad-sparkle", "ps-crystal"),
+    factory_entry!("pad-sparkle", "ps-bell-hold"),
+    factory_entry!("pad-sparkle", "ps-shimmer"),
+    factory_entry!("pad-sparkle", "ps-music-box"),
+    factory_entry!("pad-sparkle", "ps-ice-shine"),
+    factory_entry!("pad-sparkle", "ps-starlight"),
+    factory_entry!("pad-sparkle", "ps-glitter"),
+    factory_entry!("pad-sparkle", "ps-chime-pad"),
+    factory_entry!("pad-sparkle", "ps-fm-sparkle"),
+    factory_entry!("pad-sparkle", "ps-chorus-shine"),
+    factory_entry!("pad-sparkle", "ps-glass-bell"),
+    factory_entry!("pad-sparkle", "ps-celesta"),
+    factory_entry!("pad-sparkle", "ps-prism"),
+    factory_entry!("pad-sparkle", "ps-frost"),
+    factory_entry!("pad-sparkle", "ps-twinkle"),
+    factory_entry!("pad-sparkle", "ps-aurora"),
+    factory_entry!("pad-sparkle", "ps-diamond"),
+    factory_entry!("pad-sparkle", "ps-silver"),
+    factory_entry!("pad-sparkle", "ps-glisten"),
+    factory_entry!("pad-sparkle", "ps-high-partials"),
+    factory_entry!("pad-sparkle", "ps-inharmonic"),
+    factory_entry!("pad-sparkle", "ps-celestial"),
+    factory_entry!("pad-sparkle", "ps-spark-evolve"),
+    factory_entry!("pad-sparkle", "ps-halo-shine"),
+    factory_entry!("pad-sparkle", "ps-crystal-choir"),
+    factory_entry!("pad-sparkle", "ps-bell-air"),
+    factory_entry!("pad-sparkle", "ps-glock-pad"),
+    factory_entry!("pad-sparkle", "ps-shine-fifth"),
+    factory_entry!("pad-sparkle", "ps-ice-choir"),
+    factory_entry!("pad-sparkle", "ps-quartz"),
 ];
 
 #[derive(Clone, Debug, Deserialize)]
@@ -619,6 +680,8 @@ mod tests {
         assert_eq!(output_preset_id(Some("bs-808-sub"), None), "bs-808-sub");
         assert_eq!(output_preset_id(Some("pc-hat-closed"), None), "pc-hat-closed");
         assert_eq!(output_preset_id(Some("dr-sine-sub"), None), "dr-sine-sub");
+        assert_eq!(output_preset_id(Some("pf-morning"), None), "pf-morning");
+        assert_eq!(output_preset_id(Some("ps-crystal"), None), "ps-crystal");
     }
 
     #[test]
@@ -741,6 +804,60 @@ mod tests {
                 (16.2..=18.0).contains(&p.default_duration),
                 "{id} default_duration {} must be ~16 s+ (8 bars @ 120 BPM)",
                 p.default_duration
+            );
+        }
+    }
+
+    #[test]
+    fn factory_pf_pad_fresh_bank_has_thirty_ids() {
+        let ids: Vec<_> = factory_ids()
+            .into_iter()
+            .filter(|id| id.starts_with("pf-"))
+            .collect();
+        assert_eq!(
+            ids.len(),
+            30,
+            "expected exactly 30 pf-* factory pads, got {}: {ids:?}",
+            ids.len()
+        );
+        for id in &ids {
+            let p = load_factory(id).expect(id);
+            assert!(
+                (16.2..=18.0).contains(&p.default_duration),
+                "{id} default_duration {} must be ~16 s+ (8 bars @ 120 BPM)",
+                p.default_duration
+            );
+            assert!(
+                (48..=72).contains(&p.default_note),
+                "{id} default_note {} must be MIDI 48–72 (C3–C5)",
+                p.default_note
+            );
+        }
+    }
+
+    #[test]
+    fn factory_ps_pad_sparkle_bank_has_thirty_ids() {
+        let ids: Vec<_> = factory_ids()
+            .into_iter()
+            .filter(|id| id.starts_with("ps-"))
+            .collect();
+        assert_eq!(
+            ids.len(),
+            30,
+            "expected exactly 30 ps-* factory pads, got {}: {ids:?}",
+            ids.len()
+        );
+        for id in &ids {
+            let p = load_factory(id).expect(id);
+            assert!(
+                (16.2..=18.0).contains(&p.default_duration),
+                "{id} default_duration {} must be ~16 s+ (8 bars @ 120 BPM)",
+                p.default_duration
+            );
+            assert!(
+                (48..=72).contains(&p.default_note),
+                "{id} default_note {} must be MIDI 48–72 (C3–C5)",
+                p.default_note
             );
         }
     }

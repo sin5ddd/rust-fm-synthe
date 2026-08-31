@@ -1,0 +1,74 @@
+name = "evolving fm sparkle"
+description = "ゆっくり指数が開くFMスパークル。キラキラが育つ。"
+algorithm = 1
+feedback = 0.16
+feedback_op = 4
+gain = 0.96
+default_note = 67
+default_duration = 17.2
+
+[lfo]
+rate_hz = 0.1
+depth_cents = 8.0
+
+[mod_sweep]
+start = 0.4
+end = 1.25
+
+[filter]
+type = "highpass"
+cutoff = 280
+resonance = 0.12
+env_amount = 0.8
+attack = 7.5
+decay = 5.0
+sustain = 0.66
+release = 0.3
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -2
+level = 0.92
+attack = 0.05
+decay = 2.0
+sustain = 0.88
+release = 0.3
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 3
+level = 0.36
+attack = 0.1
+decay = 2.8
+sustain = 0.65
+release = 0.24
+vel_sens = 0.18
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 5.0
+detune_cents = 0
+level = 0.22
+attack = 0.16
+decay = 3.5
+sustain = 0.5
+release = 0.2
+vel_sens = 0.2
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 7.02
+detune_cents = 0
+level = 0.12
+attack = 0.2
+decay = 4.0
+sustain = 0.42
+release = 0.18
+vel_sens = 0.22
+waveform = "sine"

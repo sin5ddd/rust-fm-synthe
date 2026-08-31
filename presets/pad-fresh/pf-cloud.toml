@@ -1,0 +1,70 @@
+name = "soft cloud pad"
+description = "柔らかい雲。ハーフサインの層。湿った空気、泥なし。"
+algorithm = 8
+feedback = 0.04
+feedback_op = 4
+gain = 0.94
+default_note = 60
+default_duration = 16.9
+
+[lfo]
+rate_hz = 0.13
+depth_cents = 11.0
+
+[filter]
+type = "highpass"
+cutoff = 180
+resonance = 0.09
+env_amount = 0.55
+attack = 5.5
+decay = 4.5
+sustain = 0.7
+release = 0.32
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -8
+level = 0.8
+attack = 0.09
+decay = 1.8
+sustain = 0.86
+release = 0.34
+vel_sens = 0.16
+waveform = "half-sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 9
+level = 0.74
+attack = 0.1
+decay = 1.7
+sustain = 0.86
+release = 0.32
+vel_sens = 0.16
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 1.5
+detune_cents = 4
+level = 0.3
+attack = 0.11
+decay = 1.5
+sustain = 0.82
+release = 0.28
+vel_sens = 0.14
+waveform = "half-sine"
+
+# OP4
+[[operators]]
+ratio = 2.0
+detune_cents = -3
+level = 0.16
+attack = 0.12
+decay = 1.3
+sustain = 0.8
+release = 0.24
+vel_sens = 0.14
+waveform = "sine"

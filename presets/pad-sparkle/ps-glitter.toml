@@ -1,0 +1,70 @@
+name = "glitter pad"
+description = "グリッター。高次倍音の粉。パッドとして残る。"
+algorithm = 8
+feedback = 0.05
+feedback_op = 4
+gain = 0.93
+default_note = 72
+default_duration = 16.6
+
+[lfo]
+rate_hz = 0.35
+depth_cents = 10.0
+
+[filter]
+type = "highpass"
+cutoff = 400
+resonance = 0.15
+env_amount = 0.5
+attack = 3.8
+decay = 4.2
+sustain = 0.64
+release = 0.26
+
+# OP1
+[[operators]]
+ratio = 2.0
+detune_cents = -4
+level = 0.55
+attack = 0.05
+decay = 1.3
+sustain = 0.84
+release = 0.26
+vel_sens = 0.2
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 3.0
+detune_cents = 6
+level = 0.42
+attack = 0.06
+decay = 1.2
+sustain = 0.82
+release = 0.24
+vel_sens = 0.22
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 5.0
+detune_cents = 3
+level = 0.28
+attack = 0.07
+decay = 1.0
+sustain = 0.8
+release = 0.22
+vel_sens = 0.24
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 8.0
+detune_cents = -3
+level = 0.14
+attack = 0.08
+decay = 0.8
+sustain = 0.78
+release = 0.2
+vel_sens = 0.26
+waveform = "abs-sine"
