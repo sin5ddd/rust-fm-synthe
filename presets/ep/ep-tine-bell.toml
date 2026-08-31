@@ -1,0 +1,66 @@
+name = "ep-tine-bell"
+description = "タイン前のめりEP。2×/3×を強く出すが整数倍のまま（3.5や ld-bell-pluck の非整数比は使わない）。胴（比1）は残す。C3。約2.4秒。"
+algorithm = 8
+feedback = 0.08
+feedback_op = 4
+gain = 1.02
+default_note = 48
+default_duration = 2.4
+
+[filter]
+type = "lowpass"
+cutoff = 6800.0
+resonance = 0.08
+env_amount = 0.55
+attack = 0.0005
+decay = 0.38
+sustain = 0.2
+release = 0.36
+
+# OP1 キャリア: 胴。ベルワンショットにしないためのサステイン。
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.82
+attack = 0.002
+decay = 1.05
+sustain = 0.3
+release = 0.45
+vel_sens = 0.36
+waveform = "sine"
+
+# OP2 キャリア: タイン 2× 強め。
+[[operators]]
+ratio = 2.0
+detune_cents = 3
+level = 0.88
+attack = 0.0003
+decay = 0.42
+sustain = 0.05
+release = 0.2
+vel_sens = 0.48
+waveform = "sine"
+
+# OP3 キャリア: タイン 3× 強め。
+[[operators]]
+ratio = 3.0
+detune_cents = -2
+level = 0.74
+attack = 0.0003
+decay = 0.34
+sustain = 0.04
+release = 0.18
+vel_sens = 0.5
+waveform = "sine"
+
+# OP4 キャリア: 胴の薄い重ね（比1）。FBでわずかな砂。非整数比は足さない。
+[[operators]]
+ratio = 1.0
+detune_cents = 5
+level = 0.28
+attack = 0.004
+decay = 0.9
+sustain = 0.26
+release = 0.4
+vel_sens = 0.3
+waveform = "sine"

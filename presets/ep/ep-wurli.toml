@@ -1,0 +1,66 @@
+name = "ep-wurli"
+description = "ウーリッツァー寄り。パルス／アブサインのモジュレータでミッドの樹皮感。Rhodesより短い（約1.8秒）がクリックではない。タインは2×/3×。C3。"
+algorithm = 5
+feedback = 0.16
+feedback_op = 4
+gain = 1.1
+default_note = 48
+default_duration = 1.8
+
+[filter]
+type = "lowpass"
+cutoff = 2600.0
+resonance = 0.22
+env_amount = 1.35
+attack = 0.0006
+decay = 0.28
+sustain = 0.12
+release = 0.32
+
+# OP1 キャリア: 胴。減衰はRhodesより速め。
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.0015
+decay = 0.7
+sustain = 0.22
+release = 0.38
+vel_sens = 0.5
+waveform = "sine"
+
+# OP2 モジュレータ: パルス比2。bark / ミッドの歯。
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.62
+attack = 0.0002
+decay = 0.09
+sustain = 0.0
+release = 0.04
+vel_sens = 0.64
+waveform = "pulse"
+
+# OP3 キャリア: タイン 3×（ミッドの芯）。
+[[operators]]
+ratio = 3.0
+detune_cents = 2
+level = 0.44
+attack = 0.0004
+decay = 0.24
+sustain = 0.02
+release = 0.16
+vel_sens = 0.55
+waveform = "sine"
+
+# OP4 モジュレータ: アブサイン比2。金属ではなくリードのざらつき。
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.5
+attack = 0.0002
+decay = 0.08
+sustain = 0.0
+release = 0.035
+vel_sens = 0.58
+waveform = "abs-sine"
