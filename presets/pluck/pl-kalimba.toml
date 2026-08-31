@@ -1,0 +1,63 @@
+name = "kalimba pluck"
+description = "カリンバ。金属＋木の明るさ。短い（0.58秒）。タインの非整数比。"
+algorithm = 6
+feedback = 0.08
+feedback_op = 4
+gain = 0.98
+default_note = 67
+default_duration = 0.58
+
+[filter]
+type = "highpass"
+cutoff = 260.0
+resonance = 0.14
+env_amount = 0.4
+attack = 0.0004
+decay = 0.18
+sustain = 0.0
+release = 0.08
+
+# タイン基音
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.92
+attack = 0.0005
+decay = 0.26
+sustain = 0.0
+release = 0.08
+vel_sens = 0.36
+waveform = "sine"
+
+[[operators]]
+ratio = 2.32
+detune_cents = 6
+level = 0.4
+attack = 0.0003
+decay = 0.16
+sustain = 0.0
+release = 0.06
+vel_sens = 0.42
+waveform = "sine"
+
+[[operators]]
+ratio = 3.55
+detune_cents = -5
+level = 0.22
+attack = 0.0003
+decay = 0.1
+sustain = 0.0
+release = 0.04
+vel_sens = 0.46
+waveform = "sine"
+
+[[operators]]
+ratio = 5.8
+detune_cents = 0
+level = 0.12
+attack = 0.0002
+decay = 0.03
+sustain = 0.0
+release = 0.015
+vel_sens = 0.52
+waveform = "half-sine"

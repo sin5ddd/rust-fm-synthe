@@ -1,0 +1,63 @@
+name = "acid short pluck"
+description = "アシッド。レゾで明るいミッド。短い（0.36秒）。ソー＋高いQのLP。"
+algorithm = 8
+feedback = 0.0
+feedback_op = 4
+gain = 1.12
+default_note = 48
+default_duration = 0.36
+
+[filter]
+type = "lowpass"
+cutoff = 190.0
+resonance = 0.74
+env_amount = 4.6
+attack = 0.0015
+decay = 0.09
+sustain = 0.0
+release = 0.05
+
+# 303胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.002
+decay = 0.14
+sustain = 0.0
+release = 0.05
+vel_sens = 0.38
+waveform = "saw"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 4
+level = 0.12
+attack = 0.002
+decay = 0.12
+sustain = 0.0
+release = 0.05
+vel_sens = 0.3
+waveform = "saw"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.0
+attack = 0.001
+decay = 0.04
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.0
+attack = 0.001
+decay = 0.04
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+waveform = "sine"

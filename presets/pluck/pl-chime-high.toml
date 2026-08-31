@@ -1,0 +1,62 @@
+name = "chime high pluck"
+description = "チャイム。非常に明るい高域。中短（0.85秒）。高い非整数比。"
+algorithm = 6
+feedback = 0.1
+feedback_op = 4
+gain = 0.92
+default_note = 72
+default_duration = 0.85
+
+[filter]
+type = "highpass"
+cutoff = 920.0
+resonance = 0.12
+env_amount = 0.5
+attack = 0.0004
+decay = 0.28
+sustain = 0.0
+release = 0.12
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.78
+attack = 0.0005
+decay = 0.4
+sustain = 0.0
+release = 0.12
+vel_sens = 0.32
+waveform = "sine"
+
+[[operators]]
+ratio = 3.9
+detune_cents = 8
+level = 0.4
+attack = 0.0003
+decay = 0.22
+sustain = 0.0
+release = 0.08
+vel_sens = 0.42
+waveform = "sine"
+
+[[operators]]
+ratio = 8.1
+detune_cents = -7
+level = 0.22
+attack = 0.0002
+decay = 0.1
+sustain = 0.0
+release = 0.05
+vel_sens = 0.48
+waveform = "sine"
+
+[[operators]]
+ratio = 13.2
+detune_cents = 0
+level = 0.1
+attack = 0.0002
+decay = 0.03
+sustain = 0.0
+release = 0.015
+vel_sens = 0.55
+waveform = "abs-sine"

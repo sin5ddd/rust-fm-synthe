@@ -1,0 +1,67 @@
+name = "lofi dust pluck"
+description = "ローファイ。暗くダストっぽい。中短（0.72秒）。デチューン＋低いLP。"
+algorithm = 5
+feedback = 0.16
+feedback_op = 4
+gain = 1.0
+default_note = 55
+default_duration = 0.72
+
+[lfo]
+rate_hz = 4.2
+depth_cents = 9.0
+
+[filter]
+type = "lowpass"
+cutoff = 360.0
+resonance = 0.2
+env_amount = 1.8
+attack = 0.004
+decay = 0.28
+sustain = 0.04
+release = 0.12
+
+# ダスト胴
+[[operators]]
+ratio = 1.0
+detune_cents = -8
+level = 1.0
+attack = 0.003
+decay = 0.32
+sustain = 0.03
+release = 0.12
+vel_sens = 0.28
+waveform = "saw"
+
+[[operators]]
+ratio = 2.0
+detune_cents = 7
+level = 0.16
+attack = 0.001
+decay = 0.08
+sustain = 0.0
+release = 0.04
+vel_sens = 0.36
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 11
+level = 0.5
+attack = 0.0035
+decay = 0.28
+sustain = 0.03
+release = 0.1
+vel_sens = 0.26
+waveform = "half-sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.08
+attack = 0.0004
+decay = 0.03
+sustain = 0.0
+release = 0.015
+vel_sens = 0.4
+waveform = "pulse"

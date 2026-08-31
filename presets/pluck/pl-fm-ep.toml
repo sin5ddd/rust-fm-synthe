@@ -1,0 +1,65 @@
+name = "fm ep pluck"
+description = "FMエレクトリックピアノ。暖かめで中庸の明るさ。やや長め（0.95秒）。1:14タイン。"
+algorithm = 5
+feedback = 0.08
+feedback_op = 4
+gain = 1.0
+default_note = 60
+default_duration = 0.95
+
+[filter]
+type = "lowpass"
+cutoff = 2200.0
+resonance = 0.14
+env_amount = 1.2
+attack = 0.002
+decay = 0.35
+sustain = 0.04
+release = 0.12
+
+# EP胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.002
+decay = 0.42
+sustain = 0.04
+release = 0.12
+vel_sens = 0.36
+waveform = "sine"
+
+# タイン
+[[operators]]
+ratio = 14.0
+detune_cents = 3
+level = 0.42
+attack = 0.0004
+decay = 0.05
+sustain = 0.0
+release = 0.025
+vel_sens = 0.55
+waveform = "sine"
+
+# 柔らかい重ね
+[[operators]]
+ratio = 1.0
+detune_cents = 4
+level = 0.55
+attack = 0.003
+decay = 0.38
+sustain = 0.03
+release = 0.11
+vel_sens = 0.3
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = -2
+level = 0.22
+attack = 0.004
+decay = 0.3
+sustain = 0.02
+release = 0.1
+vel_sens = 0.28
+waveform = "sine"

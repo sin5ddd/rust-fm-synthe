@@ -1,0 +1,64 @@
+name = "pop nylon pluck"
+description = "ポップ。ナイロン質でやや暗い。中短（0.52秒）。ハーフサイン＋爪クリック。"
+algorithm = 2
+feedback = 0.06
+feedback_op = 4
+gain = 1.02
+default_note = 64
+default_duration = 0.52
+
+[filter]
+type = "lowpass"
+cutoff = 640.0
+resonance = 0.16
+env_amount = 2.0
+attack = 0.002
+decay = 0.18
+sustain = 0.02
+release = 0.08
+
+# ナイロン胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.0028
+decay = 0.24
+sustain = 0.0
+release = 0.09
+vel_sens = 0.3
+waveform = "half-sine"
+
+[[operators]]
+ratio = 2.0
+detune_cents = 2
+level = 0.2
+attack = 0.001
+decay = 0.07
+sustain = 0.0
+release = 0.03
+vel_sens = 0.42
+waveform = "sine"
+
+[[operators]]
+ratio = 3.0
+detune_cents = -3
+level = 0.1
+attack = 0.0007
+decay = 0.04
+sustain = 0.0
+release = 0.02
+vel_sens = 0.45
+waveform = "sine"
+
+# 爪
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.07
+attack = 0.0003
+decay = 0.016
+sustain = 0.0
+release = 0.01
+vel_sens = 0.55
+waveform = "pulse"

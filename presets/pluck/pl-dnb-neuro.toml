@@ -1,0 +1,63 @@
+name = "dnb neuro pluck"
+description = "ニューロファンク。金属質でミッド暗い。短い（0.33秒）。非整数FM＋BP。"
+algorithm = 1
+feedback = 0.28
+feedback_op = 4
+gain = 1.02
+default_note = 50
+default_duration = 0.33
+
+[filter]
+type = "bandpass"
+cutoff = 620.0
+resonance = 0.5
+env_amount = 1.8
+attack = 0.0005
+decay = 0.08
+sustain = 0.0
+release = 0.05
+
+# 金属胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.0006
+decay = 0.11
+sustain = 0.0
+release = 0.05
+vel_sens = 0.45
+waveform = "abs-sine"
+
+[[operators]]
+ratio = 1.73
+detune_cents = 6
+level = 0.48
+attack = 0.0003
+decay = 0.04
+sustain = 0.0
+release = 0.02
+vel_sens = 0.52
+waveform = "sine"
+
+[[operators]]
+ratio = 3.41
+detune_cents = -5
+level = 0.26
+attack = 0.0002
+decay = 0.025
+sustain = 0.0
+release = 0.012
+vel_sens = 0.55
+waveform = "half-sine"
+
+[[operators]]
+ratio = 6.8
+detune_cents = 0
+level = 0.16
+attack = 0.0002
+decay = 0.012
+sustain = 0.0
+release = 0.008
+vel_sens = 0.6
+waveform = "pulse"
