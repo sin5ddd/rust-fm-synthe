@@ -1,0 +1,70 @@
+name = "abyss rumble"
+description = "深淵のランブル。0.5正弦に薄いパルスの砂。"
+algorithm = 7
+feedback = 0.36
+feedback_op = 4
+gain = 0.98
+default_note = 24
+default_duration = 16.7
+
+[lfo]
+rate_hz = 0.11
+depth_cents = 8.0
+
+[filter]
+type = "lowpass"
+cutoff = 140
+resonance = 0.16
+env_amount = 1.0
+attack = 4.5
+decay = 7.5
+sustain = 0.74
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 0.5
+detune_cents = -2
+level = 1.0
+attack = 0.035
+decay = 2.4
+sustain = 0.94
+release = 0.34
+vel_sens = 0.12
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 4
+level = 0.32
+attack = 0.05
+decay = 2.0
+sustain = 0.86
+release = 0.28
+vel_sens = 0.14
+waveform = "pulse"
+
+# OP3
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.4
+attack = 0.04
+decay = 2.1
+sustain = 0.88
+release = 0.28
+vel_sens = 0.14
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 2.17
+detune_cents = 0
+level = 0.16
+attack = 0.03
+decay = 1.4
+sustain = 0.24
+release = 0.16
+vel_sens = 0.24
+waveform = "pulse"

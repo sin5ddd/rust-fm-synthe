@@ -1,0 +1,70 @@
+name = "warfare bed"
+description = "戦争映画の床。遠いブラスとサブのランブル。"
+algorithm = 3
+feedback = 0.12
+feedback_op = 4
+gain = 0.95
+default_note = 31
+default_duration = 16.7
+
+[lfo]
+rate_hz = 0.11
+depth_cents = 5.0
+
+[filter]
+type = "lowpass"
+cutoff = 260
+resonance = 0.14
+env_amount = 1.6
+attack = 4.5
+decay = 7.0
+sustain = 0.68
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -3
+level = 0.95
+attack = 0.04
+decay = 2.0
+sustain = 0.88
+release = 0.28
+vel_sens = 0.16
+waveform = "saw"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 5
+level = 0.24
+attack = 0.01
+decay = 0.6
+sustain = 0.14
+release = 0.12
+vel_sens = 0.28
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 0.7
+attack = 0.035
+decay = 2.3
+sustain = 0.92
+release = 0.32
+vel_sens = 0.14
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 2.5
+detune_cents = 0
+level = 0.16
+attack = 0.02
+decay = 1.0
+sustain = 0.18
+release = 0.14
+vel_sens = 0.24
+waveform = "half-sine"

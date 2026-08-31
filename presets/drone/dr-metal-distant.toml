@@ -1,0 +1,70 @@
+name = "distant metallic drone"
+description = "遠い金属のうなり。非整数比。LPで手前に出さない。"
+algorithm = 4
+feedback = 0.22
+feedback_op = 4
+gain = 0.92
+default_note = 36
+default_duration = 16.6
+
+[lfo]
+rate_hz = 0.15
+depth_cents = 8.0
+
+[filter]
+type = "lowpass"
+cutoff = 340
+resonance = 0.2
+env_amount = 1.6
+attack = 6.0
+decay = 6.0
+sustain = 0.66
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.05
+decay = 2.0
+sustain = 0.88
+release = 0.3
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.73
+detune_cents = 4
+level = 0.32
+attack = 0.12
+decay = 2.4
+sustain = 0.4
+release = 0.22
+vel_sens = 0.2
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 2.31
+detune_cents = -3
+level = 0.24
+attack = 0.18
+decay = 2.8
+sustain = 0.32
+release = 0.2
+vel_sens = 0.2
+waveform = "abs-sine"
+
+# OP4
+[[operators]]
+ratio = 3.11
+detune_cents = 0
+level = 0.18
+attack = 0.1
+decay = 2.0
+sustain = 0.26
+release = 0.18
+vel_sens = 0.24
+waveform = "sine"

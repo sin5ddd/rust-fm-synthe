@@ -1,0 +1,70 @@
+name = "dark choir drone"
+description = "より暗いクワイア。短3度を薄く足す。ミッドドローン寄り。"
+algorithm = 8
+feedback = 0.0
+feedback_op = 4
+gain = 0.95
+default_note = 33
+default_duration = 16.7
+
+[lfo]
+rate_hz = 0.16
+depth_cents = 9.0
+
+[filter]
+type = "lowpass"
+cutoff = 620
+resonance = 0.1
+env_amount = 1.1
+attack = 6.0
+decay = 6.0
+sustain = 0.74
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -13
+level = 0.92
+attack = 0.05
+decay = 2.2
+sustain = 0.9
+release = 0.32
+vel_sens = 0.14
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 12
+level = 0.86
+attack = 0.06
+decay = 2.0
+sustain = 0.88
+release = 0.3
+vel_sens = 0.14
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 1.2
+detune_cents = -4
+level = 0.32
+attack = 0.08
+decay = 1.9
+sustain = 0.86
+release = 0.26
+vel_sens = 0.14
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 0.5
+detune_cents = 2
+level = 0.48
+attack = 0.04
+decay = 2.3
+sustain = 0.92
+release = 0.3
+vel_sens = 0.12
+waveform = "sine"

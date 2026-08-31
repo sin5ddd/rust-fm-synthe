@@ -1,0 +1,75 @@
+name = "slow riser drone"
+description = "遅いライザーがドローンになる。ピッチは少しだけ上がって止まる。"
+algorithm = 5
+feedback = 0.1
+feedback_op = 4
+gain = 0.93
+default_note = 28
+default_duration = 17.2
+
+[pitch]
+start_semitones = -10.0
+end_semitones = 3.0
+curve = 0.6
+
+[mod_sweep]
+start = 0.5
+end = 1.2
+
+[filter]
+type = "lowpass"
+cutoff = 180
+resonance = 0.14
+env_amount = 3.0
+attack = 9.0
+decay = 4.0
+sustain = 0.7
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 0.5
+detune_cents = -4
+level = 1.0
+attack = 0.05
+decay = 2.4
+sustain = 0.9
+release = 0.32
+vel_sens = 0.14
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 3
+level = 0.14
+attack = 0.12
+decay = 2.0
+sustain = 0.2
+release = 0.18
+vel_sens = 0.18
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 1.0
+detune_cents = 6
+level = 0.62
+attack = 0.06
+decay = 2.0
+sustain = 0.86
+release = 0.28
+vel_sens = 0.14
+waveform = "saw"
+
+# OP4
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.12
+attack = 0.18
+decay = 1.8
+sustain = 0.18
+release = 0.16
+vel_sens = 0.2
+waveform = "sine"

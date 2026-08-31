@@ -1,0 +1,66 @@
+name = "low brass pad"
+description = "低いブラスパッド。リップのFMがすぐ落ち着き、長い胴が残る。"
+algorithm = 3
+feedback = 0.14
+feedback_op = 4
+gain = 0.96
+default_note = 36
+default_duration = 16.5
+
+[filter]
+type = "lowpass"
+cutoff = 360
+resonance = 0.18
+env_amount = 1.8
+attack = 0.08
+decay = 4.5
+sustain = 0.64
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -3
+level = 1.0
+attack = 0.03
+decay = 2.0
+sustain = 0.88
+release = 0.28
+vel_sens = 0.18
+waveform = "saw"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 4
+level = 0.28
+attack = 0.006
+decay = 0.35
+sustain = 0.1
+release = 0.1
+vel_sens = 0.32
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 0.55
+attack = 0.04
+decay = 2.1
+sustain = 0.86
+release = 0.26
+vel_sens = 0.16
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 3.0
+detune_cents = 0
+level = 0.22
+attack = 0.008
+decay = 0.8
+sustain = 0.16
+release = 0.12
+vel_sens = 0.28
+waveform = "half-sine"

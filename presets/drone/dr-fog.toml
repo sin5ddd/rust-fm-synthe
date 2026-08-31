@@ -1,0 +1,70 @@
+name = "fog pad"
+description = "霧のパッド。カットオフが低く、輪郭が溶ける。"
+algorithm = 5
+feedback = 0.04
+feedback_op = 4
+gain = 0.92
+default_note = 36
+default_duration = 17.0
+
+[lfo]
+rate_hz = 0.08
+depth_cents = 11.0
+
+[filter]
+type = "lowpass"
+cutoff = 240
+resonance = 0.1
+env_amount = 1.5
+attack = 8.0
+decay = 5.0
+sustain = 0.76
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -7
+level = 0.88
+attack = 0.07
+decay = 2.4
+sustain = 0.9
+release = 0.34
+vel_sens = 0.12
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.5
+detune_cents = 3
+level = 0.12
+attack = 0.12
+decay = 1.8
+sustain = 0.2
+release = 0.2
+vel_sens = 0.16
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 0.5
+detune_cents = 4
+level = 0.72
+attack = 0.06
+decay = 2.5
+sustain = 0.92
+release = 0.34
+vel_sens = 0.12
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 2.0
+detune_cents = -2
+level = 0.1
+attack = 0.14
+decay = 1.6
+sustain = 0.18
+release = 0.18
+vel_sens = 0.16
+waveform = "sine"

@@ -1,0 +1,70 @@
+name = "horror drone"
+description = "ホラーの不協和。1.07 / 2.13 のうなり。低い床は残す。"
+algorithm = 1
+feedback = 0.32
+feedback_op = 4
+gain = 0.92
+default_note = 28
+default_duration = 16.8
+
+[lfo]
+rate_hz = 0.13
+depth_cents = 12.0
+
+[filter]
+type = "lowpass"
+cutoff = 220
+resonance = 0.22
+env_amount = 1.6
+attack = 6.5
+decay = 5.5
+sustain = 0.66
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.04
+decay = 2.2
+sustain = 0.88
+release = 0.3
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.07
+detune_cents = 6
+level = 0.48
+attack = 0.08
+decay = 2.6
+sustain = 0.55
+release = 0.24
+vel_sens = 0.2
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 2.13
+detune_cents = -5
+level = 0.28
+attack = 0.12
+decay = 3.0
+sustain = 0.38
+release = 0.2
+vel_sens = 0.22
+waveform = "abs-sine"
+
+# OP4
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 0.22
+attack = 0.05
+decay = 2.0
+sustain = 0.4
+release = 0.22
+vel_sens = 0.16
+waveform = "sine"

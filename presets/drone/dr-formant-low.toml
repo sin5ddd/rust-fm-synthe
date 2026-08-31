@@ -1,0 +1,74 @@
+name = "low formant drone"
+description = "低いフォルマント。アブサインの母音がゆっくり動く。"
+algorithm = 3
+feedback = 0.18
+feedback_op = 4
+gain = 0.94
+default_note = 36
+default_duration = 16.5
+
+[lfo]
+rate_hz = 0.12
+depth_cents = 7.0
+
+[mod_sweep]
+start = 0.6
+end = 1.15
+
+[filter]
+type = "lowpass"
+cutoff = 340
+resonance = 0.26
+env_amount = 1.7
+attack = 6.0
+decay = 6.0
+sustain = 0.7
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -2
+level = 1.0
+attack = 0.04
+decay = 2.0
+sustain = 0.88
+release = 0.28
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 3
+level = 0.36
+attack = 0.1
+decay = 2.4
+sustain = 0.45
+release = 0.22
+vel_sens = 0.2
+waveform = "abs-sine"
+
+# OP3
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 0.58
+attack = 0.04
+decay = 2.2
+sustain = 0.9
+release = 0.3
+vel_sens = 0.14
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 3.0
+detune_cents = 0
+level = 0.22
+attack = 0.14
+decay = 2.8
+sustain = 0.32
+release = 0.18
+vel_sens = 0.22
+waveform = "abs-sine"

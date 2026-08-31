@@ -1,0 +1,70 @@
+name = "metallic bed"
+description = "金属ベッド。共有モジュレータのリンが長く残る。低いキャリア。"
+algorithm = 4
+feedback = 0.26
+feedback_op = 4
+gain = 0.92
+default_note = 36
+default_duration = 16.5
+
+[mod_sweep]
+start = 0.7
+end = 1.05
+
+[filter]
+type = "lowpass"
+cutoff = 320
+resonance = 0.22
+env_amount = 1.5
+attack = 5.0
+decay = 6.5
+sustain = 0.68
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.04
+decay = 2.0
+sustain = 0.88
+release = 0.28
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.68
+detune_cents = 3
+level = 0.28
+attack = 0.1
+decay = 2.2
+sustain = 0.36
+release = 0.2
+vel_sens = 0.2
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 2.53
+detune_cents = -2
+level = 0.22
+attack = 0.12
+decay = 2.4
+sustain = 0.3
+release = 0.18
+vel_sens = 0.2
+waveform = "abs-sine"
+
+# OP4
+[[operators]]
+ratio = 3.47
+detune_cents = 0
+level = 0.16
+attack = 0.08
+decay = 1.8
+sustain = 0.24
+release = 0.16
+vel_sens = 0.22
+waveform = "sine"

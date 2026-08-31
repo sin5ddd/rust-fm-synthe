@@ -7,7 +7,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 /// Factory bank, embedded so `cargo run` works without the presets/ directory.
-/// Disk layout is `presets/<category>/<id>.toml` (bass, bd, sd, ld, fx, perc).
+/// Disk layout is `presets/<category>/<id>.toml` (bass, bd, sd, ld, fx, perc, drone).
 macro_rules! factory_entry {
     ($dir:literal, $id:literal) => {
         (
@@ -239,6 +239,56 @@ const FACTORY: &[(&str, &str)] = &[
     factory_entry!("perc", "pc-chime"),
     factory_entry!("perc", "pc-guiro"),
     factory_entry!("perc", "pc-stick"),
+    factory_entry!("drone", "dr-sine-sub"),
+    factory_entry!("drone", "dr-sub-octave"),
+    factory_entry!("drone", "dr-rumble"),
+    factory_entry!("drone", "dr-reese-dark"),
+    factory_entry!("drone", "dr-reese-wide"),
+    factory_entry!("drone", "dr-supersaw-low"),
+    factory_entry!("drone", "dr-pulse-rumble"),
+    factory_entry!("drone", "dr-fifth-hollow"),
+    factory_entry!("drone", "dr-octave-stack"),
+    factory_entry!("drone", "dr-minor-dark"),
+    factory_entry!("drone", "dr-fm-evolve"),
+    factory_entry!("drone", "dr-fm-index"),
+    factory_entry!("drone", "dr-noisy-bp"),
+    factory_entry!("drone", "dr-metal-distant"),
+    factory_entry!("drone", "dr-choir-low"),
+    factory_entry!("drone", "dr-choir-dark"),
+    factory_entry!("drone", "dr-trailer-bloom"),
+    factory_entry!("drone", "dr-impact-hold"),
+    factory_entry!("drone", "dr-reverse-hold"),
+    factory_entry!("drone", "dr-riser-slow"),
+    factory_entry!("drone", "dr-underwater"),
+    factory_entry!("drone", "dr-industrial"),
+    factory_entry!("drone", "dr-scifi-hum"),
+    factory_entry!("drone", "dr-horror"),
+    factory_entry!("drone", "dr-ambient-dark"),
+    factory_entry!("drone", "dr-brass-pad"),
+    factory_entry!("drone", "dr-brass-distant"),
+    factory_entry!("drone", "dr-thunder-bed"),
+    factory_entry!("drone", "dr-dystopia"),
+    factory_entry!("drone", "dr-pad-dark"),
+    factory_entry!("drone", "dr-hum-grid"),
+    factory_entry!("drone", "dr-void"),
+    factory_entry!("drone", "dr-abyss"),
+    factory_entry!("drone", "dr-cathedral"),
+    factory_entry!("drone", "dr-engine"),
+    factory_entry!("drone", "dr-reactor"),
+    factory_entry!("drone", "dr-ice-cave"),
+    factory_entry!("drone", "dr-fog"),
+    factory_entry!("drone", "dr-warfare"),
+    factory_entry!("drone", "dr-ritual"),
+    factory_entry!("drone", "dr-ghost-choir"),
+    factory_entry!("drone", "dr-metal-bed"),
+    factory_entry!("drone", "dr-pulse-fifth"),
+    factory_entry!("drone", "dr-saw-minor"),
+    factory_entry!("drone", "dr-fm-bell-low"),
+    factory_entry!("drone", "dr-wobble-slow"),
+    factory_entry!("drone", "dr-formant-low"),
+    factory_entry!("drone", "dr-tape-hum"),
+    factory_entry!("drone", "dr-storm"),
+    factory_entry!("drone", "dr-score-hold"),
 ];
 
 #[derive(Clone, Debug, Deserialize)]
@@ -568,6 +618,7 @@ mod tests {
         assert_eq!(output_preset_id(Some("fx-rev-cym"), None), "fx-rev-cym");
         assert_eq!(output_preset_id(Some("bs-808-sub"), None), "bs-808-sub");
         assert_eq!(output_preset_id(Some("pc-hat-closed"), None), "pc-hat-closed");
+        assert_eq!(output_preset_id(Some("dr-sine-sub"), None), "dr-sine-sub");
     }
 
     #[test]
@@ -669,6 +720,28 @@ mod tests {
         );
         for id in &ids {
             load_factory(id).expect(id);
+        }
+    }
+
+    #[test]
+    fn factory_dr_drone_bank_has_fifty_ids() {
+        let ids: Vec<_> = factory_ids()
+            .into_iter()
+            .filter(|id| id.starts_with("dr-"))
+            .collect();
+        assert_eq!(
+            ids.len(),
+            50,
+            "expected exactly 50 dr-* factory drones, got {}: {ids:?}",
+            ids.len()
+        );
+        for id in &ids {
+            let p = load_factory(id).expect(id);
+            assert!(
+                (16.2..=18.0).contains(&p.default_duration),
+                "{id} default_duration {} must be ~16 s+ (8 bars @ 120 BPM)",
+                p.default_duration
+            );
         }
     }
 

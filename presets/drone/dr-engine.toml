@@ -1,0 +1,70 @@
+name = "engine rumble"
+description = "エンジンの回転うなり。遅いLFOでピッチがわずかに揺れる。"
+algorithm = 2
+feedback = 0.34
+feedback_op = 4
+gain = 0.94
+default_note = 28
+default_duration = 16.5
+
+[lfo]
+rate_hz = 0.28
+depth_cents = 18.0
+
+[filter]
+type = "lowpass"
+cutoff = 190
+resonance = 0.26
+env_amount = 1.1
+attack = 3.5
+decay = 8.0
+sustain = 0.72
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 0.5
+detune_cents = -3
+level = 1.0
+attack = 0.03
+decay = 2.0
+sustain = 0.9
+release = 0.28
+vel_sens = 0.16
+waveform = "pulse"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 4
+level = 0.36
+attack = 0.04
+decay = 1.6
+sustain = 0.42
+release = 0.2
+vel_sens = 0.2
+waveform = "saw"
+
+# OP3
+[[operators]]
+ratio = 1.5
+detune_cents = -2
+level = 0.18
+attack = 0.05
+decay = 1.4
+sustain = 0.26
+release = 0.16
+vel_sens = 0.22
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.16
+attack = 0.03
+decay = 1.2
+sustain = 0.22
+release = 0.14
+vel_sens = 0.24
+waveform = "sine"

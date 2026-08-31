@@ -12,7 +12,7 @@ EDM / drum & bass 向けの **オフライン4オペFMシンセ**。プリセッ
 - ボイス末尾の SVF フィルタ（`lowpass` / `bandpass` / `highpass`）とカットオフ ADSR
 - 1オペへのフィードバック、ピッチエンベロープ、簡易LFO、変調量スイープ
 - 44.1 / 48 kHz、16 / 24-bit PCM（`hound`）
-- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**、**スネア20種（`sd-*`）**、**リード50種（`ld-*`）**、**FX50種（`fx-*`）**、**ベース15種（`bs-*`）**、**パーカッション50種（`pc-*`）**
+- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**、**スネア20種（`sd-*`）**、**リード50種（`ld-*`）**、**FX50種（`fx-*`）**、**ベース15種（`bs-*`）**、**パーカッション50種（`pc-*`）**、**ドローン50種（`dr-*`）**
 
 VA / スーパーソー専用エンジンは足していない。4オペFMのまま、波形とボイスフィルタだけ増やしている。
 
@@ -61,6 +61,8 @@ cargo run -- render-all
 `bs-*` ベースバンク（808サブ、暗い／明るい／ニューロReese、ウォブル、アシッド、フレンチコア、ガバ、フーバー、歪みスクエア、タイトハウス、Amenサブ、グロウル2、正弦サブ、金属FMなど15種）も同じ。出力は `dist/bs-….wav`。TOMLは `presets/bass/`。C3付近（MIDI 36–48）。既存の `sub-bass` / `growl-bass` / `reese-mid` / `supersaw-bass` はそのまま（リネームしない追加バンク）。`reese-mid` の800–1200 Hz糊とは別。
 
 `pc-*` パーカッションバンク（ハット、オープンハット、シェイカー、タンバ、コンガ／ボンゴ、タム、カウベル、クラべ、スナップ、トライアングル、ライドFM、ウッドブロック、クラップ変種、ザップ、フォリーなど50種）も同じ。出力は `dist/pc-….wav`。TOMLは `presets/perc/`。キックは `bd-*`、スネアは `sd-*` のまま（追加のフルキックは入れない）。短いワンショット（オープンハット／ライドだけ約1秒）。既存の `cp-house` / `glass-hit` / `metallic-hit` はそのまま。
+
+`dr-*` ドローンバンク（正弦サブ、暗いReese、低いスーパーソー、中空5度、遅いFM、ノイズBPランブル、クワイア、トレーラーブルーム、リバースホールド、水中、インダストリアル、遠いブラス、雷ベッドなど50種）も同じ。出力は `dist/dr-….wav`。TOMLは `presets/drone/`。**既定の長さは 120 BPM・4/4 の8小節ホールド（1小節=2秒 → 8小節=16秒。短いリリーステール込みで約16.2–18秒）**。キャリアのサステインは高く、t=14秒でも聞こえる（0.4秒で消えるワンショットではない）。音高はだいたい C1–C2（MIDI 24–36）。ミッドドローンだけ C3（48）。既存の `bd-*` / `sd-*` / `ld-*` / `fx-*` / `bs-*` / `pc-*` はそのまま。
 
 出力ディレクトリや長さを全プリセットに上書き:
 
@@ -421,8 +423,58 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | `pc-chime` | 短いチャイム |
 | `pc-guiro` | ギロの短いスクレイプ |
 | `pc-stick` | スティックのクリック |
+| `dr-sine-sub` | 正弦サブベッド（C1。20–40 Hzの床） |
+| `dr-sub-octave` | サブ＋オクターブの正弦スタック |
+| `dr-rumble` | パルスの低ランブル |
+| `dr-reese-dark` | 暗いReeseドローン（サブ〜ミッド） |
+| `dr-reese-wide` | 広めの暗いReese |
+| `dr-supersaw-low` | 低いスーパーソードローン |
+| `dr-pulse-rumble` | パルスの低うなり |
+| `dr-fifth-hollow` | 中空5度ドローン（C+G。長3度なし） |
+| `dr-octave-stack` | オクターブ重ねの重いベッド |
+| `dr-minor-dark` | 暗い短3度寄り（6:5。長三和音なし） |
+| `dr-fm-evolve` | 指数がゆっくり開くFM |
+| `dr-fm-index` | 遅い指数スイープのFM |
+| `dr-noisy-bp` | 低いBPのノイズランブル（80 Hz付近） |
+| `dr-metal-distant` | 遠い金属のうなり |
+| `dr-choir-low` | 低いクワイア寄りの重ねサイン |
+| `dr-choir-dark` | より暗いクワイア（短3度） |
+| `dr-trailer-bloom` | トレーラーヒットが開いてドローンに |
+| `dr-impact-hold` | インパクトから床へ（消えない） |
+| `dr-reverse-hold` | リバース風に開いてホールド |
+| `dr-riser-slow` | 遅いライザーがドローンになる |
+| `dr-underwater` | 水中の低いうなり |
+| `dr-industrial` | 工場の低いハム |
+| `dr-scifi-hum` | SFの電源ハム（固定60 Hz層） |
+| `dr-horror` | ホラーの不協和ドローン |
+| `dr-ambient-dark` | 暗いアンビエントパッド |
+| `dr-brass-pad` | 低いブラスパッド |
+| `dr-brass-distant` | 遠い金管 |
+| `dr-thunder-bed` | 雷のベッド（遠雷ノイズ＋サブ） |
+| `dr-dystopia` | ディストピアのハム |
+| `dr-pad-dark` | 暗いパッドドローン |
+| `dr-hum-grid` | 50/60 Hzの電源グリッド |
+| `dr-void` | 虚空（極端に暗いLP） |
+| `dr-abyss` | 深淵のランブル |
+| `dr-cathedral` | 聖堂の低いドローバー（C3） |
+| `dr-engine` | エンジンの回転うなり |
+| `dr-reactor` | 原子炉のハム |
+| `dr-ice-cave` | 氷穴のミッドドローン（C3） |
+| `dr-fog` | 霧のパッド |
+| `dr-warfare` | 戦争映画の床 |
+| `dr-ritual` | 儀式の低い重ね（5度＋短3度） |
+| `dr-ghost-choir` | 幽霊クワイア（C3） |
+| `dr-metal-bed` | 金属ベッド |
+| `dr-pulse-fifth` | パルスの5度ランブル |
+| `dr-saw-minor` | ソーの短3度スタック |
+| `dr-fm-bell-low` | 低い金属FM（遠いゴング。薄いベルではない） |
+| `dr-wobble-slow` | ごく遅いウォブル（0.15 Hz） |
+| `dr-formant-low` | 低いフォルマント |
+| `dr-tape-hum` | テープ／機械のハム |
+| `dr-storm` | 嵐のランブル |
+| `dr-score-hold` | スコア／トレーラーのホールド（C3） |
 
-データは `presets/<category>/*.toml`（`bass` / `bd` / `sd` / `ld` / `fx` / `perc`）。`bs-*` は `presets/bass/`、`pc-*` は `presets/perc/`。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。 `--preset <id>` の ID はファイル名のまま（フォルダ名は含まない）。
+データは `presets/<category>/*.toml`（`bass` / `bd` / `sd` / `ld` / `fx` / `perc` / `drone`）。`bs-*` は `presets/bass/`、`pc-*` は `presets/perc/`、`dr-*` は `presets/drone/`。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。 `--preset <id>` の ID はファイル名のまま（フォルダ名は含まない）。
 
 ## プリセットの足し方
 
@@ -438,7 +490,7 @@ cargo run -- render --preset-file presets/ld/my-shot.toml --output dist/my-shot.
 
 工場バンクに入れるなら:
 
-- ファイルを `presets/<category>/<id>.toml` に置く（`bass` / `bd` / `sd` / `ld` / `fx` / `perc`）
+- ファイルを `presets/<category>/<id>.toml` に置く（`bass` / `bd` / `sd` / `ld` / `fx` / `perc` / `drone`）
 - `src/preset.rs` の `FACTORY` に `factory_entry!("<category>", "<id>")` を足す
 
 主なキー:
@@ -519,4 +571,4 @@ write_wav(
 cargo test
 ```
 
-エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`ld-*` リードと `fx-*` FXがそれぞれちょうど50個で非無音、`bs-*` ベースがちょうど15個で非無音、`pc-*` パーカッションがちょうど50個で非無音、`presets/ld/` の既定レンダーが約8秒（120 BPM の4小節）で末尾0.5秒が無音でないこと、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。
+エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`ld-*` リードと `fx-*` FXがそれぞれちょうど50個で非無音、`bs-*` ベースがちょうど15個で非無音、`pc-*` パーカッションがちょうど50個で非無音、`dr-*` ドローンがちょうど50個で非無音、`presets/ld/` の既定レンダーが約8秒（120 BPM の4小節）で末尾0.5秒が無音でないこと、`dr-*` の既定レンダーが約16秒（120 BPM の8小節）で末尾1秒と t=14秒が無音でないこと、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。

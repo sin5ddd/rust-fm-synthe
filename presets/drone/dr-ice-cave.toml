@@ -1,0 +1,70 @@
+name = "ice cave drone"
+description = "氷穴のミッドドローン。冷たい倍音を薄く。サブは0.5で残す。"
+algorithm = 8
+feedback = 0.06
+feedback_op = 4
+gain = 0.92
+default_note = 48
+default_duration = 16.8
+
+[lfo]
+rate_hz = 0.18
+depth_cents = 7.0
+
+[filter]
+type = "lowpass"
+cutoff = 1100
+resonance = 0.12
+env_amount = 1.2
+attack = 6.0
+decay = 6.0
+sustain = 0.74
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -5
+level = 0.86
+attack = 0.05
+decay = 2.2
+sustain = 0.88
+release = 0.3
+vel_sens = 0.14
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 6
+level = 0.78
+attack = 0.06
+decay = 2.0
+sustain = 0.88
+release = 0.28
+vel_sens = 0.14
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 0.48
+attack = 0.04
+decay = 2.4
+sustain = 0.9
+release = 0.32
+vel_sens = 0.12
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 2.7
+detune_cents = 3
+level = 0.12
+attack = 0.1
+decay = 1.6
+sustain = 0.82
+release = 0.22
+vel_sens = 0.14
+waveform = "abs-sine"

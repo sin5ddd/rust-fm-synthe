@@ -1,0 +1,70 @@
+name = "thunder bed"
+description = "雷のベッド。サブ正弦＋高FBの遠雷ノイズ。ワンショットではない。"
+algorithm = 7
+feedback = 0.62
+feedback_op = 4
+gain = 0.95
+default_note = 24
+default_duration = 16.8
+
+[lfo]
+rate_hz = 0.19
+depth_cents = 9.0
+
+[filter]
+type = "lowpass"
+cutoff = 150
+resonance = 0.2
+env_amount = 1.4
+attack = 3.0
+decay = 8.0
+sustain = 0.7
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 1.0
+attack = 0.03
+decay = 2.4
+sustain = 0.94
+release = 0.34
+vel_sens = 0.12
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = -3
+level = 0.42
+attack = 0.05
+decay = 2.0
+sustain = 0.86
+release = 0.28
+vel_sens = 0.14
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.38
+attack = 0.04
+decay = 1.8
+sustain = 0.84
+release = 0.26
+vel_sens = 0.18
+waveform = "saw"
+
+# OP4
+[[operators]]
+ratio = 3.3
+detune_cents = 0
+level = 0.28
+attack = 0.02
+decay = 1.4
+sustain = 0.3
+release = 0.16
+vel_sens = 0.28
+waveform = "pulse"
