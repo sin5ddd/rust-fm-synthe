@@ -1,0 +1,70 @@
+name = "noisy bandpass rumble"
+description = "高FBの砂を低いBPでランブルにする。カットオフは80 Hz付近。サブ隣接を残す。"
+algorithm = 1
+feedback = 0.68
+feedback_op = 4
+gain = 0.9
+default_note = 28
+default_duration = 16.4
+
+[lfo]
+rate_hz = 0.22
+depth_cents = 10.0
+
+[filter]
+type = "bandpass"
+cutoff = 88
+resonance = 0.42
+env_amount = 0.8
+attack = 5.0
+decay = 7.0
+sustain = 0.7
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 1.0
+attack = 0.035
+decay = 2.0
+sustain = 0.9
+release = 0.28
+vel_sens = 0.18
+waveform = "saw"
+
+# OP2
+[[operators]]
+ratio = 1.07
+detune_cents = 8
+level = 0.38
+attack = 0.04
+decay = 1.6
+sustain = 0.35
+release = 0.18
+vel_sens = 0.24
+waveform = "pulse"
+
+# OP3
+[[operators]]
+ratio = 2.13
+detune_cents = -10
+level = 0.28
+attack = 0.05
+decay = 1.4
+sustain = 0.28
+release = 0.16
+vel_sens = 0.28
+waveform = "half-sine"
+
+# OP4
+[[operators]]
+ratio = 3.17
+detune_cents = 0
+level = 0.32
+attack = 0.03
+decay = 1.2
+sustain = 0.22
+release = 0.14
+vel_sens = 0.32
+waveform = "pulse"

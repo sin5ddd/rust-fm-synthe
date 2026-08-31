@@ -1,0 +1,70 @@
+name = "underwater drone"
+description = "水中の低いうなり。LPが狭く、ゆっくり揺れる。"
+algorithm = 6
+feedback = 0.08
+feedback_op = 4
+gain = 0.94
+default_note = 24
+default_duration = 16.6
+
+[lfo]
+rate_hz = 0.21
+depth_cents = 16.0
+
+[filter]
+type = "lowpass"
+cutoff = 130
+resonance = 0.28
+env_amount = 1.2
+attack = 4.5
+decay = 7.0
+sustain = 0.72
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 0.5
+detune_cents = -3
+level = 1.0
+attack = 0.05
+decay = 2.2
+sustain = 0.92
+release = 0.32
+vel_sens = 0.12
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 5
+level = 0.48
+attack = 0.08
+decay = 2.0
+sustain = 0.86
+release = 0.28
+vel_sens = 0.14
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 1.5
+detune_cents = -4
+level = 0.22
+attack = 0.1
+decay = 1.8
+sustain = 0.84
+release = 0.24
+vel_sens = 0.14
+waveform = "half-sine"
+
+# OP4
+[[operators]]
+ratio = 2.03
+detune_cents = 0
+level = 0.1
+attack = 0.12
+decay = 1.6
+sustain = 0.2
+release = 0.18
+vel_sens = 0.18
+waveform = "sine"

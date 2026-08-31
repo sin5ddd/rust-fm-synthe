@@ -1,0 +1,74 @@
+name = "evolving fm drone"
+description = "指数がゆっくり開くFMドローン。16秒かけて倍音が育つ。"
+algorithm = 1
+feedback = 0.18
+feedback_op = 4
+gain = 0.95
+default_note = 33
+default_duration = 16.7
+
+[lfo]
+rate_hz = 0.09
+depth_cents = 7.0
+
+[mod_sweep]
+start = 0.35
+end = 1.25
+
+[filter]
+type = "lowpass"
+cutoff = 260
+resonance = 0.14
+env_amount = 2.2
+attack = 7.0
+decay = 5.0
+sustain = 0.7
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -2
+level = 1.0
+attack = 0.04
+decay = 2.2
+sustain = 0.9
+release = 0.3
+vel_sens = 0.16
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 3
+level = 0.42
+attack = 0.12
+decay = 3.5
+sustain = 0.55
+release = 0.22
+vel_sens = 0.18
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.28
+attack = 0.2
+decay = 4.0
+sustain = 0.4
+release = 0.2
+vel_sens = 0.2
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 3.01
+detune_cents = 0
+level = 0.18
+attack = 0.35
+decay = 5.0
+sustain = 0.28
+release = 0.18
+vel_sens = 0.22
+waveform = "sine"

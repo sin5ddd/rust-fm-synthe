@@ -1,0 +1,75 @@
+name = "reverse into hold"
+description = "リバース風に開いてからホールド。アタックは短め（スモーク用）でフィルタがゆっくり開く。"
+algorithm = 5
+feedback = 0.12
+feedback_op = 4
+gain = 0.94
+default_note = 31
+default_duration = 17.0
+
+[pitch]
+start_semitones = -9.0
+end_semitones = 0.0
+curve = -0.4
+
+[mod_sweep]
+start = 0.4
+end = 1.1
+
+[filter]
+type = "lowpass"
+cutoff = 140
+resonance = 0.16
+env_amount = 2.8
+attack = 8.0
+decay = 4.0
+sustain = 0.72
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -3
+level = 1.0
+attack = 0.06
+decay = 2.0
+sustain = 0.88
+release = 0.3
+vel_sens = 0.16
+waveform = "saw"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 4
+level = 0.16
+attack = 0.1
+decay = 1.6
+sustain = 0.22
+release = 0.18
+vel_sens = 0.2
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 0.5
+detune_cents = 2
+level = 0.78
+attack = 0.07
+decay = 2.2
+sustain = 0.9
+release = 0.32
+vel_sens = 0.14
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 3.0
+detune_cents = 0
+level = 0.14
+attack = 0.12
+decay = 1.4
+sustain = 0.18
+release = 0.16
+vel_sens = 0.22
+waveform = "abs-sine"

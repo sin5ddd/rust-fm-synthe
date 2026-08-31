@@ -1,0 +1,70 @@
+name = "dark reese drone"
+description = "暗いReeseスタック。デチューンソーのサブ〜ミッド。長いホールド。"
+algorithm = 5
+feedback = 0.12
+feedback_op = 4
+gain = 0.94
+default_note = 31
+default_duration = 16.6
+
+[lfo]
+rate_hz = 0.18
+depth_cents = 11.0
+
+[filter]
+type = "lowpass"
+cutoff = 320
+resonance = 0.2
+env_amount = 1.2
+attack = 4.2
+decay = 7.5
+sustain = 0.68
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 0.5
+detune_cents = -12
+level = 1.0
+attack = 0.04
+decay = 2.2
+sustain = 0.88
+release = 0.3
+vel_sens = 0.16
+waveform = "saw"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 3
+level = 0.14
+attack = 0.05
+decay = 1.4
+sustain = 0.22
+release = 0.18
+vel_sens = 0.22
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 0.5
+detune_cents = 14
+level = 0.92
+attack = 0.045
+decay = 2.0
+sustain = 0.86
+release = 0.28
+vel_sens = 0.16
+waveform = "saw"
+
+# OP4
+[[operators]]
+ratio = 1.01
+detune_cents = -5
+level = 0.12
+attack = 0.06
+decay = 1.2
+sustain = 0.18
+release = 0.16
+vel_sens = 0.24
+waveform = "sine"

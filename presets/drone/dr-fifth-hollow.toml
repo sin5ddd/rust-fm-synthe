@@ -1,0 +1,70 @@
+name = "hollow fifth drone"
+description = "中空5度の低ドローン。C+Gだけ。長3度なし。"
+algorithm = 8
+feedback = 0.0
+feedback_op = 4
+gain = 0.98
+default_note = 36
+default_duration = 16.4
+
+[lfo]
+rate_hz = 0.1
+depth_cents = 5.0
+
+[filter]
+type = "lowpass"
+cutoff = 520
+resonance = 0.08
+env_amount = 1.0
+attack = 4.0
+decay = 7.0
+sustain = 0.78
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -3
+level = 0.96
+attack = 0.04
+decay = 2.0
+sustain = 0.9
+release = 0.3
+vel_sens = 0.14
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.5
+detune_cents = 4
+level = 0.82
+attack = 0.045
+decay = 1.9
+sustain = 0.9
+release = 0.28
+vel_sens = 0.14
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 0.55
+attack = 0.03
+decay = 2.2
+sustain = 0.92
+release = 0.32
+vel_sens = 0.12
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 3.0
+detune_cents = 2
+level = 0.1
+attack = 0.08
+decay = 1.5
+sustain = 0.84
+release = 0.22
+vel_sens = 0.14
+waveform = "sine"

@@ -1,0 +1,70 @@
+name = "reactor hum"
+description = "原子炉のハム。非整数比の低いうなり＋サブ。"
+algorithm = 6
+feedback = 0.16
+feedback_op = 4
+gain = 0.93
+default_note = 31
+default_duration = 16.6
+
+[lfo]
+rate_hz = 0.1
+depth_cents = 6.0
+
+[filter]
+type = "lowpass"
+cutoff = 240
+resonance = 0.2
+env_amount = 1.4
+attack = 5.5
+decay = 6.5
+sustain = 0.7
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 1.0
+attack = 0.04
+decay = 2.2
+sustain = 0.92
+release = 0.3
+vel_sens = 0.14
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.11
+detune_cents = 3
+level = 0.42
+attack = 0.06
+decay = 2.0
+sustain = 0.86
+release = 0.26
+vel_sens = 0.16
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 1.73
+detune_cents = -4
+level = 0.28
+attack = 0.08
+decay = 1.8
+sustain = 0.84
+release = 0.24
+vel_sens = 0.16
+waveform = "abs-sine"
+
+# OP4
+[[operators]]
+ratio = 2.41
+detune_cents = 0
+level = 0.12
+attack = 0.1
+decay = 1.5
+sustain = 0.22
+release = 0.18
+vel_sens = 0.2
+waveform = "sine"

@@ -1,0 +1,76 @@
+name = "scored trailer hold"
+description = "スコア／トレーラーのホールド。スーパーソー低域＋正弦サブ。ミッド（C3）。"
+algorithm = 5
+feedback = 0.08
+feedback_op = 4
+gain = 0.88
+default_note = 48
+default_duration = 17.2
+
+[lfo]
+rate_hz = 0.12
+depth_cents = 8.0
+
+[mod_sweep]
+start = 0.7
+end = 1.05
+
+[filter]
+type = "lowpass"
+cutoff = 520
+resonance = 0.1
+env_amount = 1.8
+attack = 7.0
+decay = 5.5
+sustain = 0.74
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 0.5
+detune_cents = -5
+level = 0.95
+attack = 0.05
+decay = 2.4
+sustain = 0.9
+release = 0.34
+vel_sens = 0.14
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 2
+level = 0.1
+attack = 0.1
+decay = 1.6
+sustain = 0.18
+release = 0.18
+vel_sens = 0.16
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 1.0
+detune_cents = 6
+level = 0.7
+attack = 0.06
+decay = 2.1
+sustain = 0.86
+release = 0.3
+vel_sens = 0.14
+waveform = "super-saw"
+unison = 5
+unison_detune = 12.0
+
+# OP4
+[[operators]]
+ratio = 1.5
+detune_cents = -2
+level = 0.1
+attack = 0.12
+decay = 1.5
+sustain = 0.16
+release = 0.16
+vel_sens = 0.16
+waveform = "sine"

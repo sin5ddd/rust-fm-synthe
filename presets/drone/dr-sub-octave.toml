@@ -1,0 +1,70 @@
+name = "sub octave bed"
+description = "サブと1オクターブ上の正弦スタック。空洞のない重い床。"
+algorithm = 8
+feedback = 0.0
+feedback_op = 4
+gain = 1.0
+default_note = 24
+default_duration = 16.5
+
+[lfo]
+rate_hz = 0.08
+depth_cents = 3.0
+
+[filter]
+type = "lowpass"
+cutoff = 220
+resonance = 0.08
+env_amount = 0.8
+attack = 4.0
+decay = 7.0
+sustain = 0.78
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 1.0
+detune_cents = -2
+level = 0.95
+attack = 0.035
+decay = 2.0
+sustain = 0.92
+release = 0.3
+vel_sens = 0.12
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 2.0
+detune_cents = 3
+level = 0.38
+attack = 0.05
+decay = 1.8
+sustain = 0.88
+release = 0.26
+vel_sens = 0.12
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 0.88
+attack = 0.03
+decay = 2.3
+sustain = 0.94
+release = 0.32
+vel_sens = 0.1
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 4.0
+detune_cents = -1
+level = 0.08
+attack = 0.1
+decay = 1.4
+sustain = 0.82
+release = 0.22
+vel_sens = 0.14
+waveform = "sine"

@@ -1,0 +1,74 @@
+name = "grid hum"
+description = "50/60 Hzの電源グリッド。固定周波数＋ノートのサブ。"
+algorithm = 8
+feedback = 0.04
+feedback_op = 4
+gain = 0.96
+default_note = 36
+default_duration = 16.4
+
+[lfo]
+rate_hz = 0.06
+depth_cents = 2.0
+
+[filter]
+type = "lowpass"
+cutoff = 200
+resonance = 0.2
+env_amount = 0.7
+attack = 3.0
+decay = 8.0
+sustain = 0.8
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 0.88
+attack = 0.03
+decay = 2.2
+sustain = 0.92
+release = 0.3
+vel_sens = 0.12
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.42
+attack = 0.035
+decay = 2.0
+sustain = 0.9
+release = 0.28
+vel_sens = 0.12
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 50.0
+
+# OP3
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.36
+attack = 0.035
+decay = 2.0
+sustain = 0.9
+release = 0.28
+vel_sens = 0.12
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 60.0
+
+# OP4
+[[operators]]
+ratio = 1.0
+detune_cents = 1
+level = 0.22
+attack = 0.04
+decay = 1.8
+sustain = 0.86
+release = 0.24
+vel_sens = 0.12
+waveform = "sine"

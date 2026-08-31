@@ -1,0 +1,70 @@
+name = "sine sub bed"
+description = "シネマティックな正弦サブベッド。20–40 Hzの胴を長くホールド。レイヤーの床。"
+algorithm = 8
+feedback = 0.02
+feedback_op = 4
+gain = 1.02
+default_note = 24
+default_duration = 16.4
+
+[lfo]
+rate_hz = 0.11
+depth_cents = 4.0
+
+[filter]
+type = "lowpass"
+cutoff = 160
+resonance = 0.06
+env_amount = 0.6
+attack = 3.5
+decay = 8.0
+sustain = 0.8
+release = 0.35
+
+# OP1
+[[operators]]
+ratio = 0.5
+detune_cents = 0
+level = 1.0
+attack = 0.03
+decay = 2.2
+sustain = 0.94
+release = 0.32
+vel_sens = 0.12
+waveform = "sine"
+
+# OP2
+[[operators]]
+ratio = 1.0
+detune_cents = 2
+level = 0.42
+attack = 0.04
+decay = 2.0
+sustain = 0.9
+release = 0.28
+vel_sens = 0.12
+waveform = "sine"
+
+# OP3
+[[operators]]
+ratio = 0.5
+detune_cents = -3
+level = 0.55
+attack = 0.05
+decay = 2.4
+sustain = 0.92
+release = 0.3
+vel_sens = 0.1
+waveform = "sine"
+
+# OP4
+[[operators]]
+ratio = 2.0
+detune_cents = 1
+level = 0.1
+attack = 0.08
+decay = 1.6
+sustain = 0.85
+release = 0.24
+vel_sens = 0.14
+waveform = "sine"
