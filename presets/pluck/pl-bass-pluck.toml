@@ -1,0 +1,63 @@
+name = "bass pluck"
+description = "ベースプラック。暗い。短い（0.48秒）。ソー＋低いLP。C3。"
+algorithm = 5
+feedback = 0.1
+feedback_op = 4
+gain = 1.08
+default_note = 48
+default_duration = 0.48
+
+[filter]
+type = "lowpass"
+cutoff = 220.0
+resonance = 0.24
+env_amount = 2.3
+attack = 0.0012
+decay = 0.14
+sustain = 0.03
+release = 0.08
+
+# ベース胴
+[[operators]]
+ratio = 1.0
+detune_cents = -3
+level = 1.0
+attack = 0.0015
+decay = 0.2
+sustain = 0.02
+release = 0.08
+vel_sens = 0.4
+waveform = "saw"
+
+[[operators]]
+ratio = 2.0
+detune_cents = 2
+level = 0.24
+attack = 0.0005
+decay = 0.05
+sustain = 0.0
+release = 0.025
+vel_sens = 0.48
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 5
+level = 0.55
+attack = 0.0012
+decay = 0.16
+sustain = 0.02
+release = 0.07
+vel_sens = 0.36
+waveform = "sine"
+
+[[operators]]
+ratio = 3.0
+detune_cents = 0
+level = 0.1
+attack = 0.0004
+decay = 0.03
+sustain = 0.0
+release = 0.015
+vel_sens = 0.5
+waveform = "sine"

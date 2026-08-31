@@ -699,6 +699,68 @@ fn factory_pf_ps_pads_hold_eight_bars_at_120bpm() {
 }
 
 #[test]
+fn factory_pl_plucks_are_thirty_and_audible() {
+    let ids: Vec<_> = factory_ids()
+        .into_iter()
+        .filter(|id| id.starts_with("pl-"))
+        .collect();
+    assert_eq!(
+        ids.len(),
+        30,
+        "expected exactly 30 pl-* factory plucks, got {}: {ids:?}",
+        ids.len()
+    );
+
+    for id in ids {
+        let preset = load_factory(id).unwrap();
+        if id == "pl-reverse-swell" {
+            assert!(
+                (1.2..3.0).contains(&preset.default_duration),
+                "{id} reverse swell duration {} should stay a short pluck, not a 16s pad",
+                preset.default_duration
+            );
+        } else {
+            assert!(
+                preset.default_duration < 2.0,
+                "{id} default_duration {} must be < 2s (one-shot pluck)",
+                preset.default_duration
+            );
+        }
+        assert!(
+            (48..=72).contains(&preset.default_note),
+            "{id} default_note {} must be MIDI 48–72",
+            preset.default_note
+        );
+
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: 22_050,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+        assert!(
+            rms(&buf) > 0.01,
+            "pl pluck `{id}` rendered near-silence (rms={})",
+            rms(&buf)
+        );
+        assert!(
+            peak(&buf) > 0.4,
+            "pl pluck `{id}` peak {} too low",
+            peak(&buf)
+        );
+        assert!(
+            buf.iter().any(|&s| s.abs() > 1e-3),
+            "{id} effectively silent"
+        );
+    }
+}
+
+#[test]
 fn every_factory_preset_makes_sound() {
     for id in fm_synth::factory_ids() {
         let preset = load_factory(id).unwrap();

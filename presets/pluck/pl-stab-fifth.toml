@@ -1,0 +1,64 @@
+name = "stab fifth pluck"
+description = "スタブ。中空5度、中庸の明るさ。短い（0.38秒）。C+Gのみ。"
+algorithm = 8
+feedback = 0.0
+feedback_op = 4
+gain = 1.04
+default_note = 55
+default_duration = 0.38
+
+[filter]
+type = "highpass"
+cutoff = 150.0
+resonance = 0.08
+env_amount = 0.0
+attack = 0.0
+decay = 0.0
+sustain = 1
+release = 0.05
+
+# 根音
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.0008
+decay = 0.14
+sustain = 0.0
+release = 0.06
+vel_sens = 0.4
+waveform = "sine"
+
+# 5度
+[[operators]]
+ratio = 1.5
+detune_cents = 0
+level = 0.78
+attack = 0.0008
+decay = 0.13
+sustain = 0.0
+release = 0.06
+vel_sens = 0.4
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.0
+attack = 0.001
+decay = 0.04
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.0
+attack = 0.001
+decay = 0.04
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+waveform = "sine"

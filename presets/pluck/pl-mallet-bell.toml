@@ -1,0 +1,63 @@
+name = "mallet bell pluck"
+description = "マレット／ベル。明るく金属質。中短（0.72秒）。非整数のトリプルキャリア。"
+algorithm = 6
+feedback = 0.09
+feedback_op = 4
+gain = 0.98
+default_note = 71
+default_duration = 0.72
+
+[filter]
+type = "highpass"
+cutoff = 320.0
+resonance = 0.12
+env_amount = 0.3
+attack = 0.0004
+decay = 0.2
+sustain = 0.0
+release = 0.1
+
+# ベル基音
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.9
+attack = 0.0005
+decay = 0.34
+sustain = 0.0
+release = 0.1
+vel_sens = 0.38
+waveform = "sine"
+
+[[operators]]
+ratio = 2.14
+detune_cents = 9
+level = 0.44
+attack = 0.0003
+decay = 0.2
+sustain = 0.0
+release = 0.08
+vel_sens = 0.44
+waveform = "sine"
+
+[[operators]]
+ratio = 3.87
+detune_cents = -8
+level = 0.28
+attack = 0.0003
+decay = 0.12
+sustain = 0.0
+release = 0.06
+vel_sens = 0.48
+waveform = "sine"
+
+[[operators]]
+ratio = 6.05
+detune_cents = 0
+level = 0.16
+attack = 0.0002
+decay = 0.04
+sustain = 0.0
+release = 0.02
+vel_sens = 0.55
+waveform = "abs-sine"

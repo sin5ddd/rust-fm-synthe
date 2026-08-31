@@ -1,0 +1,64 @@
+name = "mallet marimba pluck"
+description = "マレット／木琴。木質で中庸の明るさ。短い（0.48秒）。ハーフサインの胴。"
+algorithm = 5
+feedback = 0.07
+feedback_op = 4
+gain = 1.0
+default_note = 65
+default_duration = 0.48
+
+[filter]
+type = "lowpass"
+cutoff = 1280.0
+resonance = 0.18
+env_amount = 2.2
+attack = 0.0004
+decay = 0.16
+sustain = 0.0
+release = 0.08
+
+# 木の胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.0004
+decay = 0.22
+sustain = 0.0
+release = 0.08
+vel_sens = 0.38
+waveform = "half-sine"
+
+# 叩いた頭
+[[operators]]
+ratio = 3.8
+detune_cents = 4
+level = 0.26
+attack = 0.0002
+decay = 0.03
+sustain = 0.0
+release = 0.015
+vel_sens = 0.5
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 8
+level = 0.48
+attack = 0.0005
+decay = 0.18
+sustain = 0.0
+release = 0.07
+vel_sens = 0.34
+waveform = "sine"
+
+[[operators]]
+ratio = 6.4
+detune_cents = -3
+level = 0.1
+attack = 0.0002
+decay = 0.018
+sustain = 0.0
+release = 0.01
+vel_sens = 0.55
+waveform = "sine"

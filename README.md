@@ -12,7 +12,7 @@ EDM / drum & bass 向けの **オフライン4オペFMシンセ**。プリセッ
 - ボイス末尾の SVF フィルタ（`lowpass` / `bandpass` / `highpass`）とカットオフ ADSR
 - 1オペへのフィードバック、ピッチエンベロープ、簡易LFO、変調量スイープ
 - 44.1 / 48 kHz、16 / 24-bit PCM（`hound`）
-- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**、**スネア20種（`sd-*`）**、**リード50種（`ld-*`）**、**FX50種（`fx-*`）**、**ベース15種（`bs-*`）**、**パーカッション50種（`pc-*`）**、**ドローン50種（`dr-*`）**、**爽やかパッド30種（`pf-*`）**、**キラキラパッド30種（`ps-*`）**
+- 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**、**スネア20種（`sd-*`）**、**リード50種（`ld-*`）**、**FX50種（`fx-*`）**、**ベース15種（`bs-*`）**、**パーカッション50種（`pc-*`）**、**ドローン50種（`dr-*`）**、**爽やかパッド30種（`pf-*`）**、**キラキラパッド30種（`ps-*`）**、**プラック30種（`pl-*`）**
 
 VA / スーパーソー専用エンジンは足していない。4オペFMのまま、波形とボイスフィルタだけ増やしている。
 
@@ -67,6 +67,8 @@ cargo run -- render-all
 `pf-*` 爽やかパッド（朝のコーラス、Juno風の軽い広がり、フルートパッド、クワイア空気、開いた5度／9度、リディアン、柔らかい長三和音など30種）も同じ。出力は `dist/pf-….wav`。TOMLは `presets/pad-fresh/`。**ロングショットはドローンと同じ 8小節ホールド（約16.2–18秒）。t=14秒でも聞こえる。** ただしドローンがサブ／ランブルの床を担うので、こちらは **低域を厚くしない**。HP／カットオフでエネルギーはだいたい 150–200 Hz より上。音高は C3–C5（MIDI 48–72）。既存の `dr-*` / `bd-*` / `sd-*` / `ld-*` / `fx-*` / `bs-*` / `pc-*` はそのまま。
 
 `ps-*` キラキラパッド（クリスタル、ベルホールド、シマー、オルゴールパッド、氷の輝き、進化するFMスパークル、遅いコーラスシャインなど30種）も同じ。出力は `dist/ps-….wav`。TOMLは `presets/pad-sparkle/`。長さは `pf-*` と同じ 16秒ホールド。**ベルワンショットではなく、高い部分音を持ったパッド。** 高域に存在感。キック／サブではない。音高は高め（C4–C5 が多い）。既存バンクは触らない。
+
+`pl-*` プラックバンク（ハウス、フューチャーガラス、DnB、ポップナイロン、マレット、オルゴール、トランスゲート、短いスーパーソー、FMエレクトリックピアノ、ハープ、ミュートギター、箏、カリンバ、チャイム、ベースプラック、アシッド、ローファイ、アルペジオ、5度／長三和音スタブ、クリック、リバーススウェルなど30種）も同じ。出力は `dist/pl-….wav`。TOMLは `presets/pluck/`。**短いワンショット（だいたい 0.25–1.2秒。`pl-reverse-swell` だけ約1.75秒）。16秒パッドではない。** アンプ／フィルタの減衰は速く、サステインはほぼゼロ。音高は C3–C5（MIDI 48–72）。既存の `ld-house-pluck` / `ld-fm-pluck` / `lead-fm-pluck` などはリネームしない（役割が重なってもパッチは別）。
 
 出力ディレクトリや長さを全プリセットに上書き:
 
@@ -537,8 +539,38 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | `ps-shine-fifth` | 輝く5度 |
 | `ps-ice-choir` | 氷のクワイア |
 | `ps-quartz` | 石英 |
+| `pl-house-dry` | ドライなハウスプラック（中庸の明るさ、0.42秒） |
+| `pl-house-bright` | 明るいハウスプラック（短い） |
+| `pl-future-glass` | フューチャーベースのガラスFM（明るい、0.65秒） |
+| `pl-dnb-tight` | タイトなDnBプラック（ミッド、極短い） |
+| `pl-dnb-neuro` | ニューロの金属FMプラック（ミッド暗い、短い） |
+| `pl-pop-soft` | 柔らかいポッププラック（中庸、0.62秒） |
+| `pl-pop-nylon` | ポップのナイロン（やや暗い、0.52秒） |
+| `pl-mallet-marimba` | 木琴マレット（木質、短い） |
+| `pl-mallet-bell` | ベルマレット（明るく金属、0.72秒） |
+| `pl-musicbox` | オルゴール（明るく高い、短い） |
+| `pl-trance-gate` | トランスのゲートプラック（明るい、極短い） |
+| `pl-supersaw-short` | 短いスーパーソー（中庸、0.36秒） |
+| `pl-fm-ep` | FMエレクトリックピアノ（暖かめ、0.95秒） |
+| `pl-fm-crystal` | クリスタルFM（非常に明るい、0.68秒） |
+| `pl-harp-open` | 開いたハープ（明るい、1.15秒） |
+| `pl-guitar-mute` | ミュートギター（暗い、極短い） |
+| `pl-koto` | 箏（明るく鋭い、0.68秒） |
+| `pl-kalimba` | カリンバ（金属＋木、短い） |
+| `pl-chime-high` | 高いチャイム（非常に明るい、0.85秒） |
+| `pl-bass-pluck` | ベースプラック（暗い、C3、短い） |
+| `pl-acid-short` | 短いアシッド（レゾで明るいミッド） |
+| `pl-lofi-dust` | ローファイのダスト（暗い、0.72秒） |
+| `pl-ambient-soft` | アンビエントの柔らかいプラック（暗い〜中庸、1.18秒） |
+| `pl-arp-minor` | アルペジオ短3度（中庸、極短い） |
+| `pl-arp-major` | アルペジオ長3度（明るい、極短い） |
+| `pl-stab-fifth` | 中空5度スタブ（中庸、短い） |
+| `pl-stab-major` | 長三和音スタブ（明るい、短い） |
+| `pl-perc-click` | クリックプラック（明るい、0.25秒） |
+| `pl-reverse-swell` | リバーススウェル（中庸、1.75秒。パッドではない） |
+| `pl-clav-funk` | ファンククラビ（ミッド明るい、極短い） |
 
-データは `presets/<category>/*.toml`（`bass` / `bd` / `sd` / `ld` / `fx` / `perc` / `drone` / `pad-fresh` / `pad-sparkle`）。`bs-*` は `presets/bass/`、`pc-*` は `presets/perc/`、`dr-*` は `presets/drone/`、`pf-*` は `presets/pad-fresh/`、`ps-*` は `presets/pad-sparkle/`。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。 `--preset <id>` の ID はファイル名のまま（フォルダ名は含まない）。
+データは `presets/<category>/*.toml`（`bass` / `bd` / `sd` / `ld` / `fx` / `perc` / `drone` / `pad-fresh` / `pad-sparkle` / `pluck`）。`bs-*` は `presets/bass/`、`pc-*` は `presets/perc/`、`dr-*` は `presets/drone/`、`pf-*` は `presets/pad-fresh/`、`ps-*` は `presets/pad-sparkle/`、`pl-*` は `presets/pluck/`。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。 `--preset <id>` の ID はファイル名のまま（フォルダ名は含まない）。
 
 ## プリセットの足し方
 
@@ -554,8 +586,8 @@ cargo run -- render --preset-file presets/ld/my-shot.toml --output dist/my-shot.
 
 工場バンクに入れるなら:
 
-- ファイルを `presets/<category>/<id>.toml` に置く（`bass` / `bd` / `sd` / `ld` / `fx` / `perc` / `drone` / `pad-fresh` / `pad-sparkle`）
-- `src/preset.rs` の `FACTORY` に `factory_entry!("<category>", "<id>")` を足す（例: `factory_entry!("pad-fresh", "pf-morning")` / `factory_entry!("pad-sparkle", "ps-crystal")`）
+- ファイルを `presets/<category>/<id>.toml` に置く（`bass` / `bd` / `sd` / `ld` / `fx` / `perc` / `drone` / `pad-fresh` / `pad-sparkle` / `pluck`）
+- `src/preset.rs` の `FACTORY` に `factory_entry!("<category>", "<id>")` を足す（例: `factory_entry!("pluck", "pl-house-dry")` / `factory_entry!("pad-sparkle", "ps-crystal")`）
 
 主なキー:
 
@@ -635,4 +667,4 @@ write_wav(
 cargo test
 ```
 
-エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`ld-*` リードと `fx-*` FXがそれぞれちょうど50個で非無音、`bs-*` ベースがちょうど15個で非無音、`pc-*` パーカッションがちょうど50個で非無音、`dr-*` ドローンがちょうど50個で非無音、`pf-*` 爽やかパッドと `ps-*` キラキラパッドがそれぞれちょうど30個で非無音、`presets/ld/` の既定レンダーが約8秒（120 BPM の4小節）で末尾0.5秒が無音でないこと、`dr-*` / `pf-*` / `ps-*` の既定レンダーが約16秒（120 BPM の8小節）で末尾1秒と t=14秒が無音でないこと、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。
+エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`ld-*` リードと `fx-*` FXがそれぞれちょうど50個で非無音、`bs-*` ベースがちょうど15個で非無音、`pc-*` パーカッションがちょうど50個で非無音、`dr-*` ドローンがちょうど50個で非無音、`pf-*` 爽やかパッドと `ps-*` キラキラパッドがそれぞれちょうど30個で非無音、`pl-*` プラックがちょうど30個で非無音かつ短い（既定は2秒未満。`pl-reverse-swell` だけ例外）、`presets/ld/` の既定レンダーが約8秒（120 BPM の4小節）で末尾0.5秒が無音でないこと、`dr-*` / `pf-*` / `ps-*` の既定レンダーが約16秒（120 BPM の8小節）で末尾1秒と t=14秒が無音でないこと、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。

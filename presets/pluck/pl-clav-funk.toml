@@ -1,0 +1,63 @@
+name = "clav funk pluck"
+description = "ファンククラビ。ミッド明るく鼻にかかったBP。極短い（0.28秒）。パルス＋ソー。"
+algorithm = 5
+feedback = 0.14
+feedback_op = 4
+gain = 1.06
+default_note = 60
+default_duration = 0.28
+
+[filter]
+type = "bandpass"
+cutoff = 1380.0
+resonance = 0.36
+env_amount = 1.2
+attack = 0.0004
+decay = 0.06
+sustain = 0.0
+release = 0.04
+
+# クラビ胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.0005
+decay = 0.08
+sustain = 0.0
+release = 0.04
+vel_sens = 0.45
+waveform = "pulse"
+
+[[operators]]
+ratio = 2.0
+detune_cents = 3
+level = 0.3
+attack = 0.0003
+decay = 0.025
+sustain = 0.0
+release = 0.012
+vel_sens = 0.5
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 5
+level = 0.55
+attack = 0.0006
+decay = 0.07
+sustain = 0.0
+release = 0.035
+vel_sens = 0.4
+waveform = "saw"
+
+[[operators]]
+ratio = 6.0
+detune_cents = 0
+level = 0.12
+attack = 0.0002
+decay = 0.012
+sustain = 0.0
+release = 0.008
+vel_sens = 0.55
+waveform = "sine"

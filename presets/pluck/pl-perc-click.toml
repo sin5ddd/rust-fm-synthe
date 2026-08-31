@@ -1,0 +1,63 @@
+name = "perc click pluck"
+description = "パーカッション寄りのクリックプラック。明るく極短い（0.25秒）。パルス＋HP。"
+algorithm = 3
+feedback = 0.18
+feedback_op = 4
+gain = 1.1
+default_note = 72
+default_duration = 0.25
+
+[filter]
+type = "highpass"
+cutoff = 1400.0
+resonance = 0.16
+env_amount = 0.8
+attack = 0.0002
+decay = 0.04
+sustain = 0.0
+release = 0.03
+
+# クリック胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.7
+attack = 0.0003
+decay = 0.05
+sustain = 0.0
+release = 0.03
+vel_sens = 0.5
+waveform = "pulse"
+
+[[operators]]
+ratio = 8.0
+detune_cents = 0
+level = 0.35
+attack = 0.0002
+decay = 0.012
+sustain = 0.0
+release = 0.008
+vel_sens = 0.6
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.2
+attack = 0.0002
+decay = 0.018
+sustain = 0.0
+release = 0.01
+vel_sens = 0.52
+waveform = "saw"
+
+[[operators]]
+ratio = 12.0
+detune_cents = 0
+level = 0.16
+attack = 0.00015
+decay = 0.008
+sustain = 0.0
+release = 0.006
+vel_sens = 0.62
+waveform = "half-sine"

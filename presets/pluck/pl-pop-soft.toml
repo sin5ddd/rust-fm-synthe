@@ -1,0 +1,63 @@
+name = "pop soft pluck"
+description = "ポップ。柔らかく中庸の明るさ。中短（0.62秒）。サイン重ね。"
+algorithm = 7
+feedback = 0.05
+feedback_op = 4
+gain = 1.0
+default_note = 62
+default_duration = 0.62
+
+[filter]
+type = "lowpass"
+cutoff = 1500.0
+resonance = 0.12
+env_amount = 1.4
+attack = 0.003
+decay = 0.22
+sustain = 0.05
+release = 0.1
+
+# 柔らかい胴
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.0025
+decay = 0.28
+sustain = 0.04
+release = 0.1
+vel_sens = 0.32
+waveform = "sine"
+
+[[operators]]
+ratio = 2.0
+detune_cents = 2
+level = 0.18
+attack = 0.0015
+decay = 0.12
+sustain = 0.0
+release = 0.05
+vel_sens = 0.4
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 5
+level = 0.42
+attack = 0.002
+decay = 0.24
+sustain = 0.03
+release = 0.09
+vel_sens = 0.3
+waveform = "sine"
+
+[[operators]]
+ratio = 3.0
+detune_cents = -2
+level = 0.08
+attack = 0.0008
+decay = 0.06
+sustain = 0.0
+release = 0.03
+vel_sens = 0.45
+waveform = "sine"

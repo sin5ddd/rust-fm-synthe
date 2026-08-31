@@ -1,0 +1,72 @@
+name = "reverse swell pluck"
+description = "リバーススウェル。中庸の明るさ。唯一やや長いプラック（1.75秒）。遅いアタックのあと消える。"
+algorithm = 5
+feedback = 0.12
+feedback_op = 4
+gain = 0.98
+default_note = 60
+default_duration = 1.75
+
+[pitch]
+start_semitones = -6.0
+end_semitones = 0.0
+curve = -0.5
+
+[mod_sweep]
+start = 0.5
+end = 1.15
+
+[filter]
+type = "lowpass"
+cutoff = 380.0
+resonance = 0.2
+env_amount = 3.0
+attack = 0.14
+decay = 0.35
+sustain = 0.0
+release = 0.12
+
+# スウェル胴
+[[operators]]
+ratio = 1.0
+detune_cents = -3
+level = 1.0
+attack = 0.12
+decay = 0.4
+sustain = 0.0
+release = 0.12
+vel_sens = 0.24
+waveform = "saw"
+
+[[operators]]
+ratio = 2.0
+detune_cents = 4
+level = 0.2
+attack = 0.1
+decay = 0.22
+sustain = 0.0
+release = 0.08
+vel_sens = 0.3
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 6
+level = 0.68
+attack = 0.14
+decay = 0.36
+sustain = 0.0
+release = 0.11
+vel_sens = 0.22
+waveform = "sine"
+
+[[operators]]
+ratio = 3.0
+detune_cents = 0
+level = 0.14
+attack = 0.08
+decay = 0.16
+sustain = 0.0
+release = 0.06
+vel_sens = 0.35
+waveform = "abs-sine"

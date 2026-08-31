@@ -8,7 +8,7 @@ use std::path::{Path, PathBuf};
 
 /// Factory bank, embedded so `cargo run` works without the presets/ directory.
 /// Disk layout is `presets/<category>/<id>.toml`
-/// (bass, bd, sd, ld, fx, perc, drone, pad-fresh, pad-sparkle).
+/// (bass, bd, sd, ld, fx, perc, drone, pad-fresh, pad-sparkle, pluck).
 macro_rules! factory_entry {
     ($dir:literal, $id:literal) => {
         (
@@ -350,6 +350,36 @@ const FACTORY: &[(&str, &str)] = &[
     factory_entry!("pad-sparkle", "ps-shine-fifth"),
     factory_entry!("pad-sparkle", "ps-ice-choir"),
     factory_entry!("pad-sparkle", "ps-quartz"),
+    factory_entry!("pluck", "pl-house-dry"),
+    factory_entry!("pluck", "pl-house-bright"),
+    factory_entry!("pluck", "pl-future-glass"),
+    factory_entry!("pluck", "pl-dnb-tight"),
+    factory_entry!("pluck", "pl-dnb-neuro"),
+    factory_entry!("pluck", "pl-pop-soft"),
+    factory_entry!("pluck", "pl-pop-nylon"),
+    factory_entry!("pluck", "pl-mallet-marimba"),
+    factory_entry!("pluck", "pl-mallet-bell"),
+    factory_entry!("pluck", "pl-musicbox"),
+    factory_entry!("pluck", "pl-trance-gate"),
+    factory_entry!("pluck", "pl-supersaw-short"),
+    factory_entry!("pluck", "pl-fm-ep"),
+    factory_entry!("pluck", "pl-fm-crystal"),
+    factory_entry!("pluck", "pl-harp-open"),
+    factory_entry!("pluck", "pl-guitar-mute"),
+    factory_entry!("pluck", "pl-koto"),
+    factory_entry!("pluck", "pl-kalimba"),
+    factory_entry!("pluck", "pl-chime-high"),
+    factory_entry!("pluck", "pl-bass-pluck"),
+    factory_entry!("pluck", "pl-acid-short"),
+    factory_entry!("pluck", "pl-lofi-dust"),
+    factory_entry!("pluck", "pl-ambient-soft"),
+    factory_entry!("pluck", "pl-arp-minor"),
+    factory_entry!("pluck", "pl-arp-major"),
+    factory_entry!("pluck", "pl-stab-fifth"),
+    factory_entry!("pluck", "pl-stab-major"),
+    factory_entry!("pluck", "pl-perc-click"),
+    factory_entry!("pluck", "pl-reverse-swell"),
+    factory_entry!("pluck", "pl-clav-funk"),
 ];
 
 #[derive(Clone, Debug, Deserialize)]
@@ -682,6 +712,7 @@ mod tests {
         assert_eq!(output_preset_id(Some("dr-sine-sub"), None), "dr-sine-sub");
         assert_eq!(output_preset_id(Some("pf-morning"), None), "pf-morning");
         assert_eq!(output_preset_id(Some("ps-crystal"), None), "ps-crystal");
+        assert_eq!(output_preset_id(Some("pl-house-dry"), None), "pl-house-dry");
     }
 
     #[test]
@@ -858,6 +889,57 @@ mod tests {
                 (48..=72).contains(&p.default_note),
                 "{id} default_note {} must be MIDI 48–72 (C3–C5)",
                 p.default_note
+            );
+        }
+    }
+
+    #[test]
+    fn factory_pl_pluck_bank_has_thirty_ids() {
+        let ids: Vec<_> = factory_ids()
+            .into_iter()
+            .filter(|id| id.starts_with("pl-"))
+            .collect();
+        assert_eq!(
+            ids.len(),
+            30,
+            "expected exactly 30 pl-* factory plucks, got {}: {ids:?}",
+            ids.len()
+        );
+        for id in &ids {
+            let p = load_factory(id).expect(id);
+            assert!(
+                (48..=72).contains(&p.default_note),
+                "{id} default_note {} must be MIDI 48–72 (C3–C5)",
+                p.default_note
+            );
+            if *id == "pl-reverse-swell" {
+                assert!(
+                    (1.2..3.0).contains(&p.default_duration),
+                    "{id} reverse swell duration {} should stay a short pluck, not a 16s pad",
+                    p.default_duration
+                );
+            } else {
+                assert!(
+                    p.default_duration < 2.0,
+                    "{id} default_duration {} must be < 2s (one-shot pluck)",
+                    p.default_duration
+                );
+                assert!(
+                    p.default_duration >= 0.2,
+                    "{id} default_duration {} is shorter than a usable pluck",
+                    p.default_duration
+                );
+            }
+            // One-shots: carrier sustain stays low so they die (not held leads).
+            let max_sustain = p
+                .operators
+                .iter()
+                .filter(|op| op.level > 1e-6)
+                .map(|op| op.sustain)
+                .fold(0.0f32, |a, s| a.max(s));
+            assert!(
+                max_sustain <= 0.08,
+                "{id} live-op sustain {max_sustain} is too high for a short pluck"
             );
         }
     }

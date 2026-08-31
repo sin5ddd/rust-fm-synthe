@@ -1,0 +1,66 @@
+name = "supersaw short pluck"
+description = "EDM。厚いスーパーソーで中庸の明るさ。短い（0.36秒）。ユニゾン5本。"
+algorithm = 5
+feedback = 0.03
+feedback_op = 4
+gain = 0.86
+default_note = 55
+default_duration = 0.36
+
+[filter]
+type = "highpass"
+cutoff = 190.0
+resonance = 0.1
+env_amount = 0.5
+attack = 0.001
+decay = 0.1
+sustain = 0.0
+release = 0.06
+
+[[operators]]
+ratio = 1.0
+detune_cents = -4
+level = 1.0
+attack = 0.003
+decay = 0.12
+sustain = 0.0
+release = 0.05
+vel_sens = 0.32
+waveform = "super-saw"
+unison = 5
+unison_detune = 18.0
+
+[[operators]]
+ratio = 2.0
+detune_cents = 3
+level = 0.08
+attack = 0.001
+decay = 0.04
+sustain = 0.0
+release = 0.02
+vel_sens = 0.4
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 9
+level = 0.7
+attack = 0.0035
+decay = 0.1
+sustain = 0.0
+release = 0.05
+vel_sens = 0.3
+waveform = "super-saw"
+unison = 5
+unison_detune = 22.0
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.0
+attack = 0.001
+decay = 0.04
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+waveform = "sine"

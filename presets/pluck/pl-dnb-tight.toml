@@ -1,0 +1,63 @@
+name = "dnb tight pluck"
+description = "DnB。タイトでミッド寄りの明るさ。極短い（0.26秒）。パルス＋速いBP。"
+algorithm = 3
+feedback = 0.2
+feedback_op = 4
+gain = 1.08
+default_note = 53
+default_duration = 0.26
+
+[filter]
+type = "bandpass"
+cutoff = 880.0
+resonance = 0.28
+env_amount = 1.4
+attack = 0.0004
+decay = 0.055
+sustain = 0.0
+release = 0.04
+
+# タイトな胴
+[[operators]]
+ratio = 1.0
+detune_cents = -2
+level = 1.0
+attack = 0.0004
+decay = 0.07
+sustain = 0.0
+release = 0.04
+vel_sens = 0.48
+waveform = "pulse"
+
+[[operators]]
+ratio = 2.0
+detune_cents = 4
+level = 0.28
+attack = 0.0002
+decay = 0.02
+sustain = 0.0
+release = 0.01
+vel_sens = 0.52
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 3
+level = 0.22
+attack = 0.0003
+decay = 0.05
+sustain = 0.0
+release = 0.03
+vel_sens = 0.4
+waveform = "saw"
+
+[[operators]]
+ratio = 5.0
+detune_cents = 0
+level = 0.14
+attack = 0.0002
+decay = 0.012
+sustain = 0.0
+release = 0.008
+vel_sens = 0.58
+waveform = "half-sine"

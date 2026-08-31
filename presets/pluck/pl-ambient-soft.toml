@@ -1,0 +1,63 @@
+name = "ambient soft pluck"
+description = "アンビエント。柔らかく暗い〜中庸。やや長いワンショット（1.18秒）。サステインほぼなし。"
+algorithm = 7
+feedback = 0.06
+feedback_op = 4
+gain = 0.96
+default_note = 60
+default_duration = 1.18
+
+[filter]
+type = "lowpass"
+cutoff = 780.0
+resonance = 0.1
+env_amount = 1.1
+attack = 0.012
+decay = 0.55
+sustain = 0.02
+release = 0.16
+
+# 柔らかい空気
+[[operators]]
+ratio = 1.0
+detune_cents = -2
+level = 1.0
+attack = 0.01
+decay = 0.65
+sustain = 0.02
+release = 0.16
+vel_sens = 0.24
+waveform = "sine"
+
+[[operators]]
+ratio = 2.0
+detune_cents = 3
+level = 0.14
+attack = 0.008
+decay = 0.35
+sustain = 0.0
+release = 0.1
+vel_sens = 0.28
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+detune_cents = 6
+level = 0.4
+attack = 0.012
+decay = 0.55
+sustain = 0.02
+release = 0.14
+vel_sens = 0.22
+waveform = "sine"
+
+[[operators]]
+ratio = 3.0
+detune_cents = 0
+level = 0.06
+attack = 0.004
+decay = 0.16
+sustain = 0.0
+release = 0.06
+vel_sens = 0.32
+waveform = "sine"
