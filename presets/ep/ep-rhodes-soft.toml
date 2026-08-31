@@ -1,0 +1,66 @@
+name = "ep-rhodes-soft"
+description = "柔らかいRhodes。アタックでタイン（比2＝約262 Hz、比3＝約392 Hz）が立ち、減衰してサイン寄りの胴（比1＝約131 Hz）へ。C3。約3.2秒。ベル（3.5）ではない。"
+algorithm = 7
+feedback = 0.06
+feedback_op = 4
+gain = 1.05
+default_note = 48
+default_duration = 3.2
+
+[filter]
+type = "lowpass"
+cutoff = 4200.0
+resonance = 0.1
+env_amount = 0.7
+attack = 0.001
+decay = 0.45
+sustain = 0.22
+release = 0.4
+
+# OP1 キャリア: 胴（比1）。サステイン中庸、リリース長め。
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.003
+decay = 1.5
+sustain = 0.4
+release = 0.55
+vel_sens = 0.32
+waveform = "sine"
+
+# OP2 キャリア: タイン 2×（オクターブ）。短い減衰、サステイン0。
+[[operators]]
+ratio = 2.0
+detune_cents = 2
+level = 0.5
+attack = 0.0004
+decay = 0.26
+sustain = 0.0
+release = 0.14
+vel_sens = 0.42
+waveform = "sine"
+
+# OP3 キャリア: タイン 3×（1oct+5度）。OP4で指数減衰のFM。
+[[operators]]
+ratio = 3.0
+detune_cents = -1
+level = 0.38
+attack = 0.0005
+decay = 0.22
+sustain = 0.0
+release = 0.12
+vel_sens = 0.4
+waveform = "sine"
+
+# OP4 モジュレータ: 比1、サステイン0。指数が落ちると胴だけ残る。
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.42
+attack = 0.0003
+decay = 0.14
+sustain = 0.0
+release = 0.06
+vel_sens = 0.38
+waveform = "sine"

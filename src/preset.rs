@@ -8,7 +8,7 @@ use std::path::{Path, PathBuf};
 
 /// Factory bank, embedded so `cargo run` works without the presets/ directory.
 /// Disk layout is `presets/<category>/<id>.toml`
-/// (bass, bd, sd, ld, fx, perc, drone, pad-fresh, pad-sparkle, pluck).
+/// (bass, bd, sd, ld, fx, perc, drone, pad-fresh, pad-sparkle, pluck, ep).
 macro_rules! factory_entry {
     ($dir:literal, $id:literal) => {
         (
@@ -380,6 +380,11 @@ const FACTORY: &[(&str, &str)] = &[
     factory_entry!("pluck", "pl-perc-click"),
     factory_entry!("pluck", "pl-reverse-swell"),
     factory_entry!("pluck", "pl-clav-funk"),
+    factory_entry!("ep", "ep-rhodes-soft"),
+    factory_entry!("ep", "ep-rhodes-hard"),
+    factory_entry!("ep", "ep-wurli"),
+    factory_entry!("ep", "ep-tine-bell"),
+    factory_entry!("ep", "ep-muted"),
 ];
 
 #[derive(Clone, Debug, Deserialize)]
@@ -708,11 +713,18 @@ mod tests {
         assert_eq!(output_preset_id(Some("ld-fm-pluck"), None), "ld-fm-pluck");
         assert_eq!(output_preset_id(Some("fx-rev-cym"), None), "fx-rev-cym");
         assert_eq!(output_preset_id(Some("bs-808-sub"), None), "bs-808-sub");
-        assert_eq!(output_preset_id(Some("pc-hat-closed"), None), "pc-hat-closed");
+        assert_eq!(
+            output_preset_id(Some("pc-hat-closed"), None),
+            "pc-hat-closed"
+        );
         assert_eq!(output_preset_id(Some("dr-sine-sub"), None), "dr-sine-sub");
         assert_eq!(output_preset_id(Some("pf-morning"), None), "pf-morning");
         assert_eq!(output_preset_id(Some("ps-crystal"), None), "ps-crystal");
         assert_eq!(output_preset_id(Some("pl-house-dry"), None), "pl-house-dry");
+        assert_eq!(
+            output_preset_id(Some("ep-rhodes-soft"), None),
+            "ep-rhodes-soft"
+        );
     }
 
     #[test]
@@ -942,6 +954,68 @@ mod tests {
                 "{id} live-op sustain {max_sustain} is too high for a short pluck"
             );
         }
+    }
+
+    #[test]
+    fn factory_ep_bank_has_five_ids() {
+        let ids: Vec<_> = factory_ids()
+            .into_iter()
+            .filter(|id| id.starts_with("ep-"))
+            .collect();
+        assert_eq!(
+            ids.len(),
+            5,
+            "expected exactly 5 ep-* factory EPs, got {}: {ids:?}",
+            ids.len()
+        );
+        for expected in [
+            "ep-rhodes-soft",
+            "ep-rhodes-hard",
+            "ep-wurli",
+            "ep-tine-bell",
+            "ep-muted",
+        ] {
+            assert!(ids.contains(&expected), "missing {expected} in {ids:?}");
+        }
+        for id in &ids {
+            let p = load_factory(id).expect(id);
+            assert_eq!(
+                p.default_note, 48,
+                "{id} default_note {} must be MIDI 48 (C3)",
+                p.default_note
+            );
+            assert!(
+                p.default_duration > 1.2,
+                "{id} default_duration {} must be > 1.2s (not a click)",
+                p.default_duration
+            );
+            // No baked minor third (6:5). 3× tine is a twelfth, C–E–G-friendly.
+            assert!(
+                p.operators
+                    .iter()
+                    .all(|op| op.level < 1e-6 || (op.ratio - 1.2).abs() > 0.02),
+                "{id} must not bake a 6:5 / minor-third ratio"
+            );
+            assert!(
+                p.operators
+                    .iter()
+                    .all(|op| op.level < 1e-6 || (op.ratio - 3.5).abs() > 0.05),
+                "{id} must not use inharmonic 3.5 (bell, not EP)"
+            );
+        }
+        let soft = load_factory("ep-rhodes-soft").unwrap();
+        assert!(
+            (2.5..=4.0).contains(&soft.default_duration),
+            "ep-rhodes-soft duration {} should be ~2.5–4s",
+            soft.default_duration
+        );
+        let wurli = load_factory("ep-wurli").unwrap();
+        assert!(
+            wurli.default_duration < soft.default_duration,
+            "ep-wurli {} should be shorter than rhodes-soft {}",
+            wurli.default_duration,
+            soft.default_duration
+        );
     }
 
     #[test]

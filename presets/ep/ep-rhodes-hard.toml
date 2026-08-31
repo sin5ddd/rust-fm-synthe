@@ -1,0 +1,66 @@
+name = "ep-rhodes-hard"
+description = "硬いRhodes。同じ1×胴＋2×/3×タインだがFM指数とベロ感を上げた咬み。C–E–G向き（短3度の比は入れない）。C3。約2.8秒。"
+algorithm = 5
+feedback = 0.1
+feedback_op = 4
+gain = 1.08
+default_note = 48
+default_duration = 2.8
+
+[filter]
+type = "lowpass"
+cutoff = 5600.0
+resonance = 0.12
+env_amount = 1.1
+attack = 0.0008
+decay = 0.32
+sustain = 0.18
+release = 0.35
+
+# OP1 キャリア: 胴（比1）。2+2の片側。
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.002
+decay = 1.15
+sustain = 0.34
+release = 0.48
+vel_sens = 0.55
+waveform = "sine"
+
+# OP2 モジュレータ: 比2、高い指数、短い減衰 → アタックの3×（1+2）。
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.78
+attack = 0.0003
+decay = 0.11
+sustain = 0.0
+release = 0.05
+vel_sens = 0.68
+waveform = "sine"
+
+# OP3 キャリア: タイン 2×（聞こえるオクターブ）。
+[[operators]]
+ratio = 2.0
+detune_cents = 3
+level = 0.58
+attack = 0.0004
+decay = 0.3
+sustain = 0.03
+release = 0.22
+vel_sens = 0.62
+waveform = "sine"
+
+# OP4 モジュレータ: 比1で2×キャリアを歪ませ、3×も足す（2±1）。
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.55
+attack = 0.0002
+decay = 0.09
+sustain = 0.0
+release = 0.04
+vel_sens = 0.6
+waveform = "sine"

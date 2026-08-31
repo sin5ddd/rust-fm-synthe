@@ -1,0 +1,66 @@
+name = "ep-muted"
+description = "ミュート／ラウンジEP。LPで暗く、タインは控えめだがアタックに2×/3×は残す。C3。約3.0秒。"
+algorithm = 7
+feedback = 0.04
+feedback_op = 4
+gain = 1.0
+default_note = 48
+default_duration = 3.0
+
+[filter]
+type = "lowpass"
+cutoff = 980.0
+resonance = 0.14
+env_amount = 1.0
+attack = 0.002
+decay = 0.4
+sustain = 0.2
+release = 0.5
+
+# OP1 キャリア: 暗い胴。
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 1.0
+attack = 0.004
+decay = 1.6
+sustain = 0.42
+release = 0.65
+vel_sens = 0.28
+waveform = "sine"
+
+# OP2 キャリア: 弱いタイン 2×。
+[[operators]]
+ratio = 2.0
+detune_cents = 1
+level = 0.22
+attack = 0.0006
+decay = 0.18
+sustain = 0.0
+release = 0.1
+vel_sens = 0.34
+waveform = "sine"
+
+# OP3 キャリア: 胴の重ね。OP4で薄い3×。
+[[operators]]
+ratio = 1.0
+detune_cents = 3
+level = 0.62
+attack = 0.005
+decay = 1.4
+sustain = 0.38
+release = 0.58
+vel_sens = 0.26
+waveform = "sine"
+
+# OP4 モジュレータ: 比2、低い指数 → アタックだけ3×。
+[[operators]]
+ratio = 2.0
+detune_cents = 0
+level = 0.3
+attack = 0.0004
+decay = 0.12
+sustain = 0.0
+release = 0.05
+vel_sens = 0.32
+waveform = "sine"

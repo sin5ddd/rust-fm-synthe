@@ -303,10 +303,7 @@ fn factory_ld_folder_holds_four_bars_at_120bpm() {
             buf.len(),
             expected
         );
-        assert!(
-            buf.len() >= tail_n,
-            "{id} buffer shorter than tail window"
-        );
+        assert!(buf.len() >= tail_n, "{id} buffer shorter than tail window");
 
         let tail = &buf[buf.len() - tail_n..];
         let tail_rms = rms(tail);
@@ -529,10 +526,7 @@ fn factory_dr_drones_hold_eight_bars_at_120bpm() {
             buf.len(),
             expected
         );
-        assert!(
-            buf.len() >= tail_n,
-            "{id} buffer shorter than tail window"
-        );
+        assert!(buf.len() >= tail_n, "{id} buffer shorter than tail window");
 
         let tail = &buf[buf.len() - tail_n..];
         let tail_rms = rms(tail);
@@ -676,10 +670,7 @@ fn factory_pf_ps_pads_hold_eight_bars_at_120bpm() {
             buf.len(),
             expected
         );
-        assert!(
-            buf.len() >= tail_n,
-            "{id} buffer shorter than tail window"
-        );
+        assert!(buf.len() >= tail_n, "{id} buffer shorter than tail window");
 
         let tail = &buf[buf.len() - tail_n..];
         let tail_rms = rms(tail);
@@ -757,6 +748,68 @@ fn factory_pl_plucks_are_thirty_and_audible() {
             buf.iter().any(|&s| s.abs() > 1e-3),
             "{id} effectively silent"
         );
+    }
+}
+
+#[test]
+fn factory_ep_bank_is_five_and_audible() {
+    let ids: Vec<_> = factory_ids()
+        .into_iter()
+        .filter(|id| id.starts_with("ep-"))
+        .collect();
+    assert_eq!(
+        ids.len(),
+        5,
+        "expected exactly 5 ep-* factory EPs, got {}: {ids:?}",
+        ids.len()
+    );
+
+    for id in ids {
+        let preset = load_factory(id).unwrap();
+        assert_eq!(
+            preset.default_note, 48,
+            "{id} default_note {} must be MIDI 48 (C3)",
+            preset.default_note
+        );
+        assert!(
+            preset.default_duration > 1.2,
+            "{id} default_duration {} must be > 1.2s (not a click)",
+            preset.default_duration
+        );
+
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: 22_050,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+        assert!(
+            rms(&buf) > 0.01,
+            "ep `{id}` rendered near-silence (rms={})",
+            rms(&buf)
+        );
+        assert!(peak(&buf) > 0.4, "ep `{id}` peak {} too low", peak(&buf));
+        assert!(
+            buf.iter().any(|&s| s.abs() > 1e-3),
+            "{id} effectively silent"
+        );
+
+        // Still ringing past 1.2s — not a 200ms pluck that dies into silence.
+        let sr = 22_050usize;
+        let t12 = ((1.2 * sr as f64).round() as usize).min(buf.len().saturating_sub(1));
+        let tail = &buf[t12.min(buf.len())..];
+        if !tail.is_empty() {
+            assert!(
+                rms(tail) > 0.005,
+                "{id} died before 1.2s (tail rms={})",
+                rms(tail)
+            );
+        }
     }
 }
 
@@ -1239,5 +1292,72 @@ fn cp_house_has_1khz_body_without_sub() {
     assert!(
         air > mid * 0.15,
         "cp-house high slap disappeared (mid={mid}, air={air})"
+    );
+}
+
+#[test]
+fn ep_rhodes_soft_attack_has_tine_2x_3x_unlike_sine() {
+    let preset = load_factory("ep-rhodes-soft").unwrap();
+    assert_eq!(preset.default_note, 48, "MIDI 48 = C3 ≈ 130.8 Hz");
+    let sr = 48_000u32;
+    let f0 = midi_to_hz(48) as f32;
+    assert!((f0 - 130.81).abs() < 0.05);
+    let buf = render(
+        &preset,
+        &RenderParams {
+            frequency_hz: f64::from(f0),
+            duration_secs: preset.default_duration,
+            velocity: 0.9,
+            sample_rate: sr,
+        },
+    )
+    .unwrap();
+    assert!(buf.iter().all(|s| s.is_finite()), "NaN/Inf");
+    assert!(rms(&buf) > 0.01, "near-silence (rms={})", rms(&buf));
+
+    // Attack window: tines (2× / 3×) live here, then decay toward the body.
+    let start = (sr as usize) / 200;
+    let end = ((sr as usize) / 8).min(buf.len());
+    assert!(end > start + 64, "not enough attack to measure");
+    let attack = hann_window(&buf[start..end]);
+
+    let fund = goertzel_power(&attack, sr as f32, f0);
+    let h2 = goertzel_power(&attack, sr as f32, f0 * 2.0);
+    let h3 = goertzel_power(&attack, sr as f32, f0 * 3.0);
+    let bell = goertzel_power(&attack, sr as f32, f0 * 3.5);
+
+    let sine: Vec<f32> = (0..attack.len())
+        .map(|i| {
+            let t = i as f32 / sr as f32;
+            (std::f32::consts::TAU * f0 * t).sin()
+        })
+        .collect();
+    let sine_w = hann_window(&sine);
+    let sine_h2 = goertzel_power(&sine_w, sr as f32, f0 * 2.0);
+    let sine_h3 = goertzel_power(&sine_w, sr as f32, f0 * 3.0);
+
+    assert!(
+        fund > 0.0 && h2 > 0.0 && h3 > 0.0,
+        "missing 1×/2×/3× on attack (1×={fund}, 2×={h2}, 3×={h3})"
+    );
+    assert!(
+        h2 > sine_h2 * 20.0,
+        "2× tine (~262 Hz) no stronger than a pure sine (h2={h2}, sine={sine_h2})"
+    );
+    assert!(
+        h3 > sine_h3 * 20.0,
+        "3× tine (~392 Hz) no stronger than a pure sine (h3={h3}, sine={sine_h3})"
+    );
+    assert!(
+        h2 > fund * 0.08,
+        "2× tine too weak vs body on attack (h2={h2}, fund={fund})"
+    );
+    assert!(
+        h3 > fund * 0.05,
+        "3× tine too weak vs body on attack (h3={h3}, fund={fund})"
+    );
+    assert!(
+        h2 > bell && h3 > bell,
+        "inharmonic 3.5× bell partial beat the tines (h2={h2}, h3={h3}, bell={bell})"
     );
 }
