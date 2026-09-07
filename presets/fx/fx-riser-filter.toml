@@ -1,7 +1,7 @@
 name = "fx-riser-filter"
 description = "フィルタ開放のライザー。ピッチは控えめ、カットオフが主役。"
 algorithm = 2
-feedback = 0.8
+feedback = 0.36
 feedback_op = 4
 gain = 0.96
 default_note = 60
@@ -28,6 +28,25 @@ env_amount = 6.0
 attack = 2.0
 decay = 0.25
 sustain = 0.72
+release = 0.14
+
+[noise]
+type = "white"
+level = 0.78
+attack = 0.08
+decay = 2.0
+sustain = 0.38
+release = 0.2
+vel_sens = 0.2
+
+[noise.filter]
+type = "lowpass"
+cutoff = 180.0
+resonance = 0.2
+env_amount = 5.4
+attack = 1.95
+decay = 0.24
+sustain = 0.7
 release = 0.14
 
 [[operators]]

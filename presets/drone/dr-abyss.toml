@@ -1,7 +1,7 @@
 name = "abyss rumble"
-description = "深淵のランブル。0.5正弦に薄いパルスの砂。"
+description = "深淵のランブル。0.5正弦に薄いノイズの砂。"
 algorithm = 7
-feedback = 0.36
+feedback = 0.18
 feedback_op = 4
 gain = 0.98
 default_note = 24
@@ -20,6 +20,25 @@ attack = 4.5
 decay = 7.5
 sustain = 0.74
 release = 0.35
+
+[noise]
+type = "brown"
+level = 0.42
+attack = 1.2
+decay = 4.0
+sustain = 0.45
+release = 0.32
+vel_sens = 0.14
+
+[noise.filter]
+type = "lowpass"
+cutoff = 160.0
+resonance = 0.1
+env_amount = 0.4
+attack = 2.0
+decay = 5.0
+sustain = 0.4
+release = 0.3
 
 # OP1
 [[operators]]

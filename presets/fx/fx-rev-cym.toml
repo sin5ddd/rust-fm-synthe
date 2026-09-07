@@ -1,7 +1,7 @@
 name = "fx-rev-cym"
 description = "クラシックなリバースシンバル。暗いノイズからHP/LPが開き、上昇ピッチでクラッシュへ。"
 algorithm = 8
-feedback = 0.88
+feedback = 0.38
 feedback_op = 4
 gain = 1.15
 default_note = 72
@@ -24,6 +24,25 @@ env_amount = 5.4
 attack = 1.9
 decay = 0.25
 sustain = 0.85
+release = 0.12
+
+[noise]
+type = "white"
+level = 1.1
+attack = 0.3
+decay = 0.2
+sustain = 0.72
+release = 0.12
+vel_sens = 0.22
+
+[noise.filter]
+type = "highpass"
+cutoff = 160.0
+resonance = 0.12
+env_amount = 4.2
+attack = 1.85
+decay = 0.22
+sustain = 0.82
 release = 0.12
 
 [[operators]]

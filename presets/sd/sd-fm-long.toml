@@ -1,7 +1,7 @@
 name = "fm long"
 description = "実験的な長いFMスネア。使えるリンとヒスの尾。ドローンにはしない。"
 algorithm = 2
-feedback = 0.44
+feedback = 0.24
 feedback_op = 4
 gain = 0.98
 default_note = 42
@@ -24,6 +24,25 @@ attack = 0.0005
 decay = 0.7
 sustain = 0.18
 release = 0.4
+
+[noise]
+type = "white"
+level = 0.78
+attack = 0.00025
+decay = 0.95
+sustain = 0.0
+release = 0.35
+vel_sens = 0.48
+
+[noise.filter]
+type = "bandpass"
+cutoff = 1600.0
+resonance = 0.16
+env_amount = 0.9
+attack = 0.0003
+decay = 0.55
+sustain = 0.1
+release = 0.3
 
 # OP1 ピッチのある胴
 [[operators]]

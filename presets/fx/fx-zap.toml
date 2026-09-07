@@ -1,7 +1,7 @@
 name = "fx-zap"
 description = "ノイズ寄りの落下ザップ。ld-zap / zap より砂が多く、FX専用。"
 algorithm = 2
-feedback = 0.55
+feedback = 0.28
 feedback_op = 4
 gain = 1.1
 default_note = 76
@@ -25,6 +25,25 @@ attack = 0.0004
 decay = 0.1
 sustain = 0.08
 release = 0.05
+
+[noise]
+type = "white"
+level = 0.8
+attack = 0.0003
+decay = 0.12
+sustain = 0.0
+release = 0.04
+vel_sens = 0.45
+
+[noise.filter]
+type = "highpass"
+cutoff = 900.0
+resonance = 0.12
+env_amount = 0.7
+attack = 0.0003
+decay = 0.08
+sustain = 0.0
+release = 0.04
 
 [[operators]]
 ratio = 1.0

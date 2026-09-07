@@ -1,7 +1,7 @@
 name = "industrial drone"
-description = "工場の低いハム。パルスとソー、フィードバックの砂。"
+description = "工場の低いハム。パルスとソー、ノイズの砂。"
 algorithm = 2
-feedback = 0.48
+feedback = 0.22
 feedback_op = 4
 gain = 0.93
 default_note = 31
@@ -20,6 +20,25 @@ attack = 4.0
 decay = 7.5
 sustain = 0.68
 release = 0.35
+
+[noise]
+type = "pink"
+level = 0.7
+attack = 0.6
+decay = 3.5
+sustain = 0.5
+release = 0.3
+vel_sens = 0.2
+
+[noise.filter]
+type = "lowpass"
+cutoff = 420.0
+resonance = 0.14
+env_amount = 0.6
+attack = 1.5
+decay = 4.0
+sustain = 0.45
+release = 0.28
 
 # OP1
 [[operators]]

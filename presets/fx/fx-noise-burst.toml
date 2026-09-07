@@ -1,63 +1,83 @@
 name = "fx-noise-burst"
 description = "少し長いノイズバースト。フィルやトランジションの砂。"
-algorithm = 2
-feedback = 0.92
-feedback_op = 4
-gain = 1.1
+algorithm = 8
+feedback = 0.14
+feedback_op = 1
+gain = 1.08
 default_note = 67
 default_duration = 0.85
 
 [lfo]
 rate_hz = 18.0
-depth_cents = 40.0
+depth_cents = 18.0
 
 [filter]
 type = "highpass"
-cutoff = 350.0
-resonance = 0.15
-env_amount = 1.2
+cutoff = 900.0
+resonance = 0.1
+env_amount = 0.8
+attack = 0.001
+decay = 0.28
+sustain = 0.08
+release = 0.1
+
+[noise]
+type = "white"
+level = 1.1
+attack = 0.002
+decay = 0.55
+sustain = 0.08
+release = 0.12
+vel_sens = 0.4
+
+[noise.filter]
+type = "highpass"
+cutoff = 1600.0
+resonance = 0.08
+env_amount = 1.0
 attack = 0.001
 decay = 0.25
 sustain = 0.08
 release = 0.1
 
 [[operators]]
-ratio = 12.0
+ratio = 1.0
 detune_cents = -16
-level = 1.0
-attack = 0.002
-decay = 0.42
-sustain = 0.08
-release = 0.12
-vel_sens = 0.4
-waveform = "pulse"
-[[operators]]
-ratio = 8.4
-detune_cents = 20
-level = 0.75
+level = 0.28
 attack = 0.001
-decay = 0.28
-sustain = 0.04
-release = 0.08
-vel_sens = 0.48
-waveform = "pulse"
-[[operators]]
-ratio = 16.6
-detune_cents = -9
-level = 0.58
-attack = 0.0015
-decay = 0.2
+decay = 0.12
 sustain = 0.0
 release = 0.06
+vel_sens = 0.48
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 5200.0
+
+[[operators]]
+ratio = 1.0
+detune_cents = 20
+level = 0.18
+attack = 0.0008
+decay = 0.08
+sustain = 0.0
+release = 0.04
 vel_sens = 0.52
 waveform = "abs-sine"
+freq_mode = "fixed"
+fixed_hz = 7400.0
+
 [[operators]]
-ratio = 19.0
-detune_cents = 14
-level = 0.45
-attack = 0.0008
-decay = 0.5
-sustain = 0.1
-release = 0.14
-vel_sens = 0.42
-waveform = "half-sine"
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"
+
+[[operators]]
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"

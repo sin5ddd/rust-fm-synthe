@@ -26,6 +26,25 @@ decay = 0.18
 sustain = 0.15
 release = 0.12
 
+[noise]
+type = "pink"
+level = 0.38
+attack = 0.002
+decay = 0.22
+sustain = 0.0
+release = 0.1
+vel_sens = 0.3
+
+[noise.filter]
+type = "lowpass"
+cutoff = 1800.0
+resonance = 0.1
+env_amount = 0.3
+attack = 0.002
+decay = 0.14
+sustain = 0.08
+release = 0.08
+
 # OP1 こもった胴
 [[operators]]
 ratio = 1.0

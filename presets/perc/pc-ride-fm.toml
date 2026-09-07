@@ -1,7 +1,7 @@
 name = "fm ride"
 description = "ライド寄りのFM。長いベル＋砂。オープンハットより金属。最大約1.2秒。"
 algorithm = 4
-feedback = 0.4
+feedback = 0.18
 feedback_op = 4
 gain = 1
 default_note = 80
@@ -15,6 +15,25 @@ env_amount = 1.1
 attack = 0.0005
 decay = 0.35
 sustain = 0.12
+release = 0.16
+
+[noise]
+type = "white"
+level = 0.7
+attack = 0.0003
+decay = 0.7
+sustain = 0.0
+release = 0.2
+vel_sens = 0.4
+
+[noise.filter]
+type = "highpass"
+cutoff = 3200.0
+resonance = 0.1
+env_amount = 0.5
+attack = 0.0003
+decay = 0.4
+sustain = 0.08
 release = 0.16
 
 [[operators]]

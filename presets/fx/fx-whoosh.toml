@@ -1,7 +1,7 @@
 name = "fx-whoosh"
 description = "ウーシュ。BPが横切る風切り。"
 algorithm = 7
-feedback = 0.7
+feedback = 0.28
 feedback_op = 4
 gain = 1.05
 default_note = 67
@@ -24,6 +24,25 @@ env_amount = 3.8
 attack = 0.35
 decay = 0.7
 sustain = 0.15
+release = 0.16
+
+[noise]
+type = "white"
+level = 1.08
+attack = 0.04
+decay = 0.85
+sustain = 0.12
+release = 0.16
+vel_sens = 0.22
+
+[noise.filter]
+type = "bandpass"
+cutoff = 450.0
+resonance = 0.28
+env_amount = 3.6
+attack = 0.32
+decay = 0.68
+sustain = 0.14
 release = 0.16
 
 [[operators]]

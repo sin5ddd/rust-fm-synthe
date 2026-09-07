@@ -22,6 +22,25 @@ decay = 0.28
 sustain = 0.2
 release = 0.2
 
+[noise]
+type = "white"
+level = 0.7
+attack = 0.0003
+decay = 0.7
+sustain = 0.0
+release = 0.24
+vel_sens = 0.45
+
+[noise.filter]
+type = "highpass"
+cutoff = 900.0
+resonance = 0.08
+env_amount = 0.4
+attack = 0.0003
+decay = 0.4
+sustain = 0.12
+release = 0.2
+
 # OP1 太い胴
 [[operators]]
 ratio = 1.5

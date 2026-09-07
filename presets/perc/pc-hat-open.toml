@@ -1,66 +1,79 @@
 name = "open hat"
-description = "オープンハット。尾は約1秒。クローズより長いノイズ減衰。"
+description = "オープンハット。ホワイトノイズの長い砂＋スティック粒。尾は約1秒。"
 algorithm = 8
-feedback = 0.9
-feedback_op = 4
-gain = 1.12
+feedback = 0.16
+feedback_op = 1
+gain = 1.1
 default_note = 84
 default_duration = 1.15
 
 [filter]
 type = "highpass"
-cutoff = 4800
-resonance = 0.22
-env_amount = 0.7
+cutoff = 2400.0
+resonance = 0.08
+env_amount = 0.3
 attack = 0.0002
-decay = 0.324
+decay = 0.32
 sustain = 0.04
-release = 0.04
+release = 0.2
+
+[noise]
+type = "white"
+level = 1.08
+attack = 0.0002
+decay = 0.85
+sustain = 0.0
+release = 0.28
+vel_sens = 0.5
+
+[noise.filter]
+type = "bandpass"
+cutoff = 7400.0
+resonance = 0.18
+env_amount = 0.35
+attack = 0.0002
+decay = 0.4
+sustain = 0.04
+release = 0.22
 
 [[operators]]
-ratio = 17.5
-detune_cents = 0
-level = 1
-attack = 0.0002
-decay = 0.72
-sustain = 0
-release = 0.252
+ratio = 1.0
+detune_cents = 0.0
+level = 0.36
+attack = 0.00015
+decay = 0.06
+sustain = 0.0
+release = 0.03
 vel_sens = 0.5
 waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 7200.0
 
 [[operators]]
-ratio = 12.775
-detune_cents = -18
-level = 0.78
-attack = 0.00015
-decay = 0.504
-sustain = 0
-release = 0.2016
+ratio = 1.0
+detune_cents = 11.0
+level = 0.18
+attack = 0.00012
+decay = 0.04
+sustain = 0.0
+release = 0.02
 vel_sens = 0.55
-waveform = "pulse"
-
-[[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.55
-attack = 0.00015
-decay = 0.324
-sustain = 0
-release = 0.03
-vel_sens = 0.6
 waveform = "abs-sine"
 freq_mode = "fixed"
-fixed_hz = 6400
+fixed_hz = 9400.0
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.42
-attack = 0.0001
-decay = 0.2016
-sustain = 0
-release = 0.02
-vel_sens = 0.65
-waveform = "pulse"
-freq_mode = "fixed"
-fixed_hz = 9408
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"
+
+[[operators]]
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"

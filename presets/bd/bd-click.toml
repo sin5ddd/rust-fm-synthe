@@ -22,6 +22,25 @@ decay = 0.04
 sustain = 0.05
 release = 0.04
 
+[noise]
+type = "white"
+level = 0.7
+attack = 0.0001
+decay = 0.028
+sustain = 0.0
+release = 0.016
+vel_sens = 0.6
+
+[noise.filter]
+type = "highpass"
+cutoff = 2200.0
+resonance = 0.14
+env_amount = 0.5
+attack = 0.0001
+decay = 0.02
+sustain = 0.0
+release = 0.012
+
 # OP1 クリックキャリア
 [[operators]]
 ratio = 2.0

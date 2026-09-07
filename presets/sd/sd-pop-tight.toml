@@ -22,6 +22,25 @@ decay = 0.14
 sustain = 0.18
 release = 0.12
 
+[noise]
+type = "white"
+level = 0.78
+attack = 0.0002
+decay = 0.32
+sustain = 0.0
+release = 0.14
+vel_sens = 0.55
+
+[noise.filter]
+type = "highpass"
+cutoff = 1800.0
+resonance = 0.1
+env_amount = 0.6
+attack = 0.0002
+decay = 0.16
+sustain = 0.1
+release = 0.12
+
 # OP1 生ドラム寄りの胴
 [[operators]]
 ratio = 2.0

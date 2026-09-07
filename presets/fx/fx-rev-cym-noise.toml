@@ -1,7 +1,7 @@
 name = "fx-rev-cym-noise"
 description = "ノイズ寄りのリバースシンバル。高FBと高比でホワイトに近い砂。"
 algorithm = 2
-feedback = 0.96
+feedback = 0.22
 feedback_op = 4
 gain = 1.16
 default_note = 67
@@ -28,6 +28,25 @@ env_amount = 3.6
 attack = 1.75
 decay = 0.22
 sustain = 0.8
+release = 0.1
+
+[noise]
+type = "white"
+level = 1.18
+attack = 0.28
+decay = 0.18
+sustain = 0.7
+release = 0.1
+vel_sens = 0.24
+
+[noise.filter]
+type = "bandpass"
+cutoff = 1100.0
+resonance = 0.14
+env_amount = 3.2
+attack = 1.7
+decay = 0.2
+sustain = 0.78
 release = 0.1
 
 [[operators]]

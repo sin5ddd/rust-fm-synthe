@@ -1,7 +1,7 @@
 name = "fx-trans-fill"
 description = "トランジションフィル。ノイズ＋短いピッチ落ち。1拍用。"
 algorithm = 2
-feedback = 0.75
+feedback = 0.3
 feedback_op = 4
 gain = 1.1
 default_note = 60
@@ -24,6 +24,25 @@ env_amount = 1.5
 attack = 0.001
 decay = 0.2
 sustain = 0.1
+release = 0.08
+
+[noise]
+type = "white"
+level = 0.95
+attack = 0.001
+decay = 0.35
+sustain = 0.0
+release = 0.1
+vel_sens = 0.35
+
+[noise.filter]
+type = "highpass"
+cutoff = 500.0
+resonance = 0.12
+env_amount = 1.2
+attack = 0.001
+decay = 0.18
+sustain = 0.08
 release = 0.08
 
 [[operators]]

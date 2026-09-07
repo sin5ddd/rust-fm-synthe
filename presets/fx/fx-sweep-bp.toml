@@ -1,7 +1,7 @@
 name = "fx-sweep-bp"
 description = "バンドパス掃引。カットオフが上へ開くFXスイープ。"
 algorithm = 7
-feedback = 0.35
+feedback = 0.2
 feedback_op = 4
 gain = 1.02
 default_note = 60
@@ -24,6 +24,25 @@ env_amount = 4.6
 attack = 0.15
 decay = 1.1
 sustain = 0.2
+release = 0.16
+
+[noise]
+type = "white"
+level = 0.78
+attack = 0.02
+decay = 1.15
+sustain = 0.22
+release = 0.16
+vel_sens = 0.22
+
+[noise.filter]
+type = "bandpass"
+cutoff = 300.0
+resonance = 0.32
+env_amount = 4.2
+attack = 0.14
+decay = 1.05
+sustain = 0.18
 release = 0.16
 
 [[operators]]

@@ -1,7 +1,7 @@
 name = "frenchcore"
 description = "フレンチコア／ハードコアの割れ。攻撃的なミッド。サブは削って裂けるように。"
 algorithm = 2
-feedback = 0.5
+feedback = 0.26
 feedback_op = 4
 gain = 1.06
 default_note = 45
@@ -25,6 +25,25 @@ attack = 0.0
 decay = 0.08
 sustain = 0.22
 release = 0.1
+
+[noise]
+type = "white"
+level = 0.95
+attack = 0.00012
+decay = 0.36
+sustain = 0.0
+release = 0.16
+vel_sens = 0.62
+
+[noise.filter]
+type = "highpass"
+cutoff = 1400.0
+resonance = 0.12
+env_amount = 0.6
+attack = 0.00012
+decay = 0.14
+sustain = 0.12
+release = 0.12
 
 # OP1 攻撃的ミッド
 [[operators]]

@@ -1,7 +1,7 @@
 name = "guiro scrape"
 description = "ギロの短いスクレイプ。ざらついた一擦り。"
 algorithm = 8
-feedback = 0.86
+feedback = 0.22
 feedback_op = 4
 gain = 1.12
 default_note = 67
@@ -16,6 +16,25 @@ attack = 0.006
 decay = 0.1
 sustain = 0.05
 release = 0.05
+
+[noise]
+type = "white"
+level = 1.02
+attack = 0.006
+decay = 0.16
+sustain = 0.0
+release = 0.05
+vel_sens = 0.42
+
+[noise.filter]
+type = "bandpass"
+cutoff = 1900.0
+resonance = 0.26
+env_amount = 0.7
+attack = 0.006
+decay = 0.1
+sustain = 0.0
+release = 0.04
 
 [[operators]]
 ratio = 8.5

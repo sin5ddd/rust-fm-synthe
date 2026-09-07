@@ -1,7 +1,7 @@
 name = "ld-noisy-bp"
-description = "ノイズ寄りのBPリード。高FBの砂をバンドパスで音符にする。"
+description = "ノイズ寄りのBPリード。砂をバンドパスで音符にする。"
 algorithm = 1
-feedback = 0.72
+feedback = 0.32
 feedback_op = 4
 gain = 0.92
 default_note = 48
@@ -20,6 +20,25 @@ attack = 0.008
 decay = 0.28
 sustain = 0.28
 release = 0.14
+
+[noise]
+type = "pink"
+level = 0.78
+attack = 0.004
+decay = 0.35
+sustain = 0.42
+release = 0.12
+vel_sens = 0.4
+
+[noise.filter]
+type = "bandpass"
+cutoff = 1200.0
+resonance = 0.35
+env_amount = 0.8
+attack = 0.006
+decay = 0.28
+sustain = 0.28
+release = 0.12
 
 # OP1
 [[operators]]

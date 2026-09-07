@@ -1,7 +1,7 @@
 name = "finger snap"
 description = "フィンガースナップ。短いミッドの肉＋ハイのクリック。"
 algorithm = 5
-feedback = 0.55
+feedback = 0.22
 feedback_op = 4
 gain = 1.16
 default_note = 72
@@ -16,6 +16,25 @@ attack = 0.00015
 decay = 0.035
 sustain = 0.05
 release = 0.03
+
+[noise]
+type = "white"
+level = 0.7
+attack = 0.00012
+decay = 0.05
+sustain = 0.0
+release = 0.02
+vel_sens = 0.55
+
+[noise.filter]
+type = "highpass"
+cutoff = 2500.0
+resonance = 0.1
+env_amount = 0.3
+attack = 0.00012
+decay = 0.03
+sustain = 0.0
+release = 0.016
 
 [[operators]]
 ratio = 1

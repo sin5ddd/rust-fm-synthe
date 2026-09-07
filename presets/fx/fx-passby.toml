@@ -1,7 +1,7 @@
 name = "fx-passby"
 description = "通過音。ピッチが落ち、BPが横切るドップラー風。"
 algorithm = 5
-feedback = 0.4
+feedback = 0.22
 feedback_op = 4
 gain = 1.06
 default_note = 60
@@ -23,6 +23,25 @@ resonance = 0.36
 env_amount = 2.6
 attack = 0.15
 decay = 0.65
+sustain = 0.12
+release = 0.14
+
+[noise]
+type = "white"
+level = 0.85
+attack = 0.03
+decay = 0.7
+sustain = 0.1
+release = 0.14
+vel_sens = 0.25
+
+[noise.filter]
+type = "bandpass"
+cutoff = 650.0
+resonance = 0.24
+env_amount = 2.4
+attack = 0.14
+decay = 0.62
 sustain = 0.12
 release = 0.14
 

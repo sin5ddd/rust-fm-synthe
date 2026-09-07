@@ -1,7 +1,7 @@
 name = "fx-whoosh-hp"
 description = "ハイパスのウーシュ。空気だけが横切る。"
 algorithm = 8
-feedback = 0.68
+feedback = 0.24
 feedback_op = 4
 gain = 1.08
 default_note = 80
@@ -20,6 +20,25 @@ env_amount = 2.6
 attack = 0.28
 decay = 0.6
 sustain = 0.12
+release = 0.14
+
+[noise]
+type = "white"
+level = 1.1
+attack = 0.04
+decay = 0.7
+sustain = 0.1
+release = 0.14
+vel_sens = 0.22
+
+[noise.filter]
+type = "highpass"
+cutoff = 1100.0
+resonance = 0.16
+env_amount = 2.2
+attack = 0.26
+decay = 0.55
+sustain = 0.1
 release = 0.14
 
 [[operators]]

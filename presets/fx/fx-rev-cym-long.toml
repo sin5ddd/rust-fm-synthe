@@ -1,7 +1,7 @@
 name = "fx-rev-cym-long"
 description = "長いダークなリバースライド。3.8秒。ビルドの奥で使う。後で切る前提。"
 algorithm = 8
-feedback = 0.86
+feedback = 0.34
 feedback_op = 4
 gain = 1.1
 default_note = 60
@@ -28,6 +28,25 @@ env_amount = 5.8
 attack = 2.9
 decay = 0.35
 sustain = 0.88
+release = 0.15
+
+[noise]
+type = "pink"
+level = 1.08
+attack = 0.4
+decay = 0.28
+sustain = 0.78
+release = 0.16
+vel_sens = 0.18
+
+[noise.filter]
+type = "lowpass"
+cutoff = 280.0
+resonance = 0.1
+env_amount = 4.6
+attack = 2.8
+decay = 0.32
+sustain = 0.86
 release = 0.15
 
 [[operators]]

@@ -1,7 +1,7 @@
 name = "thunder bed"
-description = "雷のベッド。サブ正弦＋高FBの遠雷ノイズ。ワンショットではない。"
+description = "雷のベッド。サブ正弦＋遠雷ノイズ。ワンショットではない。"
 algorithm = 7
-feedback = 0.62
+feedback = 0.24
 feedback_op = 4
 gain = 0.95
 default_note = 24
@@ -20,6 +20,25 @@ attack = 3.0
 decay = 8.0
 sustain = 0.7
 release = 0.35
+
+[noise]
+type = "brown"
+level = 0.82
+attack = 0.8
+decay = 5.0
+sustain = 0.6
+release = 0.32
+vel_sens = 0.16
+
+[noise.filter]
+type = "lowpass"
+cutoff = 180.0
+resonance = 0.14
+env_amount = 0.7
+attack = 1.5
+decay = 5.5
+sustain = 0.52
+release = 0.3
 
 # OP1
 [[operators]]

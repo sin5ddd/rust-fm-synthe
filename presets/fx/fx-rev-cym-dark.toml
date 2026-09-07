@@ -1,7 +1,7 @@
 name = "fx-rev-cym-dark"
 description = "暗いリバースシンバル。胴寄り。ライドの逆再生印象。"
 algorithm = 5
-feedback = 0.78
+feedback = 0.28
 feedback_op = 4
 gain = 1.12
 default_note = 55
@@ -24,6 +24,25 @@ env_amount = 4.8
 attack = 2.2
 decay = 0.3
 sustain = 0.82
+release = 0.14
+
+[noise]
+type = "pink"
+level = 1.12
+attack = 0.34
+decay = 0.24
+sustain = 0.75
+release = 0.14
+vel_sens = 0.2
+
+[noise.filter]
+type = "lowpass"
+cutoff = 420.0
+resonance = 0.12
+env_amount = 3.8
+attack = 2.15
+decay = 0.28
+sustain = 0.8
 release = 0.14
 
 [[operators]]

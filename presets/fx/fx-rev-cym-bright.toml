@@ -1,7 +1,7 @@
 name = "fx-rev-cym-bright"
 description = "短い明るいリバースシンバル。BPが上へ開いてスプラッシュ気味。"
 algorithm = 6
-feedback = 0.8
+feedback = 0.32
 feedback_op = 4
 gain = 1.14
 default_note = 80
@@ -24,6 +24,25 @@ env_amount = 2.8
 attack = 1.15
 decay = 0.18
 sustain = 0.75
+release = 0.08
+
+[noise]
+type = "white"
+level = 1.12
+attack = 0.22
+decay = 0.14
+sustain = 0.62
+release = 0.08
+vel_sens = 0.28
+
+[noise.filter]
+type = "bandpass"
+cutoff = 1800.0
+resonance = 0.22
+env_amount = 2.4
+attack = 1.1
+decay = 0.16
+sustain = 0.72
 release = 0.08
 
 [[operators]]

@@ -22,6 +22,25 @@ decay = 0.12
 sustain = 0.15
 release = 0.1
 
+[noise]
+type = "white"
+level = 0.62
+attack = 0.0002
+decay = 0.06
+sustain = 0.0
+release = 0.03
+vel_sens = 0.5
+
+[noise.filter]
+type = "highpass"
+cutoff = 900.0
+resonance = 0.12
+env_amount = 0.6
+attack = 0.0002
+decay = 0.05
+sustain = 0.0
+release = 0.03
+
 [[operators]]
 ratio = 1.0
 detune_cents = 0

@@ -1,7 +1,7 @@
 name = "tambourine"
 description = "タンバリン。ジングルの金属＋短い皮。ハットよりリンが残る。"
 algorithm = 6
-feedback = 0.42
+feedback = 0.18
 feedback_op = 4
 gain = 1.12
 default_note = 84
@@ -15,6 +15,25 @@ env_amount = 0.9
 attack = 0.0003
 decay = 0.12
 sustain = 0.08
+release = 0.08
+
+[noise]
+type = "white"
+level = 0.72
+attack = 0.0002
+decay = 0.28
+sustain = 0.0
+release = 0.1
+vel_sens = 0.45
+
+[noise.filter]
+type = "highpass"
+cutoff = 2800.0
+resonance = 0.12
+env_amount = 0.5
+attack = 0.0002
+decay = 0.16
+sustain = 0.04
 release = 0.08
 
 [[operators]]

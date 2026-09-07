@@ -1,7 +1,7 @@
 name = "gabber indust"
 description = "ガバ／インダストリアル。金属の踏み込みと歪んだミッド。工場っぽい尾。"
 algorithm = 5
-feedback = 0.55
+feedback = 0.26
 feedback_op = 4
 gain = 1.05
 default_note = 46
@@ -25,6 +25,25 @@ attack = 0.0
 decay = 0.1
 sustain = 0.28
 release = 0.12
+
+[noise]
+type = "white"
+level = 0.9
+attack = 0.00015
+decay = 0.48
+sustain = 0.0
+release = 0.2
+vel_sens = 0.55
+
+[noise.filter]
+type = "bandpass"
+cutoff = 1800.0
+resonance = 0.14
+env_amount = 0.5
+attack = 0.00015
+decay = 0.22
+sustain = 0.14
+release = 0.16
 
 # OP1 歪んだ胴
 [[operators]]

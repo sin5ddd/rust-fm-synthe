@@ -1,7 +1,7 @@
 name = "fm-riser"
 description = "ノイズ寄りのFMライザー。ピッチ上昇と変調量スイープ。ビルドのFX。"
 algorithm = 2
-feedback = 0.92
+feedback = 0.4
 feedback_op = 4
 gain = 0.9
 default_note = 48
@@ -19,6 +19,25 @@ depth_cents = 22.0
 [mod_sweep]
 start = 0.22
 end = 1.55
+
+[noise]
+type = "white"
+level = 0.72
+attack = 0.08
+decay = 2.0
+sustain = 0.32
+release = 0.22
+vel_sens = 0.2
+
+[noise.filter]
+type = "highpass"
+cutoff = 200.0
+resonance = 0.1
+env_amount = 3.8
+attack = 1.8
+decay = 0.22
+sustain = 0.7
+release = 0.18
 
 # OP1 キャリア
 [[operators]]

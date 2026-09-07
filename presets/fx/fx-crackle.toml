@@ -1,63 +1,88 @@
 name = "fx-crackle"
 description = "ビニールクラックルのバースト。短い砂粒。"
 algorithm = 8
-feedback = 0.97
-feedback_op = 4
-gain = 1.18
+feedback = 0.22
+feedback_op = 1
+gain = 1.14
 default_note = 84
 default_duration = 0.45
 
 [lfo]
 rate_hz = 42.0
-depth_cents = 90.0
+depth_cents = 40.0
 
 [filter]
 type = "highpass"
-cutoff = 1200.0
-resonance = 0.12
-env_amount = 0.8
+cutoff = 1800.0
+resonance = 0.08
+env_amount = 0.5
 attack = 0.0003
 decay = 0.08
-sustain = 0.05
+sustain = 0.04
 release = 0.05
 
-[[operators]]
-ratio = 19.0
-detune_cents = 30
-level = 1.0
-attack = 0.0003
-decay = 0.06
-sustain = 0.0
-release = 0.04
-vel_sens = 0.55
-waveform = "pulse"
-[[operators]]
-ratio = 15.0
-detune_cents = -28
-level = 0.8
-attack = 0.0004
-decay = 0.09
+[noise]
+type = "white"
+level = 1.08
+attack = 0.0002
+decay = 0.1
 sustain = 0.0
 release = 0.05
+vel_sens = 0.55
+
+[noise.filter]
+type = "highpass"
+cutoff = 3200.0
+resonance = 0.06
+env_amount = 0.4
+attack = 0.0002
+decay = 0.06
+sustain = 0.03
+release = 0.04
+
+[[operators]]
+ratio = 1.0
+detune_cents = 30
+level = 0.42
+attack = 0.0002
+decay = 0.035
+sustain = 0.0
+release = 0.02
+vel_sens = 0.55
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 7200.0
+
+[[operators]]
+ratio = 1.0
+detune_cents = -28
+level = 0.28
+attack = 0.0003
+decay = 0.05
+sustain = 0.0
+release = 0.025
 vel_sens = 0.5
 waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 9100.0
+
 [[operators]]
-ratio = 23.0
+ratio = 1.0
 detune_cents = 12
-level = 0.5
-attack = 0.0002
-decay = 0.04
+level = 0.16
+attack = 0.00015
+decay = 0.022
 sustain = 0.0
-release = 0.03
+release = 0.014
 vel_sens = 0.62
 waveform = "abs-sine"
+freq_mode = "fixed"
+fixed_hz = 11200.0
+
 [[operators]]
-ratio = 11.0
-detune_cents = -16
-level = 0.4
-attack = 0.0005
-decay = 0.22
+level = 0.0
+attack = 0.0
+decay = 0.01
 sustain = 0.0
-release = 0.08
-vel_sens = 0.45
-waveform = "half-sine"
+release = 0.01
+waveform = "sine"

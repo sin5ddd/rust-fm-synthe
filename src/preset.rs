@@ -1170,11 +1170,6 @@ mod tests {
             !bass.noise.is_active(),
             "old presets must stay silent on the noise bus"
         );
-        let open = load_factory("pc-hat-open").unwrap();
-        assert!(
-            !open.noise.is_active(),
-            "open hats stay on FM hiss until retuned"
-        );
         for id in [
             "pc-hat-closed",
             "pc-hat-house",
@@ -1185,7 +1180,16 @@ mod tests {
             "pc-hat-dark",
             "pc-hat-noise",
             "pc-hat-chip",
+            "pc-hat-open",
+            "pc-hat-dnb-op",
+            "pc-hat-fc-op",
             "cp-house",
+            "pc-clap-dry",
+            "pc-clap-gate",
+            "pc-clap-room",
+            "pc-shaker",
+            "pc-shaker-short",
+            "pc-cabasa",
         ] {
             let p = load_factory(id).unwrap();
             assert!(
@@ -1193,6 +1197,107 @@ mod tests {
                 "{id} should use the parallel noise oscillator"
             );
         }
+    }
+
+    #[test]
+    fn noise_forward_fx_use_the_noise_bus() {
+        for id in [
+            "fx-noise-hit",
+            "fx-noise-burst",
+            "fx-crackle",
+            "fx-rev-cym",
+            "fx-rev-cym-bright",
+            "fx-rev-cym-dark",
+            "fx-rev-cym-long",
+            "fx-rev-cym-noise",
+            "fx-rev-crash",
+            "fx-rev-crash-metal",
+            "fx-rev-hat",
+            "fx-rev-splash",
+            "fx-rev-air",
+            "fx-rev-verb",
+            "fx-riser-noise",
+            "fx-downlifter-noise",
+            "fx-whoosh",
+            "fx-whoosh-hp",
+            "fx-wind",
+            "fx-frenchcore-ns",
+            "fx-trans-fill",
+            "hp-air",
+            "fm-riser",
+            "fx-impact",
+            "fx-impact-dnb",
+            "fx-boom",
+            "fx-zap",
+        ] {
+            let p = load_factory(id).unwrap();
+            assert!(
+                p.noise.is_active(),
+                "{id} should use the parallel noise oscillator"
+            );
+        }
+        let alarm = load_factory("fx-alarm").unwrap();
+        assert!(
+            !alarm.noise.is_active(),
+            "tonal FX such as alarm stay off the noise bus"
+        );
+    }
+
+    #[test]
+    fn noise_forward_drums_use_the_noise_bus() {
+        for id in [
+            "sd-noise-layer",
+            "sd-808-snap",
+            "sd-909-snappy",
+            "sd-gated-80s",
+            "sd-brush-dust",
+            "sd-clap-snare",
+            "sd-house-disco",
+            "sd-pop-tight",
+            "sd-trap-crisp",
+            "sd-dnb-tight",
+            "sd-fat-backbeat",
+            "sd-jungle-round",
+            "sd-piccolo",
+            "sd-frenchcore",
+            "sd-gabber-indust",
+            "sd-neuro-growl",
+            "sd-fm-long",
+            "pc-tamb",
+            "pc-tamb-roll",
+            "pc-ride-fm",
+            "pc-foley-scratch",
+            "pc-guiro",
+            "pc-snap",
+            "pc-snap-lo",
+            "pc-snaps",
+            "pc-tick-indust",
+            "bd-fm-noise",
+            "bd-909-punch",
+            "bd-click",
+            "bd-house-floor",
+            "bd-disco-dry",
+            "bd-lofi-dust",
+            "dr-noisy-bp",
+            "dr-storm",
+            "dr-thunder-bed",
+            "dr-industrial",
+            "dr-abyss",
+            "ld-noisy-bp",
+        ] {
+            let p = load_factory(id).unwrap();
+            assert!(
+                p.noise.is_active(),
+                "{id} should use the parallel noise oscillator"
+            );
+        }
+        let tone = load_factory("sd-tone-layer").unwrap();
+        assert!(
+            !tone.noise.is_active(),
+            "tone-layer snares stay off the noise bus"
+        );
+        let sub = load_factory("bd-sub").unwrap();
+        assert!(!sub.noise.is_active(), "sub kicks stay off the noise bus");
     }
 
     #[test]

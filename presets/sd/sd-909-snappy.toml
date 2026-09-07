@@ -1,7 +1,7 @@
 name = "909 snappy"
 description = "TR-909風スネア。スナップが強く胴もある。ノイズボディに余韻。"
 algorithm = 5
-feedback = 0.36
+feedback = 0.2
 feedback_op = 4
 gain = 1.05
 default_note = 42
@@ -24,6 +24,25 @@ env_amount = 1.4
 attack = 0.0002
 decay = 0.22
 sustain = 0.22
+release = 0.16
+
+[noise]
+type = "white"
+level = 1.02
+attack = 0.00015
+decay = 0.5
+sustain = 0.0
+release = 0.22
+vel_sens = 0.55
+
+[noise.filter]
+type = "bandpass"
+cutoff = 2400.0
+resonance = 0.14
+env_amount = 1.0
+attack = 0.0002
+decay = 0.22
+sustain = 0.18
 release = 0.16
 
 # OP1 胴キャリア

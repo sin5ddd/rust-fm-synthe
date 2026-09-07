@@ -1,64 +1,79 @@
 name = "cabasa"
 description = "カバサ。ざらついた短いスクレイプ。シェイカーより暗く粗い。"
 algorithm = 8
-feedback = 0.93
-feedback_op = 4
-gain = 1.14
+feedback = 0.16
+feedback_op = 1
+gain = 1.1
 default_note = 72
 default_duration = 0.24
 
 [filter]
 type = "bandpass"
-cutoff = 3600
-resonance = 0.32
-env_amount = 0.8
+cutoff = 3200.0
+resonance = 0.22
+env_amount = 0.5
+attack = 0.003
+decay = 0.1
+sustain = 0.04
+release = 0.05
+
+[noise]
+type = "white"
+level = 1.12
+attack = 0.003
+decay = 0.14
+sustain = 0.0
+release = 0.05
+vel_sens = 0.45
+
+[noise.filter]
+type = "bandpass"
+cutoff = 3600.0
+resonance = 0.22
+env_amount = 0.6
 attack = 0.003
 decay = 0.1
 sustain = 0.04
 release = 0.05
 
 [[operators]]
-ratio = 12.4
-detune_cents = 0
-level = 1
-attack = 0.004
-decay = 0.12
-sustain = 0
-release = 0.05
-vel_sens = 0.45
-waveform = "pulse"
-
-[[operators]]
-ratio = 9.7
-detune_cents = 20
-level = 0.75
-attack = 0.006
-decay = 0.14
-sustain = 0
-release = 0.05
-vel_sens = 0.5
-waveform = "abs-sine"
-
-[[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.5
+ratio = 1.0
+detune_cents = 0.0
+level = 0.3
 attack = 0.002
-decay = 0.08
-sustain = 0
-release = 0.04
-vel_sens = 0.55
+decay = 0.035
+sustain = 0.0
+release = 0.018
+vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 2800
+fixed_hz = 2800.0
 
 [[operators]]
-ratio = 15
-detune_cents = -12
-level = 0.4
-attack = 0.003
-decay = 0.16
-sustain = 0
-release = 0.06
-vel_sens = 0.4
-waveform = "pulse"
+ratio = 1.0
+detune_cents = 20.0
+level = 0.16
+attack = 0.004
+decay = 0.028
+sustain = 0.0
+release = 0.014
+vel_sens = 0.55
+waveform = "abs-sine"
+freq_mode = "fixed"
+fixed_hz = 4100.0
+
+[[operators]]
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"
+
+[[operators]]
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"

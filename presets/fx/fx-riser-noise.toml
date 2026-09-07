@@ -1,7 +1,7 @@
 name = "fx-riser-noise"
 description = "ノイズライザー。砂が濃くなりピッチも上がる。3秒超。"
 algorithm = 2
-feedback = 0.94
+feedback = 0.32
 feedback_op = 4
 gain = 0.98
 default_note = 55
@@ -28,6 +28,25 @@ env_amount = 4.2
 attack = 2.4
 decay = 0.28
 sustain = 0.75
+release = 0.14
+
+[noise]
+type = "white"
+level = 1.12
+attack = 0.08
+decay = 2.4
+sustain = 0.4
+release = 0.2
+vel_sens = 0.18
+
+[noise.filter]
+type = "bandpass"
+cutoff = 380.0
+resonance = 0.16
+env_amount = 4.0
+attack = 2.3
+decay = 0.26
+sustain = 0.72
 release = 0.14
 
 [[operators]]

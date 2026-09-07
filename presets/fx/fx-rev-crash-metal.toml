@@ -1,7 +1,7 @@
 name = "fx-rev-crash-metal"
 description = "金属FMのリバースクラッシュ。固定周波数のリンが後半で開く。"
 algorithm = 4
-feedback = 0.62
+feedback = 0.36
 feedback_op = 4
 gain = 1.08
 default_note = 72
@@ -24,6 +24,25 @@ env_amount = 3.4
 attack = 1.6
 decay = 0.22
 sustain = 0.78
+release = 0.1
+
+[noise]
+type = "white"
+level = 0.82
+attack = 0.28
+decay = 0.16
+sustain = 0.65
+release = 0.1
+vel_sens = 0.24
+
+[noise.filter]
+type = "highpass"
+cutoff = 320.0
+resonance = 0.14
+env_amount = 3.0
+attack = 1.55
+decay = 0.2
+sustain = 0.76
 release = 0.1
 
 [[operators]]

@@ -1,7 +1,7 @@
 name = "fx-rev-splash"
 description = "短いリバーススプラッシュ。明るいクラッシュの逆再生。1.5秒。"
 algorithm = 6
-feedback = 0.82
+feedback = 0.3
 feedback_op = 4
 gain = 1.14
 default_note = 84
@@ -24,6 +24,25 @@ env_amount = 1.8
 attack = 0.95
 decay = 0.12
 sustain = 0.65
+release = 0.07
+
+[noise]
+type = "white"
+level = 1.12
+attack = 0.2
+decay = 0.1
+sustain = 0.5
+release = 0.06
+vel_sens = 0.3
+
+[noise.filter]
+type = "highpass"
+cutoff = 2600.0
+resonance = 0.16
+env_amount = 1.6
+attack = 0.9
+decay = 0.12
+sustain = 0.62
 release = 0.07
 
 [[operators]]

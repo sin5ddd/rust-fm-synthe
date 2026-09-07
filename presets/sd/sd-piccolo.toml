@@ -1,7 +1,7 @@
 name = "piccolo"
 description = "ピッコロ／ハイクラック。高い割れと短い胴。ヒスの尾は残す。"
 algorithm = 4
-feedback = 0.32
+feedback = 0.18
 feedback_op = 4
 gain = 1.07
 default_note = 50
@@ -20,6 +20,25 @@ env_amount = 1.3
 attack = 0.00015
 decay = 0.1
 sustain = 0.18
+release = 0.12
+
+[noise]
+type = "white"
+level = 0.88
+attack = 0.00012
+decay = 0.32
+sustain = 0.0
+release = 0.16
+vel_sens = 0.6
+
+[noise.filter]
+type = "highpass"
+cutoff = 2400.0
+resonance = 0.12
+env_amount = 0.7
+attack = 0.00012
+decay = 0.16
+sustain = 0.1
 release = 0.12
 
 # OP1 高いクラック

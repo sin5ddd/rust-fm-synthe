@@ -1,66 +1,79 @@
 name = "frenchcore open hat"
-description = "フレンチコアのオープンハット。硬いハイ＋少し長い尾。"
+description = "フレンチコアのオープンハット。硬いハイのホワイトノイズ＋少し長い尾。"
 algorithm = 8
-feedback = 0.93
-feedback_op = 4
-gain = 1.14
+feedback = 0.18
+feedback_op = 1
+gain = 1.12
 default_note = 86
 default_duration = 0.95
 
 [filter]
 type = "highpass"
-cutoff = 6800
-resonance = 0.22
-env_amount = 0.7
+cutoff = 3200.0
+resonance = 0.1
+env_amount = 0.35
 attack = 0.0002
-decay = 0.2475
-sustain = 0.04
-release = 0.04
+decay = 0.25
+sustain = 0.03
+release = 0.16
+
+[noise]
+type = "white"
+level = 1.1
+attack = 0.00015
+decay = 0.62
+sustain = 0.0
+release = 0.22
+vel_sens = 0.5
+
+[noise.filter]
+type = "bandpass"
+cutoff = 8800.0
+resonance = 0.16
+env_amount = 0.4
+attack = 0.00015
+decay = 0.28
+sustain = 0.03
+release = 0.16
 
 [[operators]]
-ratio = 22
-detune_cents = 0
-level = 1
-attack = 0.0002
-decay = 0.55
-sustain = 0
-release = 0.1925
+ratio = 1.0
+detune_cents = 0.0
+level = 0.38
+attack = 0.00012
+decay = 0.045
+sustain = 0.0
+release = 0.022
 vel_sens = 0.5
 waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 8420.0
 
 [[operators]]
-ratio = 16.06
-detune_cents = -18
-level = 0.78
-attack = 0.00015
-decay = 0.385
-sustain = 0
-release = 0.154
+ratio = 1.0
+detune_cents = 14.0
+level = 0.2
+attack = 0.0001
+decay = 0.028
+sustain = 0.0
+release = 0.016
 vel_sens = 0.55
-waveform = "pulse"
-
-[[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.55
-attack = 0.00015
-decay = 0.2475
-sustain = 0
-release = 0.03
-vel_sens = 0.6
 waveform = "abs-sine"
 freq_mode = "fixed"
-fixed_hz = 8600
+fixed_hz = 11240.0
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.42
-attack = 0.0001
-decay = 0.154
-sustain = 0
-release = 0.02
-vel_sens = 0.65
-waveform = "pulse"
-freq_mode = "fixed"
-fixed_hz = 12642
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"
+
+[[operators]]
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"

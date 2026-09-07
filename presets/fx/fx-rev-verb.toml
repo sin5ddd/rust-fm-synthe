@@ -1,7 +1,7 @@
 name = "fx-rev-verb"
 description = "リバースリバーブ風。遅いアタック＋HPのウォッシュ。フェイク。"
 algorithm = 8
-feedback = 0.48
+feedback = 0.22
 feedback_op = 4
 gain = 1.08
 default_note = 67
@@ -24,6 +24,25 @@ env_amount = 2.8
 attack = 1.35
 decay = 0.2
 sustain = 0.75
+release = 0.14
+
+[noise]
+type = "pink"
+level = 0.88
+attack = 0.36
+decay = 0.2
+sustain = 0.65
+release = 0.16
+vel_sens = 0.2
+
+[noise.filter]
+type = "highpass"
+cutoff = 380.0
+resonance = 0.1
+env_amount = 2.4
+attack = 1.3
+decay = 0.18
+sustain = 0.72
 release = 0.14
 
 [[operators]]

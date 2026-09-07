@@ -1,7 +1,7 @@
 name = "snap cluster"
 description = "スナップの重ね。わずかに遅れた2粒。pc-snap より広い。"
 algorithm = 5
-feedback = 0.5
+feedback = 0.22
 feedback_op = 4
 gain = 1.12
 default_note = 72
@@ -16,6 +16,26 @@ attack = 0.0002
 decay = 0.05
 sustain = 0.06
 release = 0.04
+
+[noise]
+type = "white"
+level = 0.68
+delay = 0.016
+attack = 0.00015
+decay = 0.06
+sustain = 0.0
+release = 0.025
+vel_sens = 0.5
+
+[noise.filter]
+type = "highpass"
+cutoff = 2200.0
+resonance = 0.1
+env_amount = 0.3
+attack = 0.00015
+decay = 0.04
+sustain = 0.0
+release = 0.02
 
 [[operators]]
 ratio = 1

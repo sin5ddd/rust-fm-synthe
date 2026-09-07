@@ -1,7 +1,7 @@
 name = "fx-rev-crash"
 description = "明るいリバースクラッシュ。HPが開いて砂状のクラッシュで切れる。"
 algorithm = 2
-feedback = 0.9
+feedback = 0.34
 feedback_op = 4
 gain = 1.12
 default_note = 76
@@ -24,6 +24,25 @@ env_amount = 3.1
 attack = 1.55
 decay = 0.2
 sustain = 0.8
+release = 0.1
+
+[noise]
+type = "white"
+level = 1.12
+attack = 0.28
+decay = 0.16
+sustain = 0.7
+release = 0.1
+vel_sens = 0.25
+
+[noise.filter]
+type = "highpass"
+cutoff = 480.0
+resonance = 0.16
+env_amount = 2.8
+attack = 1.5
+decay = 0.18
+sustain = 0.78
 release = 0.1
 
 [[operators]]

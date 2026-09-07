@@ -1,7 +1,7 @@
 name = "fm noise"
-description = "実験的なFMノイズキック。高フィードバックの砂状だが、ピッチ落下でキックとして使える。"
+description = "実験的なノイズキック。砂状のボディだが、ピッチ落下でキックとして使える。"
 algorithm = 2
-feedback = 0.88
+feedback = 0.28
 feedback_op = 4
 gain = 0.96
 default_note = 36
@@ -25,6 +25,25 @@ attack = 0.0004
 decay = 0.11
 sustain = 0.1
 release = 0.08
+
+[noise]
+type = "white"
+level = 0.88
+attack = 0.0003
+decay = 0.22
+sustain = 0.0
+release = 0.08
+vel_sens = 0.45
+
+[noise.filter]
+type = "lowpass"
+cutoff = 2400.0
+resonance = 0.12
+env_amount = 1.4
+attack = 0.0003
+decay = 0.1
+sustain = 0.06
+release = 0.06
 
 # OP1 ノイズ寄りの胴
 [[operators]]

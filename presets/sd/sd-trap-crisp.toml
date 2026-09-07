@@ -1,7 +1,7 @@
 name = "trap crisp"
 description = "トラップスネア。クリスプな割れと少し長めの尾。808スネアより明るい。"
 algorithm = 7
-feedback = 0.38
+feedback = 0.2
 feedback_op = 4
 gain = 1.04
 default_note = 40
@@ -21,6 +21,25 @@ attack = 0.0002
 decay = 0.2
 sustain = 0.2
 release = 0.16
+
+[noise]
+type = "white"
+level = 1.0
+attack = 0.00015
+decay = 0.55
+sustain = 0.0
+release = 0.24
+vel_sens = 0.55
+
+[noise.filter]
+type = "highpass"
+cutoff = 2000.0
+resonance = 0.1
+env_amount = 0.7
+attack = 0.00015
+decay = 0.28
+sustain = 0.12
+release = 0.2
 
 # OP1 トラップ胴
 [[operators]]

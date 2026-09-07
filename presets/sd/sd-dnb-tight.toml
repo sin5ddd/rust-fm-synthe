@@ -1,7 +1,7 @@
 name = "dnb tight"
 description = "DnBのタイトスネア。ミッドの割れ。短いが使える尾は残す（チョークしすぎない）。"
 algorithm = 3
-feedback = 0.3
+feedback = 0.18
 feedback_op = 4
 gain = 1.05
 default_note = 43
@@ -24,6 +24,25 @@ env_amount = 1.6
 attack = 0.0002
 decay = 0.16
 sustain = 0.2
+release = 0.14
+
+[noise]
+type = "white"
+level = 0.92
+attack = 0.00015
+decay = 0.42
+sustain = 0.0
+release = 0.18
+vel_sens = 0.58
+
+[noise.filter]
+type = "bandpass"
+cutoff = 1900.0
+resonance = 0.14
+env_amount = 0.9
+attack = 0.00015
+decay = 0.18
+sustain = 0.14
 release = 0.14
 
 # OP1 ミッドの割れ

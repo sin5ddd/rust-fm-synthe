@@ -1,7 +1,7 @@
 name = "storm rumble"
-description = "嵐のランブル。高FBノイズをLPで遠雷にする。サブ正弦が芯。"
+description = "嵐のランブル。ノイズをLPで遠雷にする。サブ正弦が芯。"
 algorithm = 1
-feedback = 0.74
+feedback = 0.28
 feedback_op = 4
 gain = 0.9
 default_note = 24
@@ -20,6 +20,25 @@ attack = 5.5
 decay = 7.0
 sustain = 0.7
 release = 0.35
+
+[noise]
+type = "brown"
+level = 0.9
+attack = 1.0
+decay = 4.5
+sustain = 0.65
+release = 0.32
+vel_sens = 0.18
+
+[noise.filter]
+type = "lowpass"
+cutoff = 220.0
+resonance = 0.16
+env_amount = 0.8
+attack = 2.5
+decay = 5.0
+sustain = 0.55
+release = 0.3
 
 # OP1
 [[operators]]

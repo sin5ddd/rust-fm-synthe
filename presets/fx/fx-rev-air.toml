@@ -1,7 +1,7 @@
 name = "fx-rev-air"
 description = "エア寄りのリバースハット。スーパーソーの砂＋HPスウェル。"
 algorithm = 8
-feedback = 0.55
+feedback = 0.22
 feedback_op = 4
 gain = 1.1
 default_note = 84
@@ -24,6 +24,25 @@ env_amount = 2.4
 attack = 1.25
 decay = 0.16
 sustain = 0.72
+release = 0.08
+
+[noise]
+type = "white"
+level = 0.95
+attack = 0.26
+decay = 0.14
+sustain = 0.6
+release = 0.08
+vel_sens = 0.22
+
+[noise.filter]
+type = "highpass"
+cutoff = 1800.0
+resonance = 0.14
+env_amount = 2.0
+attack = 1.2
+decay = 0.14
+sustain = 0.7
 release = 0.08
 
 [[operators]]

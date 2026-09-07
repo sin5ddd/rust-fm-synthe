@@ -1,7 +1,7 @@
 name = "808 snap"
 description = "TR-808風スネア。短いトーン2本とノイズ。胴は短め、ノイズに尾を残す。"
 algorithm = 7
-feedback = 0.42
+feedback = 0.22
 feedback_op = 4
 gain = 1.04
 default_note = 40
@@ -21,6 +21,25 @@ attack = 0.0
 decay = 0.08
 sustain = 0.35
 release = 0.12
+
+[noise]
+type = "white"
+level = 0.98
+attack = 0.0002
+decay = 0.42
+sustain = 0.0
+release = 0.18
+vel_sens = 0.5
+
+[noise.filter]
+type = "highpass"
+cutoff = 1600.0
+resonance = 0.1
+env_amount = 0.5
+attack = 0.0002
+decay = 0.2
+sustain = 0.12
+release = 0.14
 
 # OP1 808トーン下（加算キャリア）
 [[operators]]

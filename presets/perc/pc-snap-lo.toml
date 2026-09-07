@@ -1,7 +1,7 @@
 name = "low snap"
 description = "低いスナップ。ミッド寄りの指。ハイの粒は薄く。"
 algorithm = 5
-feedback = 0.48
+feedback = 0.2
 feedback_op = 4
 gain = 1.14
 default_note = 60
@@ -16,6 +16,25 @@ attack = 0.0002
 decay = 0.04
 sustain = 0.06
 release = 0.04
+
+[noise]
+type = "white"
+level = 0.55
+attack = 0.00015
+decay = 0.055
+sustain = 0.0
+release = 0.022
+vel_sens = 0.5
+
+[noise.filter]
+type = "bandpass"
+cutoff = 1600.0
+resonance = 0.14
+env_amount = 0.3
+attack = 0.00015
+decay = 0.035
+sustain = 0.0
+release = 0.018
 
 [[operators]]
 ratio = 1

@@ -1,7 +1,7 @@
 name = "noisy bandpass rumble"
-description = "高FBの砂を低いBPでランブルにする。カットオフは80 Hz付近。サブ隣接を残す。"
+description = "ノイズの砂を低いBPでランブルにする。カットオフは80 Hz付近。サブ隣接を残す。"
 algorithm = 1
-feedback = 0.68
+feedback = 0.28
 feedback_op = 4
 gain = 0.9
 default_note = 28
@@ -20,6 +20,25 @@ attack = 5.0
 decay = 7.0
 sustain = 0.7
 release = 0.35
+
+[noise]
+type = "brown"
+level = 0.85
+attack = 0.8
+decay = 4.0
+sustain = 0.62
+release = 0.32
+vel_sens = 0.2
+
+[noise.filter]
+type = "bandpass"
+cutoff = 90.0
+resonance = 0.28
+env_amount = 0.5
+attack = 2.0
+decay = 5.0
+sustain = 0.55
+release = 0.3
 
 # OP1
 [[operators]]
