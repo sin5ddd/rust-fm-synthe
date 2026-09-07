@@ -1,10 +1,12 @@
 use clap::{Parser, Subcommand};
 use fm_synth::{
-    default_wav_path, factory_info, load_preset, load_preset_file, output_preset_id,
-    render_all_factory, render_preset_wav, Algorithm, ExportParams, Result as SynthResult,
-    WavRenderReport, DEFAULT_OUTPUT_DIR,
+    analyze_all_factory, analyze_buffer, analyze_preset, default_png_path, default_wav_path,
+    factory_info, load_preset, load_preset_file, output_preset_id, read_wav, render_all_factory,
+    render_preset_wav, write_analysis_bundle, write_wav, Algorithm, Analysis, AnalyzeOpts,
+    AnalyzeWriteReport, ExportParams, Result as SynthResult, WavRenderReport, WavSettings,
+    DEFAULT_OUTPUT_DIR,
 };
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 
 #[derive(Parser)]
@@ -80,6 +82,69 @@ enum Command {
         #[arg(long, default_value_t = 16)]
         bit_depth: u16,
     },
+    /// WAV またはプリセットを分析し、スペクトログラム PNG と JSON を書く
+    Analyze {
+        /// 既存 WAV
+        #[arg(long)]
+        wav: Option<PathBuf>,
+        /// 工場プリセット名
+        #[arg(short, long)]
+        preset: Option<String>,
+        /// プリセットTOMLを直接指定（`--preset` より優先）
+        #[arg(long)]
+        preset_file: Option<PathBuf>,
+        /// 出力 PNG パス。省略時は WAV と同じ stem、または `dist/<id>.png`
+        #[arg(short, long)]
+        output: Option<PathBuf>,
+        /// 照合用の意図テキスト（JSON に載せる）
+        #[arg(long)]
+        intent: Option<String>,
+        /// MIDIノート (0–127)。未指定ならプリセットの default_note
+        #[arg(long)]
+        note: Option<u8>,
+        /// 周波数Hz。指定時は `--note` より優先
+        #[arg(long)]
+        hz: Option<f64>,
+        /// 秒。未指定ならプリセットの default_duration
+        #[arg(short, long)]
+        duration: Option<f64>,
+        /// ベロシティ 0.0–1.0
+        #[arg(long, default_value_t = 0.9)]
+        velocity: f32,
+        /// サンプルレート（プリセットをレンダするとき）
+        #[arg(long, default_value_t = 44_100)]
+        sample_rate: u32,
+        /// ビット深度 16 または 24（プリセットをレンダするとき）
+        #[arg(long, default_value_t = 16)]
+        bit_depth: u16,
+    },
+    /// 工場バンクを分析して PNG / JSON を書く（既定: dist/<id>.png）
+    AnalyzeAll {
+        /// 出力ディレクトリ。省略時は `dist/`
+        #[arg(short = 'o', long = "output-dir", default_value = DEFAULT_OUTPUT_DIR)]
+        output_dir: PathBuf,
+        /// 照合用の意図テキスト（各 JSON に載せる）
+        #[arg(long)]
+        intent: Option<String>,
+        /// MIDIノート (0–127)。未指定なら各プリセットの default_note
+        #[arg(long)]
+        note: Option<u8>,
+        /// 周波数Hz。指定時は `--note` より優先（全プリセット共通）
+        #[arg(long)]
+        hz: Option<f64>,
+        /// 秒。未指定なら各プリセットの default_duration
+        #[arg(short, long)]
+        duration: Option<f64>,
+        /// ベロシティ 0.0–1.0
+        #[arg(long, default_value_t = 0.9)]
+        velocity: f32,
+        /// サンプルレート
+        #[arg(long, default_value_t = 44_100)]
+        sample_rate: u32,
+        /// ビット深度 16 または 24
+        #[arg(long, default_value_t = 16)]
+        bit_depth: u16,
+    },
 }
 
 fn main() -> ExitCode {
@@ -131,6 +196,54 @@ fn run() -> SynthResult<()> {
             bit_depth,
         } => cmd_render_all(
             output_dir,
+            ExportParams {
+                note,
+                hz,
+                duration,
+                velocity,
+                sample_rate,
+                bit_depth,
+            },
+        ),
+        Command::Analyze {
+            wav,
+            preset,
+            preset_file,
+            output,
+            intent,
+            note,
+            hz,
+            duration,
+            velocity,
+            sample_rate,
+            bit_depth,
+        } => cmd_analyze(
+            wav,
+            preset,
+            preset_file,
+            output,
+            intent,
+            ExportParams {
+                note,
+                hz,
+                duration,
+                velocity,
+                sample_rate,
+                bit_depth,
+            },
+        ),
+        Command::AnalyzeAll {
+            output_dir,
+            intent,
+            note,
+            hz,
+            duration,
+            velocity,
+            sample_rate,
+            bit_depth,
+        } => cmd_analyze_all(
+            output_dir,
+            intent,
             ExportParams {
                 note,
                 hz,
@@ -211,5 +324,110 @@ fn print_wrote(report: &WavRenderReport) {
         report.preset_name,
         report.frequency_hz,
         report.duration_secs
+    );
+}
+
+fn cmd_analyze(
+    wav: Option<PathBuf>,
+    preset_name: Option<String>,
+    preset_file: Option<PathBuf>,
+    output: Option<PathBuf>,
+    intent: Option<String>,
+    export: ExportParams,
+) -> SynthResult<()> {
+    if let Some(wav_path) = wav {
+        let data = read_wav(&wav_path)?;
+        let stem = wav_path
+            .file_stem()
+            .and_then(|s| s.to_str())
+            .unwrap_or("wav");
+        let png = output.unwrap_or_else(|| wav_path.with_extension("png"));
+        let json = png.with_extension("json");
+        let analysis = analyze_buffer(
+            &data.samples,
+            data.sample_rate,
+            &AnalyzeOpts {
+                source: Some(wav_path.display().to_string()),
+                preset_id: Some(stem.to_string()),
+                intent,
+                ..AnalyzeOpts::default()
+            },
+        )?;
+        write_analysis_bundle(&analysis, &png, &json)?;
+        print_analyzed(&analysis, &png, &json, None);
+        return Ok(());
+    }
+
+    let preset = match (&preset_file, &preset_name) {
+        (Some(path), _) => load_preset_file(path)?,
+        (None, Some(name)) => load_preset(name)?,
+        (None, None) => {
+            return Err(fm_synth::Error::InvalidParam {
+                message: "specify --wav <file.wav>, --preset <name>, or --preset-file <path.toml>"
+                    .into(),
+            });
+        }
+    };
+
+    let id = output_preset_id(preset_name.as_deref(), preset_file.as_deref());
+    let png = output.unwrap_or_else(|| default_png_path(&id));
+    let json = png.with_extension("json");
+    let wav_out = png.with_extension("wav");
+    let (samples, analysis) = analyze_preset(&id, &preset, &export, intent.as_deref())?;
+    write_wav(
+        &wav_out,
+        &samples,
+        WavSettings::new(export.sample_rate, export.bit_depth)?,
+    )?;
+    write_analysis_bundle(&analysis, &png, &json)?;
+    print_analyzed(&analysis, &png, &json, Some(&wav_out));
+    Ok(())
+}
+
+fn cmd_analyze_all(
+    output_dir: PathBuf,
+    intent: Option<String>,
+    export: ExportParams,
+) -> SynthResult<()> {
+    let batch = analyze_all_factory(&output_dir, &export, intent.as_deref())?;
+    for report in &batch.written {
+        print_analyze_write(report);
+    }
+    for (id, msg) in &batch.failures {
+        eprintln!("error: preset `{id}`: {msg}");
+    }
+    batch.into_result().map(|_| ())
+}
+
+fn print_analyzed(analysis: &Analysis, png: &Path, json: &Path, wav: Option<&Path>) {
+    if let Some(wav) = wav {
+        eprintln!("wrote {}", wav.display());
+    }
+    let r = &analysis.report;
+    let pitch = match &r.pitch {
+        Some(p) => format!(
+            "{:.0}->{:.0} Hz ({:+.1} st)",
+            p.start_hz, p.end_hz, p.drop_semitones
+        ),
+        None => "n/a".into(),
+    };
+    eprintln!(
+        "analyzed {}  (png {}, json {}, centroid={:.0} Hz, flatness={:.3}, pitch={}, sub={:.2})",
+        r.preset_id.as_deref().unwrap_or("buffer"),
+        png.display(),
+        json.display(),
+        r.spectral_centroid_hz,
+        r.spectral_flatness,
+        pitch,
+        r.band_energy.sub_20_80,
+    );
+}
+
+fn print_analyze_write(report: &AnalyzeWriteReport) {
+    eprintln!(
+        "analyzed {}  (png {}, json {})",
+        report.preset_id,
+        report.png.display(),
+        report.json.display()
     );
 }

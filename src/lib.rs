@@ -4,6 +4,7 @@
 
 mod adsr;
 mod algorithm;
+mod analyze;
 mod error;
 mod filter;
 mod midi;
@@ -14,6 +15,12 @@ mod voice;
 mod wav;
 
 pub use algorithm::Algorithm;
+pub use analyze::{
+    analyze_all_factory, analyze_buffer, analyze_preset, category_hints_for_id, default_json_path,
+    default_png_path, write_analysis_bundle, Analysis, AnalysisReport, AnalyzeOpts,
+    AnalyzeWriteReport, BandEnergy, BatchAnalyzeResult, EnergyAtFrac, PitchTrack, SpectralPeak,
+    SPECTROGRAM_HEIGHT, SPECTROGRAM_WIDTH,
+};
 pub use error::{Error, Result};
 pub use filter::{FilterParams, FilterType};
 pub use midi::{cents_to_ratio, hz_to_midi, midi_to_hz, semitones_to_ratio};
@@ -26,7 +33,7 @@ pub use render::{
     default_wav_path, peak, render, render_all_factory, render_preset_wav, rms, BatchRenderResult,
     ExportParams, RenderParams, WavRenderReport, DEFAULT_OUTPUT_DIR, TARGET_PEAK,
 };
-pub use wav::{pcm_data_bytes, write_wav, WavSettings};
+pub use wav::{pcm_data_bytes, read_wav, write_wav, WavData, WavSettings};
 
 /// Resolve a note: explicit Hz wins, then MIDI, then the preset default.
 pub fn resolve_frequency(preset: &Preset, note_midi: Option<u8>, hz: Option<f64>) -> Result<f64> {

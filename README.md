@@ -168,6 +168,22 @@ cargo run --release -- render --preset fm-riser --output dist/riser.wav
 
 成功すると stderr にパス、サンプル数、PCMバイト数が出る（`render-all` はプリセットごとに1行）。どれかが失敗したら非ゼロで終了し、失敗した ID を出す。ファイルが「全部ゼロ」ならバグなので issue にしてほしい。
 
+## 分析（スペクトログラム）
+
+WAV を **軸付き PNG**（波形 + ログ周波数スペクトログラム + 平均スペクトル）と **分析 JSON**（帯域エネルギー、重心、平坦度、ピッチ軌跡）に落とす。エージェントが意図（プリセット説明や `--intent`）と照合するための材料。クレート内で LLM は呼ばない。手順は [`docs/prompt-verify.md`](docs/prompt-verify.md)。
+
+```bash
+cargo run --release -- analyze --preset bd-808-boom
+# → dist/bd-808-boom.wav / .png / .json
+
+cargo run --release -- analyze --wav dist/bd-808-boom.wav --intent "長い正弦の胴と大きなピッチ落下。サブ寄り。"
+
+cargo run --release -- analyze-all
+# → dist/<id>.png と dist/<id>.json（WAV は書かない）
+```
+
+`--output` は PNG パス。JSON は同じ stem。プリセット指定時は同じ stem の WAV も書く。
+
 ## オペレータとアルゴリズム
 
 FMではオペレータ（ここでは正弦波ベースのオシレータ）の出力で、別のオペレータの**位相**を歪める。
@@ -680,7 +696,7 @@ write_wav(
 )?;
 ```
 
-公開APIの中心は `load_preset` / `load_factory` / `render` / `write_wav`。一括書き出しは `render_all_factory`（工場バンクがソース。`presets/<category>/` の重複TOMLは見ない）。別ツールからエンジンだけ駆動する想定。
+公開APIの中心は `load_preset` / `load_factory` / `render` / `write_wav` / `read_wav` / `analyze_buffer`。一括書き出しは `render_all_factory`、一括分析は `analyze_all_factory`（工場バンクがソース。`presets/<category>/` の重複TOMLは見ない）。別ツールからエンジンだけ駆動する想定。
 
 ## テスト
 
@@ -688,4 +704,4 @@ write_wav(
 cargo test
 ```
 
-エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`ld-*` リードと `fx-*` FXがそれぞれちょうど50個で非無音、`bs-*` ベースがちょうど15個で非無音、`pc-*` パーカッションがちょうど50個で非無音、`dr-*` ドローンがちょうど50個で非無音、`pf-*` 爽やかパッドと `ps-*` キラキラパッドがそれぞれちょうど30個で非無音、`pl-*` プラックがちょうど30個で非無音かつ短い（既定は2秒未満。`pl-reverse-swell` だけ例外）、`ep-*` エレクトリックピアノがちょうど5個で非無音かつ1.2秒超（クリックではない）、`ep-rhodes-soft` のアタックに純正弦より強い2×/3×タインがあること、`presets/ld/` の既定レンダーが約8秒（120 BPM の4小節）で末尾0.5秒が無音でないこと、`dr-*` / `pf-*` / `ps-*` の既定レンダーが約16秒（120 BPM の8小節）で末尾1秒と t=14秒が無音でないこと、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。
+440 Hz 正弦の重心、ノイズの平坦度、ピッチ落下、`bd-808-boom` のサブと落下、PNG 寸法と JSON のパース、エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`ld-*` リードと `fx-*` FXがそれぞれちょうど50個で非無音、`bs-*` ベースがちょうど15個で非無音、`pc-*` パーカッションがちょうど50個で非無音、`dr-*` ドローンがちょうど50個で非無音、`pf-*` 爽やかパッドと `ps-*` キラキラパッドがそれぞれちょうど30個で非無音、`pl-*` プラックがちょうど30個で非無音かつ短い（既定は2秒未満。`pl-reverse-swell` だけ例外）、`ep-*` エレクトリックピアノがちょうど5個で非無音かつ1.2秒超（クリックではない）、`ep-rhodes-soft` のアタックに純正弦より強い2×/3×タインがあること、`presets/ld/` の既定レンダーが約8秒（120 BPM の4小節）で末尾0.5秒が無音でないこと、`dr-*` / `pf-*` / `ps-*` の既定レンダーが約16秒（120 BPM の8小節）で末尾1秒と t=14秒が無音でないこと、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。

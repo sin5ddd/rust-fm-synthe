@@ -52,11 +52,7 @@ impl fmt::Display for Error {
                     .map(|(id, msg)| format!("`{id}`: {msg}"))
                     .collect::<Vec<_>>()
                     .join("; ");
-                write!(
-                    f,
-                    "render-all failed for {} preset(s): {detail}",
-                    failures.len()
-                )
+                write!(f, "batch failed for {} preset(s): {detail}", failures.len())
             }
         }
     }
