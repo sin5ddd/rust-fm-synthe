@@ -1,66 +1,78 @@
 name = "pedal hat"
-description = "ペダル／フットハット。クローズより暗く短いチック。"
+description = "ペダル／フットハット。クローズより暗いホワイトノイズの短いチック。"
 algorithm = 8
-feedback = 0.8
-feedback_op = 4
-gain = 1.14
+feedback = 0.14
+feedback_op = 1
+gain = 1.1
 default_note = 72
-default_duration = 0.15
-
+default_duration = 0.3
 [filter]
 type = "highpass"
-cutoff = 3800
-resonance = 0.22
-env_amount = 0.7
+cutoff = 2000.0
+resonance = 0.06
+env_amount = 0.18
 attack = 0.0002
-decay = 0.027
+decay = 0.08
 sustain = 0.04
-release = 0.04
+release = 0.06
+
+[noise]
+type = "white"
+level = 1.0
+attack = 0.0002
+decay = 0.24
+sustain = 0.0
+release = 0.064
+vel_sens = 0.5
+
+[noise.filter]
+type = "bandpass"
+cutoff = 5600.0
+resonance = 0.2
+env_amount = 0.22
+attack = 0.0002
+decay = 0.08
+sustain = 0.04
+release = 0.06
 
 [[operators]]
-ratio = 14
-detune_cents = 0
-level = 1
-attack = 0.0002
-decay = 0.06
-sustain = 0
-release = 0.021
+ratio = 1.0
+detune_cents = 0.0
+level = 0.3
+attack = 0.00015
+decay = 0.038
+sustain = 0.0
+release = 0.016
 vel_sens = 0.5
 waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 5620.0
 
 [[operators]]
-ratio = 10.22
-detune_cents = -18
-level = 0.78
-attack = 0.00015
-decay = 0.042
-sustain = 0
-release = 0.0168
+ratio = 1.0
+detune_cents = 9.0
+level = 0.14
+attack = 0.00012
+decay = 0.022
+sustain = 0.0
+release = 0.012
 vel_sens = 0.55
-waveform = "pulse"
-
-[[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.55
-attack = 0.00015
-decay = 0.027
-sustain = 0
-release = 0.03
-vel_sens = 0.6
 waveform = "abs-sine"
 freq_mode = "fixed"
-fixed_hz = 5200
+fixed_hz = 7760.0
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.42
-attack = 0.0001
-decay = 0.0168
-sustain = 0
-release = 0.02
-vel_sens = 0.65
-waveform = "pulse"
-freq_mode = "fixed"
-fixed_hz = 7644
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"
+
+[[operators]]
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"

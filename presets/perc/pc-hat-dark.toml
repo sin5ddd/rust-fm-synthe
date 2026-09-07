@@ -1,66 +1,78 @@
 name = "dark hat"
-description = "暗いクローズドハット。HPを低めにして胴っぽい砂を残す。"
+description = "暗いクローズドハット。ピンクノイズで胴っぽい砂を残す。"
 algorithm = 8
-feedback = 0.85
-feedback_op = 4
-gain = 1.16
+feedback = 0.14
+feedback_op = 1
+gain = 1.1
 default_note = 76
-default_duration = 0.22
-
+default_duration = 0.44
 [filter]
 type = "highpass"
-cutoff = 3200
-resonance = 0.22
-env_amount = 0.7
+cutoff = 1800.0
+resonance = 0.06
+env_amount = 0.18
 attack = 0.0002
-decay = 0.045
-sustain = 0.04
-release = 0.04
+decay = 0.12
+sustain = 0.05
+release = 0.09
+
+[noise]
+type = "pink"
+level = 1.1
+attack = 0.0002
+decay = 0.36
+sustain = 0.0
+release = 0.1
+vel_sens = 0.5
+
+[noise.filter]
+type = "bandpass"
+cutoff = 5200.0
+resonance = 0.25
+env_amount = 0.22
+attack = 0.0002
+decay = 0.12
+sustain = 0.05
+release = 0.09
 
 [[operators]]
-ratio = 13.5
-detune_cents = 0
-level = 1
-attack = 0.0002
-decay = 0.1
-sustain = 0
-release = 0.035
+ratio = 1.0
+detune_cents = 0.0
+level = 0.28
+attack = 0.00015
+decay = 0.05
+sustain = 0.0
+release = 0.022
 vel_sens = 0.5
 waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 5480.0
 
 [[operators]]
-ratio = 9.855
-detune_cents = -18
-level = 0.78
-attack = 0.00015
-decay = 0.07
-sustain = 0
-release = 0.028
+ratio = 1.0
+detune_cents = 10.0
+level = 0.14
+attack = 0.00012
+decay = 0.03
+sustain = 0.0
+release = 0.016
 vel_sens = 0.55
-waveform = "pulse"
-
-[[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.55
-attack = 0.00015
-decay = 0.045
-sustain = 0
-release = 0.03
-vel_sens = 0.6
 waveform = "abs-sine"
 freq_mode = "fixed"
-fixed_hz = 4400
+fixed_hz = 7640.0
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.42
-attack = 0.0001
-decay = 0.028
-sustain = 0
-release = 0.02
-vel_sens = 0.65
-waveform = "pulse"
-freq_mode = "fixed"
-fixed_hz = 6468
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"
+
+[[operators]]
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"

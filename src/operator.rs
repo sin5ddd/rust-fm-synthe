@@ -123,6 +123,9 @@ pub struct OperatorParams {
     pub waveform: Waveform,
     pub freq_mode: FreqMode,
     pub fixed_hz: f64,
+    /// Seconds of silence before the envelope starts. 0 = immediate.
+    #[serde(default)]
+    pub delay: f32,
     /// Super-saw voice count. Ignored for other waveforms. Default 7.
     #[serde(default = "default_unison")]
     pub unison: u8,
@@ -145,6 +148,7 @@ impl Default for OperatorParams {
             waveform: Waveform::Sine,
             freq_mode: FreqMode::Ratio,
             fixed_hz: 440.0,
+            delay: 0.0,
             unison: 7,
             unison_detune: 20.0,
         }
@@ -182,6 +186,7 @@ pub struct Operator {
     prev: f32,
     sample_rate: f64,
     vel_amp: f32,
+    delay_left: u32,
 }
 
 impl Operator {
@@ -198,6 +203,7 @@ impl Operator {
             prev: 0.0,
             sample_rate: f64::from(sample_rate),
             vel_amp: 1.0,
+            delay_left: 0,
         }
     }
 
@@ -207,7 +213,11 @@ impl Operator {
         self.vel_amp = (1.0 - s) + s * vel;
         self.last = 0.0;
         self.prev = 0.0;
-        self.env.note_on();
+        let delay = self.params.delay.clamp(0.0, 5.0);
+        self.delay_left = (f64::from(delay) * self.sample_rate).round() as u32;
+        if self.delay_left == 0 {
+            self.env.note_on();
+        }
         // Spread initial phases so a supersaw does not start as one giant transient.
         let n = self.n_voices;
         for i in 0..n {
@@ -220,11 +230,15 @@ impl Operator {
     }
 
     pub fn note_off(&mut self) {
+        if self.delay_left > 0 {
+            self.delay_left = 0;
+            return;
+        }
         self.env.note_off();
     }
 
     pub fn is_idle(&self) -> bool {
-        self.env.is_idle()
+        self.delay_left == 0 && self.env.is_idle()
     }
 
     pub fn release_secs(&self) -> f32 {
@@ -259,6 +273,16 @@ impl Operator {
 
     /// `modulation` is an audio-rate signal in roughly [-1, 1]; converted to radians.
     pub fn tick(&mut self, modulation: f32) -> f32 {
+        if self.delay_left > 0 {
+            self.delay_left -= 1;
+            if self.delay_left == 0 {
+                self.env.note_on();
+            } else {
+                self.prev = 0.0;
+                self.last = 0.0;
+                return 0.0;
+            }
+        }
         let env = self.env.tick();
         let n = self.n_voices;
         let mut acc = 0.0f32;
@@ -388,6 +412,33 @@ mod tests {
         assert!(
             diff > 50.0,
             "super-saw nearly identical to sine (diff={diff})"
+        );
+    }
+
+    #[test]
+    fn delay_is_silent_then_speaks() {
+        let sr = 1000.0f32;
+        let params = OperatorParams {
+            delay: 0.02,
+            attack: 0.0,
+            decay: 0.0,
+            sustain: 1.0,
+            release: 0.0,
+            vel_sens: 0.0,
+            ..OperatorParams::default()
+        };
+        let mut op = Operator::new(params, sr);
+        op.note_on(1.0);
+        op.update_frequency(220.0, 1.0);
+        let early: Vec<f32> = (0..15).map(|_| op.tick(0.0)).collect();
+        assert!(
+            early.iter().all(|x| x.abs() < 1e-9),
+            "delay leaked ({early:?})"
+        );
+        let later: Vec<f32> = (0..30).map(|_| op.tick(0.0)).collect();
+        assert!(
+            later.iter().any(|x| x.abs() > 0.1),
+            "delayed op stayed silent"
         );
     }
 }

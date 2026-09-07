@@ -1,6 +1,7 @@
 use crate::algorithm::Algorithm;
 use crate::error::{Error, Result};
 use crate::filter::FilterParams;
+use crate::noise::NoiseParams;
 use crate::operator::OperatorParams;
 use serde::Deserialize;
 use std::fs;
@@ -468,6 +469,9 @@ pub struct Preset {
     pub mod_sweep: ModSweep,
     #[serde(default)]
     pub filter: FilterParams,
+    /// Parallel noise. Omit or `level = 0` to skip (old patches stay unchanged).
+    #[serde(default)]
+    pub noise: NoiseParams,
     pub operators: Vec<OperatorParams>,
 }
 
@@ -1157,5 +1161,71 @@ mod tests {
                 .all(|op| op.level < 1e-6 || (op.ratio - 1.2).abs() > 0.02),
             "no 6:5 / minor-third ratio"
         );
+    }
+
+    #[test]
+    fn omitted_noise_is_silent_and_hats_use_noise() {
+        let bass = load_factory("sub-bass").unwrap();
+        assert!(
+            !bass.noise.is_active(),
+            "old presets must stay silent on the noise bus"
+        );
+        let open = load_factory("pc-hat-open").unwrap();
+        assert!(
+            !open.noise.is_active(),
+            "open hats stay on FM hiss until retuned"
+        );
+        for id in [
+            "pc-hat-closed",
+            "pc-hat-house",
+            "pc-hat-dnb-cl",
+            "pc-hat-fc",
+            "pc-hat-pedal",
+            "pc-hat-tight",
+            "pc-hat-dark",
+            "pc-hat-noise",
+            "pc-hat-chip",
+            "cp-house",
+        ] {
+            let p = load_factory(id).unwrap();
+            assert!(
+                p.noise.is_active(),
+                "{id} should use the parallel noise oscillator"
+            );
+        }
+    }
+
+    #[test]
+    fn noise_and_notch_parse() {
+        let toml = r#"
+name = "noise-parse"
+algorithm = 8
+[filter]
+type = "notch"
+cutoff = 1000.0
+[noise]
+type = "brown"
+level = 0.5
+delay = 0.01
+[noise.filter]
+type = "bandpass"
+cutoff = 800.0
+resonance = 0.2
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+"#;
+        let p = Preset::from_toml_str("noise-parse", toml).unwrap();
+        assert_eq!(p.filter.kind, crate::FilterType::Notch);
+        assert_eq!(p.noise.kind, crate::NoiseColor::Brown);
+        assert!((p.noise.level - 0.5).abs() < 1e-6);
+        assert!((p.noise.delay - 0.01).abs() < 1e-6);
+        assert_eq!(p.noise.filter.kind, crate::FilterType::Bandpass);
+        assert!((p.noise.filter.cutoff - 800.0).abs() < 1e-6);
     }
 }

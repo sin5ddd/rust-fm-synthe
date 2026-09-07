@@ -9,12 +9,13 @@ EDM / drum & bass 向けの **オフライン4オペFMシンセ**。プリセッ
 - 4オペレータ、Yamaha 4-op（TX81Z / DX21）系アルゴリズム 1–8
 - オペレータごとに ADSR・比・デチューン・レベル・波形・固定周波数
 - 波形: `sine` / `half-sine` / `abs-sine` / `pulse` / `saw`（帯域制限） / `super-saw`（1オペ内の擬似スーパーソー）
-- ボイス末尾の SVF フィルタ（`lowpass` / `bandpass` / `highpass`）とカットオフ ADSR
+- ボイス末尾の SVF フィルタ（`lowpass` / `bandpass` / `highpass` / `notch`）とカットオフ ADSR
+- 並列ノイズ源（ホワイト / ピンク / ブラウン）。専用 SVF のあと FM ミックスに加算。省略または `level = 0` で生成しない
 - 1オペへのフィードバック、ピッチエンベロープ、簡易LFO、変調量スイープ
 - 44.1 / 48 kHz、16 / 24-bit PCM（`hound`）
 - 工場バンク: サブ、グロウル、金属ヒット、FMライザー、スタブ、ザップ、ガラスヒット、スーパーソーベース、フィルタプラック、BPグロウル、HPエア、**キック20種（`bd-*`）**、**スネア20種（`sd-*`）**、**リード50種（`ld-*`）**、**FX50種（`fx-*`）**、**ベース15種（`bs-*`）**、**パーカッション50種（`pc-*`）**、**ドローン50種（`dr-*`）**、**爽やかパッド30種（`pf-*`）**、**キラキラパッド30種（`ps-*`）**、**プラック30種（`pl-*`）**、**エレクトリックピアノ5種（`ep-*`）**
 
-VA / スーパーソー専用エンジンは足していない。4オペFMのまま、波形とボイスフィルタだけ増やしている。
+VA / スーパーソー専用エンジンは足していない。4オペFMのまま、波形とボイスフィルタと並列ノイズ源を増やしている。
 
 ## ビルドと実行
 
@@ -222,19 +223,39 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 
 ## フィルタ（ボイス1基）
 
-4オペのミックスの**あと**に SVF を1基だけ通す（オペごとではない）。LP / BP / HP は同じ状態から取り出す。レゾナンスを上げても NaN にしない。FXラックは無い。
+4オペ＋ノイズのミックスの**あと**に SVF を1基だけ通す（オペごとではない）。LP / BP / HP / ノッチは同じ状態から取り出す。ノッチは `入力 − バンドパス`。レゾナンスを上げても NaN にしない。FXラックは無い。
 
 `[filter]` を省略するとローパス・カットオフ約 18 kHz・エンベロープ量 0 なので、既存プリセットの音はほぼそのまま。
 
 | キー | 意味 |
 |------|------|
-| `type` | `lowpass`（既定）/ `bandpass` / `highpass` |
+| `type` | `lowpass`（既定）/ `bandpass` / `highpass` / `notch` |
 | `cutoff` | 基準カットオフ Hz |
 | `resonance` | 0–1。0 で Q≈0.7、1 で高め（発振手前でクランプ） |
 | `env_amount` | カットオフ ADSR の深さ（**オクターブ**、極性可）。0 なら固定カットオフ |
 | `attack` / `decay` / `sustain` / `release` | カットオフ ADSR（秒 / サステインは 0–1） |
 
 例: `cutoff = 200`、`env_amount = 4.6`、エンベロープが 1 のときカットオフは約 5.3 kHz（プラックが開く範囲）。負の量で閉じる。
+
+## ノイズ源（並列）
+
+4オペの**横**にノイズを1系統だけ置く。波形リストには入れない（ノイズで FM 変調もしない）。流れは `ノイズ → 専用 SVF → FMミックスに加算 → ボイスの [filter] → gain`。
+
+`[noise]` を省略するか `level = 0` にすると生成も専用フィルタも走らない。古いプリセットの音は変わらない。
+
+`[noise.filter]` を省略したときの既定はハイパス 20 Hz・レゾナンス 0（ブラウンの直流止め）。ボイスの `[filter]` 既定（ローパス 18 kHz）とは別。
+
+| キー | 意味 |
+|------|------|
+| `type` | `white`（既定）/ `pink` / `brown` |
+| `level` | 0–1+。0 でオフ |
+| `delay` | エンベロープ前の無音（秒）。オペレータの `delay` と同じ |
+| `attack` / `decay` / `sustain` / `release` | 振幅 ADSR |
+| `vel_sens` | 0 = ベロシティ無視、1 = 追従 |
+
+`[noise.filter]` のキーはボイスの `[filter]` と同じ（`type` / `cutoff` / `resonance` / `env_amount` / ADSR）。
+
+乱数は xorshift32。`note_on` で同じ種に戻すので、工場ワンショットは毎回同じ波形になる。ピンクは Paul Kellet の IIR、ブラウンは約 25 Hz の 1 ポール（6 dB/oct）。
 
 ## 工場プリセット
 
@@ -649,10 +670,30 @@ start = 1.0            # 変調（キャリア音量ではない）の倍率
 end = 1.0
 
 [filter]
-type = "lowpass"       # lowpass | bandpass | highpass
+type = "lowpass"       # lowpass | bandpass | highpass | notch
 cutoff = 18000.0       # Hz
 resonance = 0.0        # 0–1
 env_amount = 0.0       # オクターブ。正で開く、負で閉じる。0 は固定
+attack = 0.0
+decay = 0.0
+sustain = 1.0
+release = 0.05
+
+[noise]
+type = "white"         # white | pink | brown
+level = 0.0            # 0 でオフ（省略時も 0）
+delay = 0.0
+attack = 0.0
+decay = 0.05
+sustain = 0.0
+release = 0.02
+vel_sens = 0.0
+
+[noise.filter]
+type = "highpass"      # 省略時は HP 20 Hz（直流止め）
+cutoff = 20.0
+resonance = 0.0
+env_amount = 0.0
 attack = 0.0
 decay = 0.0
 sustain = 1.0

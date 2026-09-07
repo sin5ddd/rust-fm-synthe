@@ -1,66 +1,88 @@
 name = "chip hat"
-description = "チップチューン寄りの短いハット。パルスの粒が見える。"
+description = "チップチューン寄りの短いハット。パルスの粒＋薄いホワイトノイズ。"
 algorithm = 8
-feedback = 0.55
-feedback_op = 4
-gain = 1.15
+feedback = 0.42
+feedback_op = 1
+gain = 1.12
 default_note = 96
-default_duration = 0.13
-
+default_duration = 0.26
 [filter]
 type = "highpass"
-cutoff = 2500
-resonance = 0.22
-env_amount = 0.7
+cutoff = 2200.0
+resonance = 0.1
+env_amount = 0.22
 attack = 0.0002
-decay = 0.02025
-sustain = 0.04
-release = 0.04
+decay = 0.07
+sustain = 0.03
+release = 0.056
+
+[noise]
+type = "white"
+level = 0.42
+attack = 0.0002
+decay = 0.2
+sustain = 0.0
+release = 0.056
+vel_sens = 0.5
+
+[noise.filter]
+type = "bandpass"
+cutoff = 6400.0
+resonance = 0.15
+env_amount = 0.25
+attack = 0.0002
+decay = 0.07
+sustain = 0.03
+release = 0.056
 
 [[operators]]
-ratio = 8
-detune_cents = 0
-level = 1
+ratio = 1.0
+detune_cents = 0.0
+level = 0.92
 attack = 0.0002
-decay = 0.045
-sustain = 0
-release = 0.01575
+decay = 0.2
+sustain = 0.0
+release = 0.056
 vel_sens = 0.5
 waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 5480.0
 
 [[operators]]
-ratio = 5.84
-detune_cents = -18
-level = 0.78
+ratio = 1.0
+detune_cents = -12.0
+level = 0.7
 attack = 0.00015
-decay = 0.0315
-sustain = 0
-release = 0.0126
+decay = 0.15
+sustain = 0.0
+release = 0.044
 vel_sens = 0.55
 waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 6360.0
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.55
+ratio = 1.0
+detune_cents = 10.0
+level = 0.48
 attack = 0.00015
-decay = 0.02025
-sustain = 0
-release = 0.03
+decay = 0.1
+sustain = 0.0
+release = 0.036
 vel_sens = 0.6
 waveform = "abs-sine"
 freq_mode = "fixed"
-fixed_hz = 4200
+fixed_hz = 7840.0
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.42
+ratio = 1.0
+detune_cents = -6.0
+level = 0.55
 attack = 0.0001
-decay = 0.0126
-sustain = 0
-release = 0.02
-vel_sens = 0.65
+decay = 0.22
+sustain = 0.0
+release = 0.06
+vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 6174
+fixed_hz = 4920.0

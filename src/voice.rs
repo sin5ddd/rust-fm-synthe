@@ -2,6 +2,7 @@ use crate::adsr::Adsr;
 use crate::algorithm::Algorithm;
 use crate::filter::{FilterParams, Svf};
 use crate::midi::semitones_to_ratio;
+use crate::noise::NoiseSource;
 use crate::operator::Operator;
 use crate::preset::Preset;
 use std::f64::consts::TAU;
@@ -23,6 +24,7 @@ pub struct Voice {
     filter: Svf,
     filter_env: Adsr,
     filter_params: FilterParams,
+    noise: NoiseSource,
     note_hz: f64,
     sample_rate: f64,
     time: f64,
@@ -56,6 +58,7 @@ impl Voice {
             filter: Svf::new(sr),
             filter_env: Adsr::new(preset.filter.adsr(), sr),
             filter_params: preset.filter.clone(),
+            noise: NoiseSource::new(preset.noise.clone(), sr),
             note_hz: 440.0,
             sample_rate: f64::from(sample_rate),
             time: 0.0,
@@ -72,6 +75,7 @@ impl Voice {
         self.time = 0.0;
         self.filter.reset();
         self.filter_env.note_on();
+        self.noise.note_on(velocity);
         for op in &mut self.ops {
             op.note_on(velocity);
         }
@@ -79,13 +83,14 @@ impl Voice {
 
     pub fn note_off(&mut self) {
         self.filter_env.note_off();
+        self.noise.note_off();
         for op in &mut self.ops {
             op.note_off();
         }
     }
 
     pub fn is_idle(&self) -> bool {
-        self.ops.iter().all(|op| op.is_idle())
+        self.ops.iter().all(|op| op.is_idle()) && self.noise.is_idle()
     }
 
     pub fn max_release_secs(&self) -> f32 {
@@ -94,6 +99,7 @@ impl Voice {
             .map(Operator::release_secs)
             .fold(0.0f32, f32::max)
             .max(self.filter_env.release_secs())
+            .max(self.noise.release_secs())
     }
 
     pub fn max_sustain(&self) -> f32 {
@@ -101,6 +107,7 @@ impl Voice {
             .iter()
             .map(Operator::sustain)
             .fold(0.0f32, f32::max)
+            .max(self.noise.sustain())
     }
 
     pub fn tick(&mut self) -> f32 {
@@ -125,7 +132,7 @@ impl Voice {
             fb,
             mod_gain,
             self.feedback_op,
-        );
+        ) + self.noise.tick();
 
         let env = self.filter_env.tick();
         let cutoff = self.filter_params.cutoff * 2f32.powf(env * self.filter_params.env_amount);

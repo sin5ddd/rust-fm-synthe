@@ -2,7 +2,7 @@
 
 use fm_synth::{
     factory_ids, load_factory, midi_to_hz, pcm_data_bytes, peak, render, render_all_factory, rms,
-    write_wav, ExportParams, RenderParams, WavSettings, DEFAULT_OUTPUT_DIR,
+    write_wav, ExportParams, Preset, RenderParams, WavSettings, DEFAULT_OUTPUT_DIR,
 };
 use hound::WavReader;
 use std::fs;
@@ -1460,5 +1460,113 @@ fn bs_house_tight_has_mid_click_on_attack() {
     assert!(
         click > click_late * 6.0,
         "house-tight mid click should live on the attack (click={click}, late={click_late})"
+    );
+}
+
+#[test]
+fn pc_hat_closed_has_7khz_sizzle_not_nyquist_tick() {
+    let preset = load_factory("pc-hat-closed").unwrap();
+    let sr = 48_000u32;
+    let buf = render(
+        &preset,
+        &RenderParams {
+            frequency_hz: midi_to_hz(preset.default_note),
+            duration_secs: preset.default_duration,
+            velocity: 0.9,
+            sample_rate: sr,
+        },
+    )
+    .unwrap();
+    let sr_f = sr as f32;
+    let body = hann_window(&buf);
+    let band = |lo, hi| {
+        let mut e = 0.0;
+        let mut f = lo;
+        while f < hi {
+            e += goertzel_power(&body, sr_f, f);
+            f += 80.0;
+        }
+        e
+    };
+    let sizzle = band(6000.0, 10000.0);
+    let air_tick = band(14000.0, 20000.0);
+    assert!(
+        sizzle > air_tick * 1.2,
+        "closed hat should sizzle near 7-8 kHz, not a 16-20 kHz tick (sizzle={sizzle}, air={air_tick})"
+    );
+
+    let sr_u = sr as usize;
+    let early = rms(&buf[..sr_u / 100]); // 0-10 ms
+    let t10 = sr_u / 100;
+    let t40 = sr_u / 25;
+    let late = rms(&buf[t10..t40]); // 10-40 ms
+    assert!(
+        late > early * 0.18,
+        "closed hat died like a click by 10-40 ms (late={late}, early={early})"
+    );
+    let t80 = (sr_u * 2) / 25;
+    assert!(t80 < buf.len(), "closed hat buffer shorter than 80 ms");
+    let body = rms(&buf[t40..t80]); // 40-80 ms
+    assert!(
+        body > early * 0.06,
+        "closed hat should still sizzle at 40-80 ms (body={body}, early={early})"
+    );
+}
+
+#[test]
+fn noise_only_white_is_sand_not_a_tone() {
+    let toml = r#"
+name = "noise-only"
+algorithm = 8
+gain = 1.0
+default_note = 60
+default_duration = 0.25
+[noise]
+type = "white"
+level = 1.0
+attack = 0.0
+decay = 0.0
+sustain = 1.0
+release = 0.02
+vel_sens = 0.0
+[noise.filter]
+type = "highpass"
+cutoff = 4000.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+"#;
+    let preset = Preset::from_toml_str("noise-only", toml).unwrap();
+    let sr = 48_000u32;
+    let buf = render(
+        &preset,
+        &RenderParams {
+            frequency_hz: 261.63,
+            duration_secs: 0.25,
+            velocity: 1.0,
+            sample_rate: sr,
+        },
+    )
+    .unwrap();
+    assert!(buf.iter().all(|s| s.is_finite()), "NaN/Inf");
+    assert!(rms(&buf) > 0.02, "noise-only silent (rms={})", rms(&buf));
+    let body = hann_window(&buf);
+    let sr_f = sr as f32;
+    let mut bins = Vec::new();
+    let mut f = 500.0;
+    while f <= 8_000.0 {
+        bins.push(goertzel_power(&body, sr_f, f));
+        f += 80.0;
+    }
+    let mean = bins.iter().sum::<f64>() / bins.len() as f64;
+    let max = bins.iter().copied().fold(0.0, f64::max);
+    assert!(
+        mean > 0.0 && max < mean * 12.0,
+        "white noise should be a band, not a beep (max={max}, mean={mean})"
     );
 }

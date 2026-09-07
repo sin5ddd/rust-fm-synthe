@@ -1,7 +1,7 @@
 use crate::adsr::AdsrParams;
 use serde::Deserialize;
 
-/// Voice-level filter mode. One SVF, three taps (LP / BP / HP).
+/// Voice-level filter mode. One SVF, four taps (LP / BP / HP / notch).
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum FilterType {
@@ -9,6 +9,8 @@ pub enum FilterType {
     Lowpass,
     Bandpass,
     Highpass,
+    /// `input - bandpass` on the same state (LP + HP).
+    Notch,
 }
 
 /// Static filter + cutoff-ADSR patch data. All fields default so old TOML still parses.
@@ -57,8 +59,8 @@ impl FilterParams {
 
 /// Topology-preserving transform SVF (Cytomic / Zavalishin).
 ///
-/// One state pair yields LP, BP, and HP. Coefficients are rebuilt each sample
-/// so cutoff can be enveloped without zippering.
+/// One state pair yields LP, BP, HP, and notch. Coefficients are rebuilt each
+/// sample so cutoff can be enveloped without zippering.
 #[derive(Clone, Debug)]
 pub struct Svf {
     sample_rate: f32,
@@ -108,6 +110,8 @@ impl Svf {
             // k*v1 ≈ unity peak at the cutoff (otherwise BP gets louder with Q).
             FilterType::Bandpass => v1 * k,
             FilterType::Highpass => input - k * v1 - v2,
+            // LP + HP = input - k*v1. Same as dry minus the unity BP tap.
+            FilterType::Notch => input - k * v1,
         };
         if y.is_finite() {
             y
@@ -207,6 +211,22 @@ mod tests {
         }
         let y_bp = f.tick(1.0, 400.0, 1.0, FilterType::Bandpass);
         let y_hp = f.tick(1.0, 400.0, 1.0, FilterType::Highpass);
-        assert!(y_bp.is_finite() && y_hp.is_finite());
+        let y_n = f.tick(1.0, 400.0, 1.0, FilterType::Notch);
+        assert!(y_bp.is_finite() && y_hp.is_finite() && y_n.is_finite());
+    }
+
+    #[test]
+    fn notch_kills_sine_at_cutoff() {
+        let sr = 44_100.0;
+        let n = 8_192;
+        let tone = sine(1_000.0, sr, n);
+        let on = run(FilterType::Notch, 1_000.0, 0.45, &tone, sr);
+        let off = run(FilterType::Notch, 8_000.0, 0.45, &tone, sr);
+        let rc = rms(&on[2_000..]);
+        let ro = rms(&off[2_000..]);
+        assert!(
+            rc < ro * 0.25,
+            "notch at 1 kHz should kill a 1 kHz sine (on={rc}, off={ro})"
+        );
     }
 }
