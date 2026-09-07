@@ -4,7 +4,7 @@ algorithm = 3
 feedback = 0.09
 feedback_op = 4
 gain = 0.95
-default_note = 64
+default_note = 60
 default_duration = 17.2
 
 [lfo]
