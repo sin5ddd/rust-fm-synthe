@@ -190,6 +190,9 @@ const FACTORY: &[(&str, &str)] = &[
     factory_entry!("bass", "bs-growl-2"),
     factory_entry!("bass", "bs-sine-sub"),
     factory_entry!("bass", "bs-metal-fm"),
+    factory_entry!("bass", "bass-fm_house"),
+    factory_entry!("bass", "bass-fm_sub"),
+    factory_entry!("bass", "reese-dark"),
     factory_entry!("perc", "pc-hat-closed"),
     factory_entry!("perc", "pc-hat-open"),
     factory_entry!("perc", "pc-hat-house"),
@@ -385,6 +388,7 @@ const FACTORY: &[(&str, &str)] = &[
     factory_entry!("ep", "ep-wurli"),
     factory_entry!("ep", "ep-tine-bell"),
     factory_entry!("ep", "ep-muted"),
+    factory_entry!("ep", "keys-fm_ep"),
 ];
 
 #[derive(Clone, Debug, Deserialize)]

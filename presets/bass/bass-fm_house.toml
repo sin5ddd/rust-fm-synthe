@@ -1,0 +1,72 @@
+name = "house floor bass"
+description = "C2 tight house floor (batch 1). Native C2; write C4:…. Pairs with bd:hf."
+algorithm = 7
+feedback = 0.1
+feedback_op = 4
+gain = 1.06
+default_note = 36
+default_duration = 0.85
+
+[pitch]
+start_semitones = 2.5
+end_semitones = 0
+curve = 2.2
+
+[filter]
+type = "lowpass"
+cutoff = 520
+resonance = 0.16
+env_amount = 2.2
+attack = 0.0004
+decay = 0.06
+sustain = 0.07
+release = 0.07
+
+# Native C2 サブ芯（ratio 1。bs-house-tight の 0.5 床とは別）
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 1
+attack = 0.002
+decay = 0.4
+sustain = 0
+release = 0.1
+vel_sens = 0.25
+waveform = "sine"
+
+[[operators]]
+ratio = 2
+detune_cents = 4
+level = 0.22
+attack = 0.001
+decay = 0.1
+sustain = 0
+release = 0.04
+vel_sens = 0.35
+waveform = "sine"
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.8
+attack = 0.00025
+decay = 0.02
+sustain = 0
+release = 0.01
+vel_sens = 0.5
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 1480
+
+[[operators]]
+ratio = 1
+detune_cents = 0
+level = 0.55
+attack = 0.0002
+decay = 0.011
+sustain = 0
+release = 0.007
+vel_sens = 0.55
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 2420

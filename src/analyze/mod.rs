@@ -359,7 +359,14 @@ pub fn category_hints_for_id(id: &str) -> Vec<String> {
     } else if id.starts_with("bs-")
         || matches!(
             id,
-            "sub-bass" | "growl-bass" | "reese-mid" | "supersaw-bass" | "bp-growl"
+            "sub-bass"
+                | "growl-bass"
+                | "reese-mid"
+                | "supersaw-bass"
+                | "bp-growl"
+                | "bass-fm_house"
+                | "bass-fm_sub"
+                | "reese-dark"
         )
     {
         vec!["bass".into(), "low/mid energy".into()]
@@ -400,7 +407,7 @@ pub fn category_hints_for_id(id: &str) -> Vec<String> {
         ]
     } else if id.starts_with("pl-") {
         vec!["short pluck".into(), "fast decay, not a 16s pad".into()]
-    } else if id.starts_with("ep-") {
+    } else if id.starts_with("ep-") || matches!(id, "keys-fm_ep") {
         vec![
             "electric piano".into(),
             "integer tines 2x/3x, not a bell".into(),

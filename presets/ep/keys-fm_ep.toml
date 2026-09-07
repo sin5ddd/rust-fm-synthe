@@ -1,0 +1,62 @@
+name = "FM EP one-shot"
+description = "C3 EP tines (2×/3×). Write C4:…. Not the live 2-op lead."
+algorithm = 8
+feedback = 0.06
+feedback_op = 4
+gain = 1.04
+default_note = 48
+default_duration = 0.88
+
+[filter]
+type = "lowpass"
+cutoff = 2400.0
+resonance = 0.1
+env_amount = 0.9
+attack = 0.0006
+decay = 0.22
+sustain = 0.08
+release = 0.18
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0
+level = 0.9
+attack = 0.001
+decay = 0.42
+sustain = 0.08
+release = 0.16
+vel_sens = 0.34
+waveform = "sine"
+
+[[operators]]
+ratio = 2.0
+detune_cents = 2
+level = 0.78
+attack = 0.0003
+decay = 0.18
+sustain = 0.02
+release = 0.1
+vel_sens = 0.46
+waveform = "sine"
+
+[[operators]]
+ratio = 3.0
+detune_cents = -1
+level = 0.62
+attack = 0.0003
+decay = 0.14
+sustain = 0.0
+release = 0.08
+vel_sens = 0.48
+waveform = "sine"
+
+[[operators]]
+ratio = 4.0
+detune_cents = 3
+level = 0.22
+attack = 0.0004
+decay = 0.08
+sustain = 0.0
+release = 0.05
+vel_sens = 0.4
+waveform = "sine"

@@ -1,64 +1,63 @@
 name = "metal fm bass"
 description = "金属FMベース。非整数比のリンがミッドに乗る。サブは薄く、既存グロウルやスーパーソーとは別キャラ。"
-algorithm = 4
-feedback = 0.36
+algorithm = 8
+feedback = 0.42
 feedback_op = 4
-gain = 1.02
+gain = 1.04
 default_note = 43
 default_duration = 1.2
 
+# G2 正弦胴を残しすぎるとリンが聞こえない。HP で羊毛を切る。
 [filter]
 type = "highpass"
-cutoff = 90
-resonance = 0.18
-env_amount = 0.8
-attack = 0.004
-decay = 0.28
-sustain = 0.22
+cutoff = 240
+resonance = 0.22
+env_amount = 0.55
+attack = 0.003
+decay = 0.22
+sustain = 0.18
 release = 0.12
 
 [[operators]]
 ratio = 1
 detune_cents = 0
-level = 1
+level = 0.42
 attack = 0.006
-decay = 0.75
-sustain = 0.18
+decay = 0.7
+sustain = 0.16
 release = 0.16
-vel_sens = 0.34
+vel_sens = 0.32
 waveform = "sine"
 
 [[operators]]
 ratio = 2.73
 detune_cents = 14
-level = 0.55
-attack = 0.003
-decay = 0.22
-sustain = 0.06
-release = 0.08
+level = 0.92
+attack = 0.002
+decay = 0.45
+sustain = 0.1
+release = 0.12
 vel_sens = 0.48
 waveform = "abs-sine"
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.48
-attack = 0.004
-decay = 0.45
-sustain = 0.12
-release = 0.12
-vel_sens = 0.36
-waveform = "sine"
-freq_mode = "fixed"
-fixed_hz = 220
-
-[[operators]]
 ratio = 3.41
 detune_cents = -9
-level = 0.38
+level = 0.78
 attack = 0.002
-decay = 0.14
-sustain = 0.04
-release = 0.06
-vel_sens = 0.52
+decay = 0.38
+sustain = 0.08
+release = 0.1
+vel_sens = 0.5
 waveform = "sine"
+
+[[operators]]
+ratio = 5.17
+detune_cents = 8
+level = 0.55
+attack = 0.0015
+decay = 0.22
+sustain = 0.05
+release = 0.08
+vel_sens = 0.55
+waveform = "pulse"

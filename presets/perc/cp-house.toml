@@ -1,69 +1,77 @@
 name = "cp-house"
 description = "短いドライなハウスクラップ。2/4専用。1 kHz付近の短い胴＋ハイのスラップ。スネア代用でもサブでもない。"
-algorithm = 5
-feedback = 0.78
+algorithm = 6
+feedback = 0.88
 feedback_op = 4
 gain = 1.16
 default_note = 60
 default_duration = 0.28
 
-# HP を 1 kHz 手前に置き、レゾナンスで胴を出す。サブとスネア帯（〜400 Hz）は切る。
+# Same family as pc-clap-dry (user-ok), but a longer 1 kHz body.
+# Lower FM index than the previous house take — high index on 1 kHz pulse
+# reads as metal, not palm.
 [filter]
 type = "highpass"
-cutoff = 820.0
-resonance = 0.38
-env_amount = 0.45
+cutoff = 840.0
+resonance = 0.14
+env_amount = 0.22
 attack = 0.0002
-decay = 0.055
-sustain = 0.06
+decay = 0.1
+sustain = 0.08
 release = 0.05
 
-# 1層目: 1 kHz 付近の短い胴（ハットに負けないミッド）
+# Flesh of the パン. Sine so the long body is not a buzzy pulse cluster.
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
 level = 1.0
-attack = 0.0003
-decay = 0.09
+attack = 0.0002
+decay = 0.4
 sustain = 0.0
-release = 0.04
-vel_sens = 0.45
+release = 0.08
+vel_sens = 0.5
 waveform = "sine"
 freq_mode = "fixed"
-fixed_hz = 1020.0
+fixed_hz = 1080.0
 
+# Slap grain ~9 ms
 [[operators]]
-ratio = 6.11
-detune_cents = 14.0
-level = 0.42
-attack = 0.0002
-decay = 0.028
+ratio = 1.0
+detune_cents = 12.0
+level = 0.82
+attack = 0.009
+decay = 0.12
 sustain = 0.0
-release = 0.016
+release = 0.045
 vel_sens = 0.55
-waveform = "abs-sine"
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 1380.0
 
-# 2層目: 約22ms遅れのハイ・スラップ（2–4 kHz）
+# Air grain ~18 ms
+[[operators]]
+ratio = 1.0
+detune_cents = -10.0
+level = 0.58
+attack = 0.018
+decay = 0.1
+sustain = 0.0
+release = 0.04
+vel_sens = 0.52
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 1720.0
+
+# Modulator: enough smear for a band, not a bell. Lasts past the carriers.
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
-level = 0.86
-attack = 0.022
-decay = 0.08
+level = 1.08
+attack = 0.00012
+decay = 0.5
 sustain = 0.0
-release = 0.038
-vel_sens = 0.5
+release = 0.09
+vel_sens = 0.6
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 2760.0
-
-[[operators]]
-ratio = 11.31
-detune_cents = -18.0
-level = 0.48
-attack = 0.021
-decay = 0.028
-sustain = 0.0
-release = 0.016
-vel_sens = 0.7
-waveform = "pulse"
+fixed_hz = 168.0

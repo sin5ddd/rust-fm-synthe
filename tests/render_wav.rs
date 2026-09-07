@@ -1293,6 +1293,39 @@ fn cp_house_has_1khz_body_without_sub() {
         air > mid * 0.15,
         "cp-house high slap disappeared (mid={mid}, air={air})"
     );
+    // Closed-hat air (7–14 kHz) must not swallow the 1 kHz body.
+    let hat = band(7000.0, 14000.0);
+    assert!(
+        mid > hat * 0.4,
+        "cp-house 1 kHz body lost to hat-range air (mid={mid}, hat={hat})"
+    );
+    // A sine at ~1 kHz would spike one bin against its neighbours in the body.
+    let mut body_bins = Vec::new();
+    let mut f = 900.0;
+    while f <= 1600.0 {
+        body_bins.push(goertzel_power(&body, sr_f, f));
+        f += 50.0;
+    }
+    let body_mean = body_bins.iter().sum::<f64>() / body_bins.len() as f64;
+    let body_max = body_bins.iter().copied().fold(0.0, f64::max);
+    assert!(
+        body_mean > 0.0 && body_max < body_mean * 12.0,
+        "cp-house 1 kHz body should be a band, not a beep (max={body_max}, mean={body_mean})"
+    );
+
+    // Decay is time-to--80 dB; a 40 ms decay is a click. 60–120 ms must still
+    // carry the パン body.
+    let sr_u = sr as usize;
+    let t40 = sr_u / 25;
+    let t60 = (sr_u * 3) / 50;
+    let t120 = (sr_u * 3) / 25;
+    assert!(t120 < buf.len(), "cp-house buffer shorter than 120 ms");
+    let attack_rms = rms(&buf[..t40]);
+    let body_rms = rms(&buf[t60..t120]);
+    assert!(
+        body_rms > attack_rms * 0.10,
+        "cp-house died like a click by 60-120 ms (body_rms={body_rms}, attack_rms={attack_rms})"
+    );
 }
 
 #[test]
@@ -1359,5 +1392,73 @@ fn ep_rhodes_soft_attack_has_tine_2x_3x_unlike_sine() {
     assert!(
         h2 > bell && h3 > bell,
         "inharmonic 3.5× bell partial beat the tines (h2={h2}, h3={h3}, bell={bell})"
+    );
+}
+
+#[test]
+fn ep_wurli_attack_has_audible_2x_tine() {
+    let preset = load_factory("ep-wurli").unwrap();
+    let sr = 48_000u32;
+    let f0 = midi_to_hz(48) as f32;
+    let buf = render(
+        &preset,
+        &RenderParams {
+            frequency_hz: f64::from(f0),
+            duration_secs: preset.default_duration,
+            velocity: 0.9,
+            sample_rate: sr,
+        },
+    )
+    .unwrap();
+    let start = (sr as usize) / 500;
+    let end = ((sr as usize) / 12).min(buf.len());
+    let attack = hann_window(&buf[start..end]);
+    let fund = goertzel_power(&attack, sr as f32, f0);
+    let h2 = goertzel_power(&attack, sr as f32, f0 * 2.0);
+    let h3 = goertzel_power(&attack, sr as f32, f0 * 3.0);
+    assert!(
+        h2 > fund * 0.08,
+        "wurli 2× tine missing on attack (h2={h2}, fund={fund})"
+    );
+    assert!(
+        h3 > fund * 0.05,
+        "wurli 3× tine missing on attack (h3={h3}, fund={fund})"
+    );
+}
+
+#[test]
+fn bs_house_tight_has_mid_click_on_attack() {
+    let preset = load_factory("bs-house-tight").unwrap();
+    let sr = 48_000u32;
+    let buf = render(
+        &preset,
+        &RenderParams {
+            frequency_hz: midi_to_hz(preset.default_note),
+            duration_secs: preset.default_duration,
+            velocity: 0.9,
+            sample_rate: sr,
+        },
+    )
+    .unwrap();
+    let click_n = ((sr as usize) / 25).min(buf.len()); // ~40 ms
+    let late_a = ((sr as usize) / 5).min(buf.len()); // ~200 ms
+    let late_b = ((sr as usize) / 3).min(buf.len()); // ~333 ms
+    let sr_f = sr as f32;
+    let band = |slice: &[f32], lo, hi| {
+        let w = hann_window(slice);
+        let mut e = 0.0;
+        let mut f = lo;
+        while f < hi {
+            e += goertzel_power(&w, sr_f, f);
+            f += 40.0;
+        }
+        e
+    };
+    let click = band(&buf[..click_n], 800.0, 2800.0);
+    let click_late = band(&buf[late_a..late_b], 800.0, 2800.0);
+    assert!(click > 0.0, "house-tight mid click missing (click={click})");
+    assert!(
+        click > click_late * 6.0,
+        "house-tight mid click should live on the attack (click={click}, late={click_late})"
     );
 }

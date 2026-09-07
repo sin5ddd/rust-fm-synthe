@@ -13,9 +13,9 @@ end = 0.7
 
 [filter]
 type = "lowpass"
-cutoff = 900
-resonance = 0.24
-env_amount = 0.9
+cutoff = 1500
+resonance = 0.22
+env_amount = 1.0
 attack = 0.006
 decay = 0.35
 sustain = 0.28

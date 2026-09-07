@@ -15,6 +15,17 @@ depth_cents = 14.0
 start = 1.25
 end = 0.7
 
+# ミッドの喉に寄せる。bp-growl（BP 520）とは別で、HP だけ。
+[filter]
+type = "highpass"
+cutoff = 170
+resonance = 0.26
+env_amount = 0.55
+attack = 0.008
+decay = 0.32
+sustain = 0.22
+release = 0.16
+
 # OP1 キャリア
 [[operators]]
 ratio = 1.0
