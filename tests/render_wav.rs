@@ -361,6 +361,70 @@ fn factory_fx_are_fifty_and_audible() {
     }
 }
 
+/// 130 BPM, 4/4 → 1 bar ≈ 1.846 s → 8 bars ≈ 14.769 s.
+/// The default render must still have energy in the last 0.5 s.
+#[test]
+fn eight_bar_risers_hold_at_130bpm() {
+    const IDS: [&str; 6] = [
+        "fm-riser",
+        "fx-riser-saw",
+        "fx-riser-noise",
+        "fx-riser-filter",
+        "fx-riser-pitch",
+        "fx-uplifter",
+    ];
+    const SR: u32 = 22_050;
+    const TAIL_SECS: f64 = 0.5;
+    const BARS_8_AT_130: f64 = 32.0 * 60.0 / 130.0;
+    let tail_n = ((TAIL_SECS * f64::from(SR)).round() as usize).max(1);
+
+    for id in IDS {
+        let preset = load_factory(id).unwrap();
+        assert!(
+            preset.default_duration + 1e-9 >= BARS_8_AT_130,
+            "{id} default_duration {} must cover 8 bars at 130 BPM ({BARS_8_AT_130})",
+            preset.default_duration
+        );
+
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: SR,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+
+        let expected = (preset.default_duration * f64::from(SR)).round() as usize;
+        assert_eq!(
+            buf.len(),
+            expected,
+            "{id} sample count {} != duration*sr {}",
+            buf.len(),
+            expected
+        );
+        assert!(buf.len() >= tail_n, "{id} buffer shorter than tail window");
+
+        let tail = &buf[buf.len() - tail_n..];
+        let tail_rms = rms(tail);
+        assert!(
+            tail_rms > 0.01,
+            "{id} last {TAIL_SECS}s is silence (rms={tail_rms}); \
+             carrier sustain must hold for the full 8 bars"
+        );
+
+        let t14 = ((14.0 * f64::from(SR)).round() as usize).min(buf.len().saturating_sub(tail_n));
+        let at14 = rms(&buf[t14..t14 + tail_n]);
+        assert!(
+            at14 > 0.01,
+            "{id} silent at t=14s (rms={at14}); amp env died before bar 8"
+        );
+    }
+}
+
 #[test]
 fn factory_bs_basses_are_fifteen_and_audible() {
     let ids: Vec<_> = factory_ids()

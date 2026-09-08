@@ -1,11 +1,12 @@
 name = "fm-riser"
-description = "ノイズ寄りのFMライザー。ピッチ上昇と変調量スイープ。ビルドのFX。"
-algorithm = 2
+description = "ノイズ寄りのFMライザー。基音は2オクターブ下、スタートで100Hzのサインを重ねてピッチ包絡と一緒に上昇。倍音は1オクターブ上。130 BPMの8小節を覆う長さ。"
+algorithm = 7
 feedback = 0.4
 feedback_op = 4
 gain = 0.9
 default_note = 48
-default_duration = 2.4
+# 8 bars at 130 BPM, 4/4 = 32 * 60 / 130 ≈ 14.769 s, plus a short release tail.
+default_duration = 15.0
 
 [pitch]
 start_semitones = -19.0
@@ -23,10 +24,10 @@ end = 1.55
 [noise]
 type = "white"
 level = 0.72
-attack = 0.08
-decay = 2.0
-sustain = 0.32
-release = 0.22
+attack = 0.5
+decay = 8.0
+sustain = 0.7
+release = 0.3
 vel_sens = 0.2
 
 [noise.filter]
@@ -34,55 +35,55 @@ type = "highpass"
 cutoff = 200.0
 resonance = 0.1
 env_amount = 3.8
-attack = 1.8
-decay = 0.22
+attack = 11.0
+decay = 1.4
 sustain = 0.7
-release = 0.18
+release = 0.25
 
-# OP1 キャリア
+# OP1 キャリア。基音は ratio 0.25 で2オクターブ下。algo 7 では素のサイン。
 [[operators]]
-ratio = 1.0
+ratio = 0.25
 detune_cents = 0.0
 level = 1.0
-attack = 0.08
-decay = 2.1
-sustain = 0.35
-release = 0.25
+attack = 0.4
+decay = 6.0
+sustain = 0.8
+release = 0.3
 vel_sens = 0.2
 waveform = "sine"
 
-# OP2
+# OP2 素のサイン。MIDI 48・pitch start -19 st で約 100 Hz。包絡に追従して上昇。
 [[operators]]
-ratio = 2.71
-detune_cents = -15.0
-level = 0.7
-attack = 0.05
-decay = 1.8
-sustain = 0.28
-release = 0.2
-vel_sens = 0.25
-waveform = "abs-sine"
+ratio = 2.2908
+detune_cents = 0.0
+level = 0.95
+attack = 0.4
+decay = 6.0
+sustain = 0.8
+release = 0.3
+vel_sens = 0.2
+waveform = "sine"
 
-# OP3
+# OP3。旧 5.13 の1オクターブ上。algo 7 では OP4 に変調されるキャリア。
 [[operators]]
-ratio = 5.13
+ratio = 10.26
 detune_cents = 27.0
-level = 0.55
-attack = 0.12
-decay = 1.6
-sustain = 0.22
-release = 0.18
+level = 0.9
+attack = 0.5
+decay = 5.0
+sustain = 0.7
+release = 0.26
 vel_sens = 0.3
 waveform = "half-sine"
 
-# OP4 高フィードバックで砂状の帯域
+# OP4 高フィードバックで砂状の帯域。旧 8.07 の1オクターブ上。
 [[operators]]
-ratio = 8.07
+ratio = 16.14
 detune_cents = -33.0
 level = 0.48
-attack = 0.04
-decay = 1.4
-sustain = 0.2
-release = 0.15
+attack = 0.3
+decay = 4.5
+sustain = 0.5
+release = 0.24
 vel_sens = 0.35
 waveform = "pulse"

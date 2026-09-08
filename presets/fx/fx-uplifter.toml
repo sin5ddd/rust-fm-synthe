@@ -1,11 +1,12 @@
 name = "fx-uplifter"
-description = "アップリフター。ピッチ上昇＋フィルタ開放。ビルド用。"
-algorithm = 2
+description = "アップリフター。サブとスタート約100Hzのサインを重ね、ピッチ上昇＋フィルタ開放。130 BPMの8小節を覆う長さ。"
+algorithm = 7
 feedback = 0.34
 feedback_op = 4
 gain = 0.95
 default_note = 60
-default_duration = 2.8
+# 8 bars at 130 BPM, 4/4 ≈ 14.769 s, plus a short release tail.
+default_duration = 15.0
 
 [pitch]
 start_semitones = -16.0
@@ -25,18 +26,18 @@ type = "lowpass"
 cutoff = 220.0
 resonance = 0.28
 env_amount = 5.2
-attack = 2.1
-decay = 0.3
-sustain = 0.7
-release = 0.15
+attack = 11.0
+decay = 1.4
+sustain = 0.72
+release = 0.25
 
 [noise]
 type = "white"
 level = 0.7
-attack = 0.1
-decay = 2.2
-sustain = 0.35
-release = 0.18
+attack = 0.5
+decay = 8.0
+sustain = 0.7
+release = 0.3
 vel_sens = 0.2
 
 [noise.filter]
@@ -44,48 +45,55 @@ type = "lowpass"
 cutoff = 240.0
 resonance = 0.18
 env_amount = 4.8
-attack = 2.05
-decay = 0.28
+attack = 11.0
+decay = 1.4
 sustain = 0.68
-release = 0.15
+release = 0.25
 
+# OP1 サブ。ratio 0.25。
+[[operators]]
+ratio = 0.25
+detune_cents = 0
+level = 0.9
+attack = 0.4
+decay = 6.0
+sustain = 0.8
+release = 0.3
+vel_sens = 0.2
+waveform = "sine"
+
+# OP2 素のサイン。MIDI 60・pitch start -16 st で約 100 Hz。
+[[operators]]
+ratio = 0.9631
+detune_cents = 0
+level = 0.95
+attack = 0.4
+decay = 6.0
+sustain = 0.8
+release = 0.3
+vel_sens = 0.2
+waveform = "sine"
+
+# OP3 ソー本体。algo 7 では OP4 に変調される。
 [[operators]]
 ratio = 1.0
 detune_cents = -6
 level = 1.0
-attack = 0.06
-decay = 2.2
-sustain = 0.4
-release = 0.2
+attack = 0.35
+decay = 6.0
+sustain = 0.75
+release = 0.28
 vel_sens = 0.2
 waveform = "saw"
+
+# OP4 モジュレータ。
 [[operators]]
 ratio = 2.07
 detune_cents = 8
-level = 0.65
-attack = 0.05
-decay = 1.8
-sustain = 0.3
-release = 0.16
+level = 0.5
+attack = 0.3
+decay = 5.5
+sustain = 0.55
+release = 0.24
 vel_sens = 0.28
 waveform = "abs-sine"
-[[operators]]
-ratio = 3.11
-detune_cents = -14
-level = 0.48
-attack = 0.08
-decay = 1.6
-sustain = 0.22
-release = 0.14
-vel_sens = 0.32
-waveform = "half-sine"
-[[operators]]
-ratio = 5.5
-detune_cents = 20
-level = 0.4
-attack = 0.04
-decay = 1.4
-sustain = 0.18
-release = 0.12
-vel_sens = 0.38
-waveform = "pulse"

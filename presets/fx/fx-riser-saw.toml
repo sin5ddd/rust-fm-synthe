@@ -1,11 +1,12 @@
 name = "fx-riser-saw"
-description = "スーパーソーのライザー。厚みのある上昇。"
+description = "スーパーソーのライザー。サブとスタート約100Hzのサインを重ね、ピッチ包絡と一緒に上昇。130 BPMの8小節を覆う長さ。"
 algorithm = 8
 feedback = 0.2
 feedback_op = 4
 gain = 0.92
 default_note = 48
-default_duration = 3.0
+# 8 bars at 130 BPM, 4/4 ≈ 14.769 s, plus a short release tail.
+default_duration = 15.0
 
 [pitch]
 start_semitones = -14.0
@@ -25,52 +26,59 @@ type = "lowpass"
 cutoff = 260.0
 resonance = 0.2
 env_amount = 4.8
-attack = 2.2
-decay = 0.3
-sustain = 0.7
-release = 0.16
+attack = 11.0
+decay = 1.5
+sustain = 0.75
+release = 0.25
 
+# OP1 サブ。ratio 0.25。
+[[operators]]
+ratio = 0.25
+detune_cents = 0
+level = 0.9
+attack = 0.4
+decay = 6.0
+sustain = 0.8
+release = 0.3
+vel_sens = 0.18
+waveform = "sine"
+
+# OP2 素のサイン。MIDI 48・pitch start -14 st で約 100 Hz。
+[[operators]]
+ratio = 1.7161
+detune_cents = 0
+level = 0.95
+attack = 0.4
+decay = 6.0
+sustain = 0.8
+release = 0.3
+vel_sens = 0.2
+waveform = "sine"
+
+# OP3 スーパーソー本体。
 [[operators]]
 ratio = 1.0
 detune_cents = -5
 level = 1.0
-attack = 0.07
-decay = 2.4
-sustain = 0.45
-release = 0.2
+attack = 0.35
+decay = 6.0
+sustain = 0.75
+release = 0.28
 vel_sens = 0.18
 waveform = "super-saw"
 unison = 7
 unison_detune = 26.0
+
+# OP4 デチューンしたスーパーソー。
 [[operators]]
 ratio = 1.01
 detune_cents = 6
 level = 0.7
-attack = 0.08
-decay = 2.2
-sustain = 0.38
-release = 0.18
+attack = 0.35
+decay = 5.5
+sustain = 0.7
+release = 0.26
 vel_sens = 0.2
 waveform = "super-saw"
 unison = 5
 unison_detune = 18.0
-[[operators]]
-ratio = 2.0
-detune_cents = 0
-level = 0.35
-attack = 0.05
-decay = 1.8
-sustain = 0.22
-release = 0.14
-vel_sens = 0.3
-waveform = "saw"
-[[operators]]
-ratio = 3.5
-detune_cents = 12
-level = 0.22
-attack = 0.04
-decay = 1.4
-sustain = 0.12
-release = 0.1
-vel_sens = 0.36
-waveform = "pulse"

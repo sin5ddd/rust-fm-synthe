@@ -1244,6 +1244,115 @@ mod tests {
     }
 
     #[test]
+    fn fm_riser_is_sub_octave_carrier_with_raised_partials() {
+        let p = load_factory("fm-riser").unwrap();
+        const BARS_8_AT_130: f64 = 32.0 * 60.0 / 130.0;
+        assert!(
+            p.default_duration + 1e-9 >= BARS_8_AT_130,
+            "fm-riser default_duration {} must cover 8 bars at 130 BPM ({BARS_8_AT_130})",
+            p.default_duration
+        );
+        assert!(
+            p.default_duration <= 16.0,
+            "fm-riser default_duration {} is longer than a 130 BPM 8-bar one-shot needs",
+            p.default_duration
+        );
+        assert_eq!(
+            p.algorithm,
+            Algorithm::StackPlusCarriers,
+            "fm-riser needs dry OP1/OP2 carriers so the 100 Hz sine is audible"
+        );
+        assert!(
+            (p.operators[0].ratio - 0.25).abs() < 1e-9,
+            "carrier (fundamental) must sit 2 octaves down, got {}",
+            p.operators[0].ratio
+        );
+        let op2_start_hz = crate::midi::midi_to_hz(p.default_note)
+            * p.operators[1].ratio
+            * crate::midi::semitones_to_ratio(p.pitch.start_semitones);
+        assert!(
+            (op2_start_hz - 100.0).abs() < 0.5,
+            "OP2 sine must start near 100 Hz, got {op2_start_hz}"
+        );
+        assert_eq!(
+            p.operators[1].waveform,
+            crate::operator::Waveform::Sine,
+            "OP2 must be a sine"
+        );
+        assert!(
+            (p.operators[2].ratio - 10.26).abs() < 1e-9,
+            "OP3 must be one octave above the old 5.13 partial, got {}",
+            p.operators[2].ratio
+        );
+        assert!(
+            (p.operators[3].ratio - 16.14).abs() < 1e-9,
+            "OP4 must be one octave above the old 8.07 partial, got {}",
+            p.operators[3].ratio
+        );
+        assert!(
+            p.operators[0].sustain >= 0.7,
+            "carrier sustain {} must hold through the 8-bar render",
+            p.operators[0].sustain
+        );
+        assert!(
+            p.operators[1].sustain >= 0.7,
+            "100 Hz sine sustain {} must hold through the 8-bar render",
+            p.operators[1].sustain
+        );
+    }
+
+    #[test]
+    fn eight_bar_risers_add_sub_and_100hz_sine() {
+        const BARS_8_AT_130: f64 = 32.0 * 60.0 / 130.0;
+        const IDS: [&str; 5] = [
+            "fx-riser-saw",
+            "fx-riser-noise",
+            "fx-riser-filter",
+            "fx-riser-pitch",
+            "fx-uplifter",
+        ];
+        for id in IDS {
+            let p = load_factory(id).unwrap();
+            assert!(
+                p.default_duration + 1e-9 >= BARS_8_AT_130,
+                "{id} default_duration {} must cover 8 bars at 130 BPM ({BARS_8_AT_130})",
+                p.default_duration
+            );
+            assert!(
+                p.default_duration <= 16.0,
+                "{id} default_duration {} is longer than a 130 BPM 8-bar one-shot needs",
+                p.default_duration
+            );
+            assert!(
+                (p.operators[0].ratio - 0.25).abs() < 1e-9,
+                "{id} OP1 must be a 2-octave-down sub, got {}",
+                p.operators[0].ratio
+            );
+            assert_eq!(
+                p.operators[0].waveform,
+                crate::operator::Waveform::Sine,
+                "{id} OP1 must be a sine sub"
+            );
+            let start_hz = crate::midi::midi_to_hz(p.default_note)
+                * p.operators[1].ratio
+                * crate::midi::semitones_to_ratio(p.pitch.start_semitones);
+            assert!(
+                (start_hz - 100.0).abs() < 0.5,
+                "{id} OP2 sine must start near 100 Hz, got {start_hz}"
+            );
+            assert_eq!(
+                p.operators[1].waveform,
+                crate::operator::Waveform::Sine,
+                "{id} OP2 must be a sine"
+            );
+            assert!(
+                p.operators[0].sustain >= 0.7 && p.operators[1].sustain >= 0.7,
+                "{id} sub/100Hz sustain must hold the 8-bar render"
+            );
+        }
+    }
+
+    #[test]
     fn noise_forward_drums_use_the_noise_bus() {
         for id in [
             "sd-noise-layer",

@@ -1,11 +1,12 @@
 name = "fx-riser-noise"
-description = "ノイズライザー。砂が濃くなりピッチも上がる。3秒超。"
-algorithm = 2
+description = "ノイズライザー。サブとスタート約100Hzのサインを重ね、砂が濃くなりピッチも上がる。130 BPMの8小節を覆う長さ。"
+algorithm = 7
 feedback = 0.32
 feedback_op = 4
 gain = 0.98
 default_note = 55
-default_duration = 3.2
+# 8 bars at 130 BPM, 4/4 ≈ 14.769 s, plus a short release tail.
+default_duration = 15.0
 
 [pitch]
 start_semitones = -12.0
@@ -21,22 +22,22 @@ start = 0.2
 end = 1.7
 
 [filter]
-type = "bandpass"
-cutoff = 400.0
-resonance = 0.22
-env_amount = 4.2
-attack = 2.4
-decay = 0.28
+type = "lowpass"
+cutoff = 140.0
+resonance = 0.18
+env_amount = 5.0
+attack = 11.0
+decay = 1.4
 sustain = 0.75
-release = 0.14
+release = 0.25
 
 [noise]
 type = "white"
 level = 1.12
-attack = 0.08
-decay = 2.4
-sustain = 0.4
-release = 0.2
+attack = 0.5
+decay = 8.0
+sustain = 0.7
+release = 0.3
 vel_sens = 0.18
 
 [noise.filter]
@@ -44,48 +45,55 @@ type = "bandpass"
 cutoff = 380.0
 resonance = 0.16
 env_amount = 4.0
-attack = 2.3
-decay = 0.26
+attack = 11.0
+decay = 1.4
 sustain = 0.72
-release = 0.14
+release = 0.25
 
+# OP1 サブ。ratio 0.25。
+[[operators]]
+ratio = 0.25
+detune_cents = 0
+level = 0.9
+attack = 0.4
+decay = 6.0
+sustain = 0.8
+release = 0.3
+vel_sens = 0.18
+waveform = "sine"
+
+# OP2 素のサイン。MIDI 55・pitch start -12 st で約 100 Hz。
+[[operators]]
+ratio = 1.0204
+detune_cents = 0
+level = 0.95
+attack = 0.4
+decay = 6.0
+sustain = 0.8
+release = 0.3
+vel_sens = 0.2
+waveform = "sine"
+
+# OP3 ノイズ寄りのパルスキャリア。algo 7 では OP4 に変調される。
 [[operators]]
 ratio = 8.0
 detune_cents = -20
-level = 1.0
-attack = 0.08
-decay = 2.6
-sustain = 0.38
-release = 0.22
+level = 0.95
+attack = 0.35
+decay = 6.0
+sustain = 0.7
+release = 0.28
 vel_sens = 0.18
 waveform = "pulse"
+
+# OP4 高比の砂。
 [[operators]]
 ratio = 11.3
 detune_cents = 16
-level = 0.72
-attack = 0.06
-decay = 2.2
-sustain = 0.3
-release = 0.18
+level = 0.55
+attack = 0.3
+decay = 5.5
+sustain = 0.55
+release = 0.24
 vel_sens = 0.26
 waveform = "pulse"
-[[operators]]
-ratio = 6.4
-detune_cents = -8
-level = 0.5
-attack = 0.1
-decay = 2.0
-sustain = 0.24
-release = 0.16
-vel_sens = 0.3
-waveform = "abs-sine"
-[[operators]]
-ratio = 14.8
-detune_cents = 24
-level = 0.42
-attack = 0.05
-decay = 1.8
-sustain = 0.2
-release = 0.14
-vel_sens = 0.36
-waveform = "half-sine"
