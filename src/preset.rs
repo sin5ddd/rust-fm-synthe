@@ -391,6 +391,7 @@ const FACTORY: &[(&str, &str)] = &[
     factory_entry!("ep", "ep-wurli"),
     factory_entry!("ep", "ep-tine-bell"),
     factory_entry!("ep", "ep-muted"),
+    factory_entry!("ep", "ep-sustain"),
     factory_entry!("ep", "keys-fm_ep"),
     factory_entry!("vocal", "vl-ka"),
     factory_entry!("vocal", "vl-sa"),
@@ -1044,15 +1045,15 @@ mod tests {
     }
 
     #[test]
-    fn factory_ep_bank_has_five_ids() {
+    fn factory_ep_bank_has_six_ids() {
         let ids: Vec<_> = factory_ids()
             .into_iter()
             .filter(|id| id.starts_with("ep-"))
             .collect();
         assert_eq!(
             ids.len(),
-            5,
-            "expected exactly 5 ep-* factory EPs, got {}: {ids:?}",
+            6,
+            "expected exactly 6 ep-* factory EPs, got {}: {ids:?}",
             ids.len()
         );
         for expected in [
@@ -1061,6 +1062,7 @@ mod tests {
             "ep-wurli",
             "ep-tine-bell",
             "ep-muted",
+            "ep-sustain",
         ] {
             assert!(ids.contains(&expected), "missing {expected} in {ids:?}");
         }

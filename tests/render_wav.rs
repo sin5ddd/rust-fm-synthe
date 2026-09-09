@@ -861,15 +861,15 @@ fn factory_pl_plucks_are_thirty_and_audible() {
 }
 
 #[test]
-fn factory_ep_bank_is_five_and_audible() {
+fn factory_ep_bank_is_six_and_audible() {
     let ids: Vec<_> = factory_ids()
         .into_iter()
         .filter(|id| id.starts_with("ep-"))
         .collect();
     assert_eq!(
         ids.len(),
-        5,
-        "expected exactly 5 ep-* factory EPs, got {}: {ids:?}",
+        6,
+        "expected exactly 6 ep-* factory EPs, got {}: {ids:?}",
         ids.len()
     );
 
@@ -908,16 +908,18 @@ fn factory_ep_bank_is_five_and_audible() {
             "{id} effectively silent"
         );
 
-        // Still ringing past 1.2s — not a 200ms pluck that dies into silence.
-        let sr = 22_050usize;
-        let t12 = ((1.2 * sr as f64).round() as usize).min(buf.len().saturating_sub(1));
-        let tail = &buf[t12.min(buf.len())..];
-        if !tail.is_empty() {
-            assert!(
-                rms(tail) > 0.005,
-                "{id} died before 1.2s (tail rms={})",
-                rms(tail)
-            );
+        // Pedal-off piano dies by 1.2s. The others must still ring.
+        if id != "ep-muted" {
+            let sr = 22_050usize;
+            let t12 = ((1.2 * sr as f64).round() as usize).min(buf.len().saturating_sub(1));
+            let tail = &buf[t12.min(buf.len())..];
+            if !tail.is_empty() {
+                assert!(
+                    rms(tail) > 0.005,
+                    "{id} died before 1.2s (tail rms={})",
+                    rms(tail)
+                );
+            }
         }
     }
 }
@@ -1602,6 +1604,86 @@ fn ep_wurli_attack_has_audible_2x_tine() {
     assert!(
         h3 > fund * 0.05,
         "wurli 3× tine missing on attack (h3={h3}, fund={fund})"
+    );
+}
+
+#[test]
+fn ep_rhodes_hard_and_muted_differ_from_soft_body() {
+    fn shot(id: &str) -> (u32, Vec<f32>, f32) {
+        let preset = load_factory(id).unwrap();
+        let sr = 48_000u32;
+        let f0 = midi_to_hz(48) as f32;
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: f64::from(f0),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: sr,
+            },
+        )
+        .unwrap();
+        (sr, buf, f0)
+    }
+    let (sr, soft, f0) = shot("ep-rhodes-soft");
+    let (_, hard, _) = shot("ep-rhodes-hard");
+    let (_, muted, _) = shot("ep-muted");
+    let a = ((sr as usize) * 3 / 10).min(soft.len().min(hard.len()) - 65);
+    let b = ((sr as usize) * 6 / 10).min(soft.len().min(hard.len()));
+    let soft_w = hann_window(&soft[a..b]);
+    let hard_w = hann_window(&hard[a..b]);
+    let soft_fund = goertzel_power(&soft_w, sr as f32, f0);
+    let soft_h2 = goertzel_power(&soft_w, sr as f32, f0 * 2.0);
+    let hard_fund = goertzel_power(&hard_w, sr as f32, f0);
+    let hard_h2 = goertzel_power(&hard_w, sr as f32, f0 * 2.0);
+    let soft_ratio = soft_h2 / (soft_fund + 1e-12);
+    let hard_ratio = hard_h2 / (hard_fund + 1e-12);
+    assert!(
+        hard_ratio > soft_ratio * 3.0,
+        "hard body should keep 2× bark (hard={hard_ratio}, soft={soft_ratio})"
+    );
+    let late = ((sr as usize) * 12 / 10).min(soft.len().min(muted.len()) - 1);
+    let late_n = (sr as usize / 5)
+        .min(soft.len() - late)
+        .min(muted.len() - late);
+    let soft_late = rms(&soft[late..late + late_n]);
+    let muted_late = rms(&muted[late..late + late_n]);
+    assert!(
+        muted_late < soft_late * 0.45,
+        "muted should die unlike the Rhodes organ hold (muted={muted_late}, soft={soft_late})"
+    );
+}
+
+#[test]
+fn ep_muted_dies_while_sustain_rings() {
+    fn shot(id: &str) -> (u32, Vec<f32>) {
+        let preset = load_factory(id).unwrap();
+        let sr = 48_000u32;
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(48),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: sr,
+            },
+        )
+        .unwrap();
+        (sr, buf)
+    }
+    let (sr, muted) = shot("ep-muted");
+    let (_, sus) = shot("ep-sustain");
+    let t = ((sr as usize) * 12 / 10).min(muted.len().min(sus.len()) - 1);
+    let n = (sr as usize / 5).min(muted.len() - t).min(sus.len() - t);
+    let muted_late = rms(&muted[t..t + n]);
+    let sus_late = rms(&sus[t..t + n]);
+    assert!(
+        muted_late < 0.04,
+        "muted still singing at 1.2s (rms={muted_late})"
+    );
+    assert!(
+        sus_late > muted_late * 4.0,
+        "sustain should still ring (sustain={sus_late}, muted={muted_late})"
     );
 }
 

@@ -1,43 +1,43 @@
-name = "ep-muted"
-description = "サス無しグランド。同じ倍音。ダンパーで指数ごと消える。C3。約2.0秒。"
+name = "ep-sustain"
+description = "サス有りグランド。基音＋2×の胴に、0.9秒で消えるALL1を重ねる。弦コーラスと部屋。C3。約3.6秒。"
 algorithm = 8
 feedback = 0.0
 feedback_op = 4
 gain = 1.0
 default_note = 48
-default_duration = 2.0
+default_duration = 3.6
 
 [filter]
 type = "lowpass"
-cutoff = 3400.0
+cutoff = 3800.0
 resonance = 0.05
-env_amount = 1.00
+env_amount = 1.05
 attack = 0.0003
-decay = 0.40
-sustain = 0.0
-release = 0.16
+decay = 0.55
+sustain = 0.12
+release = 0.60
 
 [fx.chorus]
-mix = 0.42
+mix = 0.45
 rate_hz = 0.35
 depth_ms = 3.2
 delay_ms = 9.0
 feedback = 0.08
 
 [fx.reverb]
-mix = 0.14
-room = 0.20
-damp = 0.58
+mix = 0.48
+room = 0.50
+damp = 0.36
 
-# OP1 胴: 基音。ダンパー。
+# OP1 胴: 基音。最後まで残る。
 [[operators]]
 ratio = 1.0
 detune_cents = 3
 level = 0.78
 attack = 0.0012
-decay = 1.45
-sustain = 0.0
-release = 0.16
+decay = 2.20
+sustain = 0.14
+release = 1.00
 vel_sens = 0.50
 waveform = "sine"
 
@@ -53,26 +53,26 @@ release = 0.06
 vel_sens = 0.55
 waveform = "saw"
 
-# OP3 2×.
+# OP3 2×. 胴に残るオクターブ。
 [[operators]]
 ratio = 2.0
 detune_cents = 2
 level = 0.40
 attack = 0.0010
-decay = 0.70
-sustain = 0.0
-release = 0.12
+decay = 1.60
+sustain = 0.10
+release = 0.70
 vel_sens = 0.50
 waveform = "sine"
 
-# OP4 減衰する ALL1。ダンパーなのでさらに短い。
+# OP4 減衰する ALL1。0.9秒で消す（残すとハープシコード、0.1秒だと木琴）。
 [[operators]]
 ratio = 1.0
 detune_cents = 4
 level = 0.42
 attack = 0.0004
-decay = 0.48
+decay = 0.90
 sustain = 0.0
-release = 0.14
+release = 0.28
 vel_sens = 0.52
 waveform = "saw"

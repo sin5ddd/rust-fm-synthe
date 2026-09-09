@@ -22,6 +22,8 @@ pub enum Waveform {
     AbsSine,
     /// Soft square (sign of sine). Harsh, good for hits.
     Pulse,
+    /// Bipolar triangle. Odd harmonics fall as 1/n² — less round than sine, less synth than saw.
+    Triangle,
     /// Single bandlimited saw (polyBLEP). Safe for bass; naive `phase/π-1` is not.
     Saw,
     /// Pseudo supersaw *inside one operator*: several detuned bandlimited saws.
@@ -42,6 +44,13 @@ impl Waveform {
                 } else {
                     -1.0
                 }
+            }
+            Waveform::Triangle => {
+                let t = {
+                    let x = phase / TAU;
+                    x - x.floor()
+                };
+                (1.0 - 4.0 * (t - 0.5).abs()) as f32
             }
             Waveform::Saw | Waveform::SuperSaw => polyblep_saw(phase, phase_inc),
         }

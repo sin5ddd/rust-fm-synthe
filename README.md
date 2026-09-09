@@ -8,7 +8,7 @@ EDM / drum & bass 向けの **オフライン4オペFMシンセ**。プリセッ
 
 - 4オペレータ、Yamaha 4-op（TX81Z / DX21）系アルゴリズム 1–8
 - オペレータごとに ADSR・比・デチューン・レベル・波形・固定周波数
-- 波形: `sine` / `half-sine` / `abs-sine` / `pulse` / `saw`（帯域制限） / `super-saw`（1オペ内の擬似スーパーソー）
+- 波形: `sine` / `half-sine` / `abs-sine` / `pulse` / `triangle` / `saw`（帯域制限） / `super-saw`（1オペ内の擬似スーパーソー）
 - ボイス末尾の SVF フィルタ（`lowpass` / `bandpass` / `highpass` / `notch`）とカットオフ ADSR
 - 並列ノイズ源（ホワイト / ピンク / ブラウン）。専用 SVF のあと FM ミックスに加算。省略または `level = 0` で生成しない
 - 1オペへのフィードバック、ピッチエンベロープ、簡易LFO、変調量スイープ
@@ -71,19 +71,20 @@ cargo run -- render-all
 
 `pl-*` プラックバンク（ハウス、フューチャーガラス、DnB、ポップナイロン、マレット、オルゴール、トランスゲート、短いスーパーソー、FMエレクトリックピアノ、ハープ、ミュートギター、箏、カリンバ、チャイム、ベースプラック、アシッド、ローファイ、アルペジオ、5度／長三和音スタブ、クリック、リバーススウェルなど30種）も同じ。出力は `dist/pl-….wav`。TOMLは `presets/pluck/`。**短いワンショット（だいたい 0.25–1.2秒。`pl-reverse-swell` だけ約1.75秒）。16秒パッドではない。** アンプ／フィルタの減衰は速く、サステインはほぼゼロ。音高は C3–C5（MIDI 48–72）。既存の `ld-house-pluck` / `ld-fm-pluck` / `lead-fm-pluck` などはリネームしない（役割が重なってもパッチは別）。
 
-## 4オペEP実験（タインと胴）
+## 4オペEP（Rhodes のオルガン胴と、ピアノ寄りの加算）
 
-クラシックな DX7 Rhodes は4オペFMそのものだが、失敗しやすい。`pl-fm-ep` のような短いワンショットは、C3で**サイン胴だけ**になりタインが消える。`ep-*` はエンジンを変えず、アルゴリズム5（2+2）または並列（7 / 8）で **胴キャリア（比1）** と **タイン（比2 / 比3）** を分ける。
+`ep-rhodes-*` は DX7 寄りの **タイン→オルガン胴**。アタックで 2×/3×、減衰後は比1のサインがホールドする（オルガン）。ピアノのオクターブを胴まで残さない。
 
-アタックでは C3 の 1× / 2× / 3×（約131 / 262 / 392 Hz）が立つ。モジュレータはサステイン0・短いディケイなので指数が落ち、暖かい胴へ戻る。**ベルではない**（非整数 3.5 や `ld-bell-pluck` の 2.76 / 5.14 は使わない）。パッドでも、200msで消えるプラックでもない。胴のサステインは中庸、リリースは 0.3–0.8秒。既定は **C3（MIDI 48）**。
+`ep-muted` / `ep-sustain` はアルゴリズム8（加算）。胴は基音＋2×、ハンマーと減衰 ALL1（約0.9秒）を重ねる。ALL1 を残すとハープシコード、クリックだけだと木琴。コーラスは弦、リバーブは部屋。フィードバックなし。既定は **C3（MIDI 48）**。
 
 | ID | 内容 |
 |----|------|
-| `ep-rhodes-soft` | 柔らかいRhodes。タイン→サイン寄りの胴。約3.2秒 |
-| `ep-rhodes-hard` | 指数／ベロ感を上げた咬み。短3度は焼かない（C–E–G向き） |
-| `ep-wurli` | パルス／アブサインでミッドの樹皮感。Rhodesより短い（約1.8秒） |
-| `ep-tine-bell` | タイン前のめり。2×/3×は強いがEPのまま（ベルプラックではない） |
-| `ep-muted` | 暗いLP、タイン控えめのラウンジ |
+| `ep-rhodes-soft` | 柔らかいRhodes。タイン→コーラス付きオルガン胴。約3.2秒 |
+| `ep-rhodes-hard` | 硬いRhodes。2×の咬みが胴まで残る。短3度なし |
+| `ep-wurli` | 短いスタッカート寄りのピアノ。約1.8秒 |
+| `ep-tine-bell` | 明るいピアノ。3×/4×前のめり（ベルプラックではない） |
+| `ep-muted` | サス無しグランド。同じ倍音、ダンパーで消える。約2.0秒 |
+| `ep-sustain` | サス有りグランド。ペダルで胴が残る。約3.6秒 |
 
 出力は `dist/ep-….wav`。TOMLは `presets/ep/`。`factory_entry!("ep", "ep-…")` で工場バンクに載せる。`pl-fm-ep` は短いプラックのまま残す（リネームしない）。
 
@@ -216,6 +217,7 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | `half-sine` | 正の半波。DCあり。モジュレータ向き。 |
 | `abs-sine` | 全波整流。金属／フォルマント寄り。 |
 | `pulse` | 正弦の符号。ヒット向き。 |
+| `triangle` | 三角波。奇数倍音が 1/n²。正弦より角があり、鋸波より丸い。 |
 | `saw` | 帯域制限した単鋸波（polyBLEP）。ナイーブな `phase/π-1` ではないのでベースでも使える。 |
 | `super-saw` | **1オペレータ内**の擬似スーパーソー。中心を少し大きく、他をセントで散らした約7本の鋸波を足す（JP-8000寄り）。 |
 
@@ -622,11 +624,12 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | `pl-perc-click` | クリックプラック（明るい、0.25秒） |
 | `pl-reverse-swell` | リバーススウェル（中庸、1.75秒。パッドではない） |
 | `pl-clav-funk` | ファンククラビ（ミッド明るい、極短い） |
-| `ep-rhodes-soft` | 柔らかいRhodes（タイン2×/3×→胴。C3、約3.2秒） |
+| `ep-rhodes-soft` | 柔らかいRhodes（タイン→オルガン胴。C3、約3.2秒） |
 | `ep-rhodes-hard` | 硬いRhodes（指数高め。短3度なし） |
-| `ep-wurli` | ウーリッツァー寄り（パルス／アブサイン、Rhodesより短い） |
-| `ep-tine-bell` | タイン前のめりEP（整数2×/3×。ベルではない） |
-| `ep-muted` | ミュート／ラウンジ（暗いLP） |
+| `ep-wurli` | 短いスタッカート寄りのピアノ（約1.8秒） |
+| `ep-tine-bell` | 明るいピアノ（整数3×/4×。ベルではない） |
+| `ep-muted` | サス無しグランド（FS1R C3以上。C3、約2.0秒） |
+| `ep-sustain` | サス有りグランド（ペダル。C3、約3.6秒） |
 
 データは `presets/<category>/*.toml`（`bass` / `bd` / `sd` / `ld` / `fx` / `perc` / `drone` / `pad-fresh` / `pad-sparkle` / `pluck` / `ep`）。`bs-*` は `presets/bass/`、`pc-*` は `presets/perc/`、`dr-*` は `presets/drone/`、`pf-*` は `presets/pad-fresh/`、`ps-*` は `presets/pad-sparkle/`、`pl-*` は `presets/pluck/`、`ep-*` は `presets/ep/`。同じ内容を `include_str!` でバイナリに埋め込んでいるので、クローン直後の `cargo run` でも工場バンクは使える。 `--preset <id>` の ID はファイル名のまま（フォルダ名は含まない）。
 
@@ -708,7 +711,7 @@ decay = 0.3
 sustain = 0.0
 release = 0.08
 vel_sens = 0.35
-waveform = "sine"      # sine | half-sine | abs-sine | pulse | saw | super-saw
+waveform = "sine"      # sine | half-sine | abs-sine | pulse | triangle | saw | super-saw
 unison = 7             # super-saw の本数（他波形は無視）
 unison_detune = 20.0   # super-saw の広がり（セント）
 freq_mode = "ratio"    # ratio | fixed
