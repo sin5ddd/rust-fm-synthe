@@ -1399,6 +1399,63 @@ mod tests {
     }
 
     #[test]
+    fn reverse_cymbals_are_amp_swell_only() {
+        for id in [
+            "fx-rev-cym",
+            "fx-rev-crash",
+            "fx-rev-hat",
+            "fx-rev-cym-long",
+            "fx-rev-cym-bright",
+            "fx-rev-cym-dark",
+            "fx-rev-crash-metal",
+            "fx-rev-air",
+            "fx-rev-cym-noise",
+            "fx-rev-splash",
+        ] {
+            let p = load_factory(id).unwrap();
+            assert_eq!(
+                p.pitch.start_semitones, 0.0,
+                "{id} pitch start {}",
+                p.pitch.start_semitones
+            );
+            assert_eq!(
+                p.pitch.end_semitones, 0.0,
+                "{id} pitch end {}",
+                p.pitch.end_semitones
+            );
+            assert!(
+                (p.mod_sweep.start - p.mod_sweep.end).abs() < 1e-6,
+                "{id} mod_sweep {}→{}",
+                p.mod_sweep.start,
+                p.mod_sweep.end
+            );
+            assert!(
+                p.filter.env_amount.abs() < 1e-6,
+                "{id} filter env_amount {}",
+                p.filter.env_amount
+            );
+            assert!(
+                p.noise.filter.env_amount.abs() < 1e-6,
+                "{id} noise filter env_amount {}",
+                p.noise.filter.env_amount
+            );
+            let dur = p.default_duration as f32;
+            assert!(
+                p.noise.attack > dur * 0.75,
+                "{id} noise attack {} should swell across duration {dur}",
+                p.noise.attack
+            );
+            for (i, op) in p.operators.iter().enumerate() {
+                assert!(
+                    op.attack > dur * 0.75,
+                    "{id} op{i} attack {} should swell across duration {dur}",
+                    op.attack
+                );
+            }
+        }
+    }
+
+    #[test]
     fn fm_riser_is_sub_octave_carrier_with_raised_partials() {
         let p = load_factory("fm-riser").unwrap();
         const BARS_8_AT_130: f64 = 32.0 * 60.0 / 130.0;

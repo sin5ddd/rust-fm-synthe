@@ -1,90 +1,71 @@
 name = "fx-rev-cym"
-description = "クラシックなリバースシンバル。暗いノイズからHP/LPが開き、上昇ピッチでクラッシュへ。"
+description = "クラシックなリバースシンバル。音量の逆減衰のみ。ピッチ／FMスイープなし。"
 algorithm = 8
-feedback = 0.38
+feedback = 0.22
 feedback_op = 4
-gain = 1.15
+gain = 1.12
 default_note = 72
 default_duration = 2.6
 
-[pitch]
-start_semitones = -7.0
-end_semitones = 16.0
-curve = 1.4
-
-[mod_sweep]
-start = 0.35
-end = 1.55
-
 [filter]
-type = "lowpass"
-cutoff = 280.0
-resonance = 0.22
-env_amount = 5.4
-attack = 1.9
-decay = 0.25
-sustain = 0.85
-release = 0.12
+type = "highpass"
+cutoff = 1800.0
+resonance = 0.10
 
 [noise]
 type = "white"
-level = 1.1
-attack = 0.3
-decay = 0.2
-sustain = 0.72
-release = 0.12
+level = 1.12
+attack = 2.28
+decay = 0.02
+sustain = 1.0
+release = 0.04
 vel_sens = 0.22
 
 [noise.filter]
 type = "highpass"
-cutoff = 160.0
-resonance = 0.12
-env_amount = 4.2
-attack = 1.85
-decay = 0.22
-sustain = 0.82
-release = 0.12
+cutoff = 2400.0
+resonance = 0.10
 
 [[operators]]
 ratio = 11.0
 detune_cents = -18
-level = 1.0
-attack = 0.32
-decay = 0.18
-sustain = 0.72
-release = 0.12
+level = 0.85
+attack = 2.28
+decay = 0.02
+sustain = 1.0
+release = 0.04
 vel_sens = 0.22
 waveform = "pulse"
 [[operators]]
 ratio = 7.3
 detune_cents = 22
-level = 0.85
-attack = 0.28
-decay = 0.2
-sustain = 0.65
-release = 0.1
+level = 0.70
+attack = 2.28
+decay = 0.02
+sustain = 1.0
+release = 0.04
 vel_sens = 0.28
 waveform = "abs-sine"
 [[operators]]
 ratio = 13.7
 detune_cents = -9
-level = 0.7
-attack = 0.36
-decay = 0.16
-sustain = 0.6
-release = 0.1
-vel_sens = 0.3
+level = 0.55
+attack = 2.28
+decay = 0.02
+sustain = 1.0
+release = 0.04
+vel_sens = 0.30
 waveform = "pulse"
 freq_mode = "fixed"
 fixed_hz = 2850
 [[operators]]
 ratio = 9.1
 detune_cents = 31
-level = 0.62
-attack = 0.22
-decay = 0.14
-sustain = 0.55
-release = 0.08
+level = 0.48
+attack = 2.28
+decay = 0.02
+sustain = 1.0
+release = 0.04
 vel_sens = 0.35
 waveform = "half-sine"
 freq_mode = "fixed"

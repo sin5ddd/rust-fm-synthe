@@ -1,93 +1,70 @@
 name = "fx-rev-cym-long"
-description = "長いダークなリバースライド。3.8秒。ビルドの奥で使う。後で切る前提。"
+description = "長いダークなリバースシンバル。3.8秒。音量の逆減衰のみ。ピッチ／FMスイープなし。"
 algorithm = 8
-feedback = 0.34
+feedback = 0.16
 feedback_op = 4
-gain = 1.1
+gain = 1.08
 default_note = 60
 default_duration = 3.8
 
-[pitch]
-start_semitones = -10.0
-end_semitones = 14.0
-curve = 1.8
-
-[lfo]
-rate_hz = 0.22
-depth_cents = 18.0
-
-[mod_sweep]
-start = 0.28
-end = 1.5
-
 [filter]
-type = "lowpass"
-cutoff = 180.0
-resonance = 0.18
-env_amount = 5.8
-attack = 2.9
-decay = 0.35
-sustain = 0.88
-release = 0.15
+type = "highpass"
+cutoff = 900.0
+resonance = 0.08
 
 [noise]
 type = "pink"
-level = 1.08
-attack = 0.4
-decay = 0.28
-sustain = 0.78
-release = 0.16
+level = 1.10
+attack = 3.40
+decay = 0.02
+sustain = 1.0
+release = 0.05
 vel_sens = 0.18
 
 [noise.filter]
 type = "lowpass"
-cutoff = 280.0
-resonance = 0.1
-env_amount = 4.6
-attack = 2.8
-decay = 0.32
-sustain = 0.86
-release = 0.15
+cutoff = 7800.0
+resonance = 0.08
 
 [[operators]]
 ratio = 6.8
 detune_cents = -12
-level = 1.0
-attack = 0.42
-decay = 0.25
-sustain = 0.78
-release = 0.16
+level = 0.78
+attack = 3.40
+decay = 0.02
+sustain = 1.0
+release = 0.05
 vel_sens = 0.18
 waveform = "abs-sine"
 [[operators]]
 ratio = 9.4
 detune_cents = 18
-level = 0.82
-attack = 0.38
-decay = 0.22
-sustain = 0.7
-release = 0.14
+level = 0.62
+attack = 3.40
+decay = 0.02
+sustain = 1.0
+release = 0.05
 vel_sens = 0.22
 waveform = "pulse"
 [[operators]]
 ratio = 4.2
 detune_cents = -6
-level = 0.6
-attack = 0.48
-decay = 0.28
-sustain = 0.65
-release = 0.14
-vel_sens = 0.2
+level = 0.50
+attack = 3.40
+decay = 0.02
+sustain = 1.0
+release = 0.05
+vel_sens = 0.20
 waveform = "sine"
 [[operators]]
 ratio = 11.8
 detune_cents = 28
-level = 0.55
-attack = 0.3
-decay = 0.18
-sustain = 0.58
-release = 0.1
-vel_sens = 0.3
+level = 0.42
+attack = 3.40
+decay = 0.02
+sustain = 1.0
+release = 0.05
+vel_sens = 0.30
 waveform = "pulse"
 freq_mode = "fixed"
 fixed_hz = 2100

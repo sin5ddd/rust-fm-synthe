@@ -1,78 +1,59 @@
 name = "fx-rev-crash-metal"
-description = "金属FMのリバースクラッシュ。固定周波数のリンが後半で開く。"
+description = "金属寄りのリバースクラッシュ。固定のFM色。音量の逆減衰のみ。ピッチ／FMスイープなし。"
 algorithm = 4
-feedback = 0.36
+feedback = 0.22
 feedback_op = 4
-gain = 1.08
+gain = 1.06
 default_note = 72
 default_duration = 2.2
 
-[pitch]
-start_semitones = -5.0
-end_semitones = 11.0
-curve = 1.2
-
-[mod_sweep]
-start = 0.38
-end = 1.45
-
 [filter]
 type = "highpass"
-cutoff = 380.0
-resonance = 0.26
-env_amount = 3.4
-attack = 1.6
-decay = 0.22
-sustain = 0.78
-release = 0.1
+cutoff = 1600.0
+resonance = 0.10
 
 [noise]
 type = "white"
-level = 0.82
-attack = 0.28
-decay = 0.16
-sustain = 0.65
-release = 0.1
+level = 0.78
+attack = 1.92
+decay = 0.02
+sustain = 1.0
+release = 0.04
 vel_sens = 0.24
 
 [noise.filter]
 type = "highpass"
-cutoff = 320.0
-resonance = 0.14
-env_amount = 3.0
-attack = 1.55
-decay = 0.2
-sustain = 0.76
-release = 0.1
+cutoff = 2200.0
+resonance = 0.10
 
 [[operators]]
 ratio = 1.0
 detune_cents = 0
-level = 0.95
-attack = 0.3
-decay = 0.16
-sustain = 0.68
-release = 0.1
+level = 0.90
+attack = 1.92
+decay = 0.02
+sustain = 1.0
+release = 0.04
 vel_sens = 0.24
 waveform = "sine"
 [[operators]]
 ratio = 2.73
 detune_cents = 16
-level = 0.7
-attack = 0.26
-decay = 0.12
-sustain = 0.55
-release = 0.08
+level = 0.62
+attack = 1.92
+decay = 0.02
+sustain = 1.0
+release = 0.04
 vel_sens = 0.32
 waveform = "abs-sine"
 [[operators]]
 ratio = 1.0
 detune_cents = 0
-level = 0.62
-attack = 0.34
-decay = 0.18
-sustain = 0.6
-release = 0.1
+level = 0.55
+attack = 1.92
+decay = 0.02
+sustain = 1.0
+release = 0.04
 vel_sens = 0.28
 waveform = "sine"
 freq_mode = "fixed"
@@ -80,12 +61,12 @@ fixed_hz = 1940
 [[operators]]
 ratio = 1.0
 detune_cents = 0
-level = 0.5
-attack = 0.2
-decay = 0.08
-sustain = 0.45
-release = 0.06
-vel_sens = 0.4
+level = 0.42
+attack = 1.92
+decay = 0.02
+sustain = 1.0
+release = 0.04
+vel_sens = 0.40
 waveform = "pulse"
 freq_mode = "fixed"
 fixed_hz = 3360

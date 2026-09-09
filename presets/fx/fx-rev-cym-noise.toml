@@ -1,91 +1,68 @@
 name = "fx-rev-cym-noise"
-description = "ノイズ寄りのリバースシンバル。高FBと高比でホワイトに近い砂。"
-algorithm = 2
-feedback = 0.22
+description = "ノイズ寄りのリバースシンバル。音量の逆減衰のみ。ピッチ／FMスイープなし。"
+algorithm = 8
+feedback = 0.10
 feedback_op = 4
-gain = 1.16
+gain = 1.12
 default_note = 67
 default_duration = 2.4
 
-[pitch]
-start_semitones = -6.0
-end_semitones = 13.0
-curve = 1.5
-
-[lfo]
-rate_hz = 0.4
-depth_cents = 30.0
-
-[mod_sweep]
-start = 0.3
-end = 1.65
-
 [filter]
-type = "bandpass"
-cutoff = 900.0
-resonance = 0.2
-env_amount = 3.6
-attack = 1.75
-decay = 0.22
-sustain = 0.8
-release = 0.1
+type = "highpass"
+cutoff = 1400.0
+resonance = 0.08
 
 [noise]
 type = "white"
-level = 1.18
-attack = 0.28
-decay = 0.18
-sustain = 0.7
-release = 0.1
+level = 1.20
+attack = 2.10
+decay = 0.02
+sustain = 1.0
+release = 0.04
 vel_sens = 0.24
 
 [noise.filter]
-type = "bandpass"
-cutoff = 1100.0
-resonance = 0.14
-env_amount = 3.2
-attack = 1.7
-decay = 0.2
-sustain = 0.78
-release = 0.1
+type = "highpass"
+cutoff = 1800.0
+resonance = 0.08
 
 [[operators]]
 ratio = 14.0
 detune_cents = -30
-level = 1.0
-attack = 0.3
-decay = 0.16
-sustain = 0.7
-release = 0.1
+level = 0.55
+attack = 2.10
+decay = 0.02
+sustain = 1.0
+release = 0.04
 vel_sens = 0.24
 waveform = "pulse"
 [[operators]]
 ratio = 9.7
 detune_cents = 25
-level = 0.88
-attack = 0.26
-decay = 0.14
-sustain = 0.64
-release = 0.09
-vel_sens = 0.3
+level = 0.48
+attack = 2.10
+decay = 0.02
+sustain = 1.0
+release = 0.04
+vel_sens = 0.30
 waveform = "pulse"
 [[operators]]
 ratio = 18.3
 detune_cents = -11
-level = 0.7
-attack = 0.34
-decay = 0.18
-sustain = 0.58
-release = 0.1
+level = 0.38
+attack = 2.10
+decay = 0.02
+sustain = 1.0
+release = 0.04
 vel_sens = 0.32
 waveform = "abs-sine"
 [[operators]]
 ratio = 22.0
 detune_cents = 17
-level = 0.58
-attack = 0.2
-decay = 0.1
-sustain = 0.5
-release = 0.07
+level = 0.32
+attack = 2.10
+decay = 0.02
+sustain = 1.0
+release = 0.04
 vel_sens = 0.38
 waveform = "pulse"

@@ -1,78 +1,59 @@
 name = "fx-rev-hat"
-description = "リバースハットのスウェル。短め・明るい。ハイハットの逆再生印象。"
-algorithm = 7
-feedback = 0.28
+description = "リバースハット。音量の逆減衰のみ。ピッチ／FMスイープなし。"
+algorithm = 8
+feedback = 0.12
 feedback_op = 4
-gain = 1.18
+gain = 1.14
 default_note = 84
 default_duration = 1.55
 
-[pitch]
-start_semitones = -2.0
-end_semitones = 8.0
-curve = 0.8
-
-[mod_sweep]
-start = 0.5
-end = 1.35
-
 [filter]
 type = "highpass"
-cutoff = 1800.0
-resonance = 0.32
-env_amount = 2.2
-attack = 1.05
-decay = 0.15
-sustain = 0.7
-release = 0.08
+cutoff = 5200.0
+resonance = 0.14
 
 [noise]
 type = "white"
-level = 1.14
-attack = 0.24
-decay = 0.12
-sustain = 0.55
-release = 0.07
-vel_sens = 0.3
+level = 1.16
+attack = 1.32
+decay = 0.02
+sustain = 1.0
+release = 0.03
+vel_sens = 0.30
 
 [noise.filter]
 type = "highpass"
-cutoff = 2200.0
-resonance = 0.18
-env_amount = 1.8
-attack = 1.0
-decay = 0.14
-sustain = 0.68
-release = 0.08
+cutoff = 6200.0
+resonance = 0.12
 
 [[operators]]
 ratio = 16.0
 detune_cents = 8
-level = 1.0
-attack = 0.26
-decay = 0.1
-sustain = 0.55
-release = 0.07
-vel_sens = 0.3
+level = 0.70
+attack = 1.32
+decay = 0.02
+sustain = 1.0
+release = 0.03
+vel_sens = 0.30
 waveform = "pulse"
 [[operators]]
 ratio = 11.5
 detune_cents = -16
-level = 0.7
-attack = 0.22
-decay = 0.08
-sustain = 0.45
-release = 0.06
+level = 0.48
+attack = 1.32
+decay = 0.02
+sustain = 1.0
+release = 0.03
 vel_sens = 0.35
 waveform = "pulse"
 [[operators]]
 ratio = 19.0
 detune_cents = 0
-level = 0.48
-attack = 0.3
-decay = 0.12
-sustain = 0.4
-release = 0.06
+level = 0.36
+attack = 1.32
+decay = 0.02
+sustain = 1.0
+release = 0.03
 vel_sens = 0.32
 waveform = "half-sine"
 freq_mode = "fixed"
@@ -80,12 +61,12 @@ fixed_hz = 6400
 [[operators]]
 ratio = 14.2
 detune_cents = 24
-level = 0.42
-attack = 0.18
-decay = 0.07
-sustain = 0.35
-release = 0.05
-vel_sens = 0.4
+level = 0.32
+attack = 1.32
+decay = 0.02
+sustain = 1.0
+release = 0.03
+vel_sens = 0.40
 waveform = "pulse"
 freq_mode = "fixed"
 fixed_hz = 7800
