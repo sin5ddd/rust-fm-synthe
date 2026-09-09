@@ -1,64 +1,88 @@
 name = "fx-formant-ah"
-description = "アー母音のFXヒット。リードではなくワンショットの声。"
-algorithm = 3
-feedback = 0.22
+description = "アー母音のFXヒット。フォルマント合成（A）。声帯を持続。5度コーラス。"
+algorithm = 8
+feedback = 0.08
 feedback_op = 4
-gain = 1.08
+gain = 1.0
 default_note = 60
 default_duration = 0.7
 
-[pitch]
-start_semitones = 3.0
-end_semitones = -1.0
-curve = -1.0
-
 [filter]
-type = "bandpass"
-cutoff = 780.0
-resonance = 0.52
-env_amount = 1.4
-attack = 0.01
-decay = 0.22
-sustain = 0.12
-release = 0.1
+type = "lowpass"
+cutoff = 8000.0
+resonance = 0.08
+env_amount = 0
+
+[vocal]
+mix = 1.0
+vowel = "a"
+formant_resonance = 0.48
+formant_wobble = 0.04
+formant_wobble_hz = 5.0
+high_mix = 0.28
+
+[vocal.comb]
+mix = 0.40
+feedback = 0.50
+damping = 0.35
+ratio = 1.0
+
+[fx.chorus]
+mix = 0.32
+rate_hz = 0.80
+depth_ms = 4.5
+delay_ms = 14.0
+feedback = 0.12
+intervals = ["fifth"]
+
+[fx.reverb]
+mix = 0.12
+room = 0.26
+damp = 0.52
+
+[[vocal.segments]]
+at = 0
+dur = 0.7
+kind = "vowel"
+vowel = "a"
+place_hz = 0
 
 [[operators]]
 ratio = 1.0
-detune_cents = 0
-level = 1.0
-attack = 0.008
-decay = 0.42
-sustain = 0.0
-release = 0.1
-vel_sens = 0.32
-waveform = "abs-sine"
-[[operators]]
-ratio = 1.68
-detune_cents = -8
-level = 0.62
-attack = 0.006
-decay = 0.28
-sustain = 0.0
-release = 0.08
-vel_sens = 0.4
-waveform = "abs-sine"
-[[operators]]
-ratio = 2.24
-detune_cents = 6
-level = 0.4
-attack = 0.005
-decay = 0.16
-sustain = 0.0
-release = 0.06
-vel_sens = 0.45
-waveform = "half-sine"
-[[operators]]
-ratio = 0.99
-detune_cents = 0
-level = 0.28
-attack = 0.01
-decay = 0.22
-sustain = 0.0
-release = 0.07
-vel_sens = 0.35
+level = 1.00
+attack = 0.04
+decay = 0.18
+sustain = 0.72
+release = 0.16
+vel_sens = 0.22
 waveform = "sine"
+
+[[operators]]
+ratio = 2.0
+level = 0.22
+attack = 0.04
+decay = 0.18
+sustain = 0.40
+release = 0.14
+vel_sens = 0.18
+waveform = "sine"
+
+[[operators]]
+ratio = 3.0
+level = 0.08
+attack = 0.045
+decay = 0.20
+sustain = 0.22
+release = 0.12
+vel_sens = 0.16
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+level = 0.16
+attack = 0.038
+decay = 0.16
+sustain = 0.50
+release = 0.14
+vel_sens = 0.20
+waveform = "pulse"

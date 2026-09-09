@@ -13,9 +13,9 @@ depth_cents = 9.0
 
 [filter]
 type = "highpass"
-cutoff = 250
+cutoff = 150
 resonance = 0.09
-env_amount = 0.5
+env_amount = 0.34
 attack = 5.2
 decay = 4.8
 sustain = 0.7

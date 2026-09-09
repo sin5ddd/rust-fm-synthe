@@ -1,64 +1,88 @@
 name = "fx-formant-oh"
-description = "オー母音のFXヒット。低いフォルマント。"
-algorithm = 3
-feedback = 0.18
+description = "オー母音のFXヒット。フォルマント合成（O）。声帯を持続。5度コーラス。"
+algorithm = 8
+feedback = 0.08
 feedback_op = 4
-gain = 1.06
+gain = 1.0
 default_note = 55
 default_duration = 0.75
 
-[pitch]
-start_semitones = 2.0
-end_semitones = -2.0
-curve = -0.8
-
 [filter]
-type = "bandpass"
-cutoff = 520.0
-resonance = 0.5
-env_amount = 1.2
-attack = 0.012
-decay = 0.26
-sustain = 0.14
-release = 0.12
+type = "lowpass"
+cutoff = 7000.0
+resonance = 0.08
+env_amount = 0
+
+[vocal]
+mix = 1.0
+vowel = "o"
+formant_resonance = 0.50
+formant_wobble = 0.035
+formant_wobble_hz = 4.5
+high_mix = 0.16
+
+[vocal.comb]
+mix = 0.42
+feedback = 0.52
+damping = 0.40
+ratio = 1.0
+
+[fx.chorus]
+mix = 0.32
+rate_hz = 0.75
+depth_ms = 4.5
+delay_ms = 15.0
+feedback = 0.12
+intervals = ["fifth"]
+
+[fx.reverb]
+mix = 0.14
+room = 0.28
+damp = 0.55
+
+[[vocal.segments]]
+at = 0
+dur = 0.75
+kind = "vowel"
+vowel = "o"
+place_hz = 0
 
 [[operators]]
 ratio = 1.0
-detune_cents = 0
-level = 1.0
-attack = 0.01
-decay = 0.48
-sustain = 0.0
-release = 0.12
-vel_sens = 0.3
+level = 1.00
+attack = 0.045
+decay = 0.20
+sustain = 0.74
+release = 0.18
+vel_sens = 0.22
 waveform = "sine"
+
 [[operators]]
-ratio = 1.42
-detune_cents = 5
-level = 0.58
-attack = 0.008
-decay = 0.32
-sustain = 0.0
-release = 0.09
-vel_sens = 0.38
-waveform = "abs-sine"
-[[operators]]
-ratio = 1.95
-detune_cents = -7
-level = 0.38
-attack = 0.006
+ratio = 2.0
+level = 0.18
+attack = 0.045
 decay = 0.18
-sustain = 0.0
-release = 0.07
-vel_sens = 0.42
-waveform = "half-sine"
-[[operators]]
-ratio = 0.5
-detune_cents = 0
-level = 0.25
-attack = 0.012
-decay = 0.28
-sustain = 0.0
-release = 0.08
-vel_sens = 0.32
+sustain = 0.38
+release = 0.16
+vel_sens = 0.18
 waveform = "sine"
+
+[[operators]]
+ratio = 3.0
+level = 0.07
+attack = 0.05
+decay = 0.20
+sustain = 0.20
+release = 0.14
+vel_sens = 0.16
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+level = 0.14
+attack = 0.042
+decay = 0.16
+sustain = 0.48
+release = 0.16
+vel_sens = 0.20
+waveform = "pulse"

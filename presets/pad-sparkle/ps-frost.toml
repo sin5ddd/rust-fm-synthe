@@ -4,7 +4,7 @@ algorithm = 8
 feedback = 0.04
 feedback_op = 4
 gain = 0.94
-default_note = 72
+default_note = 60
 default_duration = 16.8
 
 [lfo]
@@ -13,9 +13,9 @@ depth_cents = 7.0
 
 [filter]
 type = "highpass"
-cutoff = 340
+cutoff = 150
 resonance = 0.12
-env_amount = 0.4
+env_amount = 0.34
 attack = 4.0
 decay = 4.0
 sustain = 0.68

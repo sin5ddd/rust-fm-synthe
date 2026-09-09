@@ -1,5 +1,5 @@
 name = "fm-riser"
-description = "ノイズ寄りのFMライザー。基音は2オクターブ下、スタートで100Hzのサインを重ねてピッチ包絡と一緒に上昇。倍音は1オクターブ上。130 BPMの8小節を覆う長さ。"
+description = "ノイズ寄りのFMライザー。基音は2オクターブ下、スタートで100Hzのサインを重ねてピッチ包絡と一緒に上昇。倍音は1オクターブ上。コーラスはオク下・オク上・5度の全部盛り。130 BPMの8小節を覆う長さ。"
 algorithm = 7
 feedback = 0.4
 feedback_op = 4
@@ -39,6 +39,14 @@ attack = 11.0
 decay = 1.4
 sustain = 0.7
 release = 0.25
+
+[fx.chorus]
+mix = 0.52
+rate_hz = 0.7
+depth_ms = 5.0
+delay_ms = 16.0
+feedback = 0.18
+intervals = ["octave-down", "octave-up", "fifth"]
 
 # OP1 キャリア。基音は ratio 0.25 で2オクターブ下。algo 7 では素のサイン。
 [[operators]]

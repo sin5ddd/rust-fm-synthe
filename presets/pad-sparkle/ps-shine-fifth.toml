@@ -13,9 +13,9 @@ depth_cents = 8.0
 
 [filter]
 type = "highpass"
-cutoff = 250
+cutoff = 150
 resonance = 0.1
-env_amount = 0.45
+env_amount = 0.34
 attack = 3.8
 decay = 4.0
 sustain = 0.7
@@ -25,7 +25,7 @@ release = 0.28
 [[operators]]
 ratio = 1.0
 detune_cents = -5
-level = 0.76
+level = 0.88
 attack = 0.06
 decay = 1.5
 sustain = 0.86
@@ -37,7 +37,7 @@ waveform = "sine"
 [[operators]]
 ratio = 1.5
 detune_cents = 6
-level = 0.72
+level = 0.42
 attack = 0.07
 decay = 1.4
 sustain = 0.86

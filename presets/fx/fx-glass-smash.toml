@@ -1,85 +1,88 @@
 name = "fx-glass-smash"
-description = "ガラス破砕。高整数比とインハーモニックの短いスマッシュ。"
-algorithm = 6
-feedback = 0.22
+description = "ガラス破砕。短い衝突ノイズと4.2–7 kHzの破片リン。ハットではない。パーカッション長。"
+algorithm = 8
+feedback = 0.03
 feedback_op = 4
-gain = 1.12
+gain = 1.02
 default_note = 84
-default_duration = 0.7
-
-[pitch]
-start_semitones = 8.0
-end_semitones = -3.0
-curve = -2.0
+default_duration = 1.15
 
 [filter]
 type = "highpass"
-cutoff = 600.0
-resonance = 0.2
-env_amount = 1.0
-attack = 0.0003
-decay = 0.12
-sustain = 0.08
-release = 0.08
+cutoff = 900.0
+resonance = 0.08
+env_amount = 0.25
+attack = 0.0002
+decay = 0.20
+sustain = 0.15
+release = 0.15
 
+# 衝突だけ。尾はオペのリンに任せる（ノイズを伸ばすとハットになる）。
 [noise]
 type = "white"
-level = 0.68
+level = 0.62
+attack = 0.0002
+decay = 0.09
+sustain = 0.0
+release = 0.05
+vel_sens = 0.35
+
+[noise.filter]
+type = "highpass"
+cutoff = 2400.0
+resonance = 0.14
+env_amount = 0.6
 attack = 0.0002
 decay = 0.08
 sustain = 0.0
 release = 0.04
-vel_sens = 0.5
-
-[noise.filter]
-type = "highpass"
-cutoff = 2800.0
-resonance = 0.1
-env_amount = 0.6
-attack = 0.0002
-decay = 0.06
-sustain = 0.0
-release = 0.03
 
 [[operators]]
 ratio = 1.0
-detune_cents = 0
-level = 0.85
-attack = 0.0004
-decay = 0.38
-sustain = 0.0
-release = 0.1
-vel_sens = 0.42
-waveform = "sine"
-[[operators]]
-ratio = 5.04
-detune_cents = -8
-level = 0.7
-attack = 0.0003
+level = 0.32
+attack = 0.0002
 decay = 0.16
 sustain = 0.0
-release = 0.06
-vel_sens = 0.5
+release = 0.08
+vel_sens = 0.32
 waveform = "sine"
-[[operators]]
-ratio = 8.17
-detune_cents = 11
-level = 0.55
-attack = 0.0003
-decay = 0.1
-sustain = 0.0
-release = 0.04
-vel_sens = 0.55
-waveform = "abs-sine"
-[[operators]]
-ratio = 11.3
-detune_cents = -15
-level = 0.48
-attack = 0.0002
-decay = 0.06
-sustain = 0.0
-release = 0.03
-vel_sens = 0.62
-waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 2650
+fixed_hz = 2210
+
+[[operators]]
+ratio = 1.0
+level = 0.70
+attack = 0.0002
+decay = 0.72
+sustain = 0.0
+release = 0.20
+vel_sens = 0.38
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 4760
+
+[[operators]]
+ratio = 1.0
+level = 0.58
+delay = 0.13
+attack = 0.0002
+decay = 0.78
+sustain = 0.0
+release = 0.22
+vel_sens = 0.40
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 6990
+
+[[operators]]
+ratio = 1.0
+level = 0.50
+delay = 0.38
+attack = 0.0002
+decay = 0.48
+sustain = 0.0
+release = 0.16
+vel_sens = 0.42
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 4220
