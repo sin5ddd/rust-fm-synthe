@@ -1,87 +1,89 @@
 name = "fm ride"
 description = "ライド寄りのFM。長いベル＋砂。オープンハットより金属。最大約1.2秒。"
-algorithm = 4
-feedback = 0.18
+algorithm = 8
+feedback = 0.12
 feedback_op = 4
-gain = 1
+gain = 1.0
 default_note = 80
 default_duration = 1.18
 
 [filter]
 type = "highpass"
-cutoff = 1600
-resonance = 0.24
-env_amount = 1.1
-attack = 0.0005
-decay = 0.35
-sustain = 0.12
-release = 0.16
+cutoff = 1400.0
+resonance = 0.12
+env_amount = 0.45
+attack = 0.0004
+decay = 0.4
+sustain = 0.1
+release = 0.18
 
 [noise]
 type = "white"
-level = 0.7
+level = 0.55
 attack = 0.0003
-decay = 0.7
+decay = 0.75
 sustain = 0.0
-release = 0.2
+release = 0.22
 vel_sens = 0.4
 
 [noise.filter]
 type = "highpass"
-cutoff = 3200.0
-resonance = 0.1
-env_amount = 0.5
+cutoff = 3500.0
+resonance = 0.08
+env_amount = 0.35
 attack = 0.0003
 decay = 0.4
-sustain = 0.08
+sustain = 0.06
 release = 0.16
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.85
+ratio = 1.0
+detune_cents = 0.0
+level = 0.9
 attack = 0.0004
-decay = 0.85
-sustain = 0
+decay = 0.9
+sustain = 0.0
 release = 0.22
 vel_sens = 0.35
 waveform = "sine"
 freq_mode = "fixed"
-fixed_hz = 1480
+fixed_hz = 1480.0
 
 [[operators]]
-ratio = 2.73
-detune_cents = 0
-level = 0.5
-attack = 0.0003
-decay = 0.28
-sustain = 0
-release = 0.1
-vel_sens = 0.45
-waveform = "abs-sine"
-
-[[operators]]
-ratio = 1
-detune_cents = 0
+ratio = 1.0
+detune_cents = 0.0
 level = 0.55
 attack = 0.0003
 decay = 0.7
-sustain = 0
+sustain = 0.0
 release = 0.18
 vel_sens = 0.38
 waveform = "sine"
 freq_mode = "fixed"
-fixed_hz = 2960
+fixed_hz = 2960.0
 
 [[operators]]
-ratio = 1
-detune_cents = 0
+ratio = 1.0
+detune_cents = 0.0
 level = 0.38
+attack = 0.0003
+decay = 0.5
+sustain = 0.0
+release = 0.14
+vel_sens = 0.42
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 4040.0
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.22
 attack = 0.0002
-decay = 0.16
-sustain = 0
-release = 0.08
+decay = 0.08
+sustain = 0.0
+release = 0.04
 vel_sens = 0.55
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 5400
+fixed_hz = 5400.0

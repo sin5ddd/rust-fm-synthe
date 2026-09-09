@@ -1,11 +1,11 @@
 name = "reverse swell pluck"
-description = "リバーススウェル。中庸の明るさ。唯一やや長いプラック（1.75秒）。遅いアタックのあと消える。"
+description = "リバーススウェル。中庸の明るさ。ワンショット（0.60秒）。遅いアタックのあと消える。"
 algorithm = 5
 feedback = 0.12
 feedback_op = 4
 gain = 0.98
 default_note = 60
-default_duration = 1.75
+default_duration = 0.60
 
 [pitch]
 start_semitones = -6.0
@@ -21,20 +21,20 @@ type = "lowpass"
 cutoff = 380.0
 resonance = 0.2
 env_amount = 3.0
-attack = 0.14
-decay = 0.35
-sustain = 0.0
-release = 0.12
+attack = 0.16
+decay = 0.28
+sustain = 0.00
+release = 0.10
 
 # スウェル胴
 [[operators]]
 ratio = 1.0
 detune_cents = -3
 level = 1.0
-attack = 0.12
-decay = 0.4
-sustain = 0.0
-release = 0.12
+attack = 0.16
+decay = 0.32
+sustain = 0.00
+release = 0.10
 vel_sens = 0.24
 waveform = "saw"
 
@@ -42,9 +42,9 @@ waveform = "saw"
 ratio = 2.0
 detune_cents = 4
 level = 0.2
-attack = 0.1
-decay = 0.22
-sustain = 0.0
+attack = 0.14
+decay = 0.20
+sustain = 0.00
 release = 0.08
 vel_sens = 0.3
 waveform = "sine"
@@ -53,10 +53,10 @@ waveform = "sine"
 ratio = 1.0
 detune_cents = 6
 level = 0.68
-attack = 0.14
-decay = 0.36
-sustain = 0.0
-release = 0.11
+attack = 0.18
+decay = 0.28
+sustain = 0.00
+release = 0.10
 vel_sens = 0.22
 waveform = "sine"
 
@@ -64,9 +64,9 @@ waveform = "sine"
 ratio = 3.0
 detune_cents = 0
 level = 0.14
-attack = 0.08
+attack = 0.12
 decay = 0.16
-sustain = 0.0
+sustain = 0.00
 release = 0.06
 vel_sens = 0.35
 waveform = "abs-sine"

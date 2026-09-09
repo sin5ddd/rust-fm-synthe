@@ -1,11 +1,21 @@
 name = "glass-hit"
 description = "ガラス／ベル系の短いヒット。高整数比とトリプルキャリア。トップやアクセント。"
 algorithm = 6
-feedback = 0.14
+feedback = 0.12
 feedback_op = 4
 gain = 1.0
 default_note = 84
 default_duration = 0.7
+
+[filter]
+type = "highpass"
+cutoff = 400.0
+resonance = 0.08
+env_amount = 0.2
+attack = 0.0005
+decay = 0.2
+sustain = 0.08
+release = 0.1
 
 [[operators]]
 ratio = 1.0
@@ -43,9 +53,9 @@ waveform = "sine"
 [[operators]]
 ratio = 8.0
 detune_cents = 0.0
-level = 0.34
+level = 0.28
 attack = 0.0003
-decay = 0.09
+decay = 0.08
 sustain = 0.0
 release = 0.04
 vel_sens = 0.55

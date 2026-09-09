@@ -1,94 +1,94 @@
 name = "dry clap"
 description = "ドライなクラップ。cp-house より短く、1k胴を薄くしてスラップ寄り。2/4用。"
 algorithm = 8
-feedback = 0.28
+feedback = 0.16
 feedback_op = 1
-gain = 1.14
+gain = 1.12
 default_note = 60
 default_duration = 0.18
 
 [filter]
 type = "highpass"
-cutoff = 700.0
-resonance = 0.08
-env_amount = 0.18
+cutoff = 750.0
+resonance = 0.06
+env_amount = 0.14
 attack = 0.0002
-decay = 0.06
-sustain = 0.04
-release = 0.03
+decay = 0.045
+sustain = 0.03
+release = 0.028
 
 [noise]
 type = "white"
-level = 0.92
+level = 0.95
 delay = 0.008
 attack = 0.0003
-decay = 0.18
+decay = 0.16
 sustain = 0.0
-release = 0.04
+release = 0.035
 vel_sens = 0.5
 
 [noise.filter]
 type = "bandpass"
-cutoff = 1480.0
+cutoff = 1680.0
 resonance = 0.08
-env_amount = 0.25
+env_amount = 0.2
 attack = 0.0003
-decay = 0.06
-sustain = 0.04
-release = 0.03
+decay = 0.05
+sustain = 0.03
+release = 0.028
 
 [[operators]]
 ratio = 1.0
 detune_cents = 8.0
-level = 0.9
+level = 0.72
 delay = 0.008
-attack = 0.0002
-decay = 0.016
+attack = 0.00016
+decay = 0.014
 sustain = 0.0
-release = 0.01
+release = 0.008
 vel_sens = 0.55
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 8120.0
+fixed_hz = 4600.0
 
 [[operators]]
 ratio = 1.0
 detune_cents = -10.0
 level = 1.0
 delay = 0.018
-attack = 0.0002
+attack = 0.00016
 decay = 0.02
 sustain = 0.0
-release = 0.012
+release = 0.01
 vel_sens = 0.52
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 3480.0
+fixed_hz = 3100.0
 
 [[operators]]
 ratio = 1.0
 detune_cents = 12.0
-level = 0.85
+level = 0.82
 delay = 0.026
-attack = 0.0002
-decay = 0.018
+attack = 0.00016
+decay = 0.016
 sustain = 0.0
-release = 0.01
+release = 0.009
 vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 2760.0
+fixed_hz = 2550.0
 
 [[operators]]
 ratio = 1.0
 detune_cents = -6.0
-level = 0.6
+level = 0.5
 delay = 0.02
-attack = 0.00025
-decay = 0.022
+attack = 0.0002
+decay = 0.02
 sustain = 0.0
-release = 0.012
+release = 0.01
 vel_sens = 0.48
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 4120.0
+fixed_hz = 3800.0

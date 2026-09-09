@@ -1,94 +1,94 @@
 name = "gated clap"
 description = "ゲートしたクラップ。胴のあと急に切れる。cp-house より短いゲート感。"
 algorithm = 8
-feedback = 0.26
+feedback = 0.16
 feedback_op = 1
-gain = 1.14
+gain = 1.12
 default_note = 60
 default_duration = 0.2
 
 [filter]
 type = "highpass"
 cutoff = 650.0
-resonance = 0.08
-env_amount = 0.12
+resonance = 0.06
+env_amount = 0.1
 attack = 0.00015
-decay = 0.04
+decay = 0.032
 sustain = 0.0
-release = 0.016
+release = 0.012
 
 [noise]
 type = "white"
-level = 1.0
+level = 1.05
 delay = 0.01
 attack = 0.0003
-decay = 0.14
+decay = 0.12
 sustain = 0.0
-release = 0.02
+release = 0.016
 vel_sens = 0.5
 
 [noise.filter]
 type = "bandpass"
 cutoff = 1320.0
 resonance = 0.1
-env_amount = 0.2
+env_amount = 0.16
 attack = 0.00025
-decay = 0.045
+decay = 0.036
 sustain = 0.0
-release = 0.016
+release = 0.012
 
 [[operators]]
 ratio = 1.0
 detune_cents = 8.0
-level = 0.88
+level = 0.78
 delay = 0.01
-attack = 0.00016
-decay = 0.014
+attack = 0.00014
+decay = 0.012
 sustain = 0.0
-release = 0.008
+release = 0.006
 vel_sens = 0.55
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 7800.0
+fixed_hz = 4000.0
 
 [[operators]]
 ratio = 1.0
 detune_cents = -10.0
-level = 1.02
+level = 1.0
 delay = 0.02
-attack = 0.00016
-decay = 0.018
+attack = 0.00014
+decay = 0.016
 sustain = 0.0
-release = 0.01
+release = 0.008
 vel_sens = 0.52
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 3400.0
+fixed_hz = 2900.0
 
 [[operators]]
 ratio = 1.0
 detune_cents = 12.0
-level = 0.88
+level = 0.82
 delay = 0.028
-attack = 0.00016
-decay = 0.016
+attack = 0.00014
+decay = 0.014
 sustain = 0.0
-release = 0.008
+release = 0.007
 vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 2680.0
+fixed_hz = 2500.0
 
 [[operators]]
 ratio = 1.0
 detune_cents = -6.0
-level = 0.62
+level = 0.55
 delay = 0.022
-attack = 0.0002
-decay = 0.02
+attack = 0.00018
+decay = 0.018
 sustain = 0.0
-release = 0.01
+release = 0.008
 vel_sens = 0.48
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 4000.0
+fixed_hz = 3600.0

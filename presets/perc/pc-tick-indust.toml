@@ -1,25 +1,25 @@
 name = "industrial tick"
 description = "インダストリアルなティック。暗い金属＋砂。"
-algorithm = 4
-feedback = 0.22
+algorithm = 8
+feedback = 0.14
 feedback_op = 4
-gain = 1.12
+gain = 1.1
 default_note = 72
 default_duration = 0.16
 
 [filter]
 type = "highpass"
-cutoff = 1400
-resonance = 0.26
-env_amount = 0.6
+cutoff = 1200.0
+resonance = 0.14
+env_amount = 0.35
 attack = 0.00012
 decay = 0.035
-sustain = 0.05
-release = 0.03
+sustain = 0.04
+release = 0.028
 
 [noise]
 type = "white"
-level = 0.72
+level = 0.62
 attack = 0.0001
 decay = 0.05
 sustain = 0.0
@@ -29,59 +29,56 @@ vel_sens = 0.55
 [noise.filter]
 type = "highpass"
 cutoff = 2000.0
-resonance = 0.12
-env_amount = 0.35
+resonance = 0.1
+env_amount = 0.28
 attack = 0.0001
 decay = 0.03
 sustain = 0.0
 release = 0.016
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 1
+ratio = 1.0
+detune_cents = 0.0
+level = 0.9
 attack = 0.00012
 decay = 0.05
-sustain = 0
+sustain = 0.0
 release = 0.028
 vel_sens = 0.5
-waveform = "pulse"
-freq_mode = "fixed"
-fixed_hz = 2100
-
-[[operators]]
-ratio = 3.7
-detune_cents = 0
-level = 0.5
-attack = 0.0001
-decay = 0.03
-sustain = 0
-release = 0.018
-vel_sens = 0.55
-waveform = "abs-sine"
-
-[[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.4
-attack = 0.0001
-decay = 0.08
-sustain = 0
-release = 0.035
-vel_sens = 0.45
 waveform = "sine"
 freq_mode = "fixed"
-fixed_hz = 1750
+fixed_hz = 1750.0
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.35
-attack = 8e-05
-decay = 0.02
-sustain = 0
-release = 0.014
-vel_sens = 0.62
+ratio = 1.0
+detune_cents = 0.0
+level = 0.4
+attack = 0.0001
+decay = 0.03
+sustain = 0.0
+release = 0.016
+vel_sens = 0.55
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 4550
+fixed_hz = 2100.0
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.22
+attack = 0.00008
+decay = 0.016
+sustain = 0.0
+release = 0.01
+vel_sens = 0.6
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 4550.0
+
+[[operators]]
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"

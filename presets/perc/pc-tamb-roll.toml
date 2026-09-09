@@ -1,87 +1,96 @@
 name = "tambourine roll hit"
 description = "タンバリンの短いロール風ヒット。粒を重ねたワンショット。"
 algorithm = 8
-feedback = 0.22
+feedback = 0.1
 feedback_op = 4
-gain = 1.1
+gain = 1.08
 default_note = 84
 default_duration = 0.38
 
 [filter]
 type = "highpass"
-cutoff = 2200
-resonance = 0.2
-env_amount = 0.6
-attack = 0.002
+cutoff = 2000.0
+resonance = 0.12
+env_amount = 0.35
+attack = 0.001
 decay = 0.14
-sustain = 0.06
+sustain = 0.05
 release = 0.06
+
+[lfo]
+amp_depth = 0.4
+amp_rate_hz = 18.0
 
 [noise]
 type = "white"
-level = 0.85
+level = 0.7
 attack = 0.0003
 decay = 0.2
 sustain = 0.0
-release = 0.08
+release = 0.07
 vel_sens = 0.45
 
 [noise.filter]
 type = "highpass"
-cutoff = 2600.0
-resonance = 0.12
-env_amount = 0.4
+cutoff = 2800.0
+resonance = 0.08
+env_amount = 0.3
 attack = 0.0003
 decay = 0.12
 sustain = 0.04
-release = 0.06
+release = 0.055
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.9
-attack = 0.0004
-decay = 0.06
-sustain = 0
-release = 0.03
-vel_sens = 0.5
-waveform = "sine"
-freq_mode = "fixed"
-fixed_hz = 4300
-
-[[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.7
-attack = 0.012
-decay = 0.07
-sustain = 0
-release = 0.03
-vel_sens = 0.5
-waveform = "sine"
-freq_mode = "fixed"
-fixed_hz = 5100
-
-[[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.55
-attack = 0.024
-decay = 0.08
-sustain = 0
-release = 0.04
-vel_sens = 0.5
-waveform = "sine"
-freq_mode = "fixed"
-fixed_hz = 3900
-
-[[operators]]
-ratio = 16
-detune_cents = 0
-level = 0.35
+ratio = 1.0
+detune_cents = 0.0
+level = 0.85
 attack = 0.0003
-decay = 0.2
-sustain = 0
-release = 0.08
-vel_sens = 0.45
-waveform = "pulse"
+decay = 0.055
+sustain = 0.0
+release = 0.028
+vel_sens = 0.5
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 4300.0
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.7
+delay = 0.012
+attack = 0.0003
+decay = 0.06
+sustain = 0.0
+release = 0.03
+vel_sens = 0.5
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 5100.0
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.55
+delay = 0.024
+attack = 0.0003
+decay = 0.07
+sustain = 0.0
+release = 0.035
+vel_sens = 0.5
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 3900.0
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.4
+delay = 0.036
+attack = 0.0003
+decay = 0.08
+sustain = 0.0
+release = 0.04
+vel_sens = 0.48
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 6200.0

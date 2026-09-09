@@ -1,11 +1,11 @@
 name = "house bright pluck"
-description = "ハウス。明るい。短いワンショット（0.38秒）。ソー＋2:1/3:1のキラッと。"
+description = "ハウス。明るい。ワンショット（0.60秒）。ソー＋2:1/3:1のキラッと。"
 algorithm = 5
 feedback = 0.08
 feedback_op = 4
 gain = 1.0
 default_note = 64
-default_duration = 0.38
+default_duration = 0.60
 
 [filter]
 type = "lowpass"
@@ -13,9 +13,9 @@ cutoff = 980.0
 resonance = 0.26
 env_amount = 3.5
 attack = 0.0006
-decay = 0.09
-sustain = 0.02
-release = 0.06
+decay = 0.48
+sustain = 0.16
+release = 0.12
 
 # 明るいソー
 [[operators]]
@@ -23,9 +23,9 @@ ratio = 1.0
 detune_cents = -4
 level = 1.0
 attack = 0.0008
-decay = 0.12
-sustain = 0.0
-release = 0.06
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.42
 waveform = "saw"
 
@@ -35,9 +35,9 @@ ratio = 2.0
 detune_cents = 3
 level = 0.32
 attack = 0.0003
-decay = 0.03
-sustain = 0.0
-release = 0.015
+decay = 0.50
+sustain = 0.00
+release = 0.08
 vel_sens = 0.5
 waveform = "sine"
 
@@ -46,9 +46,9 @@ ratio = 1.0
 detune_cents = 7
 level = 0.7
 attack = 0.0007
-decay = 0.1
-sustain = 0.0
-release = 0.05
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.38
 waveform = "sine"
 
@@ -58,8 +58,8 @@ ratio = 3.0
 detune_cents = -2
 level = 0.2
 attack = 0.0003
-decay = 0.022
-sustain = 0.0
-release = 0.012
+decay = 0.50
+sustain = 0.00
+release = 0.08
 vel_sens = 0.55
 waveform = "sine"

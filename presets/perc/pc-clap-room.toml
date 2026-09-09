@@ -1,17 +1,17 @@
 name = "room clap"
 description = "ルーム寄りのクラップ。遅れた層で部屋感。cp-house より尾が長い。"
 algorithm = 8
-feedback = 0.24
+feedback = 0.14
 feedback_op = 1
-gain = 1.1
+gain = 1.08
 default_note = 60
 default_duration = 0.42
 
 [filter]
 type = "highpass"
-cutoff = 500.0
-resonance = 0.06
-env_amount = 0.25
+cutoff = 480.0
+resonance = 0.05
+env_amount = 0.22
 attack = 0.0003
 decay = 0.16
 sustain = 0.08
@@ -19,10 +19,10 @@ release = 0.1
 
 [noise]
 type = "pink"
-level = 1.08
+level = 1.14
 delay = 0.012
 attack = 0.0004
-decay = 0.48
+decay = 0.5
 sustain = 0.0
 release = 0.14
 vel_sens = 0.45
@@ -31,58 +31,58 @@ vel_sens = 0.45
 type = "bandpass"
 cutoff = 1180.0
 resonance = 0.08
-env_amount = 0.3
+env_amount = 0.28
 attack = 0.0004
-decay = 0.14
+decay = 0.16
 sustain = 0.08
 release = 0.1
 
 [[operators]]
 ratio = 1.0
 detune_cents = 8.0
-level = 0.8
+level = 0.7
 delay = 0.012
 attack = 0.0002
-decay = 0.022
+decay = 0.02
 sustain = 0.0
-release = 0.014
+release = 0.012
 vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 7600.0
+fixed_hz = 3900.0
 
 [[operators]]
 ratio = 1.0
 detune_cents = -12.0
-level = 0.95
+level = 0.92
 delay = 0.026
 attack = 0.0002
-decay = 0.03
+decay = 0.028
 sustain = 0.0
 release = 0.016
 vel_sens = 0.52
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 2700.0
+
+[[operators]]
+ratio = 1.0
+detune_cents = 14.0
+level = 0.8
+delay = 0.04
+attack = 0.0002
+decay = 0.026
+sustain = 0.0
+release = 0.014
+vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
 fixed_hz = 3300.0
 
 [[operators]]
 ratio = 1.0
-detune_cents = 14.0
-level = 0.85
-delay = 0.04
-attack = 0.0002
-decay = 0.028
-sustain = 0.0
-release = 0.014
-vel_sens = 0.5
-waveform = "pulse"
-freq_mode = "fixed"
-fixed_hz = 2580.0
-
-[[operators]]
-ratio = 1.0
 detune_cents = -8.0
-level = 0.55
+level = 0.5
 delay = 0.055
 attack = 0.0003
 decay = 0.04
@@ -91,4 +91,4 @@ release = 0.02
 vel_sens = 0.45
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 3900.0
+fixed_hz = 2100.0

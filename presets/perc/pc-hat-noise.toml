@@ -1,49 +1,50 @@
 name = "noise hat"
 description = "ノイズ寄りのハット。ホワイトノイズ主体の砂。"
 algorithm = 8
-feedback = 0.12
+feedback = 0.06
 feedback_op = 1
-gain = 1.14
+gain = 1.12
 default_note = 84
 default_duration = 0.4
+
 [filter]
 type = "highpass"
 cutoff = 2600.0
-resonance = 0.06
-env_amount = 0.22
+resonance = 0.04
+env_amount = 0.14
 attack = 0.0002
-decay = 0.11
+decay = 0.14
 sustain = 0.04
-release = 0.08
+release = 0.09
 
 [noise]
 type = "white"
-level = 1.18
+level = 1.28
 attack = 0.0002
-decay = 0.32
+decay = 0.34
 sustain = 0.0
-release = 0.09
+release = 0.1
 vel_sens = 0.5
 
 [noise.filter]
 type = "bandpass"
 cutoff = 7600.0
-resonance = 0.12
-env_amount = 0.28
+resonance = 0.08
+env_amount = 0.18
 attack = 0.0002
-decay = 0.11
+decay = 0.14
 sustain = 0.04
-release = 0.08
+release = 0.09
 
 [[operators]]
 ratio = 1.0
 detune_cents = 7.0
-level = 0.16
+level = 0.08
 attack = 0.00012
-decay = 0.03
+decay = 0.022
 sustain = 0.0
-release = 0.014
-vel_sens = 0.45
+release = 0.012
+vel_sens = 0.4
 waveform = "pulse"
 freq_mode = "fixed"
 fixed_hz = 6940.0

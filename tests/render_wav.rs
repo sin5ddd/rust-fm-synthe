@@ -813,19 +813,11 @@ fn factory_pl_plucks_are_thirty_and_audible() {
 
     for id in ids {
         let preset = load_factory(id).unwrap();
-        if id == "pl-reverse-swell" {
-            assert!(
-                (1.2..3.0).contains(&preset.default_duration),
-                "{id} reverse swell duration {} should stay a short pluck, not a 16s pad",
-                preset.default_duration
-            );
-        } else {
-            assert!(
-                preset.default_duration < 2.0,
-                "{id} default_duration {} must be < 2s (one-shot pluck)",
-                preset.default_duration
-            );
-        }
+        assert!(
+            (0.50..=0.70).contains(&preset.default_duration),
+            "{id} default_duration {} must be ~0.60s (usable one-shot, not a pad)",
+            preset.default_duration
+        );
         assert!(
             (48..=72).contains(&preset.default_note),
             "{id} default_note {} must be MIDI 48–72",

@@ -1,67 +1,63 @@
 name = "low perc zap"
 description = "低いパーカッションザップ。ミッドの短い落下。キックではない。"
-algorithm = 1
-feedback = 0.28
+algorithm = 8
+feedback = 0.1
 feedback_op = 4
-gain = 1.1
-default_note = 55
-default_duration = 0.28
+gain = 1.08
+default_note = 67
+default_duration = 0.32
 
 [pitch]
-start_semitones = 10
-end_semitones = -4
-curve = 2
+start_semitones = 8
+end_semitones = -8
+curve = 0.15
 
 [filter]
-type = "lowpass"
-cutoff = 1800
-resonance = 0.2
-env_amount = 1
+type = "highpass"
+cutoff = 220.0
+resonance = 0.06
+env_amount = 0.25
 attack = 0.0003
-decay = 0.08
-sustain = 0.06
+decay = 0.14
+sustain = 0.05
 release = 0.05
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 1
-attack = 0.0004
-decay = 0.14
-sustain = 0
-release = 0.06
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.00035
+decay = 0.26
+sustain = 0.0
+release = 0.07
 vel_sens = 0.4
 waveform = "sine"
 
 [[operators]]
-ratio = 2.2
-detune_cents = 0
-level = 0.4
-attack = 0.00025
-decay = 0.05
-sustain = 0
-release = 0.025
+ratio = 1.0
+detune_cents = 0.0
+level = 0.1
+attack = 0.0002
+decay = 0.03
+sustain = 0.0
+release = 0.016
 vel_sens = 0.5
+waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 1800.0
+
+[[operators]]
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
 waveform = "sine"
 
 [[operators]]
-ratio = 4
-detune_cents = 0
-level = 0.24
-attack = 0.0002
-decay = 0.03
-sustain = 0
-release = 0.018
-vel_sens = 0.55
-waveform = "pulse"
-
-[[operators]]
-ratio = 7
-detune_cents = 0
-level = 0.16
-attack = 0.00015
-decay = 0.02
-sustain = 0
-release = 0.012
-vel_sens = 0.58
-waveform = "half-sine"
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"

@@ -1,48 +1,49 @@
 name = "dark hat"
 description = "暗いクローズドハット。ピンクノイズで胴っぽい砂を残す。"
 algorithm = 8
-feedback = 0.14
+feedback = 0.08
 feedback_op = 1
-gain = 1.1
+gain = 1.08
 default_note = 76
 default_duration = 0.44
+
 [filter]
 type = "highpass"
-cutoff = 1800.0
-resonance = 0.06
-env_amount = 0.18
+cutoff = 1600.0
+resonance = 0.05
+env_amount = 0.12
 attack = 0.0002
-decay = 0.12
+decay = 0.14
 sustain = 0.05
-release = 0.09
+release = 0.1
 
 [noise]
 type = "pink"
-level = 1.1
+level = 1.2
 attack = 0.0002
-decay = 0.36
+decay = 0.38
 sustain = 0.0
-release = 0.1
+release = 0.11
 vel_sens = 0.5
 
 [noise.filter]
 type = "bandpass"
-cutoff = 5200.0
-resonance = 0.25
-env_amount = 0.22
+cutoff = 4800.0
+resonance = 0.18
+env_amount = 0.16
 attack = 0.0002
-decay = 0.12
+decay = 0.14
 sustain = 0.05
-release = 0.09
+release = 0.1
 
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
-level = 0.28
+level = 0.14
 attack = 0.00015
-decay = 0.05
+decay = 0.045
 sustain = 0.0
-release = 0.022
+release = 0.02
 vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
@@ -51,11 +52,11 @@ fixed_hz = 5480.0
 [[operators]]
 ratio = 1.0
 detune_cents = 10.0
-level = 0.14
+level = 0.08
 attack = 0.00012
-decay = 0.03
+decay = 0.026
 sustain = 0.0
-release = 0.016
+release = 0.014
 vel_sens = 0.55
 waveform = "abs-sine"
 freq_mode = "fixed"

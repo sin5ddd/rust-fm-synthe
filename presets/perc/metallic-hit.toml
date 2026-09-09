@@ -1,60 +1,70 @@
 name = "metallic-hit"
 description = "金属ヒット。固定周波数オペでピッチに追従しない倍音。パーカッション／トップ。"
-algorithm = 4
-feedback = 0.38
+algorithm = 8
+feedback = 0.22
 feedback_op = 4
-gain = 1.05
+gain = 1.04
 default_note = 72
 default_duration = 0.55
 
-# OP1 キャリア
+[filter]
+type = "highpass"
+cutoff = 350.0
+resonance = 0.1
+env_amount = 0.28
+attack = 0.0004
+decay = 0.16
+sustain = 0.08
+release = 0.08
+
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
-level = 1.0
-attack = 0.0006
+level = 0.85
+attack = 0.0005
 decay = 0.32
 sustain = 0.0
-release = 0.08
-vel_sens = 0.45
+release = 0.1
+vel_sens = 0.4
 waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 920.0
 
-# OP2 インハーモニック
-[[operators]]
-ratio = 2.73
-detune_cents = 18.0
-level = 0.62
-attack = 0.0004
-decay = 0.14
-sustain = 0.0
-release = 0.05
-vel_sens = 0.5
-waveform = "abs-sine"
-
-# OP3 固定周波数のリン
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
-level = 0.55
-attack = 0.0003
-decay = 0.22
+level = 0.7
+attack = 0.0004
+decay = 0.24
 sustain = 0.0
-release = 0.06
-vel_sens = 0.4
+release = 0.08
+vel_sens = 0.42
 waveform = "sine"
 freq_mode = "fixed"
 fixed_hz = 1840.0
 
-# OP4 高域の金属ノイズ源
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
-level = 0.4
-attack = 0.0002
-decay = 0.06
+level = 0.45
+attack = 0.0003
+decay = 0.16
 sustain = 0.0
-release = 0.03
-vel_sens = 0.65
+release = 0.06
+vel_sens = 0.48
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 2512.0
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.28
+attack = 0.0002
+decay = 0.05
+sustain = 0.0
+release = 0.025
+vel_sens = 0.6
 waveform = "pulse"
 freq_mode = "fixed"
 fixed_hz = 3175.0

@@ -1,11 +1,11 @@
 name = "house dry pluck"
-description = "ハウス。ドライで中庸の明るさ。短いワンショット（0.42秒）。単ソー＋控えめLP。"
+description = "ハウス。ドライで中庸の明るさ。ワンショット（0.60秒）。単ソー＋控えめLP。"
 algorithm = 8
 feedback = 0.04
 feedback_op = 4
 gain = 1.05
 default_note = 60
-default_duration = 0.42
+default_duration = 0.60
 
 [filter]
 type = "lowpass"
@@ -13,9 +13,9 @@ cutoff = 340.0
 resonance = 0.18
 env_amount = 2.6
 attack = 0.001
-decay = 0.13
-sustain = 0.04
-release = 0.08
+decay = 0.50
+sustain = 0.18
+release = 0.12
 
 # 素のソー胴
 [[operators]]
@@ -23,9 +23,9 @@ ratio = 1.0
 detune_cents = 0
 level = 1.0
 attack = 0.0012
-decay = 0.16
-sustain = 0.0
-release = 0.07
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.4
 waveform = "saw"
 

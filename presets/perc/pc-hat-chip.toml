@@ -1,48 +1,49 @@
 name = "chip hat"
 description = "チップチューン寄りの短いハット。パルスの粒＋薄いホワイトノイズ。"
 algorithm = 8
-feedback = 0.42
+feedback = 0.38
 feedback_op = 1
-gain = 1.12
+gain = 1.1
 default_note = 96
 default_duration = 0.26
+
 [filter]
 type = "highpass"
 cutoff = 2200.0
-resonance = 0.1
-env_amount = 0.22
+resonance = 0.08
+env_amount = 0.16
 attack = 0.0002
-decay = 0.07
+decay = 0.08
 sustain = 0.03
-release = 0.056
+release = 0.05
 
 [noise]
 type = "white"
-level = 0.42
+level = 0.36
 attack = 0.0002
-decay = 0.2
+decay = 0.18
 sustain = 0.0
-release = 0.056
+release = 0.05
 vel_sens = 0.5
 
 [noise.filter]
 type = "bandpass"
 cutoff = 6400.0
-resonance = 0.15
-env_amount = 0.25
+resonance = 0.12
+env_amount = 0.2
 attack = 0.0002
-decay = 0.07
+decay = 0.08
 sustain = 0.03
-release = 0.056
+release = 0.05
 
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
-level = 0.92
-attack = 0.0002
-decay = 0.2
+level = 0.9
+attack = 0.00015
+decay = 0.16
 sustain = 0.0
-release = 0.056
+release = 0.05
 vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
@@ -51,11 +52,11 @@ fixed_hz = 5480.0
 [[operators]]
 ratio = 1.0
 detune_cents = -12.0
-level = 0.7
-attack = 0.00015
-decay = 0.15
+level = 0.62
+attack = 0.00012
+decay = 0.12
 sustain = 0.0
-release = 0.044
+release = 0.04
 vel_sens = 0.55
 waveform = "pulse"
 freq_mode = "fixed"
@@ -64,11 +65,11 @@ fixed_hz = 6360.0
 [[operators]]
 ratio = 1.0
 detune_cents = 10.0
-level = 0.48
-attack = 0.00015
-decay = 0.1
+level = 0.4
+attack = 0.00012
+decay = 0.08
 sustain = 0.0
-release = 0.036
+release = 0.03
 vel_sens = 0.6
 waveform = "abs-sine"
 freq_mode = "fixed"
@@ -77,11 +78,11 @@ fixed_hz = 7840.0
 [[operators]]
 ratio = 1.0
 detune_cents = -6.0
-level = 0.55
+level = 0.48
 attack = 0.0001
-decay = 0.22
+decay = 0.18
 sustain = 0.0
-release = 0.06
+release = 0.055
 vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"

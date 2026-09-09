@@ -1,7 +1,7 @@
 name = "wood rim"
 description = "木寄りのリム。sd-rimshot より金属リンが弱く、短いウッドクリック。スネア代用ではない。"
-algorithm = 6
-feedback = 0.18
+algorithm = 8
+feedback = 0.08
 feedback_op = 4
 gain = 1.1
 default_note = 60
@@ -9,62 +9,62 @@ default_duration = 0.22
 
 [filter]
 type = "highpass"
-cutoff = 900
-resonance = 0.16
-env_amount = 0.5
-attack = 0.00015
-decay = 0.04
-sustain = 0.08
-release = 0.04
+cutoff = 900.0
+resonance = 0.1
+env_amount = 0.3
+attack = 0.00012
+decay = 0.035
+sustain = 0.05
+release = 0.03
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 1
-attack = 0.00015
-decay = 0.045
-sustain = 0
-release = 0.03
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
+attack = 0.00012
+decay = 0.04
+sustain = 0.0
+release = 0.025
 vel_sens = 0.5
 waveform = "sine"
 freq_mode = "fixed"
-fixed_hz = 980
+fixed_hz = 980.0
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.7
-attack = 0.00012
-decay = 0.025
-sustain = 0
-release = 0.018
-vel_sens = 0.58
+ratio = 1.0
+detune_cents = 0.0
+level = 0.62
+attack = 0.0001
+decay = 0.022
+sustain = 0.0
+release = 0.014
+vel_sens = 0.55
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 1680
+fixed_hz = 1680.0
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.28
-attack = 0.0002
-decay = 0.12
-sustain = 0
-release = 0.05
+ratio = 1.0
+detune_cents = 0.0
+level = 0.22
+attack = 0.00015
+decay = 0.08
+sustain = 0.0
+release = 0.04
 vel_sens = 0.4
 waveform = "sine"
 freq_mode = "fixed"
-fixed_hz = 1320
+fixed_hz = 1320.0
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.22
+ratio = 1.0
+detune_cents = 0.0
+level = 0.14
 attack = 0.0001
-decay = 0.02
-sustain = 0
-release = 0.015
+decay = 0.014
+sustain = 0.0
+release = 0.01
 vel_sens = 0.6
 waveform = "abs-sine"
 freq_mode = "fixed"
-fixed_hz = 2400
+fixed_hz = 2400.0

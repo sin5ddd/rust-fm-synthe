@@ -1,11 +1,11 @@
 name = "koto pluck"
-description = "箏（琴）。明るく鋭いアタック。中短（0.68秒）。わずかなピッチ落下。"
+description = "箏（琴）。明るく鋭いアタック。ワンショット（0.60秒）。わずかなピッチ落下。"
 algorithm = 4
 feedback = 0.12
 feedback_op = 4
 gain = 1.0
 default_note = 64
-default_duration = 0.68
+default_duration = 0.60
 
 [pitch]
 start_semitones = 2.4
@@ -18,9 +18,9 @@ cutoff = 1700.0
 resonance = 0.22
 env_amount = 2.4
 attack = 0.0005
-decay = 0.2
-sustain = 0.0
-release = 0.1
+decay = 0.46
+sustain = 0.16
+release = 0.12
 
 # 箏の胴
 [[operators]]
@@ -28,9 +28,9 @@ ratio = 1.04
 detune_cents = 0
 level = 1.0
 attack = 0.0006
-decay = 0.3
-sustain = 0.0
-release = 0.1
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.4
 waveform = "saw"
 
@@ -39,9 +39,9 @@ ratio = 2.08
 detune_cents = 4
 level = 0.3
 attack = 0.0003
-decay = 0.08
-sustain = 0.0
-release = 0.04
+decay = 0.50
+sustain = 0.00
+release = 0.08
 vel_sens = 0.48
 waveform = "sine"
 
@@ -50,9 +50,9 @@ ratio = 1.0
 detune_cents = -3
 level = 0.45
 attack = 0.0007
-decay = 0.26
-sustain = 0.0
-release = 0.09
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.36
 waveform = "abs-sine"
 
@@ -61,8 +61,8 @@ ratio = 5.5
 detune_cents = 0
 level = 0.14
 attack = 0.0002
-decay = 0.02
-sustain = 0.0
-release = 0.01
+decay = 0.50
+sustain = 0.00
+release = 0.08
 vel_sens = 0.55
 waveform = "pulse"

@@ -1,11 +1,11 @@
 name = "fm crystal pluck"
-description = "クリスタルFM。非常に明るい。中短（0.68秒）。高い比のシリアル。"
+description = "クリスタルFM。非常に明るい。ワンショット（0.60秒）。高い比のシリアル。"
 algorithm = 1
 feedback = 0.11
 feedback_op = 4
 gain = 0.94
 default_note = 72
-default_duration = 0.68
+default_duration = 0.60
 
 [filter]
 type = "highpass"
@@ -13,18 +13,18 @@ cutoff = 740.0
 resonance = 0.14
 env_amount = 0.6
 attack = 0.0005
-decay = 0.16
-sustain = 0.0
-release = 0.08
+decay = 0.48
+sustain = 0.16
+release = 0.12
 
 [[operators]]
 ratio = 1.0
 detune_cents = 0
 level = 0.82
 attack = 0.0007
-decay = 0.3
-sustain = 0.0
-release = 0.09
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.34
 waveform = "sine"
 
@@ -33,9 +33,9 @@ ratio = 3.17
 detune_cents = 5
 level = 0.38
 attack = 0.0004
-decay = 0.1
-sustain = 0.0
-release = 0.04
+decay = 0.50
+sustain = 0.00
+release = 0.08
 vel_sens = 0.46
 waveform = "sine"
 
@@ -44,9 +44,9 @@ ratio = 6.83
 detune_cents = -6
 level = 0.2
 attack = 0.0003
-decay = 0.05
-sustain = 0.0
-release = 0.022
+decay = 0.50
+sustain = 0.00
+release = 0.08
 vel_sens = 0.5
 waveform = "abs-sine"
 
@@ -55,8 +55,8 @@ ratio = 11.2
 detune_cents = 0
 level = 0.1
 attack = 0.0002
-decay = 0.018
-sustain = 0.0
-release = 0.01
+decay = 0.50
+sustain = 0.00
+release = 0.08
 vel_sens = 0.56
 waveform = "sine"

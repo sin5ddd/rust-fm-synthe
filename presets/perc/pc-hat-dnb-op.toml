@@ -1,49 +1,49 @@
 name = "dnb open hat"
 description = "DnBのオープンハット。少し暗いホワイトノイズの中くらいの尾。ロールやオフビート向き。"
 algorithm = 8
-feedback = 0.16
+feedback = 0.1
 feedback_op = 1
-gain = 1.08
+gain = 1.06
 default_note = 80
 default_duration = 1.05
 
 [filter]
 type = "highpass"
 cutoff = 2200.0
-resonance = 0.08
-env_amount = 0.25
+resonance = 0.06
+env_amount = 0.2
 attack = 0.0002
-decay = 0.28
+decay = 0.32
 sustain = 0.04
-release = 0.18
+release = 0.2
 
 [noise]
 type = "white"
-level = 1.05
+level = 1.14
 attack = 0.0002
-decay = 0.75
+decay = 0.78
 sustain = 0.0
-release = 0.24
+release = 0.26
 vel_sens = 0.5
 
 [noise.filter]
 type = "bandpass"
-cutoff = 6600.0
-resonance = 0.2
-env_amount = 0.3
+cutoff = 6200.0
+resonance = 0.14
+env_amount = 0.24
 attack = 0.0002
-decay = 0.35
+decay = 0.38
 sustain = 0.04
-release = 0.2
+release = 0.22
 
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
-level = 0.32
+level = 0.16
 attack = 0.00015
-decay = 0.055
+decay = 0.05
 sustain = 0.0
-release = 0.028
+release = 0.024
 vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
@@ -52,11 +52,11 @@ fixed_hz = 6680.0
 [[operators]]
 ratio = 1.0
 detune_cents = 10.0
-level = 0.16
+level = 0.08
 attack = 0.00012
-decay = 0.035
+decay = 0.032
 sustain = 0.0
-release = 0.018
+release = 0.016
 vel_sens = 0.55
 waveform = "abs-sine"
 freq_mode = "fixed"

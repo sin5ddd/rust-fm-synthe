@@ -1,48 +1,49 @@
 name = "house closed hat"
 description = "ハウスのクローズドハット。タイトで明るいホワイトノイズ。4つ打ちの16分向き。"
 algorithm = 8
-feedback = 0.16
+feedback = 0.1
 feedback_op = 1
-gain = 1.14
+gain = 1.12
 default_note = 84
 default_duration = 0.28
+
 [filter]
 type = "highpass"
-cutoff = 3400.0
-resonance = 0.08
-env_amount = 0.3
+cutoff = 3600.0
+resonance = 0.06
+env_amount = 0.22
 attack = 0.0002
 decay = 0.08
-sustain = 0.04
-release = 0.06
+sustain = 0.03
+release = 0.055
 
 [noise]
 type = "white"
-level = 1.05
-attack = 0.0002
+level = 1.16
+attack = 0.00018
 decay = 0.22
 sustain = 0.0
-release = 0.06
+release = 0.055
 vel_sens = 0.5
 
 [noise.filter]
 type = "bandpass"
 cutoff = 8600.0
-resonance = 0.2
-env_amount = 0.35
-attack = 0.0002
+resonance = 0.14
+env_amount = 0.28
+attack = 0.00018
 decay = 0.08
-sustain = 0.04
-release = 0.06
+sustain = 0.03
+release = 0.055
 
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
-level = 0.34
-attack = 0.00015
-decay = 0.035
+level = 0.18
+attack = 0.00012
+decay = 0.03
 sustain = 0.0
-release = 0.016
+release = 0.014
 vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
@@ -51,11 +52,11 @@ fixed_hz = 7800.0
 [[operators]]
 ratio = 1.0
 detune_cents = 12.0
-level = 0.18
-attack = 0.00012
-decay = 0.022
+level = 0.1
+attack = 0.0001
+decay = 0.018
 sustain = 0.0
-release = 0.014
+release = 0.012
 vel_sens = 0.55
 waveform = "abs-sine"
 freq_mode = "fixed"

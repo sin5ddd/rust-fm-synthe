@@ -1,11 +1,11 @@
 name = "trance gate pluck"
-description = "トランス。明るくゲートしたスーパーソー。極短い（0.32秒）。速いLP閉じ。"
+description = "トランス。明るくゲートしたスーパーソー。ワンショット（0.60秒）。速いLP閉じ。"
 algorithm = 8
 feedback = 0.06
 feedback_op = 4
 gain = 0.9
 default_note = 60
-default_duration = 0.32
+default_duration = 0.60
 
 [filter]
 type = "lowpass"
@@ -13,9 +13,9 @@ cutoff = 240.0
 resonance = 0.46
 env_amount = 5.0
 attack = 0.001
-decay = 0.055
-sustain = 0.0
-release = 0.04
+decay = 0.34
+sustain = 0.14
+release = 0.12
 
 # ゲート胴
 [[operators]]
@@ -23,9 +23,9 @@ ratio = 1.0
 detune_cents = -5
 level = 1.0
 attack = 0.002
-decay = 0.08
-sustain = 0.0
-release = 0.04
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.3
 waveform = "super-saw"
 unison = 7
@@ -36,9 +36,9 @@ ratio = 1.0
 detune_cents = 6
 level = 0.62
 attack = 0.002
-decay = 0.07
-sustain = 0.0
-release = 0.035
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.28
 waveform = "saw"
 
@@ -47,9 +47,9 @@ ratio = 2.0
 detune_cents = 0
 level = 0.18
 attack = 0.001
-decay = 0.04
-sustain = 0.0
-release = 0.02
+decay = 0.50
+sustain = 0.00
+release = 0.08
 vel_sens = 0.4
 waveform = "sine"
 
@@ -58,8 +58,8 @@ ratio = 1.0
 detune_cents = -8
 level = 0.38
 attack = 0.0018
-decay = 0.065
-sustain = 0.0
-release = 0.03
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.28
 waveform = "saw"

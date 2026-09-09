@@ -1,48 +1,49 @@
 name = "pedal hat"
 description = "ペダル／フットハット。クローズより暗いホワイトノイズの短いチック。"
 algorithm = 8
-feedback = 0.14
+feedback = 0.1
 feedback_op = 1
-gain = 1.1
+gain = 1.08
 default_note = 72
 default_duration = 0.3
+
 [filter]
 type = "highpass"
-cutoff = 2000.0
-resonance = 0.06
-env_amount = 0.18
+cutoff = 1800.0
+resonance = 0.05
+env_amount = 0.14
 attack = 0.0002
 decay = 0.08
-sustain = 0.04
-release = 0.06
+sustain = 0.03
+release = 0.055
 
 [noise]
 type = "white"
-level = 1.0
+level = 1.08
 attack = 0.0002
-decay = 0.24
+decay = 0.22
 sustain = 0.0
-release = 0.064
+release = 0.06
 vel_sens = 0.5
 
 [noise.filter]
 type = "bandpass"
-cutoff = 5600.0
-resonance = 0.2
-env_amount = 0.22
+cutoff = 5200.0
+resonance = 0.16
+env_amount = 0.18
 attack = 0.0002
 decay = 0.08
-sustain = 0.04
-release = 0.06
+sustain = 0.03
+release = 0.055
 
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
-level = 0.3
+level = 0.16
 attack = 0.00015
-decay = 0.038
+decay = 0.032
 sustain = 0.0
-release = 0.016
+release = 0.014
 vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
@@ -51,11 +52,11 @@ fixed_hz = 5620.0
 [[operators]]
 ratio = 1.0
 detune_cents = 9.0
-level = 0.14
+level = 0.08
 attack = 0.00012
-decay = 0.022
+decay = 0.018
 sustain = 0.0
-release = 0.012
+release = 0.01
 vel_sens = 0.55
 waveform = "abs-sine"
 freq_mode = "fixed"

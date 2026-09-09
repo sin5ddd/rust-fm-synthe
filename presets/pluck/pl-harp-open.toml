@@ -1,11 +1,11 @@
 name = "harp open pluck"
-description = "ハープ。開いた明るさ。やや長いワンショット（1.15秒）。サイン＋5度。"
+description = "ハープ。開いた明るさ。ワンショット（0.60秒）。サイン＋5度。"
 algorithm = 7
 feedback = 0.04
 feedback_op = 4
 gain = 0.97
 default_note = 67
-default_duration = 1.15
+default_duration = 0.60
 
 [filter]
 type = "highpass"
@@ -13,9 +13,9 @@ cutoff = 170.0
 resonance = 0.08
 env_amount = 0.4
 attack = 0.002
-decay = 0.45
-sustain = 0.0
-release = 0.14
+decay = 0.50
+sustain = 0.16
+release = 0.12
 
 # 開いた弦
 [[operators]]
@@ -23,9 +23,9 @@ ratio = 1.0
 detune_cents = 0
 level = 1.0
 attack = 0.0015
-decay = 0.55
-sustain = 0.0
-release = 0.14
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.3
 waveform = "sine"
 
@@ -35,9 +35,9 @@ ratio = 1.5
 detune_cents = 2
 level = 0.28
 attack = 0.0012
-decay = 0.4
-sustain = 0.0
-release = 0.12
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.32
 waveform = "sine"
 
@@ -46,9 +46,9 @@ ratio = 2.0
 detune_cents = -3
 level = 0.16
 attack = 0.001
-decay = 0.28
-sustain = 0.0
-release = 0.1
+decay = 0.50
+sustain = 0.00
+release = 0.08
 vel_sens = 0.36
 waveform = "sine"
 
@@ -57,8 +57,8 @@ ratio = 4.0
 detune_cents = 0
 level = 0.08
 attack = 0.0004
-decay = 0.06
-sustain = 0.0
-release = 0.03
+decay = 0.50
+sustain = 0.00
+release = 0.08
 vel_sens = 0.48
 waveform = "sine"

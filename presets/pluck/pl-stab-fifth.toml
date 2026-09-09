@@ -1,11 +1,11 @@
 name = "stab fifth pluck"
-description = "スタブ。中空5度、中庸の明るさ。短い（0.38秒）。C+Gのみ。"
+description = "スタブ。中空5度、中庸の明るさ。ワンショット（0.60秒）。C+Gのみ。"
 algorithm = 8
 feedback = 0.0
 feedback_op = 4
 gain = 1.04
 default_note = 55
-default_duration = 0.38
+default_duration = 0.60
 
 [filter]
 type = "highpass"
@@ -23,9 +23,9 @@ ratio = 1.0
 detune_cents = 0
 level = 1.0
 attack = 0.0008
-decay = 0.14
-sustain = 0.0
-release = 0.06
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.4
 waveform = "sine"
 
@@ -35,9 +35,9 @@ ratio = 1.5
 detune_cents = 0
 level = 0.78
 attack = 0.0008
-decay = 0.13
-sustain = 0.0
-release = 0.06
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.4
 waveform = "sine"
 

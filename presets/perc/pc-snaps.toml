@@ -1,86 +1,92 @@
 name = "snap cluster"
 description = "スナップの重ね。わずかに遅れた2粒。pc-snap より広い。"
-algorithm = 5
-feedback = 0.22
+algorithm = 8
+feedback = 0.1
 feedback_op = 4
-gain = 1.12
+gain = 1.1
 default_note = 72
 default_duration = 0.26
 
 [filter]
 type = "highpass"
-cutoff = 650
-resonance = 0.2
-env_amount = 0.45
+cutoff = 600.0
+resonance = 0.1
+env_amount = 0.28
 attack = 0.0002
 decay = 0.05
-sustain = 0.06
-release = 0.04
+sustain = 0.05
+release = 0.035
 
 [noise]
 type = "white"
-level = 0.68
+level = 0.5
 delay = 0.016
 attack = 0.00015
-decay = 0.06
+decay = 0.055
 sustain = 0.0
-release = 0.025
+release = 0.022
 vel_sens = 0.5
 
 [noise.filter]
 type = "highpass"
-cutoff = 2200.0
-resonance = 0.1
-env_amount = 0.3
+cutoff = 2400.0
+resonance = 0.08
+env_amount = 0.22
 attack = 0.00015
-decay = 0.04
+decay = 0.035
 sustain = 0.0
-release = 0.02
+release = 0.018
 
 [[operators]]
-ratio = 1
-detune_cents = 0
-level = 1
+ratio = 1.0
+detune_cents = 0.0
+level = 1.0
 attack = 0.0002
-decay = 0.05
-sustain = 0
-release = 0.028
+decay = 0.048
+sustain = 0.0
+release = 0.026
 vel_sens = 0.48
 waveform = "sine"
 freq_mode = "fixed"
-fixed_hz = 1280
+fixed_hz = 1280.0
 
 [[operators]]
-ratio = 8
-detune_cents = 0
-level = 0.32
-attack = 0.00015
-decay = 0.018
-sustain = 0
-release = 0.012
+ratio = 1.0
+detune_cents = 0.0
+level = 0.55
+attack = 0.00014
+decay = 0.016
+sustain = 0.0
+release = 0.01
 vel_sens = 0.6
-waveform = "abs-sine"
-
-[[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.78
-attack = 0.018
-decay = 0.055
-sustain = 0
-release = 0.03
-vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 2900
+fixed_hz = 3400.0
 
 [[operators]]
-ratio = 10
-detune_cents = 0
-level = 0.28
-attack = 0.017
-decay = 0.02
-sustain = 0
-release = 0.012
-vel_sens = 0.62
+ratio = 1.0
+detune_cents = 0.0
+level = 0.82
+delay = 0.018
+attack = 0.0002
+decay = 0.05
+sustain = 0.0
+release = 0.028
+vel_sens = 0.5
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 1180.0
+
+[[operators]]
+ratio = 1.0
+detune_cents = 0.0
+level = 0.5
+delay = 0.018
+attack = 0.00014
+decay = 0.018
+sustain = 0.0
+release = 0.01
+vel_sens = 0.58
 waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 2900.0

@@ -1,49 +1,53 @@
 name = "shaker"
 description = "シェイカー。粒状のハイノイズ。短いワンショット（ループ前提ではない）。"
 algorithm = 8
-feedback = 0.16
+feedback = 0.08
 feedback_op = 1
-gain = 1.12
+gain = 1.1
 default_note = 84
 default_duration = 0.28
 
 [filter]
 type = "highpass"
-cutoff = 2800.0
-resonance = 0.1
-env_amount = 0.35
-attack = 0.003
+cutoff = 3800.0
+resonance = 0.08
+env_amount = 0.28
+attack = 0.004
 decay = 0.12
-sustain = 0.04
-release = 0.06
+sustain = 0.03
+release = 0.055
+
+[lfo]
+amp_depth = 0.42
+amp_rate_hz = 32.0
 
 [noise]
 type = "white"
-level = 1.1
+level = 1.18
 attack = 0.004
 decay = 0.18
 sustain = 0.0
-release = 0.06
+release = 0.055
 vel_sens = 0.45
 
 [noise.filter]
 type = "highpass"
-cutoff = 4200.0
-resonance = 0.1
-env_amount = 0.4
+cutoff = 5200.0
+resonance = 0.08
+env_amount = 0.3
 attack = 0.003
 decay = 0.1
-sustain = 0.04
+sustain = 0.03
 release = 0.05
 
 [[operators]]
 ratio = 1.0
-detune_cents = 22.0
-level = 0.28
+detune_cents = 18.0
+level = 0.16
 attack = 0.002
-decay = 0.04
+decay = 0.03
 sustain = 0.0
-release = 0.02
+release = 0.016
 vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
@@ -51,12 +55,12 @@ fixed_hz = 6400.0
 
 [[operators]]
 ratio = 1.0
-detune_cents = -16.0
-level = 0.16
+detune_cents = -14.0
+level = 0.1
 attack = 0.003
-decay = 0.03
+decay = 0.022
 sustain = 0.0
-release = 0.016
+release = 0.012
 vel_sens = 0.55
 waveform = "abs-sine"
 freq_mode = "fixed"

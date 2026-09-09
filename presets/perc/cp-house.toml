@@ -1,20 +1,18 @@
 name = "cp-house"
 description = "短いドライなハウスクラップ。2/4専用。1 kHz付近の短い胴＋ハイのスラップ。スネア代用でもサブでもない。"
 algorithm = 8
-feedback = 0.32
-feedback_op = 4
-gain = 1.16
+feedback = 0.18
+feedback_op = 1
+gain = 1.14
 default_note = 60
 default_duration = 0.28
 
-# AHKV1_Clap01-style: silence, first slap, gap, louder cluster, 1 kHz noise tail.
-# Palm is white noise through a wide ~1.3 kHz BP. Pulse ops are delayed grains.
-# Operator `delay` is a rest before the envelope. Decay is time-to--80 dB.
+# Palm is white noise through a wide ~1.3 kHz BP. Pulse ops are delayed 2–4 kHz slaps.
 [filter]
 type = "highpass"
-cutoff = 450.0
-resonance = 0.06
-env_amount = 0.2
+cutoff = 500.0
+resonance = 0.05
+env_amount = 0.16
 attack = 0.0002
 decay = 0.055
 sustain = 0.04
@@ -22,80 +20,76 @@ release = 0.04
 
 [noise]
 type = "white"
-level = 1.05
+level = 1.12
 delay = 0.012
 attack = 0.0004
-decay = 0.34
+decay = 0.32
 sustain = 0.0
-release = 0.07
+release = 0.06
 vel_sens = 0.45
 
 [noise.filter]
 type = "bandpass"
-cutoff = 1320.0
-resonance = 0.08
-env_amount = 0.35
+cutoff = 1280.0
+resonance = 0.1
+env_amount = 0.28
 attack = 0.0003
 decay = 0.08
-sustain = 0.05
+sustain = 0.04
 release = 0.05
 
-# First slap ~12 ms (high tick)
 [[operators]]
 ratio = 1.0
-detune_cents = 9.0
-level = 0.85
+detune_cents = 8.0
+level = 0.7
 delay = 0.012
 attack = 0.0002
-decay = 0.018
+decay = 0.016
 sustain = 0.0
 release = 0.01
 vel_sens = 0.55
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 8120.0
+fixed_hz = 4200.0
 
-# Main cluster ~25 ms (2–4.5 kHz slap)
 [[operators]]
 ratio = 1.0
-detune_cents = -12.0
-level = 1.05
-delay = 0.025
+detune_cents = -10.0
+level = 1.0
+delay = 0.024
 attack = 0.0002
-decay = 0.028
+decay = 0.026
 sustain = 0.0
 release = 0.014
 vel_sens = 0.52
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 3480.0
+fixed_hz = 2800.0
 
-# Peak grain ~34 ms
 [[operators]]
 ratio = 1.0
-detune_cents = 15.0
-level = 0.95
+detune_cents = 12.0
+level = 0.88
 delay = 0.034
 attack = 0.0002
-decay = 0.026
+decay = 0.022
 sustain = 0.0
 release = 0.012
 vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 2760.0
+fixed_hz = 3400.0
 
-# Extra slap with the cluster
 [[operators]]
 ratio = 1.0
-detune_cents = -7.0
-level = 0.7
-delay = 0.026
-attack = 0.0003
-decay = 0.032
+detune_cents = -6.0
+level = 0.55
+delay = 0.028
+attack = 0.00025
+decay = 0.03
 sustain = 0.0
-release = 0.016
+release = 0.014
 vel_sens = 0.45
 waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 4120.0
+fixed_hz = 1950.0

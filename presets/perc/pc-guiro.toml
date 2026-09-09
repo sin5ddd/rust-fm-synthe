@@ -1,83 +1,83 @@
 name = "guiro scrape"
 description = "ギロの短いスクレイプ。ざらついた一擦り。"
 algorithm = 8
-feedback = 0.22
-feedback_op = 4
-gain = 1.12
+feedback = 0.08
+feedback_op = 1
+gain = 1.08
 default_note = 67
 default_duration = 0.26
 
 [filter]
-type = "bandpass"
-cutoff = 1800
-resonance = 0.34
-env_amount = 1
-attack = 0.006
-decay = 0.1
-sustain = 0.05
+type = "highpass"
+cutoff = 800.0
+resonance = 0.04
+env_amount = 0.25
+attack = 0.008
+decay = 0.12
+sustain = 0.03
 release = 0.05
+
+[lfo]
+amp_depth = 0.55
+amp_rate_hz = 18.0
 
 [noise]
 type = "white"
-level = 1.02
-attack = 0.006
-decay = 0.16
+level = 1.25
+attack = 0.008
+decay = 0.2
 sustain = 0.0
 release = 0.05
 vel_sens = 0.42
 
 [noise.filter]
-type = "bandpass"
-cutoff = 1900.0
-resonance = 0.26
-env_amount = 0.7
+type = "highpass"
+cutoff = 900.0
+resonance = 0.04
+env_amount = 0.2
 attack = 0.006
-decay = 0.1
+decay = 0.12
 sustain = 0.0
 release = 0.04
 
 [[operators]]
-ratio = 8.5
-detune_cents = 0
-level = 1
-attack = 0.008
-decay = 0.14
-sustain = 0
-release = 0.05
+ratio = 1.0
+detune_cents = 0.0
+level = 0.08
+attack = 0.01
+decay = 0.1
+sustain = 0.0
+release = 0.035
 vel_sens = 0.42
 waveform = "pulse"
+freq_mode = "fixed"
+fixed_hz = 980.0
 
 [[operators]]
-ratio = 6.2
-detune_cents = 14
-level = 0.65
-attack = 0.01
-decay = 0.12
-sustain = 0
-release = 0.045
+ratio = 1.0
+detune_cents = 14.0
+level = 0.06
+attack = 0.012
+decay = 0.08
+sustain = 0.0
+release = 0.03
 vel_sens = 0.48
 waveform = "abs-sine"
-
-[[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.4
-attack = 0.006
-decay = 0.08
-sustain = 0
-release = 0.035
-vel_sens = 0.5
-waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 980
+fixed_hz = 1480.0
 
 [[operators]]
-ratio = 11
-detune_cents = -8
-level = 0.3
-attack = 0.005
-decay = 0.16
-sustain = 0
-release = 0.06
-vel_sens = 0.4
-waveform = "pulse"
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"
+
+[[operators]]
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"

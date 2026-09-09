@@ -1,11 +1,11 @@
 name = "future glass pluck"
-description = "フューチャーベース。ガラス質で明るい。中短（0.65秒）。非整数比のシリアルFM。"
+description = "フューチャーベース。ガラス質で明るい。ワンショット（0.60秒）。非整数比のシリアルFM。"
 algorithm = 1
 feedback = 0.14
 feedback_op = 4
 gain = 0.96
 default_note = 69
-default_duration = 0.65
+default_duration = 0.60
 
 [filter]
 type = "highpass"
@@ -13,9 +13,9 @@ cutoff = 520.0
 resonance = 0.16
 env_amount = 0.8
 attack = 0.0008
-decay = 0.18
-sustain = 0.0
-release = 0.1
+decay = 0.48
+sustain = 0.16
+release = 0.12
 
 # ガラスの胴
 [[operators]]
@@ -23,9 +23,9 @@ ratio = 1.0
 detune_cents = 0
 level = 0.92
 attack = 0.0008
-decay = 0.28
-sustain = 0.0
-release = 0.1
+decay = 2.00
+sustain = 0.00
+release = 0.10
 vel_sens = 0.36
 waveform = "sine"
 
@@ -34,9 +34,9 @@ ratio = 2.73
 detune_cents = 5
 level = 0.36
 attack = 0.0004
-decay = 0.08
-sustain = 0.0
-release = 0.04
+decay = 0.50
+sustain = 0.00
+release = 0.08
 vel_sens = 0.48
 waveform = "sine"
 
@@ -45,9 +45,9 @@ ratio = 4.91
 detune_cents = -7
 level = 0.2
 attack = 0.0003
-decay = 0.045
-sustain = 0.0
-release = 0.02
+decay = 0.50
+sustain = 0.00
+release = 0.08
 vel_sens = 0.52
 waveform = "sine"
 
@@ -56,8 +56,8 @@ ratio = 7.2
 detune_cents = 0
 level = 0.12
 attack = 0.0002
-decay = 0.018
-sustain = 0.0
-release = 0.01
+decay = 0.50
+sustain = 0.00
+release = 0.08
 vel_sens = 0.58
 waveform = "abs-sine"

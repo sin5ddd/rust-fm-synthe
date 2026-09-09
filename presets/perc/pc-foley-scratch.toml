@@ -1,83 +1,78 @@
 name = "foley scratch"
 description = "フォリーの短いスクラッチ。ざらついたノイズの一擦り。"
 algorithm = 8
-feedback = 0.22
-feedback_op = 4
-gain = 1.12
+feedback = 0.08
+feedback_op = 1
+gain = 1.1
 default_note = 72
 default_duration = 0.2
 
 [filter]
-type = "bandpass"
-cutoff = 2200
-resonance = 0.3
-env_amount = 1.2
-attack = 0.002
-decay = 0.07
-sustain = 0.04
+type = "highpass"
+cutoff = 1000.0
+resonance = 0.04
+env_amount = 0.25
+attack = 0.003
+decay = 0.08
+sustain = 0.02
 release = 0.04
+
+[lfo]
+amp_depth = 0.5
+amp_rate_hz = 28.0
 
 [noise]
 type = "white"
-level = 1.05
-attack = 0.002
-decay = 0.12
+level = 1.22
+attack = 0.003
+decay = 0.14
 sustain = 0.0
 release = 0.04
 vel_sens = 0.45
 
 [noise.filter]
-type = "bandpass"
-cutoff = 2400.0
-resonance = 0.22
-env_amount = 0.8
+type = "highpass"
+cutoff = 1400.0
+resonance = 0.04
+env_amount = 0.2
 attack = 0.002
 decay = 0.08
 sustain = 0.0
 release = 0.035
 
 [[operators]]
-ratio = 10
-detune_cents = 0
-level = 1
-attack = 0.003
-decay = 0.1
-sustain = 0
-release = 0.04
+ratio = 1.0
+detune_cents = 0.0
+level = 0.08
+attack = 0.004
+decay = 0.06
+sustain = 0.0
+release = 0.025
 vel_sens = 0.45
 waveform = "pulse"
-
-[[operators]]
-ratio = 14.5
-detune_cents = 18
-level = 0.7
-attack = 0.004
-decay = 0.08
-sustain = 0
-release = 0.035
-vel_sens = 0.5
-waveform = "abs-sine"
-
-[[operators]]
-ratio = 1
-detune_cents = 0
-level = 0.45
-attack = 0.002
-decay = 0.06
-sustain = 0
-release = 0.03
-vel_sens = 0.55
-waveform = "pulse"
 freq_mode = "fixed"
-fixed_hz = 1750
+fixed_hz = 1750.0
 
 [[operators]]
-ratio = 8
-detune_cents = -10
-level = 0.32
-attack = 0.002
-decay = 0.12
-sustain = 0
-release = 0.05
-vel_sens = 0.4
-waveform = "pulse"
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"
+
+[[operators]]
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"
+
+[[operators]]
+level = 0.0
+attack = 0.0
+decay = 0.01
+sustain = 0.0
+release = 0.01
+waveform = "sine"

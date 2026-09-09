@@ -1,48 +1,49 @@
 name = "tight hat"
 description = "極短いタイトハット。明るいホワイトノイズ。16分の隙間向き。"
 algorithm = 8
-feedback = 0.16
+feedback = 0.1
 feedback_op = 1
-gain = 1.18
+gain = 1.16
 default_note = 88
 default_duration = 0.2
+
 [filter]
 type = "highpass"
-cutoff = 3800.0
-resonance = 0.08
-env_amount = 0.28
-attack = 0.0002
-decay = 0.056
-sustain = 0.03
-release = 0.044
+cutoff = 4000.0
+resonance = 0.06
+env_amount = 0.22
+attack = 0.00015
+decay = 0.05
+sustain = 0.02
+release = 0.038
 
 [noise]
 type = "white"
-level = 1.08
-attack = 0.00015
-decay = 0.15
+level = 1.16
+attack = 0.00012
+decay = 0.14
 sustain = 0.0
-release = 0.04
+release = 0.036
 vel_sens = 0.5
 
 [noise.filter]
 type = "bandpass"
 cutoff = 8800.0
-resonance = 0.18
-env_amount = 0.32
-attack = 0.00015
-decay = 0.056
-sustain = 0.03
-release = 0.044
+resonance = 0.14
+env_amount = 0.26
+attack = 0.00012
+decay = 0.05
+sustain = 0.02
+release = 0.038
 
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
-level = 0.36
-attack = 0.00012
-decay = 0.026
+level = 0.18
+attack = 0.0001
+decay = 0.022
 sustain = 0.0
-release = 0.012
+release = 0.01
 vel_sens = 0.5
 waveform = "pulse"
 freq_mode = "fixed"
@@ -51,11 +52,11 @@ fixed_hz = 8120.0
 [[operators]]
 ratio = 1.0
 detune_cents = 12.0
-level = 0.18
+level = 0.1
 attack = 0.0001
-decay = 0.016
+decay = 0.014
 sustain = 0.0
-release = 0.01
+release = 0.008
 vel_sens = 0.55
 waveform = "abs-sine"
 freq_mode = "fixed"

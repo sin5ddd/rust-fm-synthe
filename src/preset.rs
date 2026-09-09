@@ -1012,24 +1012,11 @@ mod tests {
                 "{id} default_note {} must be MIDI 48–72 (C3–C5)",
                 p.default_note
             );
-            if *id == "pl-reverse-swell" {
-                assert!(
-                    (1.2..3.0).contains(&p.default_duration),
-                    "{id} reverse swell duration {} should stay a short pluck, not a 16s pad",
-                    p.default_duration
-                );
-            } else {
-                assert!(
-                    p.default_duration < 2.0,
-                    "{id} default_duration {} must be < 2s (one-shot pluck)",
-                    p.default_duration
-                );
-                assert!(
-                    p.default_duration >= 0.2,
-                    "{id} default_duration {} is shorter than a usable pluck",
-                    p.default_duration
-                );
-            }
+            assert!(
+                (0.50..=0.70).contains(&p.default_duration),
+                "{id} default_duration {} must be ~0.60s (usable one-shot, not a pad)",
+                p.default_duration
+            );
             // One-shots: carrier sustain stays low so they die (not held leads).
             let max_sustain = p
                 .operators
@@ -1347,6 +1334,10 @@ mod tests {
             "pc-shaker",
             "pc-shaker-short",
             "pc-cabasa",
+            "pc-guiro",
+            "pc-foley-scratch",
+            "pc-tamb",
+            "pc-tamb-roll",
         ] {
             let p = load_factory(id).unwrap();
             assert!(
