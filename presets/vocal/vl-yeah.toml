@@ -33,6 +33,23 @@ feedback = 0.55
 damping = 0.35
 ratio = 1.0
 
+[fx.overdrive]
+mix = 0.12
+drive = 0.22
+
+[fx.chorus]
+mix = 0.42
+rate_hz = 0.85
+depth_ms = 5.0
+delay_ms = 14.0
+feedback = 0.15
+intervals = ["octave-down", "fifth"]
+
+[fx.reverb]
+mix = 0.16
+room = 0.32
+damp = 0.50
+
 [[vocal.segments]]
 at = 0
 dur = 0.05

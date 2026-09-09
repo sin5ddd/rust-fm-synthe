@@ -7,6 +7,7 @@ mod algorithm;
 mod analyze;
 mod error;
 mod filter;
+mod fx;
 mod midi;
 mod noise;
 mod operator;
@@ -25,6 +26,7 @@ pub use analyze::{
 };
 pub use error::{Error, Result};
 pub use filter::{FilterParams, FilterType};
+pub use fx::{ChorusInterval, ChorusParams, DelayParams, FxParams, OverdriveParams, ReverbParams};
 pub use midi::{cents_to_ratio, hz_to_midi, midi_to_hz, semitones_to_ratio};
 pub use noise::{NoiseColor, NoiseParams};
 pub use operator::{FreqMode, OperatorParams, Waveform};

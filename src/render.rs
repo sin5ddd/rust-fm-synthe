@@ -88,7 +88,7 @@ pub fn render(preset: &Preset, params: &RenderParams) -> Result<Vec<f32>> {
         if i == note_off_at {
             voice.note_off();
         }
-        if voice.is_idle() {
+        if !preset.fx.is_active() && voice.is_idle() {
             break;
         }
         let x = voice.tick();

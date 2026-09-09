@@ -1,6 +1,7 @@
 use crate::adsr::Adsr;
 use crate::algorithm::Algorithm;
 use crate::filter::{FilterParams, Svf};
+use crate::fx::FxChain;
 use crate::midi::semitones_to_ratio;
 use crate::noise::NoiseSource;
 use crate::operator::Operator;
@@ -29,6 +30,7 @@ pub struct Voice {
     filter_params: FilterParams,
     noise: NoiseSource,
     vocal: VocalRuntime,
+    fx: FxChain,
     note_hz: f64,
     sample_rate: f64,
     time: f64,
@@ -66,6 +68,7 @@ impl Voice {
             filter_params: preset.filter.clone(),
             noise: NoiseSource::new(preset.noise.clone(), sr),
             vocal: VocalRuntime::new(preset.vocal.clone(), sr),
+            fx: FxChain::new(preset.fx.clone(), sr),
             note_hz: 440.0,
             sample_rate: f64::from(sample_rate),
             time: 0.0,
@@ -81,6 +84,7 @@ impl Voice {
         self.note_hz = note_hz.max(0.01);
         self.time = 0.0;
         self.filter.reset();
+        self.fx.reset();
         self.filter_env.note_on();
         self.noise.note_on(velocity);
         self.vocal.note_on();
@@ -165,7 +169,8 @@ impl Voice {
             1.0
         };
         self.time += 1.0 / self.sample_rate;
-        filtered * self.gain * trem
+        let dry = filtered * self.gain * trem;
+        self.fx.tick(dry)
     }
 }
 

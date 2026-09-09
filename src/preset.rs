@@ -1,6 +1,7 @@
 use crate::algorithm::Algorithm;
 use crate::error::{Error, Result};
 use crate::filter::FilterParams;
+use crate::fx::FxParams;
 use crate::noise::NoiseParams;
 use crate::operator::OperatorParams;
 use crate::vocal::VocalParams;
@@ -509,6 +510,9 @@ pub struct Preset {
     /// Glottal comb + 3 formants + consonant segments. Omit or `mix = 0` to skip.
     #[serde(default)]
     pub vocal: VocalParams,
+    /// Insert FX: OD → chorus → delay → reverb. Omit or all `mix = 0` to skip.
+    #[serde(default)]
+    pub fx: FxParams,
     pub operators: Vec<OperatorParams>,
 }
 
@@ -1114,6 +1118,8 @@ mod tests {
                 p.default_note
             );
             assert!(p.vocal.is_active(), "{id} vocal mix must be active");
+            assert!(p.fx.chorus.mix > 0.3, "{id} factory chorus mix");
+            assert!(p.fx.delay.mix.abs() < 1e-8, "{id} factory delay stays off");
             assert!(
                 p.operators.iter().all(|op| {
                     op.waveform != crate::Waveform::SuperSaw
@@ -1586,5 +1592,40 @@ level = 0.0
         assert_eq!(p.vocal.vowel, crate::Vowel::I);
         assert_eq!(p.vocal.segments.len(), 1);
         assert_eq!(p.vocal.segments[0].kind, crate::SegmentKind::Plosive);
+    }
+
+    #[test]
+    fn fx_table_parses() {
+        let toml = r#"
+name = "fx-parse"
+algorithm = 8
+[fx.chorus]
+mix = 0.4
+rate_hz = 0.9
+intervals = ["octave-down", "fifth"]
+[fx.delay]
+mix = 0.2
+time_ms = 250
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+"#;
+        let p = Preset::from_toml_str("fx-parse", toml).unwrap();
+        assert!(p.fx.is_active());
+        assert!((p.fx.chorus.mix - 0.4).abs() < 1e-6);
+        assert!((p.fx.delay.time_ms - 250.0).abs() < 1e-6);
+        assert_eq!(p.fx.overdrive.mix, 0.0);
+        assert_eq!(
+            p.fx.chorus.intervals,
+            vec![
+                crate::ChorusInterval::OctaveDown,
+                crate::ChorusInterval::Fifth
+            ]
+        );
     }
 }
