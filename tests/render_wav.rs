@@ -878,15 +878,15 @@ fn factory_ep_bank_is_five_and_audible() {
 }
 
 #[test]
-fn factory_vl_bank_is_twenty_and_audible() {
+fn factory_vl_bank_is_audible() {
     let ids: Vec<_> = factory_ids()
         .into_iter()
         .filter(|id| id.starts_with("vl-"))
         .collect();
     assert_eq!(
         ids.len(),
-        20,
-        "expected exactly 20 vl-* factory vocals, got {}: {ids:?}",
+        27,
+        "expected exactly 27 vl-* factory vocals, got {}: {ids:?}",
         ids.len()
     );
 

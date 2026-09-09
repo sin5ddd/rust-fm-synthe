@@ -5,7 +5,7 @@ feedback = 0.35
 feedback_op = 4
 gain = 1.0
 default_note = 60
-default_duration = 1.35
+default_duration = 3.50
 
 [lfo]
 rate_hz = 5.5
@@ -24,6 +24,7 @@ mix = 1.0
 formant_resonance = 0.55
 formant_wobble = 0.045
 formant_wobble_hz = 5.5
+high_mix = 0.40
 
 [vocal.comb]
 mix = 0.40

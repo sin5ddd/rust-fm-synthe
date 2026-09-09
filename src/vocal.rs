@@ -6,6 +6,9 @@ const RNG_SEED: u32 = 0xC0FF_EE11;
 const GLIDE_SECS: f32 = 0.02;
 const RHOTIC_GLIDE_SECS: f32 = 0.06;
 const RHOTIC_F3_HZ: f32 = 1600.0;
+/// Falsetto brightness: F4/F5 sit high and light, not a 2.5–3.5 kHz chest cluster.
+const F4_DEFAULT_HZ: f32 = 4200.0;
+const F5_DEFAULT_HZ: f32 = 5200.0;
 
 /// Peterson-Barney female vowels. Absolute Hz; does not follow note pitch.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Deserialize)]
@@ -86,6 +89,8 @@ pub struct VocalParams {
     pub formant_wobble: f32,
     /// Wobble rate in Hz. 0 with wobble>0 uses 5.5.
     pub formant_wobble_hz: f32,
+    /// 0–1 mix of F4+F5 into the formant sum. 0 = F1–F3 only (old patches).
+    pub high_mix: f32,
     pub comb: CombParams,
     pub segments: Vec<VocalSegment>,
 }
@@ -98,6 +103,7 @@ impl Default for VocalParams {
             formant_resonance: 0.55,
             formant_wobble: 0.0,
             formant_wobble_hz: 0.0,
+            high_mix: 0.0,
             comb: CombParams::default(),
             segments: Vec::new(),
         }
@@ -220,6 +226,8 @@ pub struct VocalRuntime {
     f1: Svf,
     f2: Svf,
     f3: Svf,
+    f4: Svf,
+    f5: Svf,
     burst: Svf,
     rng: u32,
     sample_rate: f32,
@@ -244,6 +252,8 @@ impl VocalRuntime {
             f1: Svf::new(sr),
             f2: Svf::new(sr),
             f3: Svf::new(sr),
+            f4: Svf::new(sr),
+            f5: Svf::new(sr),
             burst: Svf::new(sr),
             rng: RNG_SEED,
             sample_rate: sr,
@@ -263,6 +273,8 @@ impl VocalRuntime {
         self.f1.reset();
         self.f2.reset();
         self.f3.reset();
+        self.f4.reset();
+        self.f5.reset();
         self.burst.reset();
         self.time = 0.0;
         let hz = initial_formants(&self.params);
@@ -374,7 +386,19 @@ impl VocalRuntime {
         let y1 = self.f1.tick(src, f1_hz, q_res, FilterType::Bandpass);
         let y2 = self.f2.tick(src, f2_hz, q_res, FilterType::Bandpass);
         let y3 = self.f3.tick(src, f3_hz, q_res, FilterType::Bandpass);
-        let wet = (y1 * 1.0 + y2 * 0.75 + y3 * 0.5) / 2.25;
+        let hm = self.params.high_mix.clamp(0.0, 1.0);
+        let core = y1 * 1.0 + y2 * 0.75 + y3 * 0.5;
+        let wet = if hm > 1e-8 {
+            let y4 = self
+                .f4
+                .tick(src, F4_DEFAULT_HZ, q_res, FilterType::Bandpass);
+            let y5 = self
+                .f5
+                .tick(src, F5_DEFAULT_HZ, q_res, FilterType::Bandpass);
+            (core + (y4 * 0.40 + y5 * 0.22) * hm) / (2.25 + 0.62 * hm)
+        } else {
+            core / 2.25
+        };
         let mix = self.params.mix.clamp(0.0, 1.0);
         let out = src * (1.0 - mix) + wet * mix;
         if out.is_finite() {
@@ -497,6 +521,33 @@ mod tests {
         let y = run(VocalParams::default(), &input, 200.0, 1.0, sr);
         let err: f32 = input.iter().zip(&y).map(|(a, b)| (a - b).abs()).sum();
         assert!(err < 1e-9, "bypass error {err}");
+    }
+
+    #[test]
+    fn falsetto_high_formants_prefer_f4() {
+        let sr = 44_100.0;
+        let n = 8_192;
+        let params = VocalParams {
+            mix: 1.0,
+            high_mix: 1.0,
+            formant_resonance: 0.55,
+            comb: CombParams {
+                mix: 0.0,
+                ..CombParams::default()
+            },
+            vowel: Vowel::A,
+            ..VocalParams::default()
+        };
+        let hi = sine(F4_DEFAULT_HZ, sr, n);
+        let lo = sine(200.0, sr, n);
+        let y_hi = run(params.clone(), &hi, 200.0, 1.0, sr);
+        let y_lo = run(params, &lo, 200.0, 1.0, sr);
+        let rh = rms(&y_hi[n / 2..]);
+        let rl = rms(&y_lo[n / 2..]);
+        assert!(
+            rh > rl * 1.5,
+            "F4=4200 should pass 4200 more than 200 Hz (hi={rh}, lo={rl})"
+        );
     }
 
     #[test]

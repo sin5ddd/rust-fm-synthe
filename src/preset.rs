@@ -411,6 +411,13 @@ const FACTORY: &[(&str, &str)] = &[
     factory_entry!("vocal", "vl-nana"),
     factory_entry!("vocal", "vl-mama"),
     factory_entry!("vocal", "vl-awa"),
+    factory_entry!("vocal", "vl-tu"),
+    factory_entry!("vocal", "vl-he"),
+    factory_entry!("vocal", "vl-naaa"),
+    factory_entry!("vocal", "vl-rara"),
+    factory_entry!("vocal", "vl-pa"),
+    factory_entry!("vocal", "vl-ya"),
+    factory_entry!("vocal", "vl-yeah"),
 ];
 
 #[derive(Clone, Debug, Deserialize)]
@@ -1057,15 +1064,15 @@ mod tests {
     }
 
     #[test]
-    fn factory_vl_bank_has_twenty_ids() {
+    fn factory_vl_bank_has_expected_ids() {
         let ids: Vec<_> = factory_ids()
             .into_iter()
             .filter(|id| id.starts_with("vl-"))
             .collect();
         assert_eq!(
             ids.len(),
-            20,
-            "expected exactly 20 vl-* factory vocals, got {}: {ids:?}",
+            27,
+            "expected exactly 27 vl-* factory vocals, got {}: {ids:?}",
             ids.len()
         );
         for expected in [
@@ -1089,10 +1096,16 @@ mod tests {
             "vl-nana",
             "vl-mama",
             "vl-awa",
+            "vl-tu",
+            "vl-he",
+            "vl-naaa",
+            "vl-rara",
+            "vl-pa",
+            "vl-ya",
+            "vl-yeah",
         ] {
             assert!(ids.contains(&expected), "missing {expected} in {ids:?}");
         }
-        let mora1 = ["vl-ka", "vl-sa", "vl-ta", "vl-ha", "vl-na", "vl-ma"];
         for id in &ids {
             let p = load_factory(id).expect(id);
             assert_eq!(
@@ -1110,20 +1123,14 @@ mod tests {
             );
             if *id == "vl-hanami" {
                 assert!(
-                    (1.2..=1.5).contains(&p.default_duration),
-                    "{id} duration {} should be 1.2–1.5s",
-                    p.default_duration
-                );
-            } else if mora1.contains(id) {
-                assert!(
-                    (0.45..=0.70).contains(&p.default_duration),
-                    "{id} 1-mora duration {} should be 0.45–0.70s",
+                    (3.35..=3.70).contains(&p.default_duration),
+                    "{id} duration {} should be ~3.5s for chopping",
                     p.default_duration
                 );
             } else {
                 assert!(
-                    (0.85..=1.10).contains(&p.default_duration),
-                    "{id} 2-mora duration {} should be 0.85–1.10s",
+                    (3.0..=3.40).contains(&p.default_duration),
+                    "{id} duration {} should be ≥3s for chopping",
                     p.default_duration
                 );
             }

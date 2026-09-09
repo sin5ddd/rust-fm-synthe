@@ -1,5 +1,5 @@
-name = "vl-haha"
-description = "弱い子音。はは。"
+name = "vl-he"
+description = "EDMチョップ。he-。長く強いビブラート。"
 algorithm = 8
 feedback = 0.35
 feedback_op = 4
@@ -9,9 +9,9 @@ default_duration = 3.20
 
 [lfo]
 rate_hz = 5.5
-depth_cents = 22
+depth_cents = 50
 amp_rate_hz = 4.0
-amp_depth = 0.10
+amp_depth = 0.08
 
 [filter]
 type = "lowpass"
@@ -21,6 +21,7 @@ env_amount = 0
 
 [vocal]
 mix = 1.0
+vowel = "e"
 formant_resonance = 0.55
 formant_wobble = 0.045
 formant_wobble_hz = 5.5
@@ -36,28 +37,14 @@ ratio = 1.0
 at = 0
 dur = 0.055
 kind = "breath"
-vowel = "a"
+vowel = "e"
 place_hz = 2400
 
 [[vocal.segments]]
 at = 0.055
-dur = 0.16
+dur = 2.6
 kind = "vowel"
-vowel = "a"
-place_hz = 0
-
-[[vocal.segments]]
-at = 0.23
-dur = 0.055
-kind = "breath"
-vowel = "a"
-place_hz = 2400
-
-[[vocal.segments]]
-at = 0.285
-dur = 0.28
-kind = "vowel"
-vowel = "a"
+vowel = "e"
 place_hz = 0
 
 [[operators]]
