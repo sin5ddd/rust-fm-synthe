@@ -4,6 +4,8 @@ use serde::Deserialize;
 const COMB_MAX: usize = 4096;
 const RNG_SEED: u32 = 0xC0FF_EE11;
 const GLIDE_SECS: f32 = 0.02;
+const RHOTIC_GLIDE_SECS: f32 = 0.06;
+const RHOTIC_F3_HZ: f32 = 1600.0;
 
 /// Peterson-Barney female vowels. Absolute Hz; does not follow note pitch.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Deserialize)]
@@ -163,6 +165,35 @@ fn scale_nasal(hz: (f32, f32, f32), kind: SegmentKind, place_hz: f32) -> (f32, f
     }
 }
 
+/// English /r/ and curled-tongue ら: F3 well below 2000 Hz.
+fn apply_kind_formants(hz: (f32, f32, f32), kind: SegmentKind, place_hz: f32) -> (f32, f32, f32) {
+    let hz = scale_nasal(hz, kind, place_hz);
+    if kind != SegmentKind::Flap {
+        return hz;
+    }
+    let (f1, f2, _) = hz;
+    let f3 = if place_hz > 0.0 && place_hz < 2200.0 {
+        place_hz
+    } else {
+        RHOTIC_F3_HZ
+    };
+    let f2 = f2.min((f3 - 200.0).max(900.0));
+    (f1 * 0.88, f2, f3)
+}
+
+fn initial_formants(params: &VocalParams) -> (f32, f32, f32) {
+    let mut chosen: Option<&VocalSegment> = None;
+    for s in &params.segments {
+        if s.at <= 0.0 {
+            chosen = Some(s);
+        }
+    }
+    match chosen {
+        Some(s) => apply_kind_formants(vowel_hz(s.vowel), s.kind, s.place_hz),
+        None => vowel_hz(params.vowel),
+    }
+}
+
 fn lerp3(a: (f32, f32, f32), b: (f32, f32, f32), t: f32) -> (f32, f32, f32) {
     let t = t.clamp(0.0, 1.0);
     (
@@ -196,13 +227,14 @@ pub struct VocalRuntime {
     glide_from: (f32, f32, f32),
     glide_to: (f32, f32, f32),
     glide_left: f32,
+    glide_secs: f32,
     prev_vowel: Vowel,
 }
 
 impl VocalRuntime {
     pub fn new(params: VocalParams, sample_rate: f32) -> Self {
         let sr = sample_rate.max(1.0);
-        let hz = vowel_hz(params.vowel);
+        let hz = initial_formants(&params);
         Self {
             prev_vowel: params.vowel,
             params,
@@ -219,6 +251,7 @@ impl VocalRuntime {
             glide_from: hz,
             glide_to: hz,
             glide_left: 0.0,
+            glide_secs: GLIDE_SECS,
         }
     }
 
@@ -232,10 +265,11 @@ impl VocalRuntime {
         self.f3.reset();
         self.burst.reset();
         self.time = 0.0;
-        let hz = vowel_hz(self.params.vowel);
+        let hz = initial_formants(&self.params);
         self.glide_from = hz;
         self.glide_to = hz;
         self.glide_left = 0.0;
+        self.glide_secs = GLIDE_SECS;
         self.prev_vowel = self.params.vowel;
     }
 
@@ -249,11 +283,17 @@ impl VocalRuntime {
         let t32 = t as f32;
 
         let seg = self.active_seg(t32);
-        let target = scale_nasal(vowel_hz(seg.vowel), seg.kind, seg.place_hz);
+        let target = apply_kind_formants(vowel_hz(seg.vowel), seg.kind, seg.place_hz);
         if seg.vowel != self.prev_vowel || target != self.glide_to {
             self.glide_from = self.current_formants();
             self.glide_to = target;
-            self.glide_left = GLIDE_SECS;
+            let f3_jump = (target.2 - self.glide_from.2).abs();
+            self.glide_secs = if f3_jump > 400.0 {
+                RHOTIC_GLIDE_SECS
+            } else {
+                GLIDE_SECS
+            };
+            self.glide_left = self.glide_secs;
             self.prev_vowel = seg.vowel;
         }
         let (mut f1_hz, mut f2_hz, mut f3_hz) = self.current_formants();
@@ -348,7 +388,8 @@ impl VocalRuntime {
         if self.glide_left <= 0.0 {
             self.glide_to
         } else {
-            let p = (1.0 - self.glide_left / GLIDE_SECS).clamp(0.0, 1.0);
+            let dur = self.glide_secs.max(1e-4);
+            let p = (1.0 - self.glide_left / dur).clamp(0.0, 1.0);
             lerp3(self.glide_from, self.glide_to, p)
         }
     }
@@ -456,6 +497,17 @@ mod tests {
         let y = run(VocalParams::default(), &input, 200.0, 1.0, sr);
         let err: f32 = input.iter().zip(&y).map(|(a, b)| (a - b).abs()).sum();
         assert!(err < 1e-9, "bypass error {err}");
+    }
+
+    #[test]
+    fn flap_drops_f3_below_2000() {
+        let a = vowel_hz(Vowel::A);
+        let r = apply_kind_formants(a, SegmentKind::Flap, 1550.0);
+        assert!(r.2 < 2000.0, "rhotic F3 {} should be well below 2000", r.2);
+        assert!((r.2 - 1550.0).abs() < 1.0);
+        assert!(r.2 < a.2 - 400.0);
+        let def = apply_kind_formants(a, SegmentKind::Flap, 0.0);
+        assert!((def.2 - RHOTIC_F3_HZ).abs() < 1.0);
     }
 
     #[test]

@@ -1,5 +1,5 @@
 name = "vl-ra"
-description = "フラップ＋長いあー。ウェットなミッド寄りの /a/。トレモロ付き。"
+description = "巻き舌のら＋長いあー。F3を1600Hz付近まで下げてからあへ戻す。"
 algorithm = 8
 feedback = 0.28
 feedback_op = 4
@@ -31,13 +31,13 @@ ratio = 1.0
 
 [[vocal.segments]]
 at = 0.0
-dur = 0.022
+dur = 0.070
 kind = "flap"
 vowel = "a"
-place_hz = 1800
+place_hz = 1550
 
 [[vocal.segments]]
-at = 0.022
+at = 0.070
 dur = 1.20
 kind = "vowel"
 vowel = "a"
