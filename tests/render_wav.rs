@@ -878,6 +878,76 @@ fn factory_ep_bank_is_five_and_audible() {
 }
 
 #[test]
+fn factory_vl_bank_is_twenty_and_audible() {
+    let ids: Vec<_> = factory_ids()
+        .into_iter()
+        .filter(|id| id.starts_with("vl-"))
+        .collect();
+    assert_eq!(
+        ids.len(),
+        20,
+        "expected exactly 20 vl-* factory vocals, got {}: {ids:?}",
+        ids.len()
+    );
+
+    for id in &ids {
+        let preset = load_factory(id).unwrap();
+        assert_eq!(
+            preset.default_note, 60,
+            "{id} default_note {} must be MIDI 60 (C4)",
+            preset.default_note
+        );
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: midi_to_hz(preset.default_note),
+                duration_secs: preset.default_duration,
+                velocity: 0.9,
+                sample_rate: 22_050,
+            },
+        )
+        .expect(id);
+        assert!(buf.iter().all(|s| s.is_finite()), "{id} NaN/Inf");
+        assert!(
+            rms(&buf) > 0.01,
+            "vl `{id}` rendered near-silence (rms={})",
+            rms(&buf)
+        );
+        assert!(peak(&buf) > 0.4, "vl `{id}` peak {} too low", peak(&buf));
+        assert!(
+            buf.iter().any(|&s| s.abs() > 1e-3),
+            "{id} effectively silent"
+        );
+    }
+
+    let ha = load_factory("vl-ha").unwrap();
+    let hanami = load_factory("vl-hanami").unwrap();
+    let rp = |preset: &fm_synth::Preset| RenderParams {
+        frequency_hz: midi_to_hz(preset.default_note),
+        duration_secs: preset.default_duration,
+        velocity: 0.9,
+        sample_rate: 22_050,
+    };
+    let buf_ha = render(&ha, &rp(&ha)).unwrap();
+    let buf_hanami = render(&hanami, &rp(&hanami)).unwrap();
+    assert!(
+        buf_hanami.len() > buf_ha.len(),
+        "vl-hanami should be longer than vl-ha"
+    );
+
+    let kasa = load_factory("vl-kasa").unwrap();
+    let buf = render(&kasa, &rp(&kasa)).unwrap();
+    let sr = 22_050.0f64;
+    let a = (0.20 * sr).round() as usize;
+    let b = (0.30 * sr).round() as usize;
+    let window = &buf[a.min(buf.len())..b.min(buf.len())];
+    assert!(
+        rms(window) > 0.0,
+        "vl-kasa 0.20–0.30s window was silent (no /s/)"
+    );
+}
+
+#[test]
 fn every_factory_preset_makes_sound() {
     for id in fm_synth::factory_ids() {
         let preset = load_factory(id).unwrap();

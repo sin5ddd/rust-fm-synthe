@@ -123,7 +123,7 @@ impl Svf {
 }
 
 /// Map a 0–1 patch knob to Q. Stays well below self-oscillation.
-fn resonance_to_q(resonance: f32) -> f32 {
+pub(crate) fn resonance_to_q(resonance: f32) -> f32 {
     let r = resonance.clamp(0.0, 1.0);
     (0.707 + r * 11.0).clamp(0.5, 12.0)
 }

@@ -1,0 +1,84 @@
+name = "vl-ra"
+description = "フラップ＋長いあー。ウェットなミッド寄りの /a/。トレモロ付き。"
+algorithm = 8
+feedback = 0.28
+feedback_op = 4
+gain = 1.05
+default_note = 60
+default_duration = 1.8
+
+[lfo]
+rate_hz = 5.0
+amp_rate_hz = 4.0
+amp_depth = 0.25
+
+[filter]
+type = "lowpass"
+cutoff = 4000.0
+resonance = 0.10
+env_amount = 0
+
+[vocal]
+mix = 1.0
+vowel = "a"
+formant_resonance = 0.62
+
+[vocal.comb]
+mix = 0.48
+feedback = 0.60
+damping = 0.28
+ratio = 1.0
+
+[[vocal.segments]]
+at = 0.0
+dur = 0.022
+kind = "flap"
+vowel = "a"
+place_hz = 1800
+
+[[vocal.segments]]
+at = 0.022
+dur = 1.20
+kind = "vowel"
+vowel = "a"
+place_hz = 0
+
+[[operators]]
+ratio = 1.0
+level = 1.00
+attack = 0.060
+decay = 0.45
+sustain = 0.88
+release = 0.55
+vel_sens = 0.18
+waveform = "sine"
+
+[[operators]]
+ratio = 2.0
+level = 0.14
+attack = 0.060
+decay = 0.40
+sustain = 0.45
+release = 0.40
+vel_sens = 0.14
+waveform = "sine"
+
+[[operators]]
+ratio = 3.0
+level = 0.04
+attack = 0.065
+decay = 0.35
+sustain = 0.18
+release = 0.35
+vel_sens = 0.12
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+level = 0.12
+attack = 0.058
+decay = 0.35
+sustain = 0.50
+release = 0.40
+vel_sens = 0.16
+waveform = "pulse"

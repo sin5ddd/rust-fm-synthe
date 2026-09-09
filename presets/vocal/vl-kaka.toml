@@ -1,0 +1,100 @@
+name = "vl-kaka"
+description = "強い子音の連続。かか。"
+algorithm = 8
+feedback = 0.35
+feedback_op = 4
+gain = 1.0
+default_note = 60
+default_duration = 0.95
+
+[lfo]
+rate_hz = 5.5
+depth_cents = 22
+amp_rate_hz = 4.0
+amp_depth = 0.10
+
+[filter]
+type = "lowpass"
+cutoff = 8000.0
+resonance = 0.08
+env_amount = 0
+
+[vocal]
+mix = 1.0
+formant_resonance = 0.55
+formant_wobble = 0.045
+formant_wobble_hz = 5.5
+
+[vocal.comb]
+mix = 0.40
+feedback = 0.55
+damping = 0.35
+ratio = 1.0
+
+[[vocal.segments]]
+at = 0
+dur = 0.035
+kind = "plosive"
+vowel = "a"
+place_hz = 2000
+
+[[vocal.segments]]
+at = 0.035
+dur = 0.16
+kind = "vowel"
+vowel = "a"
+place_hz = 0
+
+[[vocal.segments]]
+at = 0.2
+dur = 0.035
+kind = "plosive"
+vowel = "a"
+place_hz = 2000
+
+[[vocal.segments]]
+at = 0.235
+dur = 0.28
+kind = "vowel"
+vowel = "a"
+place_hz = 0
+
+[[operators]]
+ratio = 1.0
+level = 1.00
+attack = 0.052
+decay = 0.18
+sustain = 0.78
+release = 0.12
+vel_sens = 0.22
+waveform = "sine"
+
+[[operators]]
+ratio = 2.0
+level = 0.22
+attack = 0.052
+decay = 0.18
+sustain = 0.40
+release = 0.10
+vel_sens = 0.18
+waveform = "sine"
+
+[[operators]]
+ratio = 3.0
+level = 0.08
+attack = 0.056
+decay = 0.20
+sustain = 0.22
+release = 0.10
+vel_sens = 0.16
+waveform = "sine"
+
+[[operators]]
+ratio = 1.0
+level = 0.18
+attack = 0.050
+decay = 0.16
+sustain = 0.55
+release = 0.10
+vel_sens = 0.20
+waveform = "pulse"

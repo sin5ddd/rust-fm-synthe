@@ -5,6 +5,7 @@ use crate::midi::semitones_to_ratio;
 use crate::noise::NoiseSource;
 use crate::operator::Operator;
 use crate::preset::Preset;
+use crate::vocal::VocalRuntime;
 use std::f64::consts::TAU;
 
 /// One-note FM voice. Offline renderer drives this sample-by-sample.
@@ -19,12 +20,15 @@ pub struct Voice {
     pitch_curve: f64,
     lfo_rate: f64,
     lfo_depth_cents: f64,
+    lfo_amp_depth: f32,
+    lfo_amp_rate: f64,
     mod_start: f32,
     mod_end: f32,
     filter: Svf,
     filter_env: Adsr,
     filter_params: FilterParams,
     noise: NoiseSource,
+    vocal: VocalRuntime,
     note_hz: f64,
     sample_rate: f64,
     time: f64,
@@ -53,12 +57,15 @@ impl Voice {
             pitch_curve: f64::from(preset.pitch.curve),
             lfo_rate: preset.lfo.rate_hz,
             lfo_depth_cents: preset.lfo.depth_cents,
+            lfo_amp_depth: preset.lfo.amp_depth,
+            lfo_amp_rate: preset.lfo.amp_rate_hz,
             mod_start: preset.mod_sweep.start,
             mod_end: preset.mod_sweep.end,
             filter: Svf::new(sr),
             filter_env: Adsr::new(preset.filter.adsr(), sr),
             filter_params: preset.filter.clone(),
             noise: NoiseSource::new(preset.noise.clone(), sr),
+            vocal: VocalRuntime::new(preset.vocal.clone(), sr),
             note_hz: 440.0,
             sample_rate: f64::from(sample_rate),
             time: 0.0,
@@ -76,6 +83,7 @@ impl Voice {
         self.filter.reset();
         self.filter_env.note_on();
         self.noise.note_on(velocity);
+        self.vocal.note_on();
         for op in &mut self.ops {
             op.note_on(velocity);
         }
@@ -114,11 +122,12 @@ impl Voice {
         let t = (self.time / self.duration).clamp(0.0, 1.0);
         let shaped = shape(t, self.pitch_curve);
         let pitch_st = self.pitch_start + (self.pitch_end - self.pitch_start) * shaped;
-        let lfo = if self.lfo_depth_cents.abs() > 1e-6 && self.lfo_rate > 0.0 {
-            (TAU * self.lfo_rate * self.time).sin() * self.lfo_depth_cents
+        let lfo_sin = if self.lfo_rate > 0.0 && self.lfo_depth_cents.abs() > 1e-6 {
+            (TAU * self.lfo_rate * self.time).sin()
         } else {
             0.0
         };
+        let lfo = lfo_sin * self.lfo_depth_cents;
         let pitch_mult = semitones_to_ratio(pitch_st + lfo / 100.0);
         for op in &mut self.ops {
             op.update_frequency(self.note_hz, pitch_mult);
@@ -133,6 +142,7 @@ impl Voice {
             mod_gain,
             self.feedback_op,
         ) + self.noise.tick();
+        let mix = self.vocal.tick(mix, self.note_hz, pitch_mult);
 
         let env = self.filter_env.tick();
         let cutoff = self.filter_params.cutoff * 2f32.powf(env * self.filter_params.env_amount);
@@ -143,8 +153,19 @@ impl Voice {
             self.filter_params.kind,
         );
 
+        let trem_rate = if self.lfo_amp_rate > 0.0 {
+            self.lfo_amp_rate
+        } else {
+            self.lfo_rate
+        };
+        let trem = if self.lfo_amp_depth.abs() > 1e-6 && trem_rate > 0.0 {
+            let s = (TAU * trem_rate * self.time).sin() as f32;
+            (1.0 + self.lfo_amp_depth * s).max(0.0)
+        } else {
+            1.0
+        };
         self.time += 1.0 / self.sample_rate;
-        filtered * self.gain
+        filtered * self.gain * trem
     }
 }
 

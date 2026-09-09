@@ -12,6 +12,7 @@ mod noise;
 mod operator;
 mod preset;
 mod render;
+mod vocal;
 mod voice;
 mod wav;
 
@@ -35,6 +36,7 @@ pub use render::{
     default_wav_path, peak, render, render_all_factory, render_preset_wav, rms, BatchRenderResult,
     ExportParams, RenderParams, WavRenderReport, DEFAULT_OUTPUT_DIR, TARGET_PEAK,
 };
+pub use vocal::{CombParams, SegmentKind, VocalParams, VocalSegment, Vowel};
 pub use wav::{pcm_data_bytes, read_wav, write_wav, WavData, WavSettings};
 
 /// Resolve a note: explicit Hz wins, then MIDI, then the preset default.

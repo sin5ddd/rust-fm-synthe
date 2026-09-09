@@ -3,13 +3,14 @@ use crate::error::{Error, Result};
 use crate::filter::FilterParams;
 use crate::noise::NoiseParams;
 use crate::operator::OperatorParams;
+use crate::vocal::VocalParams;
 use serde::Deserialize;
 use std::fs;
 use std::path::{Path, PathBuf};
 
 /// Factory bank, embedded so `cargo run` works without the presets/ directory.
 /// Disk layout is `presets/<category>/<id>.toml`
-/// (bass, bd, sd, ld, fx, perc, drone, pad-fresh, pad-sparkle, pluck, ep).
+/// (bass, bd, sd, ld, fx, perc, drone, pad-fresh, pad-sparkle, pluck, ep, vocal).
 macro_rules! factory_entry {
     ($dir:literal, $id:literal) => {
         (
@@ -390,6 +391,26 @@ const FACTORY: &[(&str, &str)] = &[
     factory_entry!("ep", "ep-tine-bell"),
     factory_entry!("ep", "ep-muted"),
     factory_entry!("ep", "keys-fm_ep"),
+    factory_entry!("vocal", "vl-ka"),
+    factory_entry!("vocal", "vl-sa"),
+    factory_entry!("vocal", "vl-ta"),
+    factory_entry!("vocal", "vl-kasa"),
+    factory_entry!("vocal", "vl-saka"),
+    factory_entry!("vocal", "vl-tata"),
+    factory_entry!("vocal", "vl-kaka"),
+    factory_entry!("vocal", "vl-sasa"),
+    factory_entry!("vocal", "vl-kishi"),
+    factory_entry!("vocal", "vl-tesu"),
+    factory_entry!("vocal", "vl-ha"),
+    factory_entry!("vocal", "vl-na"),
+    factory_entry!("vocal", "vl-ma"),
+    factory_entry!("vocal", "vl-hana"),
+    factory_entry!("vocal", "vl-nami"),
+    factory_entry!("vocal", "vl-hanami"),
+    factory_entry!("vocal", "vl-haha"),
+    factory_entry!("vocal", "vl-nana"),
+    factory_entry!("vocal", "vl-mama"),
+    factory_entry!("vocal", "vl-awa"),
 ];
 
 #[derive(Clone, Debug, Deserialize)]
@@ -416,6 +437,10 @@ impl Default for PitchEnv {
 pub struct LfoParams {
     pub rate_hz: f64,
     pub depth_cents: f64,
+    /// 0–1 amplitude tremolo depth. 0 = off (old patches unchanged).
+    pub amp_depth: f32,
+    /// Tremolo rate in Hz. 0 = follow `rate_hz`.
+    pub amp_rate_hz: f64,
 }
 
 impl Default for LfoParams {
@@ -423,6 +448,8 @@ impl Default for LfoParams {
         Self {
             rate_hz: 0.0,
             depth_cents: 0.0,
+            amp_depth: 0.0,
+            amp_rate_hz: 0.0,
         }
     }
 }
@@ -472,6 +499,9 @@ pub struct Preset {
     /// Parallel noise. Omit or `level = 0` to skip (old patches stay unchanged).
     #[serde(default)]
     pub noise: NoiseParams,
+    /// Glottal comb + 3 formants + consonant segments. Omit or `mix = 0` to skip.
+    #[serde(default)]
+    pub vocal: VocalParams,
     pub operators: Vec<OperatorParams>,
 }
 
@@ -1027,6 +1057,80 @@ mod tests {
     }
 
     #[test]
+    fn factory_vl_bank_has_twenty_ids() {
+        let ids: Vec<_> = factory_ids()
+            .into_iter()
+            .filter(|id| id.starts_with("vl-"))
+            .collect();
+        assert_eq!(
+            ids.len(),
+            20,
+            "expected exactly 20 vl-* factory vocals, got {}: {ids:?}",
+            ids.len()
+        );
+        for expected in [
+            "vl-ka",
+            "vl-sa",
+            "vl-ta",
+            "vl-kasa",
+            "vl-saka",
+            "vl-tata",
+            "vl-kaka",
+            "vl-sasa",
+            "vl-kishi",
+            "vl-tesu",
+            "vl-ha",
+            "vl-na",
+            "vl-ma",
+            "vl-hana",
+            "vl-nami",
+            "vl-hanami",
+            "vl-haha",
+            "vl-nana",
+            "vl-mama",
+            "vl-awa",
+        ] {
+            assert!(ids.contains(&expected), "missing {expected} in {ids:?}");
+        }
+        let mora1 = ["vl-ka", "vl-sa", "vl-ta", "vl-ha", "vl-na", "vl-ma"];
+        for id in &ids {
+            let p = load_factory(id).expect(id);
+            assert_eq!(
+                p.default_note, 60,
+                "{id} default_note {} must be MIDI 60 (C4)",
+                p.default_note
+            );
+            assert!(p.vocal.is_active(), "{id} vocal mix must be active");
+            assert!(
+                p.operators.iter().all(|op| {
+                    op.waveform != crate::Waveform::SuperSaw
+                        && op.waveform != crate::Waveform::AbsSine
+                }),
+                "{id} must not use SuperSaw or AbsSine"
+            );
+            if *id == "vl-hanami" {
+                assert!(
+                    (1.2..=1.5).contains(&p.default_duration),
+                    "{id} duration {} should be 1.2–1.5s",
+                    p.default_duration
+                );
+            } else if mora1.contains(id) {
+                assert!(
+                    (0.45..=0.70).contains(&p.default_duration),
+                    "{id} 1-mora duration {} should be 0.45–0.70s",
+                    p.default_duration
+                );
+            } else {
+                assert!(
+                    (0.85..=1.10).contains(&p.default_duration),
+                    "{id} 2-mora duration {} should be 0.85–1.10s",
+                    p.default_duration
+                );
+            }
+        }
+    }
+
+    #[test]
     fn load_preset_file_from_category_folder() {
         let p =
             load_preset_file(Path::new("presets/bass/sub-bass.toml")).expect("nested factory toml");
@@ -1441,5 +1545,39 @@ level = 0.0
         assert!((p.noise.delay - 0.01).abs() < 1e-6);
         assert_eq!(p.noise.filter.kind, crate::FilterType::Bandpass);
         assert!((p.noise.filter.cutoff - 800.0).abs() < 1e-6);
+    }
+
+    #[test]
+    fn vocal_table_parses() {
+        let toml = r#"
+name = "vocal-parse"
+algorithm = 8
+[vocal]
+mix = 1.0
+vowel = "i"
+formant_resonance = 0.4
+[vocal.comb]
+mix = 0.3
+feedback = 0.5
+[[vocal.segments]]
+at = 0.0
+dur = 0.04
+kind = "plosive"
+vowel = "a"
+place_hz = 2000
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+"#;
+        let p = Preset::from_toml_str("vocal-parse", toml).unwrap();
+        assert!(p.vocal.is_active());
+        assert_eq!(p.vocal.vowel, crate::Vowel::I);
+        assert_eq!(p.vocal.segments.len(), 1);
+        assert_eq!(p.vocal.segments[0].kind, crate::SegmentKind::Plosive);
     }
 }

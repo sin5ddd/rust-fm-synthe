@@ -407,6 +407,11 @@ pub fn category_hints_for_id(id: &str) -> Vec<String> {
         ]
     } else if id.starts_with("pl-") {
         vec!["short pluck".into(), "fast decay, not a 16s pad".into()]
+    } else if id.starts_with("vl-") {
+        vec![
+            "vocal one-shot".into(),
+            "formants + glottal comb, not a pad".into(),
+        ]
     } else if id.starts_with("ep-") || matches!(id, "keys-fm_ep") {
         vec![
             "electric piano".into(),
