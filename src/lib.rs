@@ -36,7 +36,7 @@ pub use preset::{
 };
 pub use render::{
     default_wav_path, peak, render, render_all_factory, render_preset_wav, rms, BatchRenderResult,
-    ExportParams, RenderParams, WavRenderReport, DEFAULT_OUTPUT_DIR, TARGET_PEAK,
+    ExportParams, RenderParams, WavRenderReport, DEFAULT_OUTPUT_DIR, TARGET_PEAK, TARGET_RMS,
 };
 pub use vocal::{CombParams, SegmentKind, VocalParams, VocalSegment, Vowel};
 pub use wav::{pcm_data_bytes, read_wav, write_wav, WavData, WavSettings};

@@ -743,6 +743,44 @@ mod tests {
     }
 
     #[test]
+    fn fm_riser_chorus_is_octave_up_down_and_fifth() {
+        let p = load_factory("fm-riser").unwrap();
+        assert!(p.fx.chorus.mix > 0.4, "chorus mix {}", p.fx.chorus.mix);
+        assert_eq!(
+            p.fx.chorus.intervals,
+            vec![
+                crate::ChorusInterval::OctaveDown,
+                crate::ChorusInterval::OctaveUp,
+                crate::ChorusInterval::Fifth,
+            ]
+        );
+    }
+
+    #[test]
+    fn fx_formant_hits_use_vocal_and_fifth_chorus() {
+        for (id, vowel) in [
+            ("fx-formant-ah", crate::Vowel::A),
+            ("fx-formant-oh", crate::Vowel::O),
+        ] {
+            let p = load_factory(id).unwrap();
+            assert!(p.vocal.mix > 0.8, "{id} vocal mix {}", p.vocal.mix);
+            assert_eq!(p.vocal.vowel, vowel, "{id}");
+            assert_eq!(
+                p.fx.chorus.intervals,
+                vec![crate::ChorusInterval::Fifth],
+                "{id}"
+            );
+            assert!(p.fx.chorus.mix > 0.3, "{id} chorus mix {}", p.fx.chorus.mix);
+            assert!(
+                p.operators.iter().all(|op| {
+                    op.waveform != crate::Waveform::AbsSine
+                        && op.waveform != crate::Waveform::SuperSaw
+                }),
+                "{id} source must be harmonic for formants"
+            );
+        }
+    }
+    #[test]
     fn unknown_preset_errors() {
         let err = load_factory("not-a-real-preset").unwrap_err();
         assert!(matches!(err, Error::PresetNotFound { .. }));

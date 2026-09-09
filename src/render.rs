@@ -57,7 +57,11 @@ impl RenderParams {
 /// Target peak after normalize, about -1 dBFS.
 pub const TARGET_PEAK: f32 = 0.89125094;
 
-/// Render a mono buffer. Peak-normalized so factory shots sit at a usable level.
+/// Target gated RMS after loudness normalize.
+pub const TARGET_RMS: f32 = 0.20;
+const LOUDNESS_GATE: f32 = 1e-4;
+
+/// Render a mono buffer. Loudness-normalized so factory shots sit at a usable level.
 pub fn render(preset: &Preset, params: &RenderParams) -> Result<Vec<f32>> {
     params.validate()?;
     let n = (params.duration_secs * f64::from(params.sample_rate)).round() as usize;
@@ -95,7 +99,7 @@ pub fn render(preset: &Preset, params: &RenderParams) -> Result<Vec<f32>> {
         *sample = if x.is_finite() { x } else { 0.0 };
     }
 
-    normalize_peak(&mut buf, TARGET_PEAK);
+    normalize_loudness(&mut buf, TARGET_RMS, TARGET_PEAK);
     Ok(buf)
 }
 
@@ -106,6 +110,34 @@ pub fn normalize_peak(buf: &mut [f32], target: f32) {
         for x in buf.iter_mut() {
             *x *= g;
         }
+    }
+}
+
+fn gated_rms(buf: &[f32], gate: f32) -> f32 {
+    let mut sum = 0.0f64;
+    let mut n = 0u32;
+    for &x in buf {
+        if x.abs() > gate {
+            sum += f64::from(x) * f64::from(x);
+            n += 1;
+        }
+    }
+    if n == 0 {
+        return 0.0;
+    }
+    (sum / f64::from(n)).sqrt() as f32
+}
+
+pub fn normalize_loudness(buf: &mut [f32], target_rms: f32, peak_ceiling: f32) {
+    let r = gated_rms(buf, LOUDNESS_GATE);
+    if r > 1e-8 {
+        let g = target_rms / r;
+        for x in buf.iter_mut() {
+            *x *= g;
+        }
+    }
+    if peak(buf) > peak_ceiling {
+        normalize_peak(buf, peak_ceiling);
     }
 }
 
@@ -264,7 +296,7 @@ mod tests {
         )
         .unwrap();
         assert!(buf.iter().all(|x| x.is_finite()));
-        assert!(peak(&buf) > 0.5, "peak {}", peak(&buf));
+        assert!(peak(&buf) > 0.20, "peak {}", peak(&buf));
         assert!(rms(&buf) > 0.02, "rms {}", rms(&buf));
         assert!(!buf.iter().all(|&x| x == 0.0));
     }
@@ -398,5 +430,35 @@ mod tests {
         assert_eq!(bp.filter.kind, crate::FilterType::Bandpass);
         let hp = load_factory("hp-air").unwrap();
         assert_eq!(hp.filter.kind, crate::FilterType::Highpass);
+    }
+
+    #[test]
+    fn loudness_matches_gated_rms() {
+        let n = 512;
+        let w = 2.0 * std::f32::consts::PI * 8.0 / n as f32;
+        let mut a: Vec<f32> = (0..n).map(|i| 0.05 * (w * i as f32).sin()).collect();
+        let mut b: Vec<f32> = (0..n).map(|i| 0.40 * (w * i as f32).sin()).collect();
+        normalize_loudness(&mut a, TARGET_RMS, TARGET_PEAK);
+        normalize_loudness(&mut b, TARGET_RMS, TARGET_PEAK);
+        let ra = gated_rms(&a, LOUDNESS_GATE);
+        let rb = gated_rms(&b, LOUDNESS_GATE);
+        assert!(
+            (ra - rb).abs() / TARGET_RMS < 0.05,
+            "gated rms mismatch ra={ra} rb={rb}"
+        );
+    }
+
+    #[test]
+    fn loudness_peak_ceiling() {
+        let mut buf = vec![0.99f32; 64];
+        normalize_loudness(&mut buf, TARGET_RMS, TARGET_PEAK);
+        assert!(peak(&buf) <= TARGET_PEAK + 1e-6, "peak {}", peak(&buf));
+    }
+
+    #[test]
+    fn loudness_silence_is_noop() {
+        let mut buf = vec![0.0f32; 32];
+        normalize_loudness(&mut buf, TARGET_RMS, TARGET_PEAK);
+        assert!(buf.iter().all(|&x| x == 0.0));
     }
 }

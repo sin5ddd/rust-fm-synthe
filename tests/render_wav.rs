@@ -686,6 +686,51 @@ fn factory_ps_pads_are_thirty_and_audible() {
     }
 }
 
+/// Sparkle pads are sampled at C4. HP must not steal the root (or they read as G/E).
+#[test]
+fn factory_ps_pads_root_at_c4() {
+    let ids: Vec<_> = factory_ids()
+        .into_iter()
+        .filter(|id| id.starts_with("ps-"))
+        .collect();
+    assert_eq!(ids.len(), 30);
+
+    const SR: u32 = 22_050;
+    let f0 = midi_to_hz(60) as f32;
+
+    for id in ids {
+        let preset = load_factory(id).unwrap();
+        assert_eq!(
+            preset.default_note, 60,
+            "{id} default_note {} must be MIDI 60 (C4)",
+            preset.default_note
+        );
+        let buf = render(
+            &preset,
+            &RenderParams {
+                frequency_hz: f64::from(f0),
+                duration_secs: 1.5,
+                velocity: 0.9,
+                sample_rate: SR,
+            },
+        )
+        .expect(id);
+        let start = (SR as usize) / 2;
+        let end = ((SR as usize) * 6 / 5).min(buf.len());
+        assert!(end > start + 64, "{id} too short to measure root");
+        let body = hann_window(&buf[start..end]);
+        let sr_f = SR as f32;
+        let c = goertzel_power(&body, sr_f, f0).max(goertzel_power(&body, sr_f, f0 * 2.0));
+        let g = goertzel_power(&body, sr_f, f0 * 1.5).max(goertzel_power(&body, sr_f, f0 * 3.0));
+        let e = goertzel_power(&body, sr_f, f0 * 1.25).max(goertzel_power(&body, sr_f, f0 * 2.5));
+        assert!(
+            c > g,
+            "{id} G stronger than C (c={c}, g={g}); HP or 3× partial stole the root"
+        );
+        assert!(c > e, "{id} E stronger than C (c={c}, e={e})");
+    }
+}
+
 /// 120 BPM, 4/4 → 1 bar = 2 s → 8 bars = 16 s held note.
 /// Pads are long-shot like drones, but not the sub/rumble bed.
 /// Last 1 s and t=14 s must still have energy.
