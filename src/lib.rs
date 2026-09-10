@@ -34,8 +34,9 @@ pub use layers::{
     render_export, render_with_layers, resolve_layer_plan, skips_fx_auto_layers, stack_looks_thin,
     AutoLayerExtra, LayerInterval, LayerMode, LayerPlan, LayeredRender, LAYER_GAIN_FIFTH,
     LAYER_GAIN_OCTAVE, LAYER_GAIN_OCTAVE_DOWN, LAYER_GAIN_OCTAVE_DOWN_2, LAYER_GAIN_OCTAVE_DOWN_3,
-    LAYER_GAIN_OCTAVE_UP_2, LAYER_GAIN_ROOT, PAD_DETUNE_HZ_OCTAVE_DOWN, PAD_DETUNE_HZ_OCTAVE_UP,
-    PAD_HOLD_SECS_AT_130, PAD_MID_BP_HI_HZ, PAD_MID_BP_LO_HZ,
+    LAYER_GAIN_OCTAVE_UP_2, LAYER_GAIN_ROOT, PAD_DETUNE_HZ_FIFTH, PAD_DETUNE_HZ_OCTAVE2,
+    PAD_DETUNE_HZ_OCTAVE_DOWN, PAD_DETUNE_HZ_OCTAVE_UP, PAD_HOLD_SECS_AT_130, PAD_MID_BP_HI_HZ,
+    PAD_MID_BP_LO_HZ,
 };
 pub use midi::{cents_to_ratio, hz_to_midi, midi_to_hz, semitones_to_ratio};
 pub use noise::{NoiseColor, NoiseParams};

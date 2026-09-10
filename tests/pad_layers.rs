@@ -3,11 +3,11 @@
 //! Not operator-ratio surgery or `[fx.chorus] intervals`.
 
 use fm_synth::{
-    analyze_preset, is_airy_fresh_pad_id, is_factory_lead_id, is_factory_pad_stack_id,
+    analyze_preset, factory_ids, is_airy_fresh_pad_id, is_factory_lead_id, is_factory_pad_stack_id,
     is_factory_sparkle_pad_id, load_factory, midi_to_hz, render, render_export, resolve_layer_plan,
     semitones_to_ratio, AutoLayerExtra, ExportParams, LayerInterval, LayerMode, Preset,
-    PAD_DETUNE_HZ_OCTAVE_DOWN, PAD_DETUNE_HZ_OCTAVE_UP, PAD_HOLD_SECS_AT_130, PAD_MID_BP_HI_HZ,
-    PAD_MID_BP_LO_HZ,
+    PAD_DETUNE_HZ_FIFTH, PAD_DETUNE_HZ_OCTAVE2, PAD_DETUNE_HZ_OCTAVE_DOWN, PAD_DETUNE_HZ_OCTAVE_UP,
+    PAD_HOLD_SECS_AT_130, PAD_MID_BP_HI_HZ, PAD_MID_BP_LO_HZ,
 };
 
 const SR: u32 = 22_050;
@@ -166,8 +166,8 @@ fn non_airy_fresh_pad_stays_single_note_on_auto() {
 #[test]
 fn pad_octave_voices_are_detuned_a_few_hz() {
     let preset = sine_patch();
-    // Long enough that a Goertzel bin (~sr/n) is narrower than the few-Hz offset.
-    let secs = 2.2;
+    // Long enough that a Goertzel bin (~sr/n) is narrower than the 1–3 Hz offset.
+    let secs = 3.2;
     let layered = render_export(
         "ps-detune-probe",
         &preset,
@@ -221,9 +221,9 @@ fn thin_pad_auto_adds_fifth_and_two_octaves() {
     let e15 = goertzel_power(
         &win,
         SR as f32,
-        (f0 * semitones_to_ratio(7.0) + 2.5) as f32,
+        (f0 * semitones_to_ratio(7.0) + PAD_DETUNE_HZ_FIFTH) as f32,
     );
-    let e4 = goertzel_power(&win, SR as f32, (f0 * 4.0 + 5.0) as f32);
+    let e4 = goertzel_power(&win, SR as f32, (f0 * 4.0 + PAD_DETUNE_HZ_OCTAVE2) as f32);
     let e0 = goertzel_power(&win, SR as f32, f0 as f32);
     assert!(
         e15 > e0 * 0.04,
@@ -255,7 +255,7 @@ fn pad_fifth_and_two_oct_are_mid_bandpassed() {
     let mid = goertzel_power(
         &win,
         SR as f32,
-        (f0 * semitones_to_ratio(7.0) + 2.5) as f32,
+        (f0 * semitones_to_ratio(7.0) + PAD_DETUNE_HZ_FIFTH) as f32,
     );
     let low = goertzel_power(&win, SR as f32, 80.0);
     assert!(mid > 0.0, "mid fifth must survive the BP");
@@ -283,6 +283,11 @@ fn factory_pads_keep_pitch_and_hold_through_default() {
             "{id} must keep HP/BP so pads do not steal kick/sub"
         );
         assert!(preset.filter.cutoff >= 140.0, "{id} HP cutoff too low");
+        assert!(
+            preset.lfo.depth_cents.abs() < 1e-9,
+            "{id} pitch LFO depth {} must be 0 (うねり is static ±oct Hz, not a wobbling root)",
+            preset.lfo.depth_cents
+        );
 
         let (buf, analysis) = analyze_preset(
             id,
@@ -348,4 +353,78 @@ fn layers_off_pad_matches_single_render() {
         .map(|(a, b)| (a - b).abs())
         .sum();
     assert!(err < 1e-4, "Off should be a single 4OP render, err={err}");
+}
+
+#[test]
+fn pad_stack_presets_have_no_pitch_lfo() {
+    for id in factory_ids() {
+        if !is_factory_pad_stack_id(id) {
+            continue;
+        }
+        let p = load_factory(id).unwrap();
+        assert!(
+            p.lfo.depth_cents.abs() < 1e-9,
+            "{id} lfo.depth_cents {} must be 0 so the root does not wobble",
+            p.lfo.depth_cents
+        );
+    }
+}
+
+#[test]
+fn root_ridge_stays_flat_beating_is_from_static_octaves() {
+    // Single-note: Goertzel at f0 stays stronger than f0+3 Hz early and late
+    // (the autocorr tracker can octave-jump on bright pads; that is not LFO).
+    for id in ["ps-crystal", "ps-shimmer", "pf-flute-pad"] {
+        let preset = load_factory(id).unwrap();
+        let off = render_export(id, &preset, &export(LayerMode::Off, 3.0)).unwrap();
+        let f0 = midi_to_hz(preset.default_note) as f32;
+        let n = off.samples.len();
+        let early = hann(&off.samples[n / 5..n * 2 / 5]);
+        let late = hann(&off.samples[n * 3 / 5..n * 4 / 5]);
+        let sr = SR as f32;
+        for (label, win) in [("early", &early), ("late", &late)] {
+            let e0 = goertzel_power(win, sr, f0);
+            let e_wobble = goertzel_power(win, sr, f0 + 3.0);
+            assert!(
+                e0 > e_wobble * 3.0,
+                "{id} {label} Off root wandered (e0={e0}, f0+3={e_wobble})"
+            );
+        }
+    }
+
+    // Layered sine: root Goertzel stays on f0 early and late; ±oct sit 2 Hz off.
+    let preset = sine_patch();
+    let layered = render_export(
+        "ps-beat-probe",
+        &preset,
+        &export(
+            LayerMode::Explicit(vec![LayerInterval::Octave, LayerInterval::OctaveDown]),
+            3.0,
+        ),
+    )
+    .unwrap();
+    let f0 = midi_to_hz(60) as f32;
+    let n = layered.samples.len();
+    let early = hann(&layered.samples[n / 8..n / 3]);
+    let late = hann(&layered.samples[n * 2 / 3..n * 11 / 12]);
+    let sr = SR as f32;
+    for (label, win) in [("early", &early), ("late", &late)] {
+        let e0 = goertzel_power(win, sr, f0);
+        let e_wobble = goertzel_power(win, sr, f0 + 3.0);
+        assert!(
+            e0 > e_wobble * 4.0,
+            "{label} root must stay on f0, not wander +3 Hz (e0={e0}, wobble={e_wobble})"
+        );
+        let e_up = goertzel_power(win, sr, f0 * 2.0 + PAD_DETUNE_HZ_OCTAVE_UP as f32);
+        let e_up_exact = goertzel_power(win, sr, f0 * 2.0);
+        assert!(
+            e_up > e_up_exact * 1.2,
+            "{label} octave-up must be a static +2 Hz offset (det={e_up}, exact={e_up_exact})"
+        );
+    }
+    assert!(
+        (PAD_DETUNE_HZ_OCTAVE_UP.abs() - 2.0).abs() < 1e-9
+            && (PAD_DETUNE_HZ_OCTAVE_DOWN + 2.0).abs() < 1e-9,
+        "±octave offsets must stay in the 1–3 Hz static band"
+    );
 }

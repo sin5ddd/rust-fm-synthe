@@ -9,7 +9,7 @@ default_duration = 7.384615385
 
 [lfo]
 rate_hz = 0.09
-depth_cents = 8.0
+depth_cents = 0.0
 
 [mod_sweep]
 start = 0.5

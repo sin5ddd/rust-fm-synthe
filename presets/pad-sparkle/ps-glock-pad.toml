@@ -9,7 +9,7 @@ default_duration = 7.384615385
 
 [lfo]
 rate_hz = 0.12
-depth_cents = 4.0
+depth_cents = 0.0
 
 [filter]
 type = "highpass"

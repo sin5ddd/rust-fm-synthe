@@ -68,7 +68,7 @@ cargo run --release -- analyze-all
 | 中空5度 | 1× と 1.5×。長3度（1.25×）は弱い |
 | リードのオクターブ重ね | `render_layers` に `unison`+`octave`（薄いときは `fifth`）。1× と 2× が**別レンダー**。比2キャリアや chorus の octave-up ではない |
 | FXのオクターブ下重ね | ピッチ系は `unison`+`octave-down`+`octave-down-2`（薄いときは `octave-down-3`）。レーザーが 1/2×・1/4× の**別レンダー**。4OP内部の比0.5化ではない |
-| パッドの上下オクターブ | `ps-*` / 風系 `pf-*` は `unison`+`octave`+`octave-down`（数Hzデチューン）。薄いときは `fifth`+`octave-up-2` とミッドBP。長いアタック、サブはHPで切る |
+| パッドの上下オクターブ | `ps-*` / 風系 `pf-*` は `unison`+`octave`+`octave-down`（静的 1–3 Hz。基音のリッジは時間方向にまっすぐ）。薄いときは `fifth`+`octave-up-2` とミッドBP。長いアタック、サブはHPで切る。ピッチLFOで全体を揺らさない |
 
 ## 判定の書き方
 

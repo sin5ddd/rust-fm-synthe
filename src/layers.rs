@@ -30,11 +30,12 @@ pub const LAYER_GAIN_OCTAVE_DOWN_3: f32 = 0.34;
 /// 4 whole notes at 130 BPM: `4 * 4 * (60/130) = 960/130`.
 pub const PAD_HOLD_SECS_AT_130: f64 = 16.0 * 60.0 / 130.0;
 
-/// Few-Hz detune on pad octave-up / octave-down / extra voices ("数ヘルツずらした").
-pub const PAD_DETUNE_HZ_OCTAVE_UP: f64 = 4.0;
-pub const PAD_DETUNE_HZ_OCTAVE_DOWN: f64 = -3.5;
-pub const PAD_DETUNE_HZ_OCTAVE2: f64 = 5.0;
-pub const PAD_DETUNE_HZ_FIFTH: f64 = 2.5;
+/// Static 1–3 Hz offset on pad ±octave (and extras). Root stays at f0;
+/// beating / うねり comes from 2·f0+2 Hz and 0.5·f0−2 Hz, not a pitch LFO.
+pub const PAD_DETUNE_HZ_OCTAVE_UP: f64 = 2.0;
+pub const PAD_DETUNE_HZ_OCTAVE_DOWN: f64 = -2.0;
+pub const PAD_DETUNE_HZ_OCTAVE2: f64 = 2.0;
+pub const PAD_DETUNE_HZ_FIFTH: f64 = 1.5;
 
 /// Mid bandpass on pad fifth / +24 extras so they stay out of kick/sub.
 pub const PAD_MID_BP_LO_HZ: f32 = 200.0;
@@ -191,8 +192,8 @@ impl<'de> Deserialize<'de> for LayerInterval {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum LayerMode {
     /// Factory leads: +12, plus +7 when the octave mix still looks thin.
-    /// Factory sparkle / airy fresh pads: −12 and +12 (few-Hz detune), plus
-    /// +7 and +24 (mid bandpass) when the ±octave mix still looks thin.
+    /// Factory sparkle / airy fresh pads: −12 and +12 (static 1–3 Hz offset),
+    /// plus +7 and +24 (mid bandpass) when the ±octave mix still looks thin.
     /// Factory pitched FX: −12 and −24, plus −36 when still thin.
     /// Other factory FX: a single −12 body (except already-sub shots).
     /// Other banks stay single-note unless the preset sets `render_layers`.

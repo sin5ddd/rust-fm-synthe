@@ -173,7 +173,7 @@ pub struct ExportParams {
     pub sample_rate: u32,
     pub bit_depth: u16,
     /// Extra full-patch voices. Default [`LayerMode::Auto`] stacks +12 on
-    /// factory leads (and +7 when still thin), ±12 (few-Hz detune) on sparkle /
+    /// factory leads (and +7 when still thin), ±12 (static 1–3 Hz) on sparkle /
     /// airy pads (and +7/+24 when still thin), and −12/−24 on pitched factory FX.
     pub layers: LayerMode,
 }
