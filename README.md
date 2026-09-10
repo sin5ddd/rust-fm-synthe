@@ -55,7 +55,9 @@ cargo run -- render-all
 
 `sd-*` スネアバンク（808、909、DnB、ジャングル、フレンチコア、ガバなど20種）も同じ。出力は `dist/sd-….wav`。尾は意図的に長め（DAW側で切る前提）。
 
-`ld-*` リードバンク（プラック、スーパーソー、フーバー、フレンチコア、303風、クワイアなど50種）も同じ。出力は `dist/ld-….wav`。トーンリードの既定は C3（MIDI 48）。高いキャラだけ C4（60）。**既定の長さは 120 BPM・4/4 の4小節ホールド（1小節=2秒 → 4小節=8秒。短いリリーステール込みで約8.2秒）**。プラック／スタブもキーを押さえている間は鳴り続ける（ワンショットで消えない）。`presets/ld/` の既存 `lead-fm-pluck` / `stab-fm-fifth` / `stab-fm-major` / `filter-pluck` / `stab-pluck` も同じ（リネームしない）。
+`ld-*` リードバンク（プラック、スーパーソー、フーバー、フレンチコア、303風、クワイアなど50種）も同じ。出力は `dist/ld-….wav`。トーンリードの既定は C3（MIDI 48）。高いキャラだけ C4（60）。**既定の長さは 130 BPM の3全音符（3 × 4 × 60/130 = 720/130 ≈ 5.538秒）**。プラック／スタブもキーを押さえている間は鳴り続ける（ワンショットで消えない）。`presets/ld/` の既存 `lead-fm-pluck` / `stab-fm-fifth` / `stab-fm-major` / `filter-pluck` / `stab-pluck` も同じ（リネームしない）。
+
+工場リードの `render` / `render-all` / `analyze` は、**同じ4OPパッチを基音ともう一度 +12（オクターブ上）でレンダして混ぜる**。分析でまだ薄い（正弦2本だけ、など）ときは +7（完全5度）も足す。オペレータの比を 2.0 に振り直したり、`[fx.chorus] intervals = octave-up` のディレイピッチシフトで厚くしたつもり、ではない。`--layers none` で単音。`--layers octave` / `--layers octave,fifth` で固定。プリセットに `render_layers = ["octave"]` または `["octave", "fifth"]`（`[]` で単音固定）を書ける。
 
 `fx-*` FXバンク（リバースシンバル、ライザー、インパクト、ダウンリフター、レーザー、ウーシュなど50種）も同じ。出力は `dist/fx-….wav`。ピッチのないノイズ／スイープが多い。リバースシンバルとライザーは長め（1.5–4秒、後で切る前提）。インパクトやヒットは短い。
 
@@ -94,7 +96,7 @@ cargo run -- render-all
 cargo run -- render-all -o /tmp/shots --duration 0.4 --note 36
 ```
 
-`--note` / `--duration` / `--hz` / `--velocity` / `--sample-rate` / `--bit-depth` は `render` と同じ。指定すると全プリセットに同じ値がかかる。
+`--note` / `--duration` / `--hz` / `--velocity` / `--sample-rate` / `--bit-depth` / `--layers` は `render` と同じ。指定すると全プリセットに同じ値がかかる。`--layers auto`（既定）は工場リードだけオクターブ重ね。ベースやキックは単音のまま。
 
 サブのワンショット（C2、約1.35秒、16-bit / 44.1 kHz）。`--output` 省略時は `dist/sub-bass.wav`:
 
@@ -184,7 +186,7 @@ cargo run --release -- analyze-all
 # → dist/<id>.png と dist/<id>.json（WAV は書かない）
 ```
 
-`--output` は PNG パス。JSON は同じ stem。プリセット指定時は同じ stem の WAV も書く。
+`--output` は PNG パス。JSON は同じ stem。プリセット指定時は同じ stem の WAV も書く。`--layers` は `render` と同じ（工場リードは既定でオクターブ重ね。JSON の `render_layers` に実際に混ぜた声が出る）。
 
 ## オペレータとアルゴリズム
 
@@ -315,11 +317,11 @@ FMではオペレータ（ここでは正弦波ベースのオシレータ）の
 | `sd-tone-layer` | 胴／トーンだけのレイヤー用 |
 | `sd-fm-long` | 実験的な長いFMスネア（使える尾） |
 | `cp-house` | 短いドライなハウスクラップ（2/4専用。1 kHz付近の胴。スネア代用ではない） |
-| `lead-fm-pluck` | C3（MIDI 48、約130.8 Hz）のFMプラック（メロディ用。C4ではない。4小節ホールド） |
+| `lead-fm-pluck` | C3（MIDI 48、約130.8 Hz）のFMプラック（メロディ用。C4ではない。約200msのFMアタック。3全音符ホールド @ 130 BPM） |
 | `stab-fm-fifth` | C3の中空5度スタブ（C–Gのみ。長3度なし） |
 | `stab-fm-major` | C3の長三和音スタブ（C–E–G。中空の `stab-fm-fifth` の対） |
 | `reese-mid` | C3ミッドReeseの糊（800–1200 Hz。サブなし） |
-| `ld-fm-pluck` | FMプラック（C3。既存 `lead-fm-pluck` とは別パッチ。4小節ホールド） |
+| `ld-fm-pluck` | シリアルFMプラック（C3。既存 `lead-fm-pluck` とは別パッチ。約200msのFMアタック。3全音符ホールド @ 130 BPM） |
 | `ld-hollow-fifth` | 中空5度リード（C–Gのみ。長3度なし） |
 | `ld-house-pluck` | ドライなハウスプラック |
 | `ld-dnb-stab` | タイトなDnBスタブ |
@@ -740,7 +742,7 @@ write_wav(
 )?;
 ```
 
-公開APIの中心は `load_preset` / `load_factory` / `render` / `write_wav` / `read_wav` / `analyze_buffer`。一括書き出しは `render_all_factory`、一括分析は `analyze_all_factory`（工場バンクがソース。`presets/<category>/` の重複TOMLは見ない）。別ツールからエンジンだけ駆動する想定。
+公開APIの中心は `load_preset` / `load_factory` / `render` / `render_export` / `write_wav` / `read_wav` / `analyze_buffer`。`render` は単音の4OP。CLI と `render_all_factory` / `analyze_preset` は `render_export`（`--layers`）経由。一括書き出しは `render_all_factory`、一括分析は `analyze_all_factory`（工場バンクがソース。`presets/<category>/` の重複TOMLは見ない）。別ツールからエンジンだけ駆動する想定。
 
 ## テスト
 
@@ -748,4 +750,4 @@ write_wav(
 cargo test
 ```
 
-440 Hz 正弦の重心、ノイズの平坦度、ピッチ落下、`bd-808-boom` のサブと落下、PNG 寸法と JSON のパース、エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`ld-*` リードと `fx-*` FXがそれぞれちょうど50個で非無音、`bs-*` ベースがちょうど15個で非無音、`pc-*` パーカッションがちょうど50個で非無音、`dr-*` ドローンがちょうど50個で非無音、`pf-*` 爽やかパッドと `ps-*` キラキラパッドがそれぞれちょうど30個で非無音、`pl-*` プラックがちょうど30個で非無音かつ短い（既定は2秒未満。`pl-reverse-swell` だけ例外）、`ep-*` エレクトリックピアノがちょうど5個で非無音かつ1.2秒超（クリックではない）、`ep-rhodes-soft` のアタックに純正弦より強い2×/3×タインがあること、`presets/ld/` の既定レンダーが約8秒（120 BPM の4小節）で末尾0.5秒が無音でないこと、`dr-*` / `pf-*` / `ps-*` の既定レンダーが約16秒（120 BPM の8小節）で末尾1秒と t=14秒が無音でないこと、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。
+440 Hz 正弦の重心、ノイズの平坦度、ピッチ落下、`bd-808-boom` のサブと落下、PNG 寸法と JSON のパース、エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`ld-*` リードと `fx-*` FXがそれぞれちょうど50個で非無音、工場リードのレンダー時オクターブ重ね（`ld-fm-pluck` はアルゴリズム1のまま、遅延部の 2×f0 が第二声であること）、`bs-*` ベースがちょうど15個で非無音、`pc-*` パーカッションがちょうど50個で非無音、`dr-*` ドローンがちょうど50個で非無音、`pf-*` 爽やかパッドと `ps-*` キラキラパッドがそれぞれちょうど30個で非無音、`pl-*` プラックがちょうど30個で非無音かつ短い（既定は2秒未満。`pl-reverse-swell` だけ例外）、`ep-*` エレクトリックピアノがちょうど5個で非無音かつ1.2秒超（クリックではない）、`ep-rhodes-soft` のアタックに純正弦より強い2×/3×タインがあること、`presets/ld/` の既定レンダーが約5.54秒（130 BPM の3全音符）で末尾0.4秒が無音でないこと、`dr-*` / `pf-*` / `ps-*` の既定レンダーが約16秒（120 BPM の8小節）で末尾1秒と t=14秒が無音でないこと、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。

@@ -1,6 +1,6 @@
 use crate::error::{Error, Result};
+use crate::layers::{render_export, LayerMode};
 use crate::preset::{factory_ids, load_factory, Preset};
-use crate::resolve_frequency;
 use crate::voice::Voice;
 use crate::wav::{pcm_data_bytes, write_wav, WavSettings};
 use std::path::{Path, PathBuf};
@@ -172,6 +172,9 @@ pub struct ExportParams {
     pub velocity: f32,
     pub sample_rate: u32,
     pub bit_depth: u16,
+    /// Extra full-patch voices. Default [`LayerMode::Auto`] stacks an octave
+    /// on factory leads (and a fifth when the mix is still thin).
+    pub layers: LayerMode,
 }
 
 impl Default for ExportParams {
@@ -183,6 +186,7 @@ impl Default for ExportParams {
             velocity: 0.9,
             sample_rate: 44_100,
             bit_depth: 16,
+            layers: LayerMode::Auto,
         }
     }
 }
@@ -198,6 +202,8 @@ pub struct WavRenderReport {
     pub sample_count: usize,
     pub sample_rate: u32,
     pub bit_depth: u16,
+    /// Semitone offsets mixed into the WAV (always includes `0`).
+    pub layers: Vec<i16>,
 }
 
 impl WavRenderReport {
@@ -232,26 +238,19 @@ pub fn render_preset_wav(
     output: &Path,
     export: &ExportParams,
 ) -> Result<WavRenderReport> {
-    let frequency_hz = resolve_frequency(preset, export.note, export.hz)?;
-    let duration_secs = export.duration.unwrap_or(preset.default_duration);
-    let params = RenderParams {
-        frequency_hz,
-        duration_secs,
-        velocity: export.velocity,
-        sample_rate: export.sample_rate,
-    };
-    let samples = render(preset, &params)?;
+    let layered = render_export(preset_id, preset, export)?;
     let settings = WavSettings::new(export.sample_rate, export.bit_depth)?;
-    write_wav(output, &samples, settings)?;
+    write_wav(output, &layered.samples, settings)?;
     Ok(WavRenderReport {
         preset_id: preset_id.to_string(),
         preset_name: preset.name.clone(),
         path: output.to_path_buf(),
-        frequency_hz,
-        duration_secs,
-        sample_count: samples.len(),
+        frequency_hz: layered.frequency_hz,
+        duration_secs: layered.duration_secs,
+        sample_count: layered.samples.len(),
         sample_rate: export.sample_rate,
         bit_depth: export.bit_depth,
+        layers: layered.semitones,
     })
 }
 

@@ -5,7 +5,7 @@ feedback = 0.58
 feedback_op = 4
 gain = 1.02
 default_note = 48
-default_duration = 8.2
+default_duration = 5.538461538
 
 [lfo]
 rate_hz = 4.4

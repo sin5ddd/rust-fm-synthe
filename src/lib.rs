@@ -8,6 +8,7 @@ mod analyze;
 mod error;
 mod filter;
 mod fx;
+mod layers;
 mod midi;
 mod noise;
 mod operator;
@@ -27,6 +28,10 @@ pub use analyze::{
 pub use error::{Error, Result};
 pub use filter::{FilterParams, FilterType};
 pub use fx::{ChorusInterval, ChorusParams, DelayParams, FxParams, OverdriveParams, ReverbParams};
+pub use layers::{
+    is_factory_lead_id, render_export, render_with_layers, resolve_layer_plan, stack_looks_thin,
+    LayerInterval, LayerMode, LayeredRender, LAYER_GAIN_FIFTH, LAYER_GAIN_OCTAVE, LAYER_GAIN_ROOT,
+};
 pub use midi::{cents_to_ratio, hz_to_midi, midi_to_hz, semitones_to_ratio};
 pub use noise::{NoiseColor, NoiseParams};
 pub use operator::{FreqMode, OperatorParams, Waveform};

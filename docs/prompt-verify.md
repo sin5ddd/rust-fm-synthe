@@ -66,6 +66,7 @@ cargo run --release -- analyze-all
 | ドローン / パッド / ホールド | t=0.85 でもエネルギーが残る |
 | ベル / 非整数 | `peaks_hz` が整数倍から外れる |
 | 中空5度 | 1× と 1.5×。長3度（1.25×）は弱い |
+| リードのオクターブ重ね | `render_layers` に `unison`+`octave`（薄いときは `fifth`）。1× と 2× が**別レンダー**。比2キャリアや chorus の octave-up ではない |
 
 ## 判定の書き方
 

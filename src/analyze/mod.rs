@@ -4,9 +4,9 @@ mod font;
 mod plot;
 
 use crate::error::{Error, Result};
+use crate::layers::render_export;
 use crate::preset::{factory_ids, load_factory, Preset};
-use crate::render::{peak, render, rms, ExportParams, RenderParams, DEFAULT_OUTPUT_DIR};
-use crate::resolve_frequency;
+use crate::render::{peak, rms, ExportParams, DEFAULT_OUTPUT_DIR};
 use rustfft::num_complex::Complex;
 use rustfft::FftPlanner;
 use serde::Serialize;
@@ -102,6 +102,9 @@ pub struct AnalysisReport {
     pub pitch: Option<PitchTrack>,
     pub peaks_hz: Vec<SpectralPeak>,
     pub category_hints: Vec<String>,
+    /// Full-patch voices mixed at render time (`unison`, `octave`, `fifth`).
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub render_layers: Vec<String>,
     pub stft_nfft: usize,
     pub stft_hop: usize,
     pub images: ImagePaths,
@@ -227,6 +230,7 @@ pub fn analyze_buffer(samples: &[f32], sample_rate: u32, opts: &AnalyzeOpts) -> 
         pitch: pitch_track(samples, sample_rate, nfft, hop),
         peaks_hz: spectral_peaks(&mean, sr, nfft),
         category_hints,
+        render_layers: Vec::new(),
         stft_nfft: nfft,
         stft_hop: hop,
         images: ImagePaths {
@@ -250,19 +254,9 @@ pub fn analyze_preset(
     export: &ExportParams,
     intent: Option<&str>,
 ) -> Result<(Vec<f32>, Analysis)> {
-    let frequency_hz = resolve_frequency(preset, export.note, export.hz)?;
-    let duration_secs = export.duration.unwrap_or(preset.default_duration);
-    let samples = render(
-        preset,
-        &RenderParams {
-            frequency_hz,
-            duration_secs,
-            velocity: export.velocity,
-            sample_rate: export.sample_rate,
-        },
-    )?;
-    let analysis = analyze_buffer(
-        &samples,
+    let layered = render_export(preset_id, preset, export)?;
+    let mut analysis = analyze_buffer(
+        &layered.samples,
         export.sample_rate,
         &AnalyzeOpts {
             source: None,
@@ -270,11 +264,12 @@ pub fn analyze_preset(
             preset_name: Some(preset.name.clone()),
             description: Some(preset.description.clone()),
             intent: intent.map(str::to_string),
-            frequency_hz: Some(frequency_hz),
+            frequency_hz: Some(layered.frequency_hz),
             midi_note: export.note.or(Some(preset.default_note)),
         },
     )?;
-    Ok((samples, analysis))
+    analysis.report.render_layers = layered.layer_labels();
+    Ok((layered.samples, analysis))
 }
 
 pub fn write_analysis_bundle(analysis: &Analysis, png: &Path, json: &Path) -> Result<()> {
@@ -379,6 +374,7 @@ pub fn category_hints_for_id(id: &str) -> Vec<String> {
         vec![
             "lead / held tone".into(),
             "energy should remain near t=0.85".into(),
+            "factory export stacks a second full 4OP render at +12 (optional +7)".into(),
         ]
     } else if id.starts_with("fx-") || matches!(id, "fm-riser" | "zap" | "hp-air") {
         vec![

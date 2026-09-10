@@ -2,6 +2,7 @@ use crate::algorithm::Algorithm;
 use crate::error::{Error, Result};
 use crate::filter::FilterParams;
 use crate::fx::FxParams;
+use crate::layers::LayerInterval;
 use crate::noise::NoiseParams;
 use crate::operator::OperatorParams;
 use crate::vocal::VocalParams;
@@ -514,6 +515,13 @@ pub struct Preset {
     /// Insert FX: OD → chorus → delay → reverb. Omit or all `mix = 0` to skip.
     #[serde(default)]
     pub fx: FxParams,
+    /// Optional render-time voices on top of the unison 4OP patch.
+    ///
+    /// Omit to follow CLI `--layers` / the factory-lead auto default.
+    /// `[]` forces a single note. `["octave"]` or `["octave", "fifth"]` always
+    /// mix those full-patch renders. This is not `[fx.chorus] intervals`.
+    #[serde(default)]
+    pub render_layers: Option<Vec<LayerInterval>>,
     pub operators: Vec<OperatorParams>,
 }
 
@@ -1270,8 +1278,8 @@ mod tests {
         let major = load_factory("stab-fm-major").unwrap();
         assert_eq!(major.feedback, 0.0);
         assert!(
-            (8.0..=8.5).contains(&major.default_duration),
-            "stab-fm-major duration {} (held 4 bars @ 120 BPM)",
+            (major.default_duration - 12.0 * 60.0 / 130.0).abs() < 1e-6,
+            "stab-fm-major duration {} (3 whole notes @ 130 BPM)",
             major.default_duration
         );
         let live: Vec<_> = major
@@ -1715,5 +1723,44 @@ level = 0.0
                 crate::ChorusInterval::Fifth
             ]
         );
+    }
+
+    #[test]
+    fn render_layers_field_parses() {
+        let toml = r#"
+name = "layer-flag"
+algorithm = 1
+render_layers = ["octave", "fifth"]
+[[operators]]
+level = 1.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+"#;
+        let p = Preset::from_toml_str("layer-flag", toml).unwrap();
+        assert_eq!(
+            p.render_layers.as_deref(),
+            Some([crate::LayerInterval::Octave, crate::LayerInterval::Fifth].as_slice())
+        );
+
+        let empty = r#"
+name = "layer-off"
+algorithm = 1
+render_layers = []
+[[operators]]
+level = 1.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+"#;
+        let off = Preset::from_toml_str("layer-off", empty).unwrap();
+        assert_eq!(off.render_layers.as_deref(), Some([].as_slice()));
+        assert!(load_factory("ld-fm-pluck").unwrap().render_layers.is_none());
     }
 }

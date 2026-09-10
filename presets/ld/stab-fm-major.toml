@@ -5,7 +5,7 @@ feedback = 0.0
 feedback_op = 4
 gain = 1.15
 default_note = 48
-default_duration = 8.2
+default_duration = 5.538461538
 
 # フィルタなし。FMもFBもデチューンもしない。正弦3本の長三和音。短3度は足さない。
 
