@@ -4,7 +4,8 @@
 //! late window brighter than the start even if pitch is unvoiced.
 
 use fm_synth::{
-    analyze_buffer, analyze_preset, load_factory, AnalyzeOpts, AnalysisReport, ExportParams,
+    analyze_buffer, analyze_preset, load_factory, render_export, AnalysisReport, AnalyzeOpts,
+    ExportParams, LayerMode,
 };
 
 const SR: u32 = 44_100;
@@ -13,11 +14,12 @@ const INTENT: &str = "riser: pitch and/or spectrum rises over 15s";
 const PITCH_RISERS: [&str; 4] = ["fx-riser-pitch", "fx-riser-saw", "fx-uplifter", "fm-riser"];
 const SPECTRUM_RISERS: [&str; 2] = ["fx-riser-noise", "fx-riser-filter"];
 
-fn analyze_id(id: &str) -> (Vec<f32>, AnalysisReport) {
+fn analyze_id(id: &str, layers: LayerMode) -> (Vec<f32>, AnalysisReport) {
     let preset = load_factory(id).expect(id);
     let export = ExportParams {
         sample_rate: SR,
         velocity: 0.9,
+        layers,
         ..ExportParams::default()
     };
     let (buf, analysis) = analyze_preset(id, &preset, &export, Some(INTENT)).expect(id);
@@ -36,7 +38,9 @@ fn window_report(buf: &[f32], t0: f64, t1: f64) -> AnalysisReport {
 #[test]
 fn pitch_risers_measure_an_upward_track() {
     for id in PITCH_RISERS {
-        let (_buf, report) = analyze_id(id);
+        // Climb is a property of the 4OP patch. Auto down-stacks add parallel
+        // ridges that can steal the monophonic pitch tracker.
+        let (_buf, report) = analyze_id(id, LayerMode::Off);
         let pitch = report
             .pitch
             .as_ref()
@@ -59,7 +63,7 @@ fn pitch_risers_measure_an_upward_track() {
 #[test]
 fn noise_and_filter_risers_brighten() {
     for id in SPECTRUM_RISERS {
-        let (buf, _report) = analyze_id(id);
+        let (buf, _report) = analyze_id(id, LayerMode::Off);
         let early = window_report(&buf, 0.4, 2.6);
         let late = window_report(&buf, 10.5, 13.8);
         assert!(
@@ -94,5 +98,28 @@ fn eight_bar_fx_risers_keep_sub_and_100hz_sine() {
             "{id} OP2 must start near 100 Hz, got {start_hz}"
         );
         assert!(preset.pitch.end_semitones > preset.pitch.start_semitones);
+    }
+}
+
+#[test]
+fn pitch_risers_auto_still_stack_octave_downs() {
+    for id in PITCH_RISERS {
+        let preset = load_factory(id).expect(id);
+        let out = render_export(
+            id,
+            &preset,
+            &ExportParams {
+                duration: Some(0.4),
+                sample_rate: 22_050,
+                layers: LayerMode::Auto,
+                ..ExportParams::default()
+            },
+        )
+        .expect(id);
+        assert!(
+            out.semitones.contains(&-12) && out.semitones.contains(&-24),
+            "{id} auto should stack −12/−24, got {:?}",
+            out.semitones
+        );
     }
 }

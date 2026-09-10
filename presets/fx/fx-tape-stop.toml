@@ -18,13 +18,17 @@ end = 0.45
 
 [filter]
 type = "lowpass"
-cutoff = 2400.0
-resonance = 0.18
-env_amount = -2.8
+cutoff = 2600.0
+resonance = 0.16
+env_amount = -2.6
 attack = 0.4
-decay = 0.45
-sustain = 0.1
+decay = 0.48
+sustain = 0.12
 release = 0.12
+
+[fx.overdrive]
+mix = 0.22
+drive = 0.32
 
 [[operators]]
 ratio = 1.0

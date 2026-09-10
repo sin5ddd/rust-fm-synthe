@@ -59,6 +59,10 @@ delay_ms = 16.0
 feedback = 0.16
 intervals = ["octave-down", "octave-up", "fifth"]
 
+[fx.overdrive]
+mix = 0.12
+drive = 0.22
+
 # OP1 キャリア。基音は ratio 0.25 で2オクターブ下。algo 7 では素のサイン。ベッドだけ。
 [[operators]]
 ratio = 0.25

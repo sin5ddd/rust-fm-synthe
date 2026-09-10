@@ -3,7 +3,7 @@ description = "ブーム。サブもあるがミッドの胴を残す。シネ�
 algorithm = 5
 feedback = 0.18
 feedback_op = 4
-gain = 1.08
+gain = 1.12
 default_note = 48
 default_duration = 0.95
 
@@ -14,20 +14,24 @@ curve = -2.8
 
 [filter]
 type = "lowpass"
-cutoff = 180.0
-resonance = 0.12
-env_amount = 3.6
+cutoff = 260.0
+resonance = 0.14
+env_amount = 3.8
 attack = 0.001
-decay = 0.28
-sustain = 0.2
+decay = 0.32
+sustain = 0.22
 release = 0.14
+
+[fx.overdrive]
+mix = 0.28
+drive = 0.4
 
 [noise]
 type = "brown"
-level = 0.78
+level = 0.88
 attack = 0.002
-decay = 0.45
-sustain = 0.05
+decay = 0.5
+sustain = 0.06
 release = 0.16
 vel_sens = 0.3
 
@@ -64,9 +68,9 @@ waveform = "sine"
 [[operators]]
 ratio = 2.2
 detune_cents = 6
-level = 0.4
+level = 0.52
 attack = 0.001
-decay = 0.12
+decay = 0.16
 sustain = 0.0
 release = 0.06
 vel_sens = 0.5

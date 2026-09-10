@@ -9,13 +9,17 @@ default_duration = 1.15
 
 [filter]
 type = "highpass"
-cutoff = 900.0
-resonance = 0.08
-env_amount = 0.25
+cutoff = 620.0
+resonance = 0.1
+env_amount = 0.28
 attack = 0.0002
-decay = 0.20
-sustain = 0.15
+decay = 0.22
+sustain = 0.16
 release = 0.15
+
+[fx.overdrive]
+mix = 0.2
+drive = 0.3
 
 # 衝突だけ。尾はオペのリンに任せる（ノイズを伸ばすとハットになる）。
 [noise]

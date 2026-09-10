@@ -58,7 +58,9 @@ enum Command {
         #[arg(long, default_value_t = 16)]
         bit_depth: u16,
         /// 同じ4OPパッチを別音程でもう一度レンダして混ぜる。
-        /// `auto`=工場リードはオクターブ（薄いとき5度も）。`none` / `octave` / `octave,fifth`。
+        /// `auto`=工場リードはオクターブ上（薄いとき5度）。工場FXのピッチ系は
+        /// −12/−24（薄いとき−36）。他の工場FXは−12。`none` / `octave` /
+        /// `octave-down` / `octave-down,octave-down-2` / `0,-12,-24`。
         /// `[fx.chorus] intervals` のピッチシフトではない。
         #[arg(long, default_value = "auto")]
         layers: String,
@@ -87,7 +89,10 @@ enum Command {
         #[arg(long, default_value_t = 16)]
         bit_depth: u16,
         /// 同じ4OPパッチを別音程でもう一度レンダして混ぜる。
-        /// `auto`=工場リードはオクターブ（薄いとき5度も）。`none` / `octave` / `octave,fifth`。
+        /// `auto`=工場リードはオクターブ上（薄いとき5度）。工場FXのピッチ系は
+        /// −12/−24（薄いとき−36）。他の工場FXは−12。`none` / `octave` /
+        /// `octave-down` / `octave-down,octave-down-2` / `0,-12,-24`。
+        /// `[fx.chorus] intervals` のピッチシフトではない。
         #[arg(long, default_value = "auto")]
         layers: String,
     },
@@ -127,7 +132,10 @@ enum Command {
         #[arg(long, default_value_t = 16)]
         bit_depth: u16,
         /// 同じ4OPパッチを別音程でもう一度レンダして混ぜる。
-        /// `auto`=工場リードはオクターブ（薄いとき5度も）。`none` / `octave` / `octave,fifth`。
+        /// `auto`=工場リードはオクターブ上（薄いとき5度）。工場FXのピッチ系は
+        /// −12/−24（薄いとき−36）。他の工場FXは−12。`none` / `octave` /
+        /// `octave-down` / `octave-down,octave-down-2` / `0,-12,-24`。
+        /// `[fx.chorus] intervals` のピッチシフトではない。
         #[arg(long, default_value = "auto")]
         layers: String,
     },
@@ -158,7 +166,10 @@ enum Command {
         #[arg(long, default_value_t = 16)]
         bit_depth: u16,
         /// 同じ4OPパッチを別音程でもう一度レンダして混ぜる。
-        /// `auto`=工場リードはオクターブ（薄いとき5度も）。`none` / `octave` / `octave,fifth`。
+        /// `auto`=工場リードはオクターブ上（薄いとき5度）。工場FXのピッチ系は
+        /// −12/−24（薄いとき−36）。他の工場FXは−12。`none` / `octave` /
+        /// `octave-down` / `octave-down,octave-down-2` / `0,-12,-24`。
+        /// `[fx.chorus] intervals` のピッチシフトではない。
         #[arg(long, default_value = "auto")]
         layers: String,
     },

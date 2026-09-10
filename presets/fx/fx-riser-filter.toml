@@ -31,6 +31,10 @@ decay = 1.0
 sustain = 0.9
 release = 0.25
 
+[fx.overdrive]
+mix = 0.14
+drive = 0.24
+
 [noise]
 type = "white"
 level = 0.95

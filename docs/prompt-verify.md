@@ -67,6 +67,7 @@ cargo run --release -- analyze-all
 | ベル / 非整数 | `peaks_hz` が整数倍から外れる |
 | 中空5度 | 1× と 1.5×。長3度（1.25×）は弱い |
 | リードのオクターブ重ね | `render_layers` に `unison`+`octave`（薄いときは `fifth`）。1× と 2× が**別レンダー**。比2キャリアや chorus の octave-up ではない |
+| FXのオクターブ下重ね | ピッチ系は `unison`+`octave-down`+`octave-down-2`（薄いときは `octave-down-3`）。レーザーが 1/2×・1/4× の**別レンダー**。4OP内部の比0.5化ではない |
 
 ## 判定の書き方
 

@@ -517,9 +517,10 @@ pub struct Preset {
     pub fx: FxParams,
     /// Optional render-time voices on top of the unison 4OP patch.
     ///
-    /// Omit to follow CLI `--layers` / the factory-lead auto default.
-    /// `[]` forces a single note. `["octave"]` or `["octave", "fifth"]` always
-    /// mix those full-patch renders. This is not `[fx.chorus] intervals`.
+    /// Omit to follow CLI `--layers` / the factory-lead / factory-FX auto default.
+    /// `[]` forces a single note. `["octave"]`, `["octave-down", "octave-down-2"]`,
+    /// or numeric `[-12, -24]` always mix those full-patch renders.
+    /// This is not `[fx.chorus] intervals`.
     #[serde(default)]
     pub render_layers: Option<Vec<LayerInterval>>,
     pub operators: Vec<OperatorParams>,
@@ -1762,5 +1763,56 @@ level = 0.0
         let off = Preset::from_toml_str("layer-off", empty).unwrap();
         assert_eq!(off.render_layers.as_deref(), Some([].as_slice()));
         assert!(load_factory("ld-fm-pluck").unwrap().render_layers.is_none());
+
+        let downs = r#"
+name = "layer-downs"
+algorithm = 1
+render_layers = ["octave-down", "octave-down-2"]
+[[operators]]
+level = 1.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+"#;
+        let d = Preset::from_toml_str("layer-downs", downs).unwrap();
+        assert_eq!(
+            d.render_layers.as_deref(),
+            Some(
+                [
+                    crate::LayerInterval::OctaveDown,
+                    crate::LayerInterval::OctaveDown2
+                ]
+                .as_slice()
+            )
+        );
+
+        let numeric = r#"
+name = "layer-numeric"
+algorithm = 1
+render_layers = [-12, -24, -36]
+[[operators]]
+level = 1.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+"#;
+        let n = Preset::from_toml_str("layer-numeric", numeric).unwrap();
+        assert_eq!(
+            n.render_layers.as_deref(),
+            Some(
+                [
+                    crate::LayerInterval::OctaveDown,
+                    crate::LayerInterval::OctaveDown2,
+                    crate::LayerInterval::OctaveDown3
+                ]
+                .as_slice()
+            )
+        );
     }
 }

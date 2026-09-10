@@ -3,7 +3,7 @@ description = "上昇レーザーFX。リードの ld-zap とは別。短いワ�
 algorithm = 1
 feedback = 0.34
 feedback_op = 4
-gain = 1.08
+gain = 1.12
 default_note = 72
 default_duration = 0.42
 
@@ -18,20 +18,24 @@ end = 1.4
 
 [filter]
 type = "highpass"
-cutoff = 240.0
-resonance = 0.16
-env_amount = 1.2
+cutoff = 70.0
+resonance = 0.14
+env_amount = 1.15
 attack = 0.0005
 decay = 0.16
 sustain = 0.1
 release = 0.06
+
+[fx.overdrive]
+mix = 0.26
+drive = 0.36
 
 [[operators]]
 ratio = 1.0
 detune_cents = 0
 level = 1.0
 attack = 0.0008
-decay = 0.28
+decay = 0.32
 sustain = 0.0
 release = 0.06
 vel_sens = 0.35

@@ -27,6 +27,10 @@ feedback = 0.50
 damping = 0.35
 ratio = 1.0
 
+[fx.overdrive]
+mix = 0.16
+drive = 0.26
+
 [fx.chorus]
 mix = 0.32
 rate_hz = 0.80

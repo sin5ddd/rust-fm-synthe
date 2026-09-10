@@ -102,7 +102,7 @@ pub struct AnalysisReport {
     pub pitch: Option<PitchTrack>,
     pub peaks_hz: Vec<SpectralPeak>,
     pub category_hints: Vec<String>,
-    /// Full-patch voices mixed at render time (`unison`, `octave`, `fifth`).
+    /// Full-patch voices mixed at render time (`unison`, `octave`, `octave-down`, …).
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub render_layers: Vec<String>,
     pub stft_nfft: usize,
@@ -380,6 +380,7 @@ pub fn category_hints_for_id(id: &str) -> Vec<String> {
         vec![
             "fx / sweep / noise".into(),
             "pitch or centroid often moves".into(),
+            "pitched factory FX stack full 4OP renders at -12/-24 (optional -36)".into(),
         ]
     } else if id.starts_with("pc-") || matches!(id, "cp-house" | "glass-hit" | "metallic-hit") {
         vec![

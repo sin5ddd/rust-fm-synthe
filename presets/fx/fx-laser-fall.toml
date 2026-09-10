@@ -3,7 +3,7 @@ description = "落下レーザー。フィルタも閉じる。フィルの終�
 algorithm = 1
 feedback = 0.26
 feedback_op = 4
-gain = 1.06
+gain = 1.1
 default_note = 80
 default_duration = 0.55
 
@@ -18,13 +18,17 @@ end = 0.25
 
 [filter]
 type = "lowpass"
-cutoff = 5000.0
-resonance = 0.2
-env_amount = -4.0
+cutoff = 5200.0
+resonance = 0.18
+env_amount = -3.6
 attack = 0.001
-decay = 0.4
-sustain = 0.05
+decay = 0.42
+sustain = 0.06
 release = 0.08
+
+[fx.overdrive]
+mix = 0.24
+drive = 0.34
 
 [[operators]]
 ratio = 1.0

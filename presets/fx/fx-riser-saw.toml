@@ -32,6 +32,10 @@ decay = 0.01
 sustain = 1.0
 release = 0.25
 
+[fx.overdrive]
+mix = 0.14
+drive = 0.24
+
 # OP1 サブ。ratio 0.25。ベッドだけ。
 [[operators]]
 ratio = 0.25

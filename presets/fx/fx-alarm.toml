@@ -13,13 +13,17 @@ depth_cents = 400.0
 
 [filter]
 type = "bandpass"
-cutoff = 1400.0
-resonance = 0.28
-env_amount = 0.6
+cutoff = 1200.0
+resonance = 0.24
+env_amount = 0.7
 attack = 0.004
-decay = 0.2
-sustain = 0.25
+decay = 0.22
+sustain = 0.28
 release = 0.1
+
+[fx.overdrive]
+mix = 0.2
+drive = 0.3
 
 [[operators]]
 ratio = 1.0

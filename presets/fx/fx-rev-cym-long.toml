@@ -9,8 +9,12 @@ default_duration = 3.8
 
 [filter]
 type = "highpass"
-cutoff = 900.0
-resonance = 0.08
+cutoff = 620.0
+resonance = 0.1
+
+[fx.overdrive]
+mix = 0.2
+drive = 0.3
 
 [noise]
 type = "pink"
