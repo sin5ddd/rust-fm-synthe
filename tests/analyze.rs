@@ -1,7 +1,7 @@
 //! Spectrogram / metrics: sine, noise, pitch drop, factory kick smoke.
 
 use fm_synth::{
-    analyze_buffer, load_factory, midi_to_hz, render, write_analysis_bundle, write_wav,
+    analyze_buffer, load_factory, midi_to_hz, render, write_analysis_bundle, write_wav, Analysis,
     AnalyzeOpts, RenderParams, WavSettings, SPECTROGRAM_HEIGHT, SPECTROGRAM_WIDTH,
 };
 use std::fs;
@@ -206,4 +206,86 @@ fn bd_808_boom_has_sub_and_pitch_drop() {
     } else {
         panic!("bd-808-boom should yield a pitch track (start_semitones=24)");
     }
+}
+
+fn analyze_factory_kick(id: &str) -> Analysis {
+    let preset = load_factory(id).unwrap();
+    let sr = 22_050u32;
+    let buf = render(
+        &preset,
+        &RenderParams {
+            frequency_hz: midi_to_hz(preset.default_note),
+            duration_secs: preset.default_duration,
+            velocity: 0.9,
+            sample_rate: sr,
+        },
+    )
+    .unwrap();
+    analyze_buffer(
+        &buf,
+        sr,
+        &AnalyzeOpts {
+            preset_id: Some(id.into()),
+            description: Some(preset.description.clone()),
+            ..AnalyzeOpts::default()
+        },
+    )
+    .unwrap()
+}
+
+#[test]
+fn bd_electro_zap_has_measurable_pitch_drop() {
+    let a = analyze_factory_kick("bd-electro-zap");
+    assert!(
+        a.report.duration_secs < 0.4,
+        "electro-zap should stay a short fill, got {}s",
+        a.report.duration_secs
+    );
+    let pitch = a
+        .report
+        .pitch
+        .as_ref()
+        .expect("electro-zap laser drop must be voiced (was null on serial FM)");
+    assert!(
+        pitch.start_hz > pitch.end_hz,
+        "electro-zap pitch should fall ({} -> {})",
+        pitch.start_hz,
+        pitch.end_hz
+    );
+    assert!(
+        pitch.drop_semitones > 3.0,
+        "electro-zap drop {} st too small",
+        pitch.drop_semitones
+    );
+    assert!(
+        pitch.confidence > 0.5,
+        "electro-zap pitch confidence {}",
+        pitch.confidence
+    );
+}
+
+#[test]
+fn bd_frenchcore_has_aggressive_mid_and_thin_sub() {
+    let a = analyze_factory_kick("bd-frenchcore");
+    let b = &a.report.band_energy;
+    assert!(
+        (0.25..=0.55).contains(&b.mid_250_2000),
+        "frenchcore mid punch {} (want ~0.25–0.45)",
+        b.mid_250_2000
+    );
+    assert!(
+        b.sub_20_80 < 0.05,
+        "frenchcore sub should stay cut, got {}",
+        b.sub_20_80
+    );
+    assert!(
+        a.report.duration_secs <= 0.4,
+        "frenchcore should be a short hard hit, got {}s",
+        a.report.duration_secs
+    );
+    assert!(
+        a.report.peak > 0.4,
+        "frenchcore peak {} after loudness normalize",
+        a.report.peak
+    );
 }
