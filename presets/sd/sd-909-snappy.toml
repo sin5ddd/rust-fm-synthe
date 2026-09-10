@@ -5,7 +5,7 @@ feedback = 0.2
 feedback_op = 4
 gain = 1.05
 default_note = 42
-default_duration = 0.9
+default_duration = 1.12
 
 [pitch]
 start_semitones = 4.5
@@ -18,32 +18,32 @@ end = 0.45
 
 [filter]
 type = "bandpass"
-cutoff = 2200.0
-resonance = 0.18
-env_amount = 1.4
+cutoff = 2400.0
+resonance = 0.14
+env_amount = 1.2
 attack = 0.0002
-decay = 0.22
-sustain = 0.22
-release = 0.16
+decay = 0.32
+sustain = 0.24
+release = 0.22
 
 [noise]
 type = "white"
-level = 1.02
+level = 1.1
 attack = 0.00015
-decay = 0.5
+decay = 0.72
 sustain = 0.0
-release = 0.22
+release = 0.3
 vel_sens = 0.55
 
 [noise.filter]
-type = "bandpass"
-cutoff = 2400.0
-resonance = 0.14
-env_amount = 1.0
+type = "highpass"
+cutoff = 1800.0
+resonance = 0.12
+env_amount = 0.7
 attack = 0.0002
-decay = 0.22
-sustain = 0.18
-release = 0.16
+decay = 0.32
+sustain = 0.16
+release = 0.22
 
 # OP1 胴キャリア
 [[operators]]
@@ -75,9 +75,9 @@ ratio = 6.0
 detune_cents = 12.0
 level = 1.0
 attack = 0.00015
-decay = 0.48
+decay = 0.68
 sustain = 0.0
-release = 0.22
+release = 0.3
 vel_sens = 0.55
 waveform = "pulse"
 

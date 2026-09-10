@@ -5,7 +5,7 @@ feedback = 0.28
 feedback_op = 4
 gain = 1.06
 default_note = 48
-default_duration = 0.7
+default_duration = 0.95
 
 [pitch]
 start_semitones = 6.0
@@ -14,13 +14,33 @@ curve = -12.0
 
 [filter]
 type = "highpass"
-cutoff = 420.0
-resonance = 0.22
-env_amount = 0.8
+cutoff = 380.0
+resonance = 0.18
+env_amount = 0.7
 attack = 0.00015
-decay = 0.06
-sustain = 0.25
-release = 0.1
+decay = 0.1
+sustain = 0.28
+release = 0.18
+
+# 短いワイヤ／ヒス尾（クリックはオペレータ側）
+[noise]
+type = "white"
+level = 0.92
+attack = 0.00012
+decay = 0.52
+sustain = 0.0
+release = 0.26
+vel_sens = 0.58
+
+[noise.filter]
+type = "highpass"
+cutoff = 2800.0
+resonance = 0.14
+env_amount = 0.9
+attack = 0.00012
+decay = 0.26
+sustain = 0.08
+release = 0.18
 
 # OP1 短いリム胴
 [[operators]]
@@ -52,9 +72,9 @@ ratio = 1.0
 detune_cents = 0.0
 level = 0.58
 attack = 0.00018
-decay = 0.38
+decay = 0.58
 sustain = 0.0
-release = 0.2
+release = 0.3
 vel_sens = 0.45
 waveform = "sine"
 freq_mode = "fixed"

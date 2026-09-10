@@ -5,37 +5,37 @@ feedback = 0.22
 feedback_op = 4
 gain = 1.04
 default_note = 42
-default_duration = 0.85
+default_duration = 1.18
 
 [filter]
 type = "highpass"
-cutoff = 520.0
-resonance = 0.2
-env_amount = 1.2
+cutoff = 480.0
+resonance = 0.16
+env_amount = 0.9
 attack = 0.0003
-decay = 0.18
-sustain = 0.15
-release = 0.16
+decay = 0.28
+sustain = 0.18
+release = 0.22
 
 [noise]
 type = "white"
-level = 1.05
+level = 1.18
 delay = 0.008
 attack = 0.0003
-decay = 0.48
+decay = 0.78
 sustain = 0.0
-release = 0.2
+release = 0.34
 vel_sens = 0.5
 
 [noise.filter]
-type = "bandpass"
-cutoff = 1600.0
-resonance = 0.12
-env_amount = 0.8
+type = "highpass"
+cutoff = 1800.0
+resonance = 0.1
+env_amount = 0.55
 attack = 0.0003
-decay = 0.16
-sustain = 0.12
-release = 0.16
+decay = 0.32
+sustain = 0.1
+release = 0.22
 
 # OP1 わずかなトーン芯
 [[operators]]
@@ -67,9 +67,9 @@ ratio = 8.5
 detune_cents = -18.0
 level = 0.7
 attack = 0.008
-decay = 0.32
+decay = 0.48
 sustain = 0.0
-release = 0.2
+release = 0.28
 vel_sens = 0.52
 waveform = "abs-sine"
 
@@ -79,8 +79,8 @@ ratio = 12.0
 detune_cents = 26.0
 level = 0.55
 attack = 0.016
-decay = 0.48
+decay = 0.72
 sustain = 0.0
-release = 0.24
+release = 0.34
 vel_sens = 0.6
 waveform = "pulse"

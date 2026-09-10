@@ -5,36 +5,36 @@ feedback = 0.14
 feedback_op = 1
 gain = 1.04
 default_note = 44
-default_duration = 0.82
+default_duration = 1.12
 
 [filter]
 type = "highpass"
 cutoff = 1200.0
 resonance = 0.1
-env_amount = 0.8
+env_amount = 0.7
 attack = 0.0002
-decay = 0.24
-sustain = 0.08
-release = 0.18
+decay = 0.36
+sustain = 0.1
+release = 0.24
 
 [noise]
 type = "white"
-level = 1.12
+level = 1.18
 attack = 0.0002
-decay = 0.55
+decay = 0.78
 sustain = 0.0
-release = 0.24
+release = 0.32
 vel_sens = 0.5
 
 [noise.filter]
 type = "highpass"
 cutoff = 1800.0
 resonance = 0.12
-env_amount = 1.0
+env_amount = 0.85
 attack = 0.0002
-decay = 0.28
+decay = 0.42
 sustain = 0.08
-release = 0.2
+release = 0.26
 
 [[operators]]
 ratio = 1.0

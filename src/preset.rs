@@ -1589,6 +1589,8 @@ mod tests {
             "sd-gabber-indust",
             "sd-neuro-growl",
             "sd-fm-long",
+            "sd-rimshot",
+            "sd-metal-ping",
             "pc-tamb",
             "pc-tamb-roll",
             "pc-ride-fm",

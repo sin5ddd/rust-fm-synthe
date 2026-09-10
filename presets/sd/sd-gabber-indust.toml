@@ -5,7 +5,7 @@ feedback = 0.26
 feedback_op = 4
 gain = 1.05
 default_note = 46
-default_duration = 0.78
+default_duration = 1.08
 
 [pitch]
 start_semitones = 4.0
@@ -18,32 +18,32 @@ end = 0.38
 
 [filter]
 type = "highpass"
-cutoff = 260.0
-resonance = 0.22
-env_amount = 0.7
+cutoff = 240.0
+resonance = 0.18
+env_amount = 0.55
 attack = 0.0
-decay = 0.1
+decay = 0.16
 sustain = 0.28
-release = 0.12
+release = 0.18
 
 [noise]
 type = "white"
-level = 0.9
+level = 1.12
 attack = 0.00015
-decay = 0.48
+decay = 0.72
 sustain = 0.0
-release = 0.2
+release = 0.3
 vel_sens = 0.55
 
 [noise.filter]
-type = "bandpass"
-cutoff = 1800.0
-resonance = 0.14
+type = "highpass"
+cutoff = 2200.0
+resonance = 0.12
 env_amount = 0.5
 attack = 0.00015
-decay = 0.22
-sustain = 0.14
-release = 0.16
+decay = 0.32
+sustain = 0.12
+release = 0.2
 
 # OP1 歪んだ胴
 [[operators]]
@@ -75,9 +75,9 @@ ratio = 1.0
 detune_cents = 0.0
 level = 0.85
 attack = 0.0002
-decay = 0.42
+decay = 0.62
 sustain = 0.0
-release = 0.2
+release = 0.28
 vel_sens = 0.48
 waveform = "saw"
 freq_mode = "fixed"
@@ -89,9 +89,9 @@ ratio = 1.0
 detune_cents = 0.0
 level = 0.4
 attack = 0.00015
-decay = 0.5
+decay = 0.7
 sustain = 0.0
-release = 0.22
+release = 0.3
 vel_sens = 0.62
 waveform = "pulse"
 freq_mode = "fixed"

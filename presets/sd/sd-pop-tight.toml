@@ -5,7 +5,7 @@ feedback = 0.18
 feedback_op = 4
 gain = 1.03
 default_note = 38
-default_duration = 0.55
+default_duration = 0.98
 
 [pitch]
 start_semitones = 2.0
@@ -14,32 +14,32 @@ curve = -7.0
 
 [filter]
 type = "lowpass"
-cutoff = 5200.0
-resonance = 0.14
-env_amount = 1.1
+cutoff = 8200.0
+resonance = 0.12
+env_amount = 0.7
 attack = 0.0002
-decay = 0.14
-sustain = 0.18
-release = 0.12
+decay = 0.24
+sustain = 0.2
+release = 0.18
 
 [noise]
 type = "white"
-level = 0.78
+level = 1.05
 attack = 0.0002
-decay = 0.32
+decay = 0.62
 sustain = 0.0
-release = 0.14
+release = 0.26
 vel_sens = 0.55
 
 [noise.filter]
 type = "highpass"
-cutoff = 1800.0
+cutoff = 2200.0
 resonance = 0.1
-env_amount = 0.6
+env_amount = 0.55
 attack = 0.0002
-decay = 0.16
+decay = 0.32
 sustain = 0.1
-release = 0.12
+release = 0.18
 
 # OP1 生ドラム寄りの胴
 [[operators]]
@@ -47,9 +47,9 @@ ratio = 2.0
 detune_cents = 0.0
 level = 1.0
 attack = 0.0004
-decay = 0.24
+decay = 0.38
 sustain = 0.0
-release = 0.14
+release = 0.2
 vel_sens = 0.32
 waveform = "sine"
 
@@ -83,8 +83,8 @@ ratio = 9.0
 detune_cents = 16.0
 level = 0.4
 attack = 0.00015
-decay = 0.28
+decay = 0.52
 sustain = 0.0
-release = 0.16
+release = 0.26
 vel_sens = 0.6
 waveform = "abs-sine"
