@@ -1,6 +1,6 @@
 name = "ld-hardstyle"
 description = "ハードスタイルのスクリーチ寄り。HP、高いモジュレータ。C4。"
-algorithm = 1
+algorithm = 5
 feedback = 0.4
 feedback_op = 4
 gain = 1.0
@@ -55,17 +55,17 @@ release = 0.05
 vel_sens = 0.5
 waveform = "sine"
 
-# OP3
+# OP3 オクターブスクリーチ
 [[operators]]
-ratio = 12.0
+ratio = 2.0
 detune_cents = -6
-level = 0.32
-attack = 0.0006
-decay = 0.06
-sustain = 0.04
-release = 0.03
-vel_sens = 0.55
-waveform = "sine"
+level = 0.52
+attack = 0.0035
+decay = 0.35
+sustain = 0.82
+release = 0.12
+vel_sens = 0.36
+waveform = "saw"
 
 # OP4
 [[operators]]

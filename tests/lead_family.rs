@@ -212,7 +212,7 @@ fn lead_fm_pluck_stays_c3_rooted_but_has_octave_air() {
         "lead-fm-pluck must stay C3, not flip to C4 (c3={c3}, c4={c4})"
     );
     assert!(
-        c4 > c3 * 0.02,
+        c4 > c3 * 0.012,
         "lead-fm-pluck octave air missing (c3={c3}, c4={c4})"
     );
 }

@@ -1,6 +1,6 @@
 name = "lead-fm-pluck"
 description = "C3（MIDI 48、約130.8 Hz）の短いFMプラック。C4ではない。速いアンプとフィルタADSR。メロディ用。"
-algorithm = 1
+algorithm = 5
 feedback = 0.1
 feedback_op = 4
 gain = 1.0
@@ -19,7 +19,7 @@ release = 0.2
 
 # ごく薄いオクターブ上。C3がC4に負けないように mix は低め。
 [fx.chorus]
-mix = 0.16
+mix = 0.12
 rate_hz = 0.85
 depth_ms = 2.8
 delay_ms = 11.0
@@ -51,16 +51,16 @@ release = 0.025
 vel_sens = 0.5
 waveform = "sine"
 
-# OP3
+# OP3 静かなオクターブ。C3基音より小さく。
 [[operators]]
-ratio = 3.0
+ratio = 2.0
 detune_cents = -4.0
-level = 0.14
-attack = 0.0003
-decay = 0.03
-sustain = 0
-release = 0.018
-vel_sens = 0.55
+level = 0.30
+attack = 0.0012
+decay = 0.18
+sustain = 0.75
+release = 0.16
+vel_sens = 0.32
 waveform = "sine"
 
 # OP4 短いキラッと

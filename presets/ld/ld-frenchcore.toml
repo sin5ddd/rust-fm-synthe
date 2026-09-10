@@ -1,6 +1,6 @@
 name = "ld-frenchcore"
 description = "フレンチコアのスクリームリード。HP/BP、羊毛サブなし。攻撃的ミッドハイ。"
-algorithm = 1
+algorithm = 5
 feedback = 0.48
 feedback_op = 4
 gain = 1.0
@@ -55,17 +55,17 @@ release = 0.05
 vel_sens = 0.5
 waveform = "saw"
 
-# OP3
+# OP3 スクリームのオクターブ層
 [[operators]]
-ratio = 7.0
+ratio = 2.0
 detune_cents = -9
-level = 0.4
-attack = 0.0006
-decay = 0.06
-sustain = 0.03
-release = 0.03
-vel_sens = 0.58
-waveform = "half-sine"
+level = 0.58
+attack = 0.0025
+decay = 0.32
+sustain = 0.82
+release = 0.18
+vel_sens = 0.4
+waveform = "pulse"
 
 # OP4
 [[operators]]

@@ -1,6 +1,6 @@
 name = "ld-nylon"
 description = "ミュートしたナイロン寄りのプラック。ハーフサイン＋低いLP。柔らかいメロディ用。"
-algorithm = 3
+algorithm = 5
 feedback = 0.05
 feedback_op = 4
 gain = 1.0
@@ -9,7 +9,7 @@ default_duration = 8.2
 
 [filter]
 type = "lowpass"
-cutoff = 280.0
+cutoff = 340.0
 resonance = 0.18
 env_amount = 2.4
 attack = 0.002
@@ -50,17 +50,17 @@ release = 0.04
 vel_sens = 0.4
 waveform = "sine"
 
-# OP3
+# OP3 柔らかいオクターブ
 [[operators]]
-ratio = 3.0
+ratio = 2.0
 detune_cents = -3
-level = 0.08
-attack = 0.0008
-decay = 0.05
-sustain = 0
-release = 0.025
-vel_sens = 0.45
-waveform = "sine"
+level = 0.40
+attack = 0.0035
+decay = 0.24
+sustain = 0.75
+release = 0.16
+vel_sens = 0.28
+waveform = "half-sine"
 
 # OP4 爪のクリック
 [[operators]]

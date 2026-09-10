@@ -1,6 +1,6 @@
 name = "ld-gabber"
 description = "ガバリード。歪んだパルスのミッド。短めのホールド、会場のメロディ。"
-algorithm = 3
+algorithm = 5
 feedback = 0.44
 feedback_op = 4
 gain = 1.0
@@ -50,17 +50,17 @@ release = 0.05
 vel_sens = 0.5
 waveform = "pulse"
 
-# OP3
+# OP3 オクターブパルス
 [[operators]]
-ratio = 1.0
+ratio = 2.0
 detune_cents = 8
-level = 0.55
+level = 0.52
 attack = 0.002
-decay = 0.22
-sustain = 0.12
-release = 0.07
+decay = 0.26
+sustain = 0.75
+release = 0.16
 vel_sens = 0.38
-waveform = "saw"
+waveform = "pulse"
 
 # OP4
 [[operators]]

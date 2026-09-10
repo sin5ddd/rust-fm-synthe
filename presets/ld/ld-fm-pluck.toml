@@ -1,6 +1,6 @@
 name = "ld-fm-pluck"
 description = "短いシリアルFMプラック。C3基音。リードバンク用（既存のlead-fm-pluckとは別パッチ）。"
-algorithm = 1
+algorithm = 5
 feedback = 0.12
 feedback_op = 4
 gain = 1.0
@@ -51,17 +51,17 @@ release = 0.02
 vel_sens = 0.5
 waveform = "sine"
 
-# OP3 高次でアタック
+# OP3 オクターブキャリア（C3基音は OP1）
 [[operators]]
-ratio = 5.0
+ratio = 2.0
 detune_cents = -6
-level = 0.18
-attack = 0.0002
-decay = 0.022
-sustain = 0
-release = 0.012
-vel_sens = 0.55
-waveform = "half-sine"
+level = 0.48
+attack = 0.001
+decay = 0.16
+sustain = 0.75
+release = 0.16
+vel_sens = 0.38
+waveform = "sine"
 
 # OP4 短いクリック
 [[operators]]

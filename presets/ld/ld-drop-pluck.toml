@@ -1,6 +1,6 @@
 name = "ld-drop-pluck"
 description = "ドロッププラック。短いピッチ落下＋LPエンベ。ビルド後のワンショット。"
-algorithm = 3
+algorithm = 5
 feedback = 0.16
 feedback_op = 4
 gain = 1.0
@@ -55,17 +55,17 @@ release = 0.03
 vel_sens = 0.5
 waveform = "sine"
 
-# OP3
+# OP3 オクターブキャリア
 [[operators]]
-ratio = 3.0
+ratio = 2.0
 detune_cents = -3
-level = 0.2
-attack = 0.0003
-decay = 0.04
-sustain = 0
-release = 0.02
-vel_sens = 0.5
-waveform = "sine"
+level = 0.46
+attack = 0.001
+decay = 0.16
+sustain = 0.75
+release = 0.16
+vel_sens = 0.38
+waveform = "saw"
 
 # OP4
 [[operators]]
