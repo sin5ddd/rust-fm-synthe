@@ -1,64 +1,68 @@
 name = "growl-bass"
 description = "ミッドのグロウル。フィードバックと非整数比で喉声っぽい歪み。Reeseの下地。"
-algorithm = 1
-feedback = 0.62
+algorithm = 7
+feedback = 0.66
 feedback_op = 4
-gain = 0.95
+gain = 0.96
 default_note = 40
-default_duration = 1.6
+default_duration = 5.0
 
 [lfo]
 rate_hz = 5.4
 depth_cents = 14.0
 
 [mod_sweep]
-start = 1.25
-end = 0.7
+start = 1.22
+end = 0.32
 
-# ミッドの喉に寄せる。bp-growl（BP 520）とは別で、HP だけ。
+[fx.overdrive]
+mix = 0.58
+drive = 0.64
+
+# 喉を先に出してから ~3 秒で閉じ、120 Hz 胴を残す。
 [filter]
-type = "highpass"
-cutoff = 170
-resonance = 0.26
-env_amount = 0.55
-attack = 0.008
-decay = 0.32
-sustain = 0.22
-release = 0.16
+type = "lowpass"
+cutoff = 200
+resonance = 0.22
+env_amount = 2.7
+attack = 0.01
+decay = 3.0
+sustain = 0.1
+release = 0.65
 
-# OP1 キャリア
+# OP1 ~120 Hz ソー胴。5 秒の床。
 [[operators]]
-ratio = 1.0
-detune_cents = -3.0
-level = 1.0
+ratio = 1.456
+detune_cents = -2.0
+level = 0.92
 attack = 0.012
-decay = 0.85
-sustain = 0.18
-release = 0.22
-vel_sens = 0.35
-waveform = "sine"
+decay = 4.1
+sustain = 0.62
+release = 0.95
+vel_sens = 0.3
+waveform = "saw"
 
-# OP2
+# OP2 薄い 82 Hz 正弦
 [[operators]]
 ratio = 1.0
-detune_cents = 7.0
-level = 0.72
-attack = 0.008
-decay = 0.55
-sustain = 0.12
-release = 0.16
-vel_sens = 0.45
+detune_cents = 3.0
+level = 0.32
+attack = 0.012
+decay = 4.0
+sustain = 0.55
+release = 0.9
+vel_sens = 0.28
 waveform = "sine"
 
-# OP3 非整数でフォルマント
+# OP3 非整数フォルマント。高域は先に消す。
 [[operators]]
 ratio = 1.47
 detune_cents = -11.0
-level = 0.58
+level = 0.82
 attack = 0.004
-decay = 0.38
-sustain = 0.08
-release = 0.12
+decay = 2.5
+sustain = 0.06
+release = 0.45
 vel_sens = 0.5
 waveform = "half-sine"
 
@@ -66,10 +70,10 @@ waveform = "half-sine"
 [[operators]]
 ratio = 2.03
 detune_cents = 9.0
-level = 0.48
+level = 0.62
 attack = 0.003
-decay = 0.28
-sustain = 0.06
-release = 0.1
+decay = 2.3
+sustain = 0.04
+release = 0.4
 vel_sens = 0.55
 waveform = "sine"

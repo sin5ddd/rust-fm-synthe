@@ -5,62 +5,71 @@ feedback = 0.78
 feedback_op = 4
 gain = 0.96
 default_note = 36
-default_duration = 1.25
+default_duration = 5.0
 
 [mod_sweep]
-start = 1.15
-end = 0.7
+start = 1.12
+end = 0.28
 
+[fx.overdrive]
+mix = 0.32
+drive = 0.48
+
+# 砂状の高域を先に出して ~3 秒で 120 Hz に閉じる。
 [filter]
 type = "lowpass"
-cutoff = 1500
-resonance = 0.22
-env_amount = 1.0
-attack = 0.006
-decay = 0.35
-sustain = 0.28
-release = 0.14
+cutoff = 220
+resonance = 0.26
+env_amount = 2.75
+attack = 0.008
+decay = 3.0
+sustain = 0.1
+release = 0.65
 
+# OP1 パルス基音。5 秒の床。
 [[operators]]
 ratio = 1
 detune_cents = 0
 level = 1
 attack = 0.006
-decay = 0.8
-sustain = 0.25
-release = 0.16
+decay = 4.0
+sustain = 0.58
+release = 0.9
 vel_sens = 0.32
 waveform = "pulse"
 
+# OP2 ~120 Hz 正弦胴
 [[operators]]
-ratio = 1
-detune_cents = 7
-level = 0.55
+ratio = 1.835
+detune_cents = 3
+level = 0.98
 attack = 0.008
-decay = 0.6
-sustain = 0.18
-release = 0.14
-vel_sens = 0.3
-waveform = "pulse"
+decay = 4.1
+sustain = 0.64
+release = 0.95
+vel_sens = 0.28
+waveform = "sine"
 
+# OP3 砂状のFM
 [[operators]]
 ratio = 2
 detune_cents = -4
-level = 0.22
+level = 0.26
 attack = 0.003
-decay = 0.2
-sustain = 0.06
-release = 0.08
+decay = 2.4
+sustain = 0.04
+release = 0.4
 vel_sens = 0.45
 waveform = "saw"
 
+# OP4 高いFB源
 [[operators]]
 ratio = 3
 detune_cents = 0
-level = 0.4
+level = 0.42
 attack = 0.002
-decay = 0.16
-sustain = 0.05
-release = 0.06
+decay = 2.2
+sustain = 0.03
+release = 0.35
 vel_sens = 0.5
 waveform = "pulse"
