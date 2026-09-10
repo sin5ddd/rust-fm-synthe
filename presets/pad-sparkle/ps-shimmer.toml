@@ -1,11 +1,11 @@
 name = "shimmer pad"
-description = "シマー。高い部分音がゆっくり揺れる。キラキラのホールド。"
+description = "シマー。高い部分音がゆっくり揺れる。キラキラのホールド。基音は長いアタックの風系。"
 algorithm = 8
 feedback = 0.06
 feedback_op = 4
 gain = 0.94
 default_note = 60
-default_duration = 16.9
+default_duration = 7.384615385
 
 [lfo]
 rate_hz = 0.28
@@ -16,7 +16,7 @@ type = "highpass"
 cutoff = 150
 resonance = 0.12
 env_amount = 0.34
-attack = 4.5
+attack = 3.60
 decay = 4.5
 sustain = 0.68
 release = 0.28
@@ -25,20 +25,20 @@ release = 0.28
 [[operators]]
 ratio = 1.0
 detune_cents = -5
-level = 0.62
-attack = 0.07
+level = 0.88
+attack = 2.05
 decay = 1.6
-sustain = 0.84
+sustain = 0.88
 release = 0.3
 vel_sens = 0.18
 waveform = "sine"
 
 # OP2
 [[operators]]
-ratio = 2.0
+ratio = 3.0
 detune_cents = 6
-level = 0.48
-attack = 0.08
+level = 0.28
+attack = 2.25
 decay = 1.4
 sustain = 0.84
 release = 0.28
@@ -50,7 +50,7 @@ waveform = "sine"
 ratio = 4.0
 detune_cents = 4
 level = 0.32
-attack = 0.09
+attack = 2.45
 decay = 1.2
 sustain = 0.82
 release = 0.24
@@ -62,7 +62,7 @@ waveform = "sine"
 ratio = 7.0
 detune_cents = -4
 level = 0.16
-attack = 0.1
+attack = 2.65
 decay = 1.0
 sustain = 0.8
 release = 0.22

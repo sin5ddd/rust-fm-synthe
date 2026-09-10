@@ -29,11 +29,13 @@ pub use error::{Error, Result};
 pub use filter::{FilterParams, FilterType};
 pub use fx::{ChorusInterval, ChorusParams, DelayParams, FxParams, OverdriveParams, ReverbParams};
 pub use layers::{
-    down_stack_looks_thin, is_factory_fx_id, is_factory_lead_id, is_impact_fx_id, is_pitched_fx_id,
+    down_stack_looks_thin, is_airy_fresh_pad_id, is_factory_fx_id, is_factory_lead_id,
+    is_factory_pad_stack_id, is_factory_sparkle_pad_id, is_impact_fx_id, is_pitched_fx_id,
     render_export, render_with_layers, resolve_layer_plan, skips_fx_auto_layers, stack_looks_thin,
     AutoLayerExtra, LayerInterval, LayerMode, LayerPlan, LayeredRender, LAYER_GAIN_FIFTH,
     LAYER_GAIN_OCTAVE, LAYER_GAIN_OCTAVE_DOWN, LAYER_GAIN_OCTAVE_DOWN_2, LAYER_GAIN_OCTAVE_DOWN_3,
-    LAYER_GAIN_ROOT,
+    LAYER_GAIN_OCTAVE_UP_2, LAYER_GAIN_ROOT, PAD_DETUNE_HZ_OCTAVE_DOWN, PAD_DETUNE_HZ_OCTAVE_UP,
+    PAD_HOLD_SECS_AT_130, PAD_MID_BP_HI_HZ, PAD_MID_BP_LO_HZ,
 };
 pub use midi::{cents_to_ratio, hz_to_midi, midi_to_hz, semitones_to_ratio};
 pub use noise::{NoiseColor, NoiseParams};

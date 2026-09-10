@@ -394,13 +394,15 @@ pub fn category_hints_for_id(id: &str) -> Vec<String> {
         ]
     } else if id.starts_with("pf-") {
         vec![
-            "fresh pad hold".into(),
+            "fresh pad hold (~4 wholes @ 130 BPM)".into(),
             "not a sub bed; energy above ~150 Hz".into(),
+            "airy pf-* auto-stack detuned ±octave (optional fifth/+24 + mid BP)".into(),
         ]
     } else if id.starts_with("ps-") {
         vec![
-            "sparkle pad hold".into(),
-            "high partials, not a kick".into(),
+            "sparkle pad hold (~4 wholes @ 130 BPM)".into(),
+            "wind-like fundamental, sparkle as upper partials; not a kick".into(),
+            "auto-stack detuned ±octave (optional fifth/+24 + mid BP)".into(),
         ]
     } else if id.starts_with("pl-") {
         vec!["short pluck".into(), "fast decay, not a 16s pad".into()]

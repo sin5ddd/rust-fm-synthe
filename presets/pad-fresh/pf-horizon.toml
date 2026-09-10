@@ -5,7 +5,7 @@ feedback = 0.03
 feedback_op = 4
 gain = 0.96
 default_note = 48
-default_duration = 16.7
+default_duration = 7.384615385
 
 [lfo]
 rate_hz = 0.11
@@ -16,7 +16,7 @@ type = "highpass"
 cutoff = 168
 resonance = 0.08
 env_amount = 0.4
-attack = 6.0
+attack = 3.60
 decay = 5.0
 sustain = 0.72
 release = 0.32

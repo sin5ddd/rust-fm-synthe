@@ -16,22 +16,41 @@ use std::path::Path;
 pub const LAYER_GAIN_ROOT: f32 = 1.0;
 /// Octave-up voice, slightly quieter than the root.
 pub const LAYER_GAIN_OCTAVE: f32 = 0.72;
+/// Two octaves up — pad presence layer (mid-bandpassed).
+pub const LAYER_GAIN_OCTAVE_UP_2: f32 = 0.40;
 /// Perfect-fifth voice, quieter still.
 pub const LAYER_GAIN_FIFTH: f32 = 0.48;
-/// One octave down — body under lasers / pitched FX.
+/// One octave down — body under lasers / pitched FX / pad wind.
 pub const LAYER_GAIN_OCTAVE_DOWN: f32 = 0.78;
 /// Two octaves down; tapers under the first down.
 pub const LAYER_GAIN_OCTAVE_DOWN_2: f32 = 0.52;
 /// Three octaves down; only mixed when the −12/−24 stack still looks thin.
 pub const LAYER_GAIN_OCTAVE_DOWN_3: f32 = 0.34;
 
+/// 4 whole notes at 130 BPM: `4 * 4 * (60/130) = 960/130`.
+pub const PAD_HOLD_SECS_AT_130: f64 = 16.0 * 60.0 / 130.0;
+
+/// Few-Hz detune on pad octave-up / octave-down / extra voices ("数ヘルツずらした").
+pub const PAD_DETUNE_HZ_OCTAVE_UP: f64 = 4.0;
+pub const PAD_DETUNE_HZ_OCTAVE_DOWN: f64 = -3.5;
+pub const PAD_DETUNE_HZ_OCTAVE2: f64 = 5.0;
+pub const PAD_DETUNE_HZ_FIFTH: f64 = 2.5;
+
+/// Mid bandpass on pad fifth / +24 extras so they stay out of kick/sub.
+pub const PAD_MID_BP_LO_HZ: f32 = 200.0;
+pub const PAD_MID_BP_HI_HZ: f32 = 2_200.0;
+
 /// One extra full-patch voice, expressed as a musical interval from the root.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum LayerInterval {
     /// +12 semitones (2× frequency). Also accepts `octave-up` in TOML/CLI.
     Octave,
+    /// +24 semitones (4×). `octave-up-2` / `+24`.
+    Octave2,
     /// +7 semitones (perfect fifth).
     Fifth,
+    /// −7 semitones (perfect fifth down). `fifth-down` / `-7`.
+    FifthDown,
     /// −12 semitones (½×). `octave-down` / `-12`.
     OctaveDown,
     /// −24 semitones (¼×). `octave-down-2` / `-24`.
@@ -44,7 +63,9 @@ impl LayerInterval {
     pub fn semitones(self) -> i16 {
         match self {
             Self::Octave => 12,
+            Self::Octave2 => 24,
             Self::Fifth => 7,
+            Self::FifthDown => -7,
             Self::OctaveDown => -12,
             Self::OctaveDown2 => -24,
             Self::OctaveDown3 => -36,
@@ -54,7 +75,8 @@ impl LayerInterval {
     pub fn gain(self) -> f32 {
         match self {
             Self::Octave => LAYER_GAIN_OCTAVE,
-            Self::Fifth => LAYER_GAIN_FIFTH,
+            Self::Octave2 => LAYER_GAIN_OCTAVE_UP_2,
+            Self::Fifth | Self::FifthDown => LAYER_GAIN_FIFTH,
             Self::OctaveDown => LAYER_GAIN_OCTAVE_DOWN,
             Self::OctaveDown2 => LAYER_GAIN_OCTAVE_DOWN_2,
             Self::OctaveDown3 => LAYER_GAIN_OCTAVE_DOWN_3,
@@ -64,7 +86,9 @@ impl LayerInterval {
     pub fn label(self) -> &'static str {
         match self {
             Self::Octave => "octave",
+            Self::Octave2 => "octave-up-2",
             Self::Fifth => "fifth",
+            Self::FifthDown => "fifth-down",
             Self::OctaveDown => "octave-down",
             Self::OctaveDown2 => "octave-down-2",
             Self::OctaveDown3 => "octave-down-3",
@@ -74,7 +98,9 @@ impl LayerInterval {
     pub fn from_semitones(st: i16) -> Option<Self> {
         match st {
             12 => Some(Self::Octave),
+            24 => Some(Self::Octave2),
             7 => Some(Self::Fifth),
+            -7 => Some(Self::FifthDown),
             -12 => Some(Self::OctaveDown),
             -24 => Some(Self::OctaveDown2),
             -36 => Some(Self::OctaveDown3),
@@ -86,7 +112,9 @@ impl LayerInterval {
         let s = raw.trim().to_ascii_lowercase();
         match s.as_str() {
             "octave" | "octave-up" => Ok(Self::Octave),
+            "octave-up-2" | "octave-2" | "octave-up2" => Ok(Self::Octave2),
             "fifth" => Ok(Self::Fifth),
+            "fifth-down" | "fifth-dn" => Ok(Self::FifthDown),
             "octave-down" => Ok(Self::OctaveDown),
             "octave-down-2" | "octave-down2" => Ok(Self::OctaveDown2),
             "octave-down-3" | "octave-down3" => Ok(Self::OctaveDown3),
@@ -94,14 +122,14 @@ impl LayerInterval {
                 if let Ok(st) = other.parse::<i16>() {
                     return Self::from_semitones(st).ok_or_else(|| Error::InvalidParam {
                         message: format!(
-                            "unsupported layer semitones {st} (use 12, 7, -12, -24, -36)"
+                            "unsupported layer semitones {st} (use 24, 12, 7, -7, -12, -24, -36)"
                         ),
                     });
                 }
                 Err(Error::InvalidParam {
                     message: format!(
-                        "unknown layer `{other}` (use auto, none, octave, fifth, \
-                         octave-down, octave-down-2, octave-down-3, or 0,-12,-24)"
+                        "unknown layer `{other}` (use auto, none, octave, octave-up-2, fifth, \
+                         fifth-down, octave-down, octave-down-2, octave-down-3, or 0,-12,12,24)"
                     ),
                 })
             }
@@ -120,7 +148,7 @@ impl<'de> Deserialize<'de> for LayerInterval {
             fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(
                     f,
-                    "a layer interval (octave, fifth, octave-down, -12, -24, …)"
+                    "a layer interval (octave, octave-up-2, fifth, fifth-down, octave-down, -12, 24, …)"
                 )
             }
             fn visit_str<E: serde::de::Error>(
@@ -163,6 +191,8 @@ impl<'de> Deserialize<'de> for LayerInterval {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum LayerMode {
     /// Factory leads: +12, plus +7 when the octave mix still looks thin.
+    /// Factory sparkle / airy fresh pads: −12 and +12 (few-Hz detune), plus
+    /// +7 and +24 (mid bandpass) when the ±octave mix still looks thin.
     /// Factory pitched FX: −12 and −24, plus −36 when still thin.
     /// Other factory FX: a single −12 body (except already-sub shots).
     /// Other banks stay single-note unless the preset sets `render_layers`.
@@ -220,6 +250,8 @@ pub enum AutoLayerExtra {
     None,
     /// Factory-lead thin check → +7.
     Fifth,
+    /// Sparkle / airy-pad thin check → +7 and +24 (mid-bandpassed).
+    FifthAndOctave2,
     /// Pitched-FX thin check → −36.
     OctaveDown3,
 }
@@ -247,8 +279,10 @@ impl LayeredRender {
             .iter()
             .map(|&st| match st {
                 0 => "unison".to_string(),
+                24 => "octave-up-2".to_string(),
                 12 => "octave".to_string(),
                 7 => "fifth".to_string(),
+                -7 => "fifth-down".to_string(),
                 -12 => "octave-down".to_string(),
                 -24 => "octave-down-2".to_string(),
                 -36 => "octave-down-3".to_string(),
@@ -326,8 +360,40 @@ pub fn skips_fx_auto_layers(id: &str) -> bool {
     matches!(preset_stem(id), "fx-sub-drop")
 }
 
+/// Factory sparkle-pad bank: `ps-*`.
+pub fn is_factory_sparkle_pad_id(id: &str) -> bool {
+    preset_stem(id).starts_with("ps-")
+}
+
+/// Airy / wind-like fresh pads that share the sparkle-family layer plan.
+pub fn is_airy_fresh_pad_id(id: &str) -> bool {
+    matches!(
+        preset_stem(id),
+        "pf-flute-pad"
+            | "pf-choir-air"
+            | "pf-silk"
+            | "pf-reed-soft"
+            | "pf-harp-air"
+            | "pf-glass-air"
+            | "pf-halo"
+            | "pf-linen"
+            | "pf-water-air"
+            | "pf-breeze"
+            | "pf-cloud"
+            | "pf-ivory"
+            | "pf-dawn"
+            | "pf-spring"
+            | "pf-alpine"
+    )
+}
+
+/// Pads that Auto stacks as wind body + detuned ±octave (maybe fifth/+24).
+pub fn is_factory_pad_stack_id(id: &str) -> bool {
+    is_factory_sparkle_pad_id(id) || is_airy_fresh_pad_id(id)
+}
+
 /// CLI `--layers` wins when it is not `auto`. Otherwise the preset field, then
-/// the factory-lead / factory-FX default.
+/// the factory-lead / factory-pad / factory-FX default.
 pub fn resolve_layer_plan(preset_id: &str, preset: &Preset, mode: &LayerMode) -> LayerPlan {
     match mode {
         LayerMode::Off => LayerPlan {
@@ -348,6 +414,11 @@ pub fn resolve_layer_plan(preset_id: &str, preset: &Preset, mode: &LayerMode) ->
                 LayerPlan {
                     intervals: vec![LayerInterval::Octave],
                     extra: AutoLayerExtra::Fifth,
+                }
+            } else if is_factory_pad_stack_id(preset_id) {
+                LayerPlan {
+                    intervals: vec![LayerInterval::Octave, LayerInterval::OctaveDown],
+                    extra: AutoLayerExtra::FifthAndOctave2,
                 }
             } else if is_pitched_fx_id(preset_id) {
                 LayerPlan {
@@ -377,11 +448,20 @@ pub fn render_with_layers(
     mode: &LayerMode,
 ) -> Result<LayeredRender> {
     let plan = resolve_layer_plan(preset_id, preset, mode);
+    // Detune / mid-BP apply to factory pad stacks. Lead / FX stay exact-Hz.
+    let color_pads = is_factory_pad_stack_id(preset_id);
+
     let root = render(preset, params)?;
     let mut parts: Vec<(i16, Vec<f32>, f32)> = vec![(0, root, LAYER_GAIN_ROOT)];
 
     for interval in &plan.intervals {
-        parts.push(render_offset(preset, params, *interval)?);
+        parts.push(render_offset(
+            preset,
+            params,
+            *interval,
+            pad_hz_offset(color_pads, *interval),
+            pad_mid_bp(color_pads, *interval),
+        )?);
     }
 
     if parts.len() == 1 && plan.extra == AutoLayerExtra::None {
@@ -400,7 +480,38 @@ pub fn render_with_layers(
         && !plan.intervals.iter().any(|i| *i == LayerInterval::Fifth)
         && stack_looks_thin(&samples, params.sample_rate, params.frequency_hz)
     {
-        parts.push(render_offset(preset, params, LayerInterval::Fifth)?);
+        parts.push(render_offset(
+            preset,
+            params,
+            LayerInterval::Fifth,
+            0.0,
+            false,
+        )?);
+        samples = mix_gain_parts(&parts);
+        semitones = parts.iter().map(|(st, _, _)| *st).collect();
+    }
+
+    if plan.extra == AutoLayerExtra::FifthAndOctave2
+        && stack_looks_thin(&samples, params.sample_rate, params.frequency_hz)
+    {
+        if !plan.intervals.iter().any(|i| *i == LayerInterval::Fifth) {
+            parts.push(render_offset(
+                preset,
+                params,
+                LayerInterval::Fifth,
+                pad_hz_offset(color_pads, LayerInterval::Fifth),
+                true,
+            )?);
+        }
+        if !plan.intervals.iter().any(|i| *i == LayerInterval::Octave2) {
+            parts.push(render_offset(
+                preset,
+                params,
+                LayerInterval::Octave2,
+                pad_hz_offset(color_pads, LayerInterval::Octave2),
+                true,
+            )?);
+        }
         samples = mix_gain_parts(&parts);
         semitones = parts.iter().map(|(st, _, _)| *st).collect();
     }
@@ -412,7 +523,13 @@ pub fn render_with_layers(
             .any(|i| *i == LayerInterval::OctaveDown3)
         && down_stack_looks_thin(&samples, params.sample_rate, params.frequency_hz)
     {
-        parts.push(render_offset(preset, params, LayerInterval::OctaveDown3)?);
+        parts.push(render_offset(
+            preset,
+            params,
+            LayerInterval::OctaveDown3,
+            0.0,
+            false,
+        )?);
         samples = mix_gain_parts(&parts);
         semitones = parts.iter().map(|(st, _, _)| *st).collect();
     }
@@ -446,20 +563,57 @@ pub fn render_export(
     Ok(layered)
 }
 
+fn pad_hz_offset(color_pads: bool, interval: LayerInterval) -> f64 {
+    if !color_pads {
+        return 0.0;
+    }
+    match interval {
+        LayerInterval::Octave => PAD_DETUNE_HZ_OCTAVE_UP,
+        LayerInterval::OctaveDown => PAD_DETUNE_HZ_OCTAVE_DOWN,
+        LayerInterval::Octave2 => PAD_DETUNE_HZ_OCTAVE2,
+        LayerInterval::Fifth | LayerInterval::FifthDown => PAD_DETUNE_HZ_FIFTH,
+        LayerInterval::OctaveDown2 | LayerInterval::OctaveDown3 => 0.0,
+    }
+}
+
+fn pad_mid_bp(color_pads: bool, interval: LayerInterval) -> bool {
+    color_pads
+        && matches!(
+            interval,
+            LayerInterval::Fifth | LayerInterval::FifthDown | LayerInterval::Octave2
+        )
+}
+
 fn render_offset(
     preset: &Preset,
     params: &RenderParams,
     interval: LayerInterval,
+    hz_offset: f64,
+    mid_bp: bool,
 ) -> Result<(i16, Vec<f32>, f32)> {
+    let freq = (params.frequency_hz * semitones_to_ratio(f64::from(interval.semitones()))
+        + hz_offset)
+        .max(8.0);
     let shifted = RenderParams {
-        frequency_hz: params.frequency_hz * semitones_to_ratio(f64::from(interval.semitones())),
+        frequency_hz: freq,
         ..params.clone()
     };
-    Ok((
-        interval.semitones(),
-        render(preset, &shifted)?,
-        interval.gain(),
-    ))
+    let mut buf = render(preset, &shifted)?;
+    if mid_bp {
+        apply_midrange_bandpass(&mut buf, params.sample_rate);
+    }
+    Ok((interval.semitones(), buf, interval.gain()))
+}
+
+fn apply_midrange_bandpass(buf: &mut [f32], sample_rate: u32) {
+    use crate::filter::{FilterType, Svf};
+    let sr = sample_rate as f32;
+    let mut hp = Svf::new(sr);
+    let mut lp = Svf::new(sr);
+    for x in buf.iter_mut() {
+        let y = hp.tick(*x, PAD_MID_BP_LO_HZ, 0.08, FilterType::Highpass);
+        *x = lp.tick(y, PAD_MID_BP_HI_HZ, 0.08, FilterType::Lowpass);
+    }
 }
 
 fn mix_gain_parts(parts: &[(i16, Vec<f32>, f32)]) -> Vec<f32> {
@@ -602,6 +756,18 @@ mod tests {
             LayerMode::Explicit(vec![LayerInterval::Octave, LayerInterval::Fifth])
         );
         assert_eq!(
+            LayerMode::parse("octave,octave-down").unwrap(),
+            LayerMode::Explicit(vec![LayerInterval::Octave, LayerInterval::OctaveDown])
+        );
+        assert_eq!(
+            LayerMode::parse("octave-up-2,fifth").unwrap(),
+            LayerMode::Explicit(vec![LayerInterval::Octave2, LayerInterval::Fifth])
+        );
+        assert_eq!(
+            LayerMode::parse("24,-7").unwrap(),
+            LayerMode::Explicit(vec![LayerInterval::Octave2, LayerInterval::FifthDown])
+        );
+        assert_eq!(
             LayerMode::parse("octave-down").unwrap(),
             LayerMode::Explicit(vec![LayerInterval::OctaveDown])
         );
@@ -636,6 +802,24 @@ mod tests {
         assert!(!is_factory_lead_id("fx-laser"));
         assert!(is_factory_lead_id("ld-laser"));
         assert!(is_factory_lead_id("ld-zap"));
+        assert!(!is_factory_pad_stack_id("ld-sine"));
+        assert!(!is_factory_sparkle_pad_id("ld-sine"));
+    }
+
+    #[test]
+    fn pad_id_detection() {
+        assert!(is_factory_sparkle_pad_id("ps-crystal"));
+        assert!(is_factory_sparkle_pad_id("presets/pad-sparkle/ps-shimmer.toml"));
+        assert!(is_airy_fresh_pad_id("pf-flute-pad"));
+        assert!(is_airy_fresh_pad_id("pf-choir-air"));
+        assert!(is_airy_fresh_pad_id("pf-silk"));
+        assert!(is_factory_pad_stack_id("ps-frost"));
+        assert!(is_factory_pad_stack_id("pf-reed-soft"));
+        assert!(!is_airy_fresh_pad_id("pf-juno-air"));
+        assert!(!is_airy_fresh_pad_id("pf-clear-saw"));
+        assert!(!is_factory_pad_stack_id("pf-organ-light"));
+        assert!(!is_factory_pad_stack_id("ld-flute"));
+        assert!(!is_factory_sparkle_pad_id("pf-flute-pad"));
     }
 
     #[test]
