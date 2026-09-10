@@ -283,6 +283,15 @@ fn thin_auto_lead_can_gain_a_fifth() {
         e15 > e0 * 0.08,
         "auto fifth should add 1.5×f0 presence (e0={e0}, e15={e15})"
     );
+
+    let chip = load_factory("ld-chip").unwrap();
+    let chip_out = render_export("ld-chip", &chip, &export(LayerMode::Auto, 0.45)).unwrap();
+    assert_eq!(
+        chip_out.semitones,
+        vec![0, 12],
+        "bright chip should stay octave-only, got {:?}",
+        chip_out.semitones
+    );
 }
 
 #[test]

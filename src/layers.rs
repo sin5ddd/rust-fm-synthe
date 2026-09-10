@@ -293,12 +293,31 @@ pub fn stack_looks_thin(buf: &[f32], sample_rate: u32, f0: f64) -> bool {
     let e3 = goertzel_power(&windowed, sr, (f0 * 3.0) as f32);
     let e4 = goertzel_power(&windowed, sr, (f0 * 4.0) as f32);
     let e5 = goertzel_power(&windowed, sr, (f0 * 5.0) as f32);
-    let ridge = e0 + e2;
-    if ridge < 1e-18 {
+    if e0 + e2 < 1e-18 {
         return false;
     }
+    // Compare upper harmonics to the *root* so adding a 2× voice cannot
+    // hide an already-bright spectrum (chip / supersaw).
     let extra = e3 + e4 + e5;
-    extra / ridge < 0.18 && e15 / ridge < 0.22
+    let harmonic_thin = extra / e0.max(1e-18) < 0.22 && e15 / (e0 + e2) < 0.22;
+
+    let bass = band_goertzel(&windowed, sr, 80.0, 250.0, 8.0);
+    let mid = band_goertzel(&windowed, sr, 250.0, 2_000.0, 16.0);
+    let high = band_goertzel(&windowed, sr, 2_000.0, (sr * 0.45).min(8_000.0), 40.0);
+    let tot = bass + mid + high;
+    let mid_weak = tot > 0.0 && (mid + high) / tot < 0.55;
+
+    harmonic_thin && mid_weak
+}
+
+fn band_goertzel(buf: &[f32], sr: f32, lo: f32, hi: f32, step: f32) -> f64 {
+    let mut e = 0.0;
+    let mut f = lo;
+    while f < hi && f < sr * 0.45 {
+        e += goertzel_power(buf, sr, f);
+        f += step;
+    }
+    e
 }
 
 fn hann_window(buf: &[f32]) -> Vec<f32> {
@@ -371,14 +390,22 @@ mod tests {
         let f0 = 130.81f32;
         let mut sine_oct = vec![0.0f32; n];
         let mut saw = vec![0.0f32; n];
+        let mut pulse_c4 = vec![0.0f32; n];
         for i in 0..n {
             let t = i as f32 / sr as f32;
             sine_oct[i] = (std::f32::consts::TAU * f0 * t).sin()
                 + 0.72 * (std::f32::consts::TAU * f0 * 2.0 * t).sin();
             let phase = (f0 * t).fract();
             saw[i] = 2.0 * phase - 1.0;
+            let c4 = 261.63f32;
+            pulse_c4[i] = if (std::f32::consts::TAU * c4 * t).sin() >= 0.0 {
+                0.7
+            } else {
+                -0.7
+            };
         }
         assert!(stack_looks_thin(&sine_oct, sr, f64::from(f0)));
         assert!(!stack_looks_thin(&saw, sr, f64::from(f0)));
+        assert!(!stack_looks_thin(&pulse_c4, sr, 261.63));
     }
 }
