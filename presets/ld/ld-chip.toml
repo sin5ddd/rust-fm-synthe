@@ -41,11 +41,11 @@ release = 0.02
 vel_sens = 0.0
 waveform = "sine"
 
-# OP3 薄いオクターブ
+# OP3 オクターブパルス
 [[operators]]
 ratio = 2.0
 detune_cents = 0
-level = 0.12
+level = 0.36
 attack = 0.002
 decay = 0.18
 sustain = 0.75

@@ -33,11 +33,11 @@ release = 0.22
 vel_sens = 0.22
 waveform = "sine"
 
-# OP2 ごく薄い2倍
+# OP2 オクターブ（サインのまま厚く）
 [[operators]]
 ratio = 2.0
 detune_cents = 0
-level = 0.08
+level = 0.38
 attack = 0.02
 decay = 0.4
 sustain = 0.82

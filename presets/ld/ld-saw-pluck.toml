@@ -41,17 +41,17 @@ release = 0.02
 vel_sens = 0.0
 waveform = "sine"
 
-# OP3 無音
+# OP3 オクターブソー
 [[operators]]
-ratio = 1.0
+ratio = 2.0
 detune_cents = 0
-level = 0.0
+level = 0.48
 attack = 0.001
-decay = 0.05
-sustain = 0
+decay = 0.18
+sustain = 0.75
 release = 0.02
-vel_sens = 0.0
-waveform = "sine"
+vel_sens = 0.32
+waveform = "saw"
 
 # OP4 無音
 [[operators]]

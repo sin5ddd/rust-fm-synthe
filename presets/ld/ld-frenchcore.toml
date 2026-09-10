@@ -21,7 +21,17 @@ decay = 0.14
 sustain = 0.22
 release = 0.2
 
+# オクターブ上の薄いコーラス。スクリームは維持。
+[fx.chorus]
+mix = 0.32
+rate_hz = 0.82
+depth_ms = 3.8
+delay_ms = 12.0
+feedback = 0.1
+intervals = ["octave-up"]
+
 # OP1
+
 [[operators]]
 ratio = 1.0
 detune_cents = 0

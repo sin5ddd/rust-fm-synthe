@@ -25,7 +25,16 @@ decay = 0.22
 sustain = 0.22
 release = 0.14
 
+[fx.chorus]
+mix = 0.28
+rate_hz = 0.58
+depth_ms = 4.8
+delay_ms = 15.5
+feedback = 0.12
+intervals = ["octave-up"]
+
 # OP1
+
 [[operators]]
 ratio = 1.0
 detune_cents = -4

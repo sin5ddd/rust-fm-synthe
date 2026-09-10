@@ -17,7 +17,17 @@ decay = 0.14
 sustain = 0.22
 release = 0.2
 
+# ごく薄いオクターブ上。C3がC4に負けないように mix は低め。
+[fx.chorus]
+mix = 0.16
+rate_hz = 0.85
+depth_ms = 2.8
+delay_ms = 11.0
+feedback = 0.06
+intervals = ["octave-up"]
+
 # OP1 キャリア: 比 1 = C3 基音（約130.8 Hz）。オクターブ上にしない。
+
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0

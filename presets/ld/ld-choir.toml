@@ -49,7 +49,7 @@ waveform = "sine"
 [[operators]]
 ratio = 2.0
 detune_cents = -5
-level = 0.28
+level = 0.46
 attack = 0.1
 decay = 0.7
 sustain = 0.82

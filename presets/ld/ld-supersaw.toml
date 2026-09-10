@@ -49,9 +49,9 @@ waveform = "sine"
 
 # OP3 レイヤー
 [[operators]]
-ratio = 1.0
+ratio = 2.0
 detune_cents = 8
-level = 0.78
+level = 0.56
 attack = 0.022
 decay = 0.8
 sustain = 0.82

@@ -46,11 +46,11 @@ release = 0.04
 vel_sens = 0.5
 waveform = "sine"
 
-# OP3 上側キャリア
+# OP3 オクターブキャリア
 [[operators]]
-ratio = 1.0
+ratio = 2.0
 detune_cents = 7.0
-level = 0.82
+level = 0.62
 attack = 0.001
 decay = 0.22
 sustain = 0.75

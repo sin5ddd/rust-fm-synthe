@@ -53,9 +53,9 @@ waveform = "sine"
 
 # OP3
 [[operators]]
-ratio = 1.0
+ratio = 2.0
 detune_cents = 8
-level = 0.55
+level = 0.50
 attack = 0.16
 decay = 0.9
 sustain = 0.82

@@ -9,7 +9,17 @@ default_duration = 8.2
 
 # フィルタなし（既定LPは素通り）。C3基音を残す。長3度は出さない。
 
+# 中空5度をオクターブ上で厚く。3度は足さない。
+[fx.chorus]
+mix = 0.24
+rate_hz = 0.66
+depth_ms = 3.2
+delay_ms = 12.5
+feedback = 0.06
+intervals = ["octave-up"]
+
 # OP1 C（比1）
+
 [[operators]]
 ratio = 1.0
 detune_cents = 0

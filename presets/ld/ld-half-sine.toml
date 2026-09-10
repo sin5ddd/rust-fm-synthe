@@ -49,7 +49,7 @@ waveform = "half-sine"
 [[operators]]
 ratio = 2.0
 detune_cents = 0
-level = 0.12
+level = 0.40
 attack = 0.02
 decay = 0.4
 sustain = 0.82

@@ -47,7 +47,7 @@ waveform = "saw"
 [[operators]]
 ratio = 2.0
 detune_cents = 0
-level = 0.28
+level = 0.42
 attack = 0.002
 decay = 0.08
 sustain = 0.75
