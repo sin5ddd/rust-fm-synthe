@@ -27,9 +27,9 @@ release = 0.18
 type = "white"
 level = 0.88
 attack = 0.00012
-decay = 0.42
-sustain = 0.05
-release = 0.32
+decay = 0.105
+sustain = 0.0
+release = 0.08
 vel_sens = 0.58
 
 [noise.filter]
@@ -38,9 +38,9 @@ cutoff = 2800.0
 resonance = 0.14
 env_amount = 0.9
 attack = 0.00012
-decay = 0.26
-sustain = 0.08
-release = 0.18
+decay = 0.065
+sustain = 0.02
+release = 0.045
 
 # OP1 短いリム胴
 [[operators]]

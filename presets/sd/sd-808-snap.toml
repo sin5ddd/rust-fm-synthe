@@ -26,9 +26,9 @@ release = 0.18
 type = "white"
 level = 1.08
 attack = 0.0002
-decay = 0.45
-sustain = 0.06
-release = 0.34
+decay = 0.225
+sustain = 0.0
+release = 0.17
 vel_sens = 0.5
 
 [noise.filter]
@@ -37,9 +37,9 @@ cutoff = 1700.0
 resonance = 0.1
 env_amount = 0.5
 attack = 0.0002
-decay = 0.32
-sustain = 0.12
-release = 0.2
+decay = 0.16
+sustain = 0.06
+release = 0.1
 
 # OP1 808トーン下（加算キャリア）
 [[operators]]

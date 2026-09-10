@@ -22,9 +22,9 @@ type = "white"
 level = 1.18
 delay = 0.008
 attack = 0.0003
-decay = 0.55
-sustain = 0.07
-release = 0.4
+decay = 0.275
+sustain = 0.0
+release = 0.2
 vel_sens = 0.5
 
 [noise.filter]
@@ -33,9 +33,9 @@ cutoff = 1800.0
 resonance = 0.1
 env_amount = 0.55
 attack = 0.0003
-decay = 0.32
-sustain = 0.1
-release = 0.22
+decay = 0.16
+sustain = 0.05
+release = 0.11
 
 # OP1 わずかなトーン芯
 [[operators]]

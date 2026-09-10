@@ -30,9 +30,9 @@ release = 0.22
 type = "white"
 level = 1.1
 attack = 0.00015
-decay = 0.5
-sustain = 0.06
-release = 0.36
+decay = 0.25
+sustain = 0.0
+release = 0.18
 vel_sens = 0.55
 
 [noise.filter]
@@ -41,9 +41,9 @@ cutoff = 1800.0
 resonance = 0.12
 env_amount = 0.7
 attack = 0.0002
-decay = 0.32
-sustain = 0.16
-release = 0.22
+decay = 0.16
+sustain = 0.08
+release = 0.11
 
 # OP1 胴キャリア
 [[operators]]

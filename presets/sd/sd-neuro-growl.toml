@@ -29,9 +29,9 @@ release = 0.28
 type = "white"
 level = 1.12
 attack = 0.0003
-decay = 0.7
-sustain = 0.07
-release = 0.4
+decay = 0.35
+sustain = 0.0
+release = 0.2
 vel_sens = 0.5
 
 [noise.filter]
@@ -40,9 +40,9 @@ cutoff = 2400.0
 resonance = 0.12
 env_amount = 0.7
 attack = 0.0004
-decay = 0.42
-sustain = 0.1
-release = 0.24
+decay = 0.21
+sustain = 0.05
+release = 0.12
 
 # OP1 グロウルキャリア
 [[operators]]

@@ -26,9 +26,9 @@ release = 0.22
 type = "white"
 level = 1.08
 attack = 0.00015
-decay = 0.55
-sustain = 0.06
-release = 0.38
+decay = 0.275
+sustain = 0.0
+release = 0.19
 vel_sens = 0.55
 
 [noise.filter]
@@ -37,9 +37,9 @@ cutoff = 2000.0
 resonance = 0.1
 env_amount = 0.6
 attack = 0.00015
-decay = 0.4
-sustain = 0.1
-release = 0.24
+decay = 0.2
+sustain = 0.05
+release = 0.12
 
 # OP1 トラップ胴
 [[operators]]

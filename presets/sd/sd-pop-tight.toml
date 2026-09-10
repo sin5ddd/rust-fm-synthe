@@ -26,9 +26,9 @@ release = 0.18
 type = "white"
 level = 1.05
 attack = 0.0002
-decay = 0.45
-sustain = 0.06
-release = 0.32
+decay = 0.225
+sustain = 0.0
+release = 0.16
 vel_sens = 0.55
 
 [noise.filter]
@@ -37,9 +37,9 @@ cutoff = 2200.0
 resonance = 0.1
 env_amount = 0.55
 attack = 0.0002
-decay = 0.32
-sustain = 0.1
-release = 0.18
+decay = 0.16
+sustain = 0.05
+release = 0.09
 
 # OP1 生ドラム寄りの胴
 [[operators]]

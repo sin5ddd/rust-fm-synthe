@@ -21,9 +21,9 @@ release = 0.24
 type = "white"
 level = 1.18
 attack = 0.0002
-decay = 0.5
-sustain = 0.07
-release = 0.38
+decay = 0.25
+sustain = 0.0
+release = 0.19
 vel_sens = 0.5
 
 [noise.filter]
@@ -32,9 +32,9 @@ cutoff = 1800.0
 resonance = 0.12
 env_amount = 0.85
 attack = 0.0002
-decay = 0.42
-sustain = 0.08
-release = 0.26
+decay = 0.21
+sustain = 0.04
+release = 0.13
 
 [[operators]]
 ratio = 1.0

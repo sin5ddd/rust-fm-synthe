@@ -26,9 +26,9 @@ release = 0.18
 type = "white"
 level = 1.02
 attack = 0.00012
-decay = 0.4
-sustain = 0.05
-release = 0.32
+decay = 0.2
+sustain = 0.0
+release = 0.16
 vel_sens = 0.6
 
 [noise.filter]
@@ -37,9 +37,9 @@ cutoff = 2600.0
 resonance = 0.12
 env_amount = 0.6
 attack = 0.00012
-decay = 0.28
-sustain = 0.1
-release = 0.18
+decay = 0.14
+sustain = 0.05
+release = 0.09
 
 # OP1 高いクラック
 [[operators]]

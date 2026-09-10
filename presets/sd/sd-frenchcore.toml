@@ -30,9 +30,9 @@ release = 0.16
 type = "white"
 level = 1.32
 attack = 0.00012
-decay = 0.5
-sustain = 0.06
-release = 0.36
+decay = 0.25
+sustain = 0.0
+release = 0.18
 vel_sens = 0.62
 
 [noise.filter]
@@ -41,9 +41,9 @@ cutoff = 2600.0
 resonance = 0.12
 env_amount = 0.55
 attack = 0.00012
-decay = 0.28
-sustain = 0.1
-release = 0.2
+decay = 0.14
+sustain = 0.05
+release = 0.1
 
 # OP1 攻撃的ミッド
 [[operators]]

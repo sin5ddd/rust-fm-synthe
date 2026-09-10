@@ -25,9 +25,9 @@ release = 0.38
 type = "pink"
 level = 1.08
 attack = 0.006
-decay = 1.05
-sustain = 0.06
-release = 0.42
+decay = 0.525
+sustain = 0.0
+release = 0.21
 vel_sens = 0.4
 
 [noise.filter]
@@ -36,9 +36,9 @@ cutoff = 1500.0
 resonance = 0.1
 env_amount = 0.35
 attack = 0.006
-decay = 0.65
-sustain = 0.12
-release = 0.34
+decay = 0.325
+sustain = 0.06
+release = 0.17
 
 # OP1 柔らかい胴
 [[operators]]
