@@ -1,56 +1,75 @@
 name = "gabber stomp"
 description = "ガバ／インダストリアルのストンプ。歪んだミッドと短い踏み込み。"
 algorithm = 5
-feedback = 0.7
+feedback = 0.76
 feedback_op = 4
-gain = 0.93
-default_note = 43
-default_duration = 0.32
+gain = 0.86
+default_note = 36
+default_duration = 0.34
 
 [pitch]
-start_semitones = 18.0
+start_semitones = 13.0
 end_semitones = 0.0
-curve = -3.0
+curve = -2.4
 
 [mod_sweep]
-start = 1.4
-end = 0.44
+start = 1.42
+end = 0.58
 
 [filter]
-type = "highpass"
-cutoff = 110.0
-resonance = 0.2
-env_amount = 0.85
+type = "lowpass"
+cutoff = 1400.0
+resonance = 0.22
+env_amount = 1.6
 attack = 0.0
-decay = 0.03
-sustain = 0.22
-release = 0.035
+decay = 0.06
+sustain = 0.18
+release = 0.04
 
 [fx.overdrive]
-mix = 0.84
-drive = 0.86
+mix = 0.85
+drive = 0.9
 
-# OP1 飽和した胴
+[noise]
+type = "pink"
+level = 0.16
+attack = 0.00015
+decay = 0.09
+sustain = 0.0
+release = 0.03
+vel_sens = 0.42
+
+[noise.filter]
+type = "bandpass"
+cutoff = 780.0
+resonance = 0.22
+env_amount = 0.55
+attack = 0.00015
+decay = 0.07
+sustain = 0.0
+release = 0.025
+
+# OP1 飽和した胴（ゲートしてストンプ全体を埋める）
 [[operators]]
 ratio = 1.0
 detune_cents = -4.0
-level = 0.86
+level = 1.0
 attack = 0.00035
-decay = 0.17
-sustain = 0.0
-release = 0.045
-vel_sens = 0.3
+decay = 0.14
+sustain = 0.12
+release = 0.05
+vel_sens = 0.28
 waveform = "saw"
 
 # OP2 胴のFM
 [[operators]]
 ratio = 1.0
 detune_cents = 7.0
-level = 0.58
+level = 0.6
 attack = 0.0002
-decay = 0.055
-sustain = 0.0
-release = 0.022
+decay = 0.1
+sustain = 0.04
+release = 0.035
 vel_sens = 0.48
 waveform = "pulse"
 
@@ -58,22 +77,22 @@ waveform = "pulse"
 [[operators]]
 ratio = 2.0
 detune_cents = 8.0
-level = 0.78
+level = 0.68
 attack = 0.0002
-decay = 0.15
-sustain = 0.0
-release = 0.035
+decay = 0.12
+sustain = 0.08
+release = 0.04
 vel_sens = 0.4
 waveform = "pulse"
 
 # OP4 クリック／FB
 [[operators]]
-ratio = 6.0
+ratio = 5.5
 detune_cents = -12.0
-level = 0.52
+level = 0.38
 attack = 0.0001
 decay = 0.012
 sustain = 0.0
 release = 0.008
-vel_sens = 0.72
+vel_sens = 0.7
 waveform = "pulse"
