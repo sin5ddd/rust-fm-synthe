@@ -1,9 +1,9 @@
 name = "wobble bass"
 description = "ベース用ウォブルワンショット。速めのピッチLFOとBPエンベ。リードの ld-wobble より低く、サブ〜ミッド。"
-algorithm = 2
-feedback = 0.32
+algorithm = 7
+feedback = 0.34
 feedback_op = 4
-gain = 1.02
+gain = 1.0
 default_note = 36
 default_duration = 1.9
 
@@ -12,56 +12,61 @@ rate_hz = 6.2
 depth_cents = 36
 
 [mod_sweep]
-start = 1.2
+start = 1.15
 end = 0.55
 
+# BP を ~120 Hz に置き、エンベで低ミッドまで動かす。細いミッドのビープにしない。
 [filter]
 type = "bandpass"
-cutoff = 280
-resonance = 0.62
-env_amount = 2.6
-attack = 0.008
-decay = 0.18
-sustain = 0.2
+cutoff = 128
+resonance = 0.3
+env_amount = 1.55
+attack = 0.01
+decay = 0.2
+sustain = 0.22
 release = 0.14
 
+# OP1 加算の ~120 Hz 胴（C2 × 1.835）
 [[operators]]
-ratio = 0.5
-detune_cents = -3
-level = 1
-attack = 0.008
-decay = 1.2
-sustain = 0.3
-release = 0.22
-vel_sens = 0.3
-waveform = "saw"
-
-[[operators]]
-ratio = 1
-detune_cents = 6
-level = 0.55
-attack = 0.006
-decay = 0.55
-sustain = 0.16
-release = 0.14
-vel_sens = 0.4
+ratio = 1.835
+detune_cents = -2
+level = 0.82
+attack = 0.01
+decay = 1.35
+sustain = 0.38
+release = 0.24
+vel_sens = 0.26
 waveform = "sine"
 
+# OP2 ノートのソー。サブ基音と倍音。LFOでウォブル
+[[operators]]
+ratio = 1
+detune_cents = 5
+level = 0.7
+attack = 0.008
+decay = 1.15
+sustain = 0.28
+release = 0.2
+vel_sens = 0.32
+waveform = "saw"
+
+# OP3 ウォブルの喉（4→3）
 [[operators]]
 ratio = 1.5
 detune_cents = -8
-level = 0.38
-attack = 0.004
-decay = 0.28
+level = 0.4
+attack = 0.005
+decay = 0.32
 sustain = 0.1
 release = 0.1
 vel_sens = 0.45
 waveform = "half-sine"
 
+# OP4 フィードバック源
 [[operators]]
 ratio = 2
 detune_cents = 0
-level = 0.34
+level = 0.32
 attack = 0.003
 decay = 0.22
 sustain = 0.08

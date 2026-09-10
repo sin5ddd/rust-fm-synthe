@@ -11,11 +11,16 @@ default_duration = 1.4
 rate_hz = 0.35
 depth_cents = 6.0
 
+# スーパーソーの2倍音（C2→~131 Hz）を 120 Hz 付近で少し持ち上げる。
 [filter]
 type = "lowpass"
-cutoff = 7200.0
-resonance = 0.12
-env_amount = 0.0
+cutoff = 2400.0
+resonance = 0.26
+env_amount = 0.45
+attack = 0.008
+decay = 0.4
+sustain = 0.55
+release = 0.16
 
 # OP1 下側キャリア: 擬似スーパーソー（1オペで7本）
 [[operators]]

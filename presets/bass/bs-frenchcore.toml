@@ -1,63 +1,72 @@
 name = "frenchcore mid-bass"
 description = "フレンチコアのミッドベース。HPで羊毛サブを切る。攻撃的なパルス＋高比。キックではなくベース。"
-algorithm = 1
-feedback = 0.44
+algorithm = 7
+feedback = 0.46
 feedback_op = 4
-gain = 1.04
+gain = 1.02
 default_note = 43
 default_duration = 1.05
 
 [mod_sweep]
-start = 1.35
-end = 0.5
+start = 1.32
+end = 0.48
 
+[fx.overdrive]
+mix = 0.36
+drive = 0.62
+
+# 羊毛だけ切る。120 Hz のパンチは残す（160 Hz HP だと胴が消える）。
 [filter]
 type = "highpass"
-cutoff = 160
-resonance = 0.28
-env_amount = 1.6
+cutoff = 48
+resonance = 0.2
+env_amount = 1.15
 attack = 0.001
-decay = 0.16
-sustain = 0.2
-release = 0.1
+decay = 0.14
+sustain = 0.18
+release = 0.09
 
+# OP1 ~120 Hz 正弦パンチ（G2 × 1.224）
+[[operators]]
+ratio = 1.224
+detune_cents = 0
+level = 0.62
+attack = 0.003
+decay = 0.62
+sustain = 0.16
+release = 0.12
+vel_sens = 0.3
+waveform = "sine"
+
+# OP2 攻撃的パルス
 [[operators]]
 ratio = 1
-detune_cents = 0
-level = 1
-attack = 0.003
-decay = 0.55
-sustain = 0.18
-release = 0.12
-vel_sens = 0.4
+detune_cents = 4
+level = 0.92
+attack = 0.002
+decay = 0.5
+sustain = 0.14
+release = 0.1
+vel_sens = 0.42
 waveform = "pulse"
 
-[[operators]]
-ratio = 2
-detune_cents = 5
-level = 0.58
-attack = 0.002
-decay = 0.18
-sustain = 0.08
-release = 0.07
-vel_sens = 0.48
-waveform = "saw"
-
+# OP3 高比の裂けるミッド（4→3）
 [[operators]]
 ratio = 5
 detune_cents = -7
-level = 0.36
+level = 0.4
 attack = 0.0008
-decay = 0.08
+decay = 0.09
 sustain = 0.03
 release = 0.04
 vel_sens = 0.55
 waveform = "half-sine"
 
+# OP4 クリック＋FB
 [[operators]]
 ratio = 9
 detune_cents = 0
-level = 0.24
+level = 0.26
 attack = 0.0005
 decay = 0.045
 sustain = 0.02

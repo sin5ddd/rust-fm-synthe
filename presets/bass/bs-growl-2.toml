@@ -1,7 +1,7 @@
 name = "growl bass 2"
 description = "2つ目のグロウル。既存 growl-bass / bp-growl よりソー寄りでフォルマント比が違う。ミッド。サブは薄く。"
-algorithm = 3
-feedback = 0.5
+algorithm = 7
+feedback = 0.52
 feedback_op = 4
 gain = 1
 default_note = 43
@@ -12,45 +12,53 @@ rate_hz = 4.2
 depth_cents = 12
 
 [mod_sweep]
-start = 1.18
-end = 0.72
+start = 1.16
+end = 0.7
 
+[fx.overdrive]
+mix = 0.28
+drive = 0.4
+
+# 120 Hz 付近を通す広めBP。growl-bass（HP）よりフォルマントが上。
 [filter]
 type = "bandpass"
-cutoff = 620
-resonance = 0.44
-env_amount = 1.5
+cutoff = 168
+resonance = 0.28
+env_amount = 1.15
 attack = 0.014
 decay = 0.36
-sustain = 0.26
+sustain = 0.28
 release = 0.16
 
+# OP1 ~120 Hz 胴（G2 × 1.224）
 [[operators]]
-ratio = 1
-detune_cents = -6
-level = 1
+ratio = 1.224
+detune_cents = -3
+level = 0.7
 attack = 0.012
-decay = 0.85
-sustain = 0.2
+decay = 0.95
+sustain = 0.26
 release = 0.2
-vel_sens = 0.34
-waveform = "saw"
+vel_sens = 0.28
+waveform = "sine"
 
+# OP2 ソー寄りキャリア
 [[operators]]
 ratio = 1
 detune_cents = 10
-level = 0.42
-attack = 0.008
-decay = 0.4
-sustain = 0.1
-release = 0.12
-vel_sens = 0.42
-waveform = "sine"
+level = 0.78
+attack = 0.01
+decay = 0.8
+sustain = 0.18
+release = 0.18
+vel_sens = 0.36
+waveform = "saw"
 
+# OP3 別フォルマント（1.31）
 [[operators]]
 ratio = 1.31
 detune_cents = -14
-level = 0.52
+level = 0.55
 attack = 0.005
 decay = 0.34
 sustain = 0.08
@@ -58,10 +66,11 @@ release = 0.1
 vel_sens = 0.48
 waveform = "abs-sine"
 
+# OP4 高い喉（2.67）
 [[operators]]
 ratio = 2.67
 detune_cents = 8
-level = 0.4
+level = 0.42
 attack = 0.003
 decay = 0.22
 sustain = 0.06

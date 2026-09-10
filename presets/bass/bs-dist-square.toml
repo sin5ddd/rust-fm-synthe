@@ -8,19 +8,24 @@ default_note = 36
 default_duration = 1.25
 
 [mod_sweep]
-start = 1.15
-end = 0.7
+start = 1.12
+end = 0.68
+
+[fx.overdrive]
+mix = 0.32
+drive = 0.48
 
 [filter]
 type = "lowpass"
-cutoff = 1500
-resonance = 0.22
-env_amount = 1.0
+cutoff = 1600
+resonance = 0.28
+env_amount = 0.85
 attack = 0.006
 decay = 0.35
 sustain = 0.28
 release = 0.14
 
+# OP1 パルス基音（奇数倍音）。120 Hz は偶数なので OP2 で足す。
 [[operators]]
 ratio = 1
 detune_cents = 0
@@ -32,21 +37,23 @@ release = 0.16
 vel_sens = 0.32
 waveform = "pulse"
 
+# OP2 ~120 Hz 正弦胴（C2 × 1.835）。パルスの穴を埋める。
 [[operators]]
-ratio = 1
-detune_cents = 7
-level = 0.55
+ratio = 1.835
+detune_cents = 3
+level = 0.62
 attack = 0.008
-decay = 0.6
-sustain = 0.18
+decay = 0.7
+sustain = 0.22
 release = 0.14
-vel_sens = 0.3
-waveform = "pulse"
+vel_sens = 0.28
+waveform = "sine"
 
+# OP3 砂状のFM（4→3）
 [[operators]]
 ratio = 2
 detune_cents = -4
-level = 0.22
+level = 0.24
 attack = 0.003
 decay = 0.2
 sustain = 0.06
@@ -54,10 +61,11 @@ release = 0.08
 vel_sens = 0.45
 waveform = "saw"
 
+# OP4 高いFB源
 [[operators]]
 ratio = 3
 detune_cents = 0
-level = 0.4
+level = 0.42
 attack = 0.002
 decay = 0.16
 sustain = 0.05
