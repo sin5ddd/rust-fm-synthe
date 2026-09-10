@@ -22,36 +22,37 @@ start = 0.28
 end = 1.45
 
 [filter]
+# Static HP: thin the sub/octave-down rumble without chasing the rising tone.
 type = "highpass"
-cutoff = 55.0
-resonance = 0.08
-env_amount = 2.6
-attack = 11.0
-decay = 1.2
-sustain = 0.8
+cutoff = 40.0
+resonance = 0.06
+env_amount = 0.0
+attack = 0.01
+decay = 0.01
+sustain = 1.0
 release = 0.25
 
 [noise]
 type = "white"
-level = 0.68
-attack = 1.6
+level = 0.38
+attack = 1.8
 decay = 8.0
-sustain = 0.75
+sustain = 0.72
 release = 0.3
 vel_sens = 0.18
 
 [noise.filter]
 type = "highpass"
-cutoff = 280.0
+cutoff = 400.0
 resonance = 0.1
-env_amount = 4.0
+env_amount = 3.6
 attack = 11.5
 decay = 1.2
 sustain = 0.75
 release = 0.25
 
 [fx.chorus]
-mix = 0.46
+mix = 0.42
 rate_hz = 0.7
 depth_ms = 5.0
 delay_ms = 16.0
@@ -62,7 +63,7 @@ intervals = ["octave-down", "octave-up", "fifth"]
 [[operators]]
 ratio = 0.25
 detune_cents = 0.0
-level = 0.26
+level = 0.1
 attack = 0.5
 decay = 8.0
 sustain = 0.75
@@ -74,7 +75,7 @@ waveform = "sine"
 [[operators]]
 ratio = 2.2908
 detune_cents = 0.0
-level = 0.5
+level = 0.72
 attack = 0.25
 decay = 8.0
 sustain = 0.8

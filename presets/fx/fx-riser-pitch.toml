@@ -20,9 +20,9 @@ end = 1.25
 
 [filter]
 type = "lowpass"
-cutoff = 1100.0
-resonance = 0.16
-env_amount = 3.0
+cutoff = 1400.0
+resonance = 0.12
+env_amount = 2.6
 attack = 10.5
 decay = 1.2
 sustain = 0.85
@@ -32,7 +32,7 @@ release = 0.25
 [[operators]]
 ratio = 0.25
 detune_cents = 0
-level = 0.22
+level = 0.08
 attack = 0.6
 decay = 8.0
 sustain = 0.75
@@ -52,9 +52,9 @@ release = 0.3
 vel_sens = 0.2
 waveform = "sine"
 
-# OP3 ソー本体。ピッチの芯。フィルタが開くにつれて主役。
+# OP3 ソー本体。OP2 と同じ 100 Hz スタートに揃え、一本の上昇尾根にする。
 [[operators]]
-ratio = 1.0
+ratio = 1.3621
 detune_cents = 0
 level = 1.0
 attack = 1.1
@@ -64,9 +64,9 @@ release = 0.28
 vel_sens = 0.2
 waveform = "saw"
 
-# OP4 オクターブ上のサイン。
+# OP4 オクターブ上のサイン（スタート約 200 Hz）。
 [[operators]]
-ratio = 2.0
+ratio = 2.7242
 detune_cents = 4
 level = 0.58
 attack = 1.4

@@ -22,20 +22,21 @@ start = 0.45
 end = 1.15
 
 [filter]
-type = "lowpass"
-cutoff = 950.0
-resonance = 0.14
-env_amount = 3.2
-attack = 10.5
-decay = 1.3
-sustain = 0.85
+# Static HP so the 2-octave-down sub cannot become the tracked pitch.
+type = "highpass"
+cutoff = 80.0
+resonance = 0.06
+env_amount = 0.0
+attack = 0.01
+decay = 0.01
+sustain = 1.0
 release = 0.25
 
 # OP1 サブ。ratio 0.25。ベッドだけ。
 [[operators]]
 ratio = 0.25
 detune_cents = 0
-level = 0.2
+level = 0.08
 attack = 0.6
 decay = 8.0
 sustain = 0.75
@@ -47,7 +48,7 @@ waveform = "sine"
 [[operators]]
 ratio = 1.7161
 detune_cents = 0
-level = 0.48
+level = 0.66
 attack = 0.25
 decay = 8.0
 sustain = 0.8
@@ -55,30 +56,30 @@ release = 0.3
 vel_sens = 0.18
 waveform = "sine"
 
-# OP3 スーパーソー本体。
+# OP3 スーパーソー本体。OP2 と同じ 100 Hz スタートに揃え、追跡が一本の上昇になる。
 [[operators]]
-ratio = 1.0
-detune_cents = -5
-level = 1.0
+ratio = 1.7161
+detune_cents = -4
+level = 0.92
 attack = 1.0
 decay = 6.0
 sustain = 0.88
 release = 0.28
 vel_sens = 0.16
 waveform = "super-saw"
-unison = 7
-unison_detune = 24.0
+unison = 5
+unison_detune = 14.0
 
 # OP4 デチューンしたスーパーソー。
 [[operators]]
-ratio = 1.01
-detune_cents = 6
-level = 0.78
+ratio = 1.733
+detune_cents = 5
+level = 0.62
 attack = 1.2
 decay = 5.5
 sustain = 0.82
 release = 0.26
 vel_sens = 0.18
 waveform = "super-saw"
-unison = 5
-unison_detune = 16.0
+unison = 3
+unison_detune = 10.0
