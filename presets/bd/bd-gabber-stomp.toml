@@ -1,75 +1,79 @@
 name = "gabber stomp"
 description = "ガバ／インダストリアルのストンプ。歪んだミッドと短い踏み込み。"
 algorithm = 5
-feedback = 0.52
+feedback = 0.7
 feedback_op = 4
-gain = 1.06
-default_note = 40
-default_duration = 0.36
+gain = 0.93
+default_note = 43
+default_duration = 0.32
 
 [pitch]
-start_semitones = 14.0
-end_semitones = -0.6
-curve = -8.0
+start_semitones = 18.0
+end_semitones = 0.0
+curve = -3.0
 
 [mod_sweep]
-start = 1.3
-end = 0.4
+start = 1.4
+end = 0.44
 
 [filter]
 type = "highpass"
-cutoff = 78.0
-resonance = 0.18
-env_amount = 0.35
+cutoff = 110.0
+resonance = 0.2
+env_amount = 0.85
 attack = 0.0
-decay = 0.04
-sustain = 0.4
-release = 0.05
+decay = 0.03
+sustain = 0.22
+release = 0.035
 
-# OP1 ストンプ胴
+[fx.overdrive]
+mix = 0.84
+drive = 0.86
+
+# OP1 飽和した胴
 [[operators]]
 ratio = 1.0
 detune_cents = -4.0
-level = 1.0
-attack = 0.0005
-decay = 0.22
+level = 0.86
+attack = 0.00035
+decay = 0.17
 sustain = 0.0
-release = 0.06
-vel_sens = 0.32
-waveform = "pulse"
+release = 0.045
+vel_sens = 0.3
+waveform = "saw"
 
-# OP2 胴変調
+# OP2 胴のFM
 [[operators]]
-ratio = 1.5
-detune_cents = 6.0
-level = 0.5
-attack = 0.0003
-decay = 0.045
+ratio = 1.0
+detune_cents = 7.0
+level = 0.58
+attack = 0.0002
+decay = 0.055
 sustain = 0.0
-release = 0.025
+release = 0.022
 vel_sens = 0.48
-waveform = "abs-sine"
+waveform = "pulse"
 
 # OP3 ミッドの踏み込み
 [[operators]]
-ratio = 1.0
-detune_cents = 9.0
+ratio = 2.0
+detune_cents = 8.0
 level = 0.78
-attack = 0.0003
-decay = 0.09
+attack = 0.0002
+decay = 0.15
 sustain = 0.0
-release = 0.04
+release = 0.035
 vel_sens = 0.4
-waveform = "saw"
+waveform = "pulse"
 
 # OP4 クリック／FB
 [[operators]]
-ratio = 6.5
-detune_cents = -16.0
-level = 0.36
-attack = 0.00015
-decay = 0.009
+ratio = 6.0
+detune_cents = -12.0
+level = 0.52
+attack = 0.0001
+decay = 0.012
 sustain = 0.0
 release = 0.008
-vel_sens = 0.7
+vel_sens = 0.72
 waveform = "pulse"
