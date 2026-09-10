@@ -732,11 +732,11 @@ fn factory_ps_pads_root_at_c4() {
     }
 }
 
-/// 120 BPM, 4/4 → 1 bar = 2 s → 8 bars = 16 s held note.
-/// Pads are long-shot like drones, but not the sub/rumble bed.
-/// Last 1 s and t=14 s must still have energy.
+/// 130 BPM, 4/4 → 4 whole notes = 16 beats × 60/130 = 960/130 s.
+/// Pads are long-shot, but not the sub/rumble bed. Last 0.6 s and t=0.85
+/// of the hold must still have energy.
 #[test]
-fn factory_pf_ps_pads_hold_eight_bars_at_120bpm() {
+fn factory_pf_ps_pads_hold_four_wholes_at_130bpm() {
     let ids: Vec<_> = factory_ids()
         .into_iter()
         .filter(|id| id.starts_with("pf-") || id.starts_with("ps-"))
@@ -749,15 +749,16 @@ fn factory_pf_ps_pads_hold_eight_bars_at_120bpm() {
     );
 
     const SR: u32 = 22_050;
-    const TAIL_SECS: f64 = 1.0;
+    const TAIL_SECS: f64 = 0.6;
     let tail_n = ((TAIL_SECS * f64::from(SR)).round() as usize).max(1);
 
     for id in ids {
         let preset = load_factory(id).unwrap();
         assert!(
-            (16.2..=18.0).contains(&preset.default_duration),
-            "{id} default_duration {} must be ~16 s+ (8 bars @ 120 BPM)",
-            preset.default_duration
+            (preset.default_duration - fm_synth::PAD_HOLD_SECS_AT_130).abs() < 1e-6,
+            "{id} default_duration {} must be 4 whole notes @ 130 BPM ({})",
+            preset.default_duration,
+            fm_synth::PAD_HOLD_SECS_AT_130
         );
 
         let buf = render(
@@ -787,14 +788,15 @@ fn factory_pf_ps_pads_hold_eight_bars_at_120bpm() {
         assert!(
             tail_rms > 0.01,
             "{id} last {TAIL_SECS}s is silence (rms={tail_rms}); \
-             carrier sustain must hold for the full 16 s key-down"
+             carrier sustain must hold for the full 4-whole key-down"
         );
 
-        let t14 = ((14.0 * f64::from(SR)).round() as usize).min(buf.len().saturating_sub(tail_n));
-        let at14 = rms(&buf[t14..t14 + tail_n]);
+        let t85 = ((0.85 * preset.default_duration * f64::from(SR)).round() as usize)
+            .min(buf.len().saturating_sub(tail_n));
+        let at85 = rms(&buf[t85..t85 + tail_n]);
         assert!(
-            at14 > 0.01,
-            "{id} silent at t=14s (rms={at14}); filter/amp env died too early"
+            at85 > 0.01,
+            "{id} silent at t=0.85 (rms={at85}); filter/amp env died too early"
         );
     }
 }
@@ -1263,7 +1265,9 @@ fn strudel_oneshots_render_nonsilent_48k_16bit() {
             "{id} rendered near-silence (rms={})",
             rms(&buf)
         );
-        assert!(peak(&buf) > 0.4, "{id} peak {} too low", peak(&buf));
+        // Held factory leads normalize to gated RMS (~0.2); the old 0.4
+        // one-shot click floor no longer applies to a 3-whole sustain.
+        assert!(peak(&buf) > 0.25, "{id} peak {} too low", peak(&buf));
 
         let path = scratch_wav(&format!("{id}-48k16.wav"));
         write_wav(&path, &buf, WavSettings::new(sr, bit_depth).unwrap()).unwrap();

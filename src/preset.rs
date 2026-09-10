@@ -517,10 +517,11 @@ pub struct Preset {
     pub fx: FxParams,
     /// Optional render-time voices on top of the unison 4OP patch.
     ///
-    /// Omit to follow CLI `--layers` / the factory-lead / factory-FX auto default.
-    /// `[]` forces a single note. `["octave"]`, `["octave-down", "octave-down-2"]`,
-    /// or numeric `[-12, -24]` always mix those full-patch renders.
-    /// This is not `[fx.chorus] intervals`.
+    /// Omit to follow CLI `--layers` / the factory-lead / factory-pad / factory-FX
+    /// auto default. `[]` forces a single note. `["octave"]`,
+    /// `["octave", "octave-down"]`, `["octave-up-2", "fifth"]`,
+    /// `["octave-down", "octave-down-2"]`, or numeric `[-12, 12, 24]` always mix
+    /// those full-patch renders. This is not `[fx.chorus] intervals`.
     #[serde(default)]
     pub render_layers: Option<Vec<LayerInterval>>,
     pub operators: Vec<OperatorParams>,
@@ -963,9 +964,10 @@ mod tests {
         for id in &ids {
             let p = load_factory(id).expect(id);
             assert!(
-                (16.2..=18.0).contains(&p.default_duration),
-                "{id} default_duration {} must be ~16 s+ (8 bars @ 120 BPM)",
-                p.default_duration
+                (p.default_duration - crate::PAD_HOLD_SECS_AT_130).abs() < 1e-6,
+                "{id} default_duration {} must be 4 whole notes @ 130 BPM ({})",
+                p.default_duration,
+                crate::PAD_HOLD_SECS_AT_130
             );
             assert!(
                 (48..=72).contains(&p.default_note),
@@ -990,9 +992,10 @@ mod tests {
         for id in &ids {
             let p = load_factory(id).expect(id);
             assert!(
-                (16.2..=18.0).contains(&p.default_duration),
-                "{id} default_duration {} must be ~16 s+ (8 bars @ 120 BPM)",
-                p.default_duration
+                (p.default_duration - crate::PAD_HOLD_SECS_AT_130).abs() < 1e-6,
+                "{id} default_duration {} must be 4 whole notes @ 130 BPM ({})",
+                p.default_duration,
+                crate::PAD_HOLD_SECS_AT_130
             );
             assert!(
                 (48..=72).contains(&p.default_note),
@@ -1810,6 +1813,33 @@ level = 0.0
                     crate::LayerInterval::OctaveDown,
                     crate::LayerInterval::OctaveDown2,
                     crate::LayerInterval::OctaveDown3
+                ]
+                .as_slice()
+            )
+        );
+
+        let pad = r#"
+name = "layer-pad"
+algorithm = 1
+render_layers = ["octave-down", "octave", "octave-up-2", "fifth"]
+[[operators]]
+level = 1.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+"#;
+        let p = Preset::from_toml_str("layer-pad", pad).unwrap();
+        assert_eq!(
+            p.render_layers.as_deref(),
+            Some(
+                [
+                    crate::LayerInterval::OctaveDown,
+                    crate::LayerInterval::Octave,
+                    crate::LayerInterval::Octave2,
+                    crate::LayerInterval::Fifth
                 ]
                 .as_slice()
             )
