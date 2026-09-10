@@ -1,75 +1,81 @@
 name = "frenchcore"
 description = "フレンチコア／ハードコア。攻撃的なミッドとクリック。サブは削って裂けるように。"
-algorithm = 2
-feedback = 0.48
+algorithm = 7
+feedback = 0.55
 feedback_op = 4
-gain = 1.05
-default_note = 45
+gain = 1.02
+default_note = 36
 default_duration = 0.3
 
 [pitch]
-start_semitones = 18.0
-end_semitones = 0.0
-curve = -7.0
+start_semitones = 16.0
+end_semitones = 4.0
+curve = -3.0
 
 [mod_sweep]
-start = 1.45
-end = 0.35
+start = 1.32
+end = 0.4
 
 [filter]
 type = "highpass"
-cutoff = 95.0
-resonance = 0.22
-env_amount = 1.15
+cutoff = 34.0
+resonance = 0.14
+env_amount = 0.35
 attack = 0.0
-decay = 0.04
-sustain = 0.22
-release = 0.03
+decay = 0.022
+sustain = 0.16
+release = 0.028
 
-# OP1 ミッドの胴
+[fx.overdrive]
+mix = 0.84
+drive = 0.86
+
+# OP1 固定 ~76 Hz の正弦胴（レベルはミッドより抑える）
 [[operators]]
 ratio = 1.0
 detune_cents = 0.0
-level = 1.0
-attack = 0.00025
-decay = 0.18
+level = 0.28
+attack = 0.0004
+decay = 0.2
 sustain = 0.0
-release = 0.045
-vel_sens = 0.35
-waveform = "pulse"
+release = 0.04
+vel_sens = 0.24
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 76.0
 
-# OP2 歪みスタック
-[[operators]]
-ratio = 1.0
-detune_cents = -7.0
-level = 0.78
-attack = 0.0002
-decay = 0.085
-sustain = 0.0
-release = 0.03
-vel_sens = 0.45
-waveform = "saw"
-
-# OP3 並列モジュレータ
+# OP2 ミッドの歪みキャリア（ノート追従）
 [[operators]]
 ratio = 2.0
-detune_cents = 12.0
-level = 0.55
+detune_cents = 6.0
+level = 1.0
 attack = 0.0002
-decay = 0.028
+decay = 0.12
+sustain = 0.0
+release = 0.032
+vel_sens = 0.45
+waveform = "pulse"
+
+# OP3 裂けるミッドスタック（4→3）
+[[operators]]
+ratio = 2.5
+detune_cents = 9.0
+level = 0.82
+attack = 0.00018
+decay = 0.07
 sustain = 0.0
 release = 0.018
 vel_sens = 0.55
-waveform = "half-sine"
+waveform = "saw"
 
-# OP4 高域クリック＋FB
+# OP4 クリック＋FB
 [[operators]]
-ratio = 5.5
-detune_cents = -18.0
-level = 0.42
-attack = 0.00015
+ratio = 6.0
+detune_cents = -12.0
+level = 0.44
+attack = 0.0001
 decay = 0.01
 sustain = 0.0
 release = 0.008
-vel_sens = 0.7
+vel_sens = 0.72
 waveform = "pulse"
