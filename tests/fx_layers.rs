@@ -3,8 +3,9 @@
 
 use fm_synth::{
     analyze_preset, factory_ids, is_factory_fx_id, is_factory_lead_id, is_pitched_fx_id,
-    load_factory, midi_to_hz, render, render_export, ExportParams, LayerInterval, LayerMode,
-    LAYER_GAIN_OCTAVE_DOWN, LAYER_GAIN_OCTAVE_DOWN_2, LAYER_GAIN_ROOT,
+    load_factory, midi_to_hz, render, render_export, semitones_to_ratio, ExportParams,
+    LayerInterval, LayerMode, Preset, LAYER_GAIN_OCTAVE_DOWN, LAYER_GAIN_OCTAVE_DOWN_2,
+    LAYER_GAIN_ROOT,
 };
 
 const SR: u32 = 22_050;
@@ -53,6 +54,36 @@ fn early_body(buf: &[f32]) -> Vec<f32> {
     hann(&buf[start..end])
 }
 
+fn sine_patch() -> Preset {
+    let toml = r#"
+name = "layer-test-sine-fx"
+algorithm = 8
+gain = 1.0
+default_note = 72
+default_duration = 0.4
+[filter]
+type = "lowpass"
+cutoff = 16000
+resonance = 0.0
+env_amount = 0.0
+[[operators]]
+ratio = 1.0
+level = 1.0
+attack = 0.005
+decay = 0.0
+sustain = 1.0
+release = 0.02
+waveform = "sine"
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+[[operators]]
+level = 0.0
+"#;
+    Preset::from_toml_str("layer-test-sine-fx", toml).unwrap()
+}
+
 #[test]
 fn pitched_fx_auto_stacks_octave_downs_leads_stay_up() {
     let laser = load_factory("fx-laser").unwrap();
@@ -86,7 +117,8 @@ fn pitched_fx_auto_stacks_octave_downs_leads_stay_up() {
 
 #[test]
 fn laser_down_stack_is_separate_full_voices() {
-    let preset = load_factory("fx-laser").unwrap();
+    // Held sine — factory lasers sweep, so ratio checks use a static patch.
+    let preset = sine_patch();
     let secs = 0.4;
     let single = render(
         &preset,
@@ -99,7 +131,7 @@ fn laser_down_stack_is_separate_full_voices() {
     )
     .unwrap();
     let layered = render_export(
-        "fx-laser",
+        "layer-test-sine-fx",
         &preset,
         &export(
             LayerMode::Explicit(vec![LayerInterval::OctaveDown, LayerInterval::OctaveDown2]),
@@ -113,7 +145,7 @@ fn laser_down_stack_is_separate_full_voices() {
     let f0 = midi_to_hz(preset.default_note) as f32;
     let off_w = early_body(&single);
     let lay_w = early_body(&layered.samples);
-    let off0 = goertzel_power(&off_w, SR as f32, f0);
+    let _off0 = goertzel_power(&off_w, SR as f32, f0);
     let off_d1 = goertzel_power(&off_w, SR as f32, f0 * 0.5);
     let off_d2 = goertzel_power(&off_w, SR as f32, f0 * 0.25);
     let l0 = goertzel_power(&lay_w, SR as f32, f0);
@@ -134,11 +166,11 @@ fn laser_down_stack_is_separate_full_voices() {
     );
     let r1 = ld1 / l0;
     let r2 = ld2 / l0;
-    let expect1 = (LAYER_GAIN_OCTAVE_DOWN / LAYER_GAIN_ROOT).powi(2);
-    let expect2 = (LAYER_GAIN_OCTAVE_DOWN_2 / LAYER_GAIN_ROOT).powi(2);
+    let expect1 = f64::from((LAYER_GAIN_OCTAVE_DOWN / LAYER_GAIN_ROOT).powi(2));
+    let expect2 = f64::from((LAYER_GAIN_OCTAVE_DOWN_2 / LAYER_GAIN_ROOT).powi(2));
     assert!(
-        r1 > expect1 * 0.25,
-        "−12/root power {r1} should be in the neighborhood of {expect1}"
+        (r1 - expect1).abs() < 0.22,
+        "−12/root power {r1} expected ~{expect1}"
     );
     assert!(
         r2 < r1,
@@ -249,14 +281,23 @@ fn analyze_laser_stack_is_richer_than_single_note() {
         low_auto + 0.01 >= low_off,
         "layered laser should not lose low-band share (off={low_off}, auto={low_auto})"
     );
-    let f0 = midi_to_hz(preset.default_note) as f32;
-    let off_w = early_body(&single);
-    let auto_w = early_body(&layered);
-    let off_d1 = goertzel_power(&off_w, SR as f32, f0 * 0.5);
-    let auto_d1 = goertzel_power(&auto_w, SR as f32, f0 * 0.5);
+    // Pitch starts −18 st; measure the actual launch ridges, not the nominal C5.
+    let f_start =
+        midi_to_hz(preset.default_note) * semitones_to_ratio(preset.pitch.start_semitones);
+    let launch_n = ((0.08 * f64::from(SR)) as usize).min(single.len());
+    let off_w = hann(&single[..launch_n]);
+    let auto_w = hann(&layered[..launch_n]);
+    let off_d1 = goertzel_power(&off_w, SR as f32, (f_start * 0.5) as f32);
+    let auto_d1 = goertzel_power(&auto_w, SR as f32, (f_start * 0.5) as f32);
+    let off_d2 = goertzel_power(&off_w, SR as f32, (f_start * 0.25) as f32);
+    let auto_d2 = goertzel_power(&auto_w, SR as f32, (f_start * 0.25) as f32);
     assert!(
-        auto_d1 > off_d1 * 1.4,
-        "auto −12 ridge should beat the single note (off={off_d1}, auto={auto_d1})"
+        auto_d1 > off_d1 * 1.3,
+        "auto −12 ridge at launch should beat the single note (off={off_d1}, auto={auto_d1})"
+    );
+    assert!(
+        auto_d2 > off_d2 * 1.2,
+        "auto −24 ridge at launch should beat the single note (off={off_d2}, auto={auto_d2})"
     );
 }
 
