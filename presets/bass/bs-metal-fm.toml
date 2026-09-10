@@ -5,28 +5,28 @@ feedback = 0.44
 feedback_op = 4
 gain = 1.02
 default_note = 43
-default_duration = 1.2
+default_duration = 5.0
 
-# 羊毛だけ切る。240 Hz HP だと 120 Hz の胴まで消える。
+# 金属リンを先に出して ~3 秒で 120 Hz 胴に閉じる。
 [filter]
-type = "highpass"
-cutoff = 48
-resonance = 0.14
-env_amount = 0.35
-attack = 0.003
-decay = 0.2
-sustain = 0.16
-release = 0.12
+type = "lowpass"
+cutoff = 200
+resonance = 0.18
+env_amount = 3.05
+attack = 0.004
+decay = 3.0
+sustain = 0.08
+release = 0.6
 
-# OP1 ~120 Hz 正弦胴（G2 × 1.224）
+# OP1 ~120 Hz 正弦胴
 [[operators]]
 ratio = 1.224
 detune_cents = 0
-level = 0.48
+level = 0.52
 attack = 0.006
-decay = 0.8
-sustain = 0.2
-release = 0.16
+decay = 4.1
+sustain = 0.64
+release = 0.95
 vel_sens = 0.28
 waveform = "sine"
 
@@ -36,9 +36,9 @@ ratio = 2.73
 detune_cents = 14
 level = 0.9
 attack = 0.002
-decay = 0.48
-sustain = 0.12
-release = 0.12
+decay = 2.6
+sustain = 0.06
+release = 0.45
 vel_sens = 0.48
 waveform = "abs-sine"
 
@@ -48,9 +48,9 @@ ratio = 3.41
 detune_cents = -9
 level = 0.74
 attack = 0.002
-decay = 0.4
-sustain = 0.1
-release = 0.1
+decay = 2.4
+sustain = 0.05
+release = 0.4
 vel_sens = 0.5
 waveform = "sine"
 
@@ -60,8 +60,8 @@ ratio = 5.17
 detune_cents = 8
 level = 0.52
 attack = 0.0015
-decay = 0.24
-sustain = 0.06
-release = 0.08
+decay = 2.0
+sustain = 0.03
+release = 0.35
 vel_sens = 0.55
 waveform = "pulse"
