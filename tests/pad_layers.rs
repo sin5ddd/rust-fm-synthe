@@ -166,7 +166,8 @@ fn non_airy_fresh_pad_stays_single_note_on_auto() {
 #[test]
 fn pad_octave_voices_are_detuned_a_few_hz() {
     let preset = sine_patch();
-    let secs = 0.55;
+    // Long enough that a Goertzel bin (~sr/n) is narrower than the few-Hz offset.
+    let secs = 2.2;
     let layered = render_export(
         "ps-detune-probe",
         &preset,
@@ -181,17 +182,22 @@ fn pad_octave_voices_are_detuned_a_few_hz() {
     let f0 = midi_to_hz(60);
     let win = late_body(&layered.samples);
     let sr = SR as f32;
+    let bin_hz = sr / win.len() as f32;
+    assert!(
+        bin_hz < 2.0,
+        "window too short to resolve a few Hz (bin={bin_hz})"
+    );
     let e_up_exact = goertzel_power(&win, sr, (f0 * 2.0) as f32);
     let e_up_det = goertzel_power(&win, sr, (f0 * 2.0 + PAD_DETUNE_HZ_OCTAVE_UP) as f32);
     let e_dn_exact = goertzel_power(&win, sr, (f0 * 0.5) as f32);
     let e_dn_det = goertzel_power(&win, sr, (f0 * 0.5 + PAD_DETUNE_HZ_OCTAVE_DOWN) as f32);
     assert!(
-        e_up_det > e_up_exact * 1.15,
-        "octave-up should sit a few Hz sharp (exact={e_up_exact}, det={e_up_det})"
+        e_up_det > e_up_exact * 1.4,
+        "octave-up should sit a few Hz sharp (exact={e_up_exact}, det={e_up_det}, bin={bin_hz})"
     );
     assert!(
-        e_dn_det > e_dn_exact * 1.15,
-        "octave-down should sit a few Hz flat (exact={e_dn_exact}, det={e_dn_det})"
+        e_dn_det > e_dn_exact * 1.4,
+        "octave-down should sit a few Hz flat (exact={e_dn_exact}, det={e_dn_det}, bin={bin_hz})"
     );
 }
 

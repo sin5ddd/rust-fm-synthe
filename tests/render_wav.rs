@@ -1265,7 +1265,9 @@ fn strudel_oneshots_render_nonsilent_48k_16bit() {
             "{id} rendered near-silence (rms={})",
             rms(&buf)
         );
-        assert!(peak(&buf) > 0.4, "{id} peak {} too low", peak(&buf));
+        // Held factory leads normalize to gated RMS (~0.2); the old 0.4
+        // one-shot click floor no longer applies to a 3-whole sustain.
+        assert!(peak(&buf) > 0.25, "{id} peak {} too low", peak(&buf));
 
         let path = scratch_wav(&format!("{id}-48k16.wav"));
         write_wav(&path, &buf, WavSettings::new(sr, bit_depth).unwrap()).unwrap();
