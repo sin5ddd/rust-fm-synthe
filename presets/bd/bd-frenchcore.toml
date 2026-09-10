@@ -1,76 +1,78 @@
 name = "frenchcore"
 description = "フレンチコア／ハードコア。攻撃的なミッドとクリック。サブは削って裂けるように。"
-algorithm = 5
-feedback = 0.58
+algorithm = 7
+feedback = 0.55
 feedback_op = 4
-gain = 0.94
-default_note = 45
+gain = 1.02
+default_note = 36
 default_duration = 0.3
 
 [pitch]
-start_semitones = 17.0
-end_semitones = 1.0
+start_semitones = 16.0
+end_semitones = 4.0
 curve = -3.0
 
 [mod_sweep]
-start = 1.4
-end = 0.44
+start = 1.32
+end = 0.4
 
 [filter]
 type = "highpass"
-cutoff = 112.0
-resonance = 0.2
-env_amount = 0.85
+cutoff = 34.0
+resonance = 0.14
+env_amount = 0.35
 attack = 0.0
-decay = 0.03
-sustain = 0.2
-release = 0.03
+decay = 0.022
+sustain = 0.16
+release = 0.028
 
 [fx.overdrive]
-mix = 0.76
-drive = 0.74
+mix = 0.84
+drive = 0.86
 
-# OP1 飽和した胴（2→1）
+# OP1 固定 ~76 Hz の正弦胴（レベルはミッドより抑える）
 [[operators]]
 ratio = 1.0
-detune_cents = -4.0
-level = 0.86
-attack = 0.0003
-decay = 0.17
+detune_cents = 0.0
+level = 0.28
+attack = 0.0004
+decay = 0.2
 sustain = 0.0
 release = 0.04
-vel_sens = 0.3
-waveform = "saw"
+vel_sens = 0.24
+waveform = "sine"
+freq_mode = "fixed"
+fixed_hz = 76.0
 
-# OP2 短いクリック変調
-[[operators]]
-ratio = 1.0
-detune_cents = 7.0
-level = 0.55
-attack = 0.00018
-decay = 0.02
-sustain = 0.0
-release = 0.014
-vel_sens = 0.52
-waveform = "pulse"
-
-# OP3 ミッドの踏み込み（4→3）
+# OP2 ミッドの歪みキャリア（ノート追従）
 [[operators]]
 ratio = 2.0
-detune_cents = 8.0
-level = 0.76
+detune_cents = 6.0
+level = 1.0
 attack = 0.0002
-decay = 0.14
+decay = 0.12
 sustain = 0.0
 release = 0.032
-vel_sens = 0.4
+vel_sens = 0.45
 waveform = "pulse"
 
-# OP4 裂けるクリック＋FB
+# OP3 裂けるミッドスタック（4→3）
+[[operators]]
+ratio = 2.5
+detune_cents = 9.0
+level = 0.82
+attack = 0.00018
+decay = 0.07
+sustain = 0.0
+release = 0.018
+vel_sens = 0.55
+waveform = "saw"
+
+# OP4 クリック＋FB
 [[operators]]
 ratio = 6.0
 detune_cents = -12.0
-level = 0.38
+level = 0.44
 attack = 0.0001
 decay = 0.01
 sustain = 0.0

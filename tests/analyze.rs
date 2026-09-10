@@ -262,20 +262,32 @@ fn bd_electro_zap_has_measurable_pitch_drop() {
         "electro-zap pitch confidence {}",
         pitch.confidence
     );
+    let b = &a.report.band_energy;
+    assert!(
+        b.sub_20_80 + b.bass_80_250 > 0.4,
+        "electro-zap needs ~80 Hz kick body (sub={}, bass={})",
+        b.sub_20_80,
+        b.bass_80_250
+    );
+    assert!(
+        b.sub_20_80 > 0.04,
+        "electro-zap ~50–80 Hz body too thin (sub={})",
+        b.sub_20_80
+    );
 }
 
 #[test]
-fn bd_frenchcore_has_aggressive_mid_and_thin_sub() {
+fn bd_frenchcore_has_aggressive_mid_and_kick_body() {
     let a = analyze_factory_kick("bd-frenchcore");
     let b = &a.report.band_energy;
     assert!(
-        (0.25..=0.55).contains(&b.mid_250_2000),
-        "frenchcore mid punch {} (want ~0.25–0.45)",
+        (0.20..=0.60).contains(&b.mid_250_2000),
+        "frenchcore mid punch {} (want ~0.25–0.45 plus 80 Hz thump)",
         b.mid_250_2000
     );
     assert!(
-        b.sub_20_80 < 0.05,
-        "frenchcore sub should stay cut, got {}",
+        b.sub_20_80 > 0.08,
+        "frenchcore needs thump near 80 Hz, got sub={}",
         b.sub_20_80
     );
     assert!(
@@ -287,5 +299,11 @@ fn bd_frenchcore_has_aggressive_mid_and_thin_sub() {
         a.report.peak > 0.4,
         "frenchcore peak {} after loudness normalize",
         a.report.peak
+    );
+    let near_80 = a.report.peaks_hz.iter().any(|p| (50.0..=110.0).contains(&p.hz));
+    assert!(
+        near_80,
+        "frenchcore should show a spectral peak near 80 Hz, got {:?}",
+        a.report.peaks_hz
     );
 }
