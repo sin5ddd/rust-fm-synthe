@@ -3,36 +3,40 @@ description = "ホワイト寄りの短いノイズヒット。トップやグ�
 algorithm = 8
 feedback = 0.16
 feedback_op = 1
-gain = 1.14
+gain = 1.18
 default_note = 72
-default_duration = 0.35
+default_duration = 0.38
 
 [filter]
 type = "highpass"
-cutoff = 2400.0
-resonance = 0.1
-env_amount = 0.5
+cutoff = 900.0
+resonance = 0.12
+env_amount = 0.55
 attack = 0.0004
-decay = 0.1
-sustain = 0.04
-release = 0.06
+decay = 0.12
+sustain = 0.05
+release = 0.07
+
+[fx.overdrive]
+mix = 0.22
+drive = 0.32
 
 [noise]
-type = "white"
-level = 1.12
+type = "pink"
+level = 1.18
 attack = 0.0003
-decay = 0.14
+decay = 0.16
 sustain = 0.0
-release = 0.06
+release = 0.07
 vel_sens = 0.5
 
 [noise.filter]
 type = "highpass"
-cutoff = 3800.0
+cutoff = 1400.0
 resonance = 0.1
-env_amount = 0.45
+env_amount = 0.5
 attack = 0.0003
-decay = 0.08
+decay = 0.1
 sustain = 0.04
 release = 0.05
 

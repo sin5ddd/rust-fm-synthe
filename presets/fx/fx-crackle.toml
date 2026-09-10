@@ -13,13 +13,17 @@ depth_cents = 40.0
 
 [filter]
 type = "highpass"
-cutoff = 1800.0
-resonance = 0.08
-env_amount = 0.5
+cutoff = 900.0
+resonance = 0.1
+env_amount = 0.55
 attack = 0.0003
-decay = 0.08
-sustain = 0.04
+decay = 0.1
+sustain = 0.05
 release = 0.05
+
+[fx.overdrive]
+mix = 0.2
+drive = 0.3
 
 [noise]
 type = "white"
@@ -32,7 +36,7 @@ vel_sens = 0.55
 
 [noise.filter]
 type = "highpass"
-cutoff = 3200.0
+cutoff = 1800.0
 resonance = 0.06
 env_amount = 0.4
 attack = 0.0002

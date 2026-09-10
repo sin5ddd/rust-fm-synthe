@@ -22,13 +22,17 @@ end = 0.22
 
 [filter]
 type = "bandpass"
-cutoff = 2800.0
-resonance = 0.24
-env_amount = -3.2
+cutoff = 2200.0
+resonance = 0.22
+env_amount = -3.0
 attack = 0.01
-decay = 1.5
-sustain = 0.1
+decay = 1.55
+sustain = 0.12
 release = 0.14
+
+[fx.overdrive]
+mix = 0.2
+drive = 0.3
 
 [noise]
 type = "white"

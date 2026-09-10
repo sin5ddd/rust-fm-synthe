@@ -9,13 +9,17 @@ default_duration = 0.5
 
 [filter]
 type = "highpass"
-cutoff = 2200.0
-resonance = 0.38
-env_amount = 1.4
+cutoff = 1400.0
+resonance = 0.32
+env_amount = 1.35
 attack = 0.0008
-decay = 0.16
-sustain = 0.08
+decay = 0.18
+sustain = 0.1
 release = 0.1
+
+[fx.overdrive]
+mix = 0.18
+drive = 0.28
 
 [noise]
 type = "white"

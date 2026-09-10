@@ -18,13 +18,17 @@ end = 0.5
 
 [filter]
 type = "highpass"
-cutoff = 280.0
-resonance = 0.2
-env_amount = 1.5
+cutoff = 140.0
+resonance = 0.18
+env_amount = 1.45
 attack = 0.001
-decay = 0.2
-sustain = 0.1
+decay = 0.22
+sustain = 0.12
 release = 0.08
+
+[fx.overdrive]
+mix = 0.22
+drive = 0.32
 
 [noise]
 type = "white"

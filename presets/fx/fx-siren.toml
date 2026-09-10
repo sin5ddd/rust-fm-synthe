@@ -13,13 +13,17 @@ depth_cents = 700.0
 
 [filter]
 type = "lowpass"
-cutoff = 2800.0
+cutoff = 3200.0
 resonance = 0.16
-env_amount = 1.0
+env_amount = 1.1
 attack = 0.02
-decay = 0.4
-sustain = 0.3
+decay = 0.42
+sustain = 0.32
 release = 0.12
+
+[fx.overdrive]
+mix = 0.2
+drive = 0.3
 
 [[operators]]
 ratio = 1.0

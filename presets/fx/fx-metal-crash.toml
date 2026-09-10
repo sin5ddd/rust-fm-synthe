@@ -14,13 +14,17 @@ curve = -1.2
 
 [filter]
 type = "highpass"
-cutoff = 280.0
-resonance = 0.22
-env_amount = 1.6
+cutoff = 180.0
+resonance = 0.2
+env_amount = 1.5
 attack = 0.0004
-decay = 0.18
-sustain = 0.12
+decay = 0.2
+sustain = 0.14
 release = 0.1
+
+[fx.overdrive]
+mix = 0.26
+drive = 0.38
 
 [noise]
 type = "white"

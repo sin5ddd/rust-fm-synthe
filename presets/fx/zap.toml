@@ -3,7 +3,7 @@ description = "下向きピッチのレーザー／ザップ。フィルやト�
 algorithm = 1
 feedback = 0.28
 feedback_op = 4
-gain = 1.0
+gain = 1.08
 default_note = 72
 default_duration = 0.38
 
@@ -15,6 +15,20 @@ curve = 1.1
 [mod_sweep]
 start = 1.4
 end = 0.15
+
+[filter]
+type = "highpass"
+cutoff = 55.0
+resonance = 0.08
+env_amount = 0.4
+attack = 0.0004
+decay = 0.12
+sustain = 0.08
+release = 0.05
+
+[fx.overdrive]
+mix = 0.22
+drive = 0.32
 
 [[operators]]
 ratio = 1.0

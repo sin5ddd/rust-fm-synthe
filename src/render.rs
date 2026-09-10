@@ -172,8 +172,8 @@ pub struct ExportParams {
     pub velocity: f32,
     pub sample_rate: u32,
     pub bit_depth: u16,
-    /// Extra full-patch voices. Default [`LayerMode::Auto`] stacks an octave
-    /// on factory leads (and a fifth when the mix is still thin).
+    /// Extra full-patch voices. Default [`LayerMode::Auto`] stacks +12 on
+    /// factory leads (and +7 when still thin) and −12/−24 on pitched factory FX.
     pub layers: LayerMode,
 }
 

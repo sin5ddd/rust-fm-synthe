@@ -59,6 +59,18 @@ cargo run -- render-all
 
 工場リードの `render` / `render-all` / `analyze` は、**同じ4OPパッチを基音ともう一度 +12（オクターブ上）でレンダして混ぜる**。分析でまだ薄い（正弦2本だけ、など）ときは +7（完全5度）も足す。オペレータの比を 2.0 に振り直したり、`[fx.chorus] intervals = octave-up` のディレイピッチシフトで厚くしたつもり、ではない。`--layers none` で単音。`--layers octave` / `--layers octave,fifth` で固定。プリセットに `render_layers = ["octave"]` または `["octave", "fifth"]`（`[]` で単音固定）を書ける。
 
+工場FXは同じ仕組みで**下方向**に重ねる（4OP内部の比を 0.5 にする手術ではない）。レーザー／ザップ／ピッチ系ライザーなどは基音 + (−12) + (−24)、まだ薄いときは (−36)。ゲインは下の段ほど小さい。ノイズ／インパクトは milder に −12 だけ（`fx-sub-drop` は既にサブなので重ねない）。
+
+```bash
+# 工場FXの既定（ピッチ系は −12/−24、必要なら −36）
+cargo run --release -- render --preset fx-laser
+# 段を明示（0 はユニゾン。省略可）
+cargo run --release -- render --preset fx-zap --layers 0,-12,-24
+cargo run --release -- render --preset fx-laser --layers octave-down,octave-down-2,octave-down-3
+# 単音（レイヤー無し）
+cargo run --release -- render --preset fx-laser --layers none
+```
+
 `fx-*` FXバンク（リバースシンバル、ライザー、インパクト、ダウンリフター、レーザー、ウーシュなど50種）も同じ。出力は `dist/fx-….wav`。ピッチのないノイズ／スイープが多い。リバースシンバルとライザーは長め（1.5–4秒、後で切る前提）。インパクトやヒットは短い。
 
 `bs-*` ベースバンク（808サブ、暗い／明るい／ニューロReese、ウォブル、アシッド、フレンチコア、ガバ、フーバー、歪みスクエア、タイトハウス、Amenサブ、グロウル2、正弦サブ、金属FMなど15種）も同じ。出力は `dist/bs-….wav`。TOMLは `presets/bass/`。C3付近（MIDI 36–48）。既存の `sub-bass` / `growl-bass` / `reese-mid` / `supersaw-bass` はそのまま（リネームしない追加バンク）。`reese-mid` の800–1200 Hz糊とは別。
@@ -96,7 +108,7 @@ cargo run -- render-all
 cargo run -- render-all -o /tmp/shots --duration 0.4 --note 36
 ```
 
-`--note` / `--duration` / `--hz` / `--velocity` / `--sample-rate` / `--bit-depth` / `--layers` は `render` と同じ。指定すると全プリセットに同じ値がかかる。`--layers auto`（既定）は工場リードだけオクターブ重ね。ベースやキックは単音のまま。
+`--note` / `--duration` / `--hz` / `--velocity` / `--sample-rate` / `--bit-depth` / `--layers` は `render` と同じ。指定すると全プリセットに同じ値がかかる。`--layers auto`（既定）は工場リードをオクターブ上、工場FXのピッチ系をオクターブ下スタック。ベースやキックは単音のまま。
 
 サブのワンショット（C2、約1.35秒、16-bit / 44.1 kHz）。`--output` 省略時は `dist/sub-bass.wav`:
 
@@ -186,7 +198,7 @@ cargo run --release -- analyze-all
 # → dist/<id>.png と dist/<id>.json（WAV は書かない）
 ```
 
-`--output` は PNG パス。JSON は同じ stem。プリセット指定時は同じ stem の WAV も書く。`--layers` は `render` と同じ（工場リードは既定でオクターブ重ね。JSON の `render_layers` に実際に混ぜた声が出る）。
+`--output` は PNG パス。JSON は同じ stem。プリセット指定時は同じ stem の WAV も書く。`--layers` は `render` と同じ（工場リードは既定でオクターブ上、工場FXのピッチ系はオクターブ下。JSON の `render_layers` に実際に混ぜた声が出る）。
 
 ## オペレータとアルゴリズム
 

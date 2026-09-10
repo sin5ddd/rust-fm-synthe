@@ -9,12 +9,16 @@ default_duration = 2.6
 
 [filter]
 type = "highpass"
-cutoff = 1800.0
-resonance = 0.10
+cutoff = 1100.0
+resonance = 0.12
+
+[fx.overdrive]
+mix = 0.2
+drive = 0.3
 
 [noise]
 type = "white"
-level = 1.12
+level = 1.16
 attack = 2.28
 decay = 0.02
 sustain = 1.0
@@ -23,7 +27,7 @@ vel_sens = 0.22
 
 [noise.filter]
 type = "highpass"
-cutoff = 2400.0
+cutoff = 1500.0
 resonance = 0.10
 
 [[operators]]

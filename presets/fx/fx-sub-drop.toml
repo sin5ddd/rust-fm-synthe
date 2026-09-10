@@ -14,13 +14,17 @@ curve = 0.9
 
 [filter]
 type = "lowpass"
-cutoff = 90.0
-resonance = 0.08
-env_amount = 2.2
+cutoff = 110.0
+resonance = 0.1
+env_amount = 2.4
 attack = 0.004
-decay = 0.35
-sustain = 0.15
+decay = 0.38
+sustain = 0.16
 release = 0.12
+
+[fx.overdrive]
+mix = 0.18
+drive = 0.28
 
 [[operators]]
 ratio = 0.5

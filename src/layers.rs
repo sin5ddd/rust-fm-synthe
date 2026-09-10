@@ -1,4 +1,4 @@
-//! Render-time multi-note mix: the same 4OP patch at N, N+12, optionally N+7.
+//! Render-time multi-note mix: the same 4OP patch at N, N+12, N−12, …
 //!
 //! This is **not** `[fx.chorus] intervals` (a delayed pitch-shift of the mono
 //! bus) and **not** reallocating operators inside a preset.
@@ -18,16 +18,26 @@ pub const LAYER_GAIN_ROOT: f32 = 1.0;
 pub const LAYER_GAIN_OCTAVE: f32 = 0.72;
 /// Perfect-fifth voice, quieter still.
 pub const LAYER_GAIN_FIFTH: f32 = 0.48;
+/// One octave down — body under lasers / pitched FX.
+pub const LAYER_GAIN_OCTAVE_DOWN: f32 = 0.78;
+/// Two octaves down; tapers under the first down.
+pub const LAYER_GAIN_OCTAVE_DOWN_2: f32 = 0.52;
+/// Three octaves down; only mixed when the −12/−24 stack still looks thin.
+pub const LAYER_GAIN_OCTAVE_DOWN_3: f32 = 0.34;
 
-/// One extra full-patch voice, expressed as a musical interval above the root.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Deserialize)]
-#[serde(rename_all = "kebab-case")]
+/// One extra full-patch voice, expressed as a musical interval from the root.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum LayerInterval {
     /// +12 semitones (2× frequency). Also accepts `octave-up` in TOML/CLI.
-    #[serde(alias = "octave-up")]
     Octave,
     /// +7 semitones (perfect fifth).
     Fifth,
+    /// −12 semitones (½×). `octave-down` / `-12`.
+    OctaveDown,
+    /// −24 semitones (¼×). `octave-down-2` / `-24`.
+    OctaveDown2,
+    /// −36 semitones (⅛×). `octave-down-3` / `-36`.
+    OctaveDown3,
 }
 
 impl LayerInterval {
@@ -35,6 +45,9 @@ impl LayerInterval {
         match self {
             Self::Octave => 12,
             Self::Fifth => 7,
+            Self::OctaveDown => -12,
+            Self::OctaveDown2 => -24,
+            Self::OctaveDown3 => -36,
         }
     }
 
@@ -42,6 +55,9 @@ impl LayerInterval {
         match self {
             Self::Octave => LAYER_GAIN_OCTAVE,
             Self::Fifth => LAYER_GAIN_FIFTH,
+            Self::OctaveDown => LAYER_GAIN_OCTAVE_DOWN,
+            Self::OctaveDown2 => LAYER_GAIN_OCTAVE_DOWN_2,
+            Self::OctaveDown3 => LAYER_GAIN_OCTAVE_DOWN_3,
         }
     }
 
@@ -49,28 +65,107 @@ impl LayerInterval {
         match self {
             Self::Octave => "octave",
             Self::Fifth => "fifth",
+            Self::OctaveDown => "octave-down",
+            Self::OctaveDown2 => "octave-down-2",
+            Self::OctaveDown3 => "octave-down-3",
+        }
+    }
+
+    pub fn from_semitones(st: i16) -> Option<Self> {
+        match st {
+            12 => Some(Self::Octave),
+            7 => Some(Self::Fifth),
+            -12 => Some(Self::OctaveDown),
+            -24 => Some(Self::OctaveDown2),
+            -36 => Some(Self::OctaveDown3),
+            _ => None,
         }
     }
 
     pub fn parse_token(raw: &str) -> Result<Self> {
-        match raw.trim().to_ascii_lowercase().as_str() {
+        let s = raw.trim().to_ascii_lowercase();
+        match s.as_str() {
             "octave" | "octave-up" => Ok(Self::Octave),
             "fifth" => Ok(Self::Fifth),
-            other => Err(Error::InvalidParam {
-                message: format!(
-                    "unknown layer `{other}` (use auto, none, octave, fifth, octave,fifth)"
-                ),
-            }),
+            "octave-down" => Ok(Self::OctaveDown),
+            "octave-down-2" | "octave-down2" => Ok(Self::OctaveDown2),
+            "octave-down-3" | "octave-down3" => Ok(Self::OctaveDown3),
+            other => {
+                if let Ok(st) = other.parse::<i16>() {
+                    return Self::from_semitones(st).ok_or_else(|| Error::InvalidParam {
+                        message: format!(
+                            "unsupported layer semitones {st} (use 12, 7, -12, -24, -36)"
+                        ),
+                    });
+                }
+                Err(Error::InvalidParam {
+                    message: format!(
+                        "unknown layer `{other}` (use auto, none, octave, fifth, \
+                         octave-down, octave-down-2, octave-down-3, or 0,-12,-24)"
+                    ),
+                })
+            }
         }
+    }
+}
+
+impl<'de> Deserialize<'de> for LayerInterval {
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        struct LayerVisitor;
+        impl<'de> serde::de::Visitor<'de> for LayerVisitor {
+            type Value = LayerInterval;
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                write!(
+                    f,
+                    "a layer interval (octave, fifth, octave-down, -12, -24, …)"
+                )
+            }
+            fn visit_str<E: serde::de::Error>(
+                self,
+                v: &str,
+            ) -> std::result::Result<LayerInterval, E> {
+                LayerInterval::parse_token(v).map_err(E::custom)
+            }
+            fn visit_string<E: serde::de::Error>(
+                self,
+                v: String,
+            ) -> std::result::Result<LayerInterval, E> {
+                self.visit_str(&v)
+            }
+            fn visit_i64<E: serde::de::Error>(
+                self,
+                v: i64,
+            ) -> std::result::Result<LayerInterval, E> {
+                if v < i64::from(i16::MIN) || v > i64::from(i16::MAX) {
+                    return Err(E::custom(format!("unsupported layer semitones {v}")));
+                }
+                LayerInterval::from_semitones(v as i16)
+                    .ok_or_else(|| E::custom(format!("unsupported layer semitones {v}")))
+            }
+            fn visit_u64<E: serde::de::Error>(
+                self,
+                v: u64,
+            ) -> std::result::Result<LayerInterval, E> {
+                if v > i16::MAX as u64 {
+                    return Err(E::custom(format!("unsupported layer semitones {v}")));
+                }
+                self.visit_i64(v as i64)
+            }
+        }
+        deserializer.deserialize_any(LayerVisitor)
     }
 }
 
 /// How `render` / `analyze` choose extra full-patch voices.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum LayerMode {
-    /// Factory leads (`ld-*` / `lead-*` / ld-folder extras): octave, plus fifth
-    /// when the octave mix still looks thin. Other banks stay single-note unless
-    /// the preset sets `render_layers`.
+    /// Factory leads: +12, plus +7 when the octave mix still looks thin.
+    /// Factory pitched FX: −12 and −24, plus −36 when still thin.
+    /// Other factory FX: a single −12 body (except already-sub shots).
+    /// Other banks stay single-note unless the preset sets `render_layers`.
     Auto,
     /// Single-note render (the historical `render()` behavior).
     Off,
@@ -85,7 +180,8 @@ impl Default for LayerMode {
 }
 
 impl LayerMode {
-    /// Parse CLI `--layers` values: `auto`, `none`, `octave`, `octave,fifth`.
+    /// Parse CLI `--layers` values: `auto`, `none`, `octave`, `octave-down`,
+    /// `octave-down,octave-down-2`, `0,-12,-24`.
     pub fn parse(spec: &str) -> Result<Self> {
         let spec = spec.trim();
         if spec.is_empty() || spec.eq_ignore_ascii_case("auto") {
@@ -101,6 +197,8 @@ impl LayerMode {
             if part.is_empty()
                 || part.eq_ignore_ascii_case("unison")
                 || part.eq_ignore_ascii_case("root")
+                || part == "0"
+                || part == "+0"
             {
                 continue;
             }
@@ -114,6 +212,23 @@ impl LayerMode {
             Ok(Self::Explicit(intervals))
         }
     }
+}
+
+/// Extra interval that Auto may append after the first mix.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum AutoLayerExtra {
+    None,
+    /// Factory-lead thin check → +7.
+    Fifth,
+    /// Pitched-FX thin check → −36.
+    OctaveDown3,
+}
+
+/// Resolved mix list plus an optional Auto follow-up interval.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct LayerPlan {
+    pub intervals: Vec<LayerInterval>,
+    pub extra: AutoLayerExtra,
 }
 
 /// One completed export buffer plus the semitone offsets that were mixed.
@@ -134,19 +249,26 @@ impl LayeredRender {
                 0 => "unison".to_string(),
                 12 => "octave".to_string(),
                 7 => "fifth".to_string(),
+                -12 => "octave-down".to_string(),
+                -24 => "octave-down-2".to_string(),
+                -36 => "octave-down-3".to_string(),
                 other => format!("{other:+}"),
             })
             .collect()
     }
 }
 
-/// Factory lead bank: `ld-*`, `lead-*`, and the older shots that live in `presets/ld/`.
-pub fn is_factory_lead_id(id: &str) -> bool {
+fn preset_stem(id: &str) -> &str {
     let stem = Path::new(id)
         .file_stem()
         .and_then(|s| s.to_str())
         .unwrap_or(id);
-    let stem = stem.rsplit('/').next().unwrap_or(stem);
+    stem.rsplit('/').next().unwrap_or(stem)
+}
+
+/// Factory lead bank: `ld-*`, `lead-*`, and the older shots that live in `presets/ld/`.
+pub fn is_factory_lead_id(id: &str) -> bool {
+    let stem = preset_stem(id);
     stem.starts_with("ld-")
         || stem.starts_with("lead-")
         || matches!(
@@ -155,23 +277,93 @@ pub fn is_factory_lead_id(id: &str) -> bool {
         )
 }
 
+/// Factory FX bank: `fx-*` plus the older `fm-riser` / `zap` / `hp-air` ids.
+pub fn is_factory_fx_id(id: &str) -> bool {
+    let stem = preset_stem(id);
+    stem.starts_with("fx-") || matches!(stem, "fm-riser" | "zap" | "hp-air")
+}
+
+/// Lasers, zaps, pitched risers, falls, stabs — want a multi-octave-down stack.
+pub fn is_pitched_fx_id(id: &str) -> bool {
+    matches!(
+        preset_stem(id),
+        "fx-laser"
+            | "fx-laser-fall"
+            | "fx-zap"
+            | "zap"
+            | "fx-blip"
+            | "fx-alarm"
+            | "fx-siren"
+            | "fx-riser-pitch"
+            | "fx-riser-saw"
+            | "fx-uplifter"
+            | "fm-riser"
+            | "fx-downlifter"
+            | "fx-fall"
+            | "fx-hoover-fall"
+            | "fx-tape-stop"
+            | "fx-down-to-kick"
+            | "fx-formant-ah"
+            | "fx-formant-oh"
+            | "fx-gabber-stab"
+            | "fx-radio-stab"
+            | "fx-sweep-bp"
+            | "fx-passby"
+            | "fx-trans-fill"
+    )
+}
+
+/// Impacts / clangs that benefit from a single octave-down body (not a full stack).
+pub fn is_impact_fx_id(id: &str) -> bool {
+    matches!(
+        preset_stem(id),
+        "fx-boom" | "fx-impact" | "fx-impact-mid" | "fx-impact-dnb" | "fx-clang"
+    )
+}
+
+/// Already a falling sub; another −12 would sit under ~20 Hz.
+pub fn skips_fx_auto_layers(id: &str) -> bool {
+    matches!(preset_stem(id), "fx-sub-drop")
+}
+
 /// CLI `--layers` wins when it is not `auto`. Otherwise the preset field, then
-/// the factory-lead default (octave, maybe fifth).
-pub fn resolve_layer_plan(
-    preset_id: &str,
-    preset: &Preset,
-    mode: &LayerMode,
-) -> (Vec<LayerInterval>, bool) {
+/// the factory-lead / factory-FX default.
+pub fn resolve_layer_plan(preset_id: &str, preset: &Preset, mode: &LayerMode) -> LayerPlan {
     match mode {
-        LayerMode::Off => (Vec::new(), false),
-        LayerMode::Explicit(intervals) => (intervals.clone(), false),
+        LayerMode::Off => LayerPlan {
+            intervals: Vec::new(),
+            extra: AutoLayerExtra::None,
+        },
+        LayerMode::Explicit(intervals) => LayerPlan {
+            intervals: intervals.clone(),
+            extra: AutoLayerExtra::None,
+        },
         LayerMode::Auto => {
             if let Some(ref intervals) = preset.render_layers {
-                (intervals.clone(), false)
+                LayerPlan {
+                    intervals: intervals.clone(),
+                    extra: AutoLayerExtra::None,
+                }
             } else if is_factory_lead_id(preset_id) {
-                (vec![LayerInterval::Octave], true)
+                LayerPlan {
+                    intervals: vec![LayerInterval::Octave],
+                    extra: AutoLayerExtra::Fifth,
+                }
+            } else if is_pitched_fx_id(preset_id) {
+                LayerPlan {
+                    intervals: vec![LayerInterval::OctaveDown, LayerInterval::OctaveDown2],
+                    extra: AutoLayerExtra::OctaveDown3,
+                }
+            } else if is_factory_fx_id(preset_id) && !skips_fx_auto_layers(preset_id) {
+                LayerPlan {
+                    intervals: vec![LayerInterval::OctaveDown],
+                    extra: AutoLayerExtra::None,
+                }
             } else {
-                (Vec::new(), false)
+                LayerPlan {
+                    intervals: Vec::new(),
+                    extra: AutoLayerExtra::None,
+                }
             }
         }
     }
@@ -184,19 +376,15 @@ pub fn render_with_layers(
     params: &RenderParams,
     mode: &LayerMode,
 ) -> Result<LayeredRender> {
-    let (intervals, maybe_fifth) = resolve_layer_plan(preset_id, preset, mode);
+    let plan = resolve_layer_plan(preset_id, preset, mode);
     let root = render(preset, params)?;
     let mut parts: Vec<(i16, Vec<f32>, f32)> = vec![(0, root, LAYER_GAIN_ROOT)];
 
-    if intervals.iter().any(|i| *i == LayerInterval::Octave) {
-        parts.push(render_offset(preset, params, LayerInterval::Octave)?);
-    }
-    let fifth_forced = intervals.iter().any(|i| *i == LayerInterval::Fifth);
-    if fifth_forced {
-        parts.push(render_offset(preset, params, LayerInterval::Fifth)?);
+    for interval in &plan.intervals {
+        parts.push(render_offset(preset, params, *interval)?);
     }
 
-    if parts.len() == 1 && !maybe_fifth {
+    if parts.len() == 1 && plan.extra == AutoLayerExtra::None {
         return Ok(LayeredRender {
             samples: parts.remove(0).1,
             frequency_hz: params.frequency_hz,
@@ -208,11 +396,23 @@ pub fn render_with_layers(
     let mut samples = mix_gain_parts(&parts);
     let mut semitones: Vec<i16> = parts.iter().map(|(st, _, _)| *st).collect();
 
-    if maybe_fifth
-        && !fifth_forced
+    if plan.extra == AutoLayerExtra::Fifth
+        && !plan.intervals.iter().any(|i| *i == LayerInterval::Fifth)
         && stack_looks_thin(&samples, params.sample_rate, params.frequency_hz)
     {
         parts.push(render_offset(preset, params, LayerInterval::Fifth)?);
+        samples = mix_gain_parts(&parts);
+        semitones = parts.iter().map(|(st, _, _)| *st).collect();
+    }
+
+    if plan.extra == AutoLayerExtra::OctaveDown3
+        && !plan
+            .intervals
+            .iter()
+            .any(|i| *i == LayerInterval::OctaveDown3)
+        && down_stack_looks_thin(&samples, params.sample_rate, params.frequency_hz)
+    {
+        parts.push(render_offset(preset, params, LayerInterval::OctaveDown3)?);
         samples = mix_gain_parts(&parts);
         semitones = parts.iter().map(|(st, _, _)| *st).collect();
     }
@@ -310,6 +510,38 @@ pub fn stack_looks_thin(buf: &[f32], sample_rate: u32, f0: f64) -> bool {
     harmonic_thin && mid_weak
 }
 
+/// After mixing 0/−12/−24, the shot still reads as a high beep (weak low band
+/// or a missing two-octave-down ridge). Used to decide whether to add −36.
+pub fn down_stack_looks_thin(buf: &[f32], sample_rate: u32, f0: f64) -> bool {
+    if buf.len() < 256 || !f0.is_finite() || f0 <= 0.0 {
+        return false;
+    }
+    let f_down3 = f0 * 0.125;
+    if f_down3 < 22.0 {
+        return false;
+    }
+    // FX one-shots decay fast — use the first half, not a late sustain window.
+    let start = buf.len() / 20;
+    let end = (buf.len() * 5 / 10).max(start + 256).min(buf.len());
+    if end <= start + 64 {
+        return false;
+    }
+    let windowed = hann_window(&buf[start..end]);
+    let sr = sample_rate as f32;
+    let e0 = goertzel_power(&windowed, sr, f0 as f32);
+    let e_d2 = goertzel_power(&windowed, sr, (f0 * 0.25) as f32);
+    let sub = band_goertzel(&windowed, sr, 20.0, 90.0, 6.0);
+    let bass = band_goertzel(&windowed, sr, 90.0, 250.0, 8.0);
+    let midhigh = band_goertzel(&windowed, sr, 250.0, (sr * 0.45).min(8_000.0), 24.0);
+    let tot = sub + bass + midhigh;
+    if tot <= 0.0 {
+        return false;
+    }
+    let low_weak = (sub + bass) / tot < 0.16;
+    let missing_down2 = e0 > 1e-14 && e_d2 / e0 < 0.07;
+    low_weak || missing_down2
+}
+
 fn band_goertzel(buf: &[f32], sr: f32, lo: f32, hi: f32, step: f32) -> f64 {
     let mut e = 0.0;
     let mut f = lo;
@@ -369,6 +601,26 @@ mod tests {
             LayerMode::parse("octave-up, fifth").unwrap(),
             LayerMode::Explicit(vec![LayerInterval::Octave, LayerInterval::Fifth])
         );
+        assert_eq!(
+            LayerMode::parse("octave-down").unwrap(),
+            LayerMode::Explicit(vec![LayerInterval::OctaveDown])
+        );
+        assert_eq!(
+            LayerMode::parse("octave-down,octave-down-2").unwrap(),
+            LayerMode::Explicit(vec![LayerInterval::OctaveDown, LayerInterval::OctaveDown2])
+        );
+        assert_eq!(
+            LayerMode::parse("0,-12,-24").unwrap(),
+            LayerMode::Explicit(vec![LayerInterval::OctaveDown, LayerInterval::OctaveDown2])
+        );
+        assert_eq!(
+            LayerMode::parse("-12,-24,-36").unwrap(),
+            LayerMode::Explicit(vec![
+                LayerInterval::OctaveDown,
+                LayerInterval::OctaveDown2,
+                LayerInterval::OctaveDown3
+            ])
+        );
         assert!(LayerMode::parse("chorus").is_err());
     }
 
@@ -381,6 +633,27 @@ mod tests {
         assert!(!is_factory_lead_id("sub-bass"));
         assert!(!is_factory_lead_id("bd-808-boom"));
         assert!(!is_factory_lead_id("bs-wobble"));
+        assert!(!is_factory_lead_id("fx-laser"));
+        assert!(is_factory_lead_id("ld-laser"));
+        assert!(is_factory_lead_id("ld-zap"));
+    }
+
+    #[test]
+    fn fx_id_detection() {
+        assert!(is_factory_fx_id("fx-laser"));
+        assert!(is_factory_fx_id("presets/fx/fx-zap.toml"));
+        assert!(is_factory_fx_id("fm-riser"));
+        assert!(is_factory_fx_id("zap"));
+        assert!(is_factory_fx_id("hp-air"));
+        assert!(!is_factory_fx_id("ld-laser"));
+        assert!(!is_factory_fx_id("ld-zap"));
+        assert!(is_pitched_fx_id("fx-laser"));
+        assert!(is_pitched_fx_id("fx-zap"));
+        assert!(is_pitched_fx_id("fx-riser-pitch"));
+        assert!(is_impact_fx_id("fx-boom"));
+        assert!(!is_pitched_fx_id("fx-boom"));
+        assert!(!is_pitched_fx_id("fx-noise-hit"));
+        assert!(skips_fx_auto_layers("fx-sub-drop"));
     }
 
     #[test]
@@ -407,5 +680,23 @@ mod tests {
         assert!(stack_looks_thin(&sine_oct, sr, f64::from(f0)));
         assert!(!stack_looks_thin(&saw, sr, f64::from(f0)));
         assert!(!stack_looks_thin(&pulse_c4, sr, 261.63));
+    }
+
+    #[test]
+    fn high_beep_looks_thin_for_down_stack() {
+        let sr = 22_050u32;
+        let n = (sr as usize) / 2;
+        let f0 = 523.25f32;
+        let mut beep = vec![0.0f32; n];
+        let mut stacked = vec![0.0f32; n];
+        for i in 0..n {
+            let t = i as f32 / sr as f32;
+            beep[i] = (std::f32::consts::TAU * f0 * t).sin();
+            stacked[i] = beep[i]
+                + 0.78 * (std::f32::consts::TAU * (f0 * 0.5) * t).sin()
+                + 0.52 * (std::f32::consts::TAU * (f0 * 0.25) * t).sin();
+        }
+        assert!(down_stack_looks_thin(&beep, sr, f64::from(f0)));
+        assert!(!down_stack_looks_thin(&stacked, sr, f64::from(f0)));
     }
 }
