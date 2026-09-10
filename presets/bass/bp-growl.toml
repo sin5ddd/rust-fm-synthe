@@ -15,22 +15,22 @@ depth_cents = 11.0
 start = 1.18
 end = 0.72
 
-# 胴は ~160 Hz に置き、エンベで喉まで動かす。520 Hz 固定のミッドビープにしない。
+# 胴は ~155 Hz に置き、エンベで喉まで動かす。
 [filter]
 type = "bandpass"
 cutoff = 155
-resonance = 0.36
-env_amount = 1.85
+resonance = 0.32
+env_amount = 1.95
 attack = 0.018
 decay = 0.42
-sustain = 0.26
+sustain = 0.28
 release = 0.18
 
 # OP1 ~120 Hz 正弦胴（E2 × 1.456）
 [[operators]]
 ratio = 1.456
 detune_cents = -3.0
-level = 0.68
+level = 0.5
 attack = 0.012
 decay = 0.9
 sustain = 0.24
@@ -42,10 +42,10 @@ waveform = "sine"
 [[operators]]
 ratio = 1.0
 detune_cents = 8.0
-level = 0.8
+level = 0.92
 attack = 0.01
 decay = 0.75
-sustain = 0.18
+sustain = 0.2
 release = 0.18
 vel_sens = 0.4
 waveform = "saw"
@@ -54,10 +54,10 @@ waveform = "saw"
 [[operators]]
 ratio = 1.47
 detune_cents = -10.0
-level = 0.58
+level = 0.64
 attack = 0.004
 decay = 0.36
-sustain = 0.1
+sustain = 0.12
 release = 0.12
 vel_sens = 0.5
 waveform = "half-sine"
@@ -66,7 +66,7 @@ waveform = "half-sine"
 [[operators]]
 ratio = 2.03
 detune_cents = 9.0
-level = 0.48
+level = 0.5
 attack = 0.003
 decay = 0.26
 sustain = 0.08

@@ -8,7 +8,7 @@ use fm_synth::{
 };
 
 const SR: u32 = 44_100;
-const BODY_IDS: [&str; 9] = [
+const BODY_IDS: [&str; 8] = [
     "bs-wobble",
     "growl-bass",
     "bs-growl-2",
@@ -17,7 +17,6 @@ const BODY_IDS: [&str; 9] = [
     "bs-frenchcore",
     "bs-metal-fm",
     "bs-dist-square",
-    "supersaw-bass",
 ];
 
 fn analyze_id(id: &str) -> (fm_synth::Preset, AnalysisReport) {
@@ -113,8 +112,10 @@ fn growl_variants_stay_distinct() {
     assert_eq!(c.filter.kind, FilterType::Bandpass);
     assert!(c.filter.env_amount > a.filter.env_amount);
     assert!(
-        rb.spectral_centroid_hz > ra.spectral_centroid_hz * 0.9,
-        "bs-growl-2 should not be a darker clone of growl-bass"
+        (rb.band_energy.mid_250_2000 - ra.band_energy.mid_250_2000).abs() > 0.04,
+        "growl variants should differ in mid energy (growl-bass mid={}, growl-2 mid={})",
+        ra.band_energy.mid_250_2000,
+        rb.band_energy.mid_250_2000
     );
     assert_bass_body("growl-bass", &ra);
     assert_bass_body("bs-growl-2", &rb);

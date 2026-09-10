@@ -37,15 +37,15 @@ release = 0.16
 vel_sens = 0.32
 waveform = "pulse"
 
-# OP2 ~120 Hz 正弦胴（C2 × 1.835）。パルスの穴を埋める。
+# OP2 ~120 Hz 正弦胴（C2 × 1.835）。パルスの偶数穴を埋める。
 [[operators]]
 ratio = 1.835
 detune_cents = 3
-level = 0.62
+level = 0.98
 attack = 0.008
-decay = 0.7
-sustain = 0.22
-release = 0.14
+decay = 0.75
+sustain = 0.26
+release = 0.15
 vel_sens = 0.28
 waveform = "sine"
 
