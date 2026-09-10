@@ -1,9 +1,9 @@
 name = "fm-riser"
-description = "ノイズ寄りのFMライザー。基音は2オクターブ下、スタートで100Hzのサインを重ねてピッチ包絡と一緒に上昇。倍音は1オクターブ上。コーラスはオク下・オク上・5度の全部盛り。130 BPMの8小節を覆う長さ。"
+description = "ノイズ寄りのFMライザー。基音は2オクターブ下の薄いサブ、スタートで100Hzのサインを重ねてピッチ包絡と一緒に上昇。倍音は1オクターブ上。コーラスはオク下・オク上・5度の全部盛り。130 BPMの8小節を覆う長さ。"
 algorithm = 7
-feedback = 0.4
+feedback = 0.36
 feedback_op = 4
-gain = 0.9
+gain = 0.92
 default_note = 48
 # 8 bars at 130 BPM, 4/4 = 32 * 60 / 130 ≈ 14.769 s, plus a short release tail.
 default_duration = 15.0
@@ -11,87 +11,97 @@ default_duration = 15.0
 [pitch]
 start_semitones = -19.0
 end_semitones = 31.0
-curve = 1.6
+curve = 0.5
 
 [lfo]
-rate_hz = 0.35
-depth_cents = 22.0
+rate_hz = 0.3
+depth_cents = 16.0
 
 [mod_sweep]
-start = 0.22
-end = 1.55
+start = 0.28
+end = 1.45
+
+[filter]
+type = "highpass"
+cutoff = 55.0
+resonance = 0.08
+env_amount = 2.6
+attack = 11.0
+decay = 1.2
+sustain = 0.8
+release = 0.25
 
 [noise]
 type = "white"
-level = 0.72
-attack = 0.5
+level = 0.68
+attack = 1.6
 decay = 8.0
-sustain = 0.7
+sustain = 0.75
 release = 0.3
-vel_sens = 0.2
+vel_sens = 0.18
 
 [noise.filter]
 type = "highpass"
-cutoff = 200.0
+cutoff = 280.0
 resonance = 0.1
-env_amount = 3.8
-attack = 11.0
-decay = 1.4
-sustain = 0.7
+env_amount = 4.0
+attack = 11.5
+decay = 1.2
+sustain = 0.75
 release = 0.25
 
 [fx.chorus]
-mix = 0.52
+mix = 0.46
 rate_hz = 0.7
 depth_ms = 5.0
 delay_ms = 16.0
-feedback = 0.18
+feedback = 0.16
 intervals = ["octave-down", "octave-up", "fifth"]
 
-# OP1 キャリア。基音は ratio 0.25 で2オクターブ下。algo 7 では素のサイン。
+# OP1 キャリア。基音は ratio 0.25 で2オクターブ下。algo 7 では素のサイン。ベッドだけ。
 [[operators]]
 ratio = 0.25
 detune_cents = 0.0
-level = 1.0
-attack = 0.4
-decay = 6.0
-sustain = 0.8
+level = 0.26
+attack = 0.5
+decay = 8.0
+sustain = 0.75
 release = 0.3
-vel_sens = 0.2
+vel_sens = 0.16
 waveform = "sine"
 
 # OP2 素のサイン。MIDI 48・pitch start -19 st で約 100 Hz。包絡に追従して上昇。
 [[operators]]
 ratio = 2.2908
 detune_cents = 0.0
-level = 0.95
-attack = 0.4
-decay = 6.0
+level = 0.5
+attack = 0.25
+decay = 8.0
 sustain = 0.8
 release = 0.3
-vel_sens = 0.2
+vel_sens = 0.18
 waveform = "sine"
 
 # OP3。旧 5.13 の1オクターブ上。algo 7 では OP4 に変調されるキャリア。
 [[operators]]
 ratio = 10.26
 detune_cents = 27.0
-level = 0.9
-attack = 0.5
+level = 0.95
+attack = 1.2
 decay = 5.0
-sustain = 0.7
+sustain = 0.8
 release = 0.26
-vel_sens = 0.3
+vel_sens = 0.28
 waveform = "half-sine"
 
 # OP4 高フィードバックで砂状の帯域。旧 8.07 の1オクターブ上。
 [[operators]]
 ratio = 16.14
 detune_cents = -33.0
-level = 0.48
-attack = 0.3
+level = 0.55
+attack = 1.0
 decay = 4.5
-sustain = 0.5
+sustain = 0.62
 release = 0.24
-vel_sens = 0.35
+vel_sens = 0.32
 waveform = "pulse"
