@@ -5,7 +5,7 @@ feedback = 0.32
 feedback_op = 4
 gain = 1.0
 default_note = 48
-default_duration = 8.2
+default_duration = 5.538461538
 
 [mod_sweep]
 start = 1.35

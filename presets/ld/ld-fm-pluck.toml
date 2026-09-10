@@ -1,11 +1,11 @@
 name = "ld-fm-pluck"
-description = "短いシリアルFMプラック。C3基音。リードバンク用（既存のlead-fm-pluckとは別パッチ）。"
+description = "シリアルFMプラック。C3基音。アタックのFMは約200ms聞こえる。リードバンク用（既存のlead-fm-pluckとは別パッチ）。"
 algorithm = 1
 feedback = 0.12
 feedback_op = 4
 gain = 1.0
 default_note = 48
-default_duration = 8.2
+default_duration = 5.538461538
 
 [filter]
 type = "lowpass"
@@ -13,11 +13,11 @@ cutoff = 380.0
 resonance = 0.28
 env_amount = 4.2
 attack = 0.0006
-decay = 0.12
+decay = 0.22
 sustain = 0.22
 release = 0.2
 
-# OP1 キャリア C3
+# OP1 キャリア C3（アンプはプラック寄り。オクターブは --layers）
 [[operators]]
 ratio = 1.0
 detune_cents = 0
@@ -29,38 +29,38 @@ release = 0.2
 vel_sens = 0.42
 waveform = "sine"
 
-# OP2 2:1 キラッと
+# OP2 2:1 モジュレータ。約200msのFM咬み（クリックではない）
 [[operators]]
 ratio = 2.0
 detune_cents = 4
-level = 0.38
-attack = 0.0003
-decay = 0.045
+level = 0.42
+attack = 0.002
+decay = 0.22
 sustain = 0
-release = 0.02
+release = 0.08
 vel_sens = 0.5
 waveform = "sine"
 
-# OP3 高次でアタック
+# OP3 高次。アタックFMを同じ窓で支える
 [[operators]]
 ratio = 5.0
 detune_cents = -6
-level = 0.18
-attack = 0.0002
-decay = 0.022
+level = 0.22
+attack = 0.001
+decay = 0.18
 sustain = 0
-release = 0.012
+release = 0.06
 vel_sens = 0.55
 waveform = "half-sine"
 
-# OP4 短いクリック
+# OP4 高めのキラッと。FM窓の前半
 [[operators]]
 ratio = 7.0
 detune_cents = 0
-level = 0.1
-attack = 0.0002
-decay = 0.012
+level = 0.12
+attack = 0.001
+decay = 0.12
 sustain = 0
-release = 0.008
+release = 0.05
 vel_sens = 0.6
 waveform = "sine"

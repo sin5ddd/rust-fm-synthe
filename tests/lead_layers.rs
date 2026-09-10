@@ -201,7 +201,7 @@ fn ld_fm_pluck_stays_serial_and_late_octave_is_a_second_voice() {
     assert_eq!(layered.samples.len(), single.len());
 
     let f0 = midi_to_hz(48) as f32;
-    let start = (SR as usize) * 2 / 5; // 0.4 s — FM ratio-2 click is long gone
+    let start = (SR as usize) * 2 / 5; // 0.4 s — ~200 ms FM attack has settled
     let end = ((SR as usize) * 7 / 10).min(single.len());
     let single_w = hann(&single[start..end]);
     let layer_w = hann(&layered.samples[start..end]);
@@ -292,6 +292,53 @@ fn thin_auto_lead_can_gain_a_fifth() {
         "bright chip should stay octave-only, got {:?}",
         chip_out.semitones
     );
+}
+
+fn fm_partial_energy(buf: &[f32], t0: f64, t1: f64, f0: f32) -> f64 {
+    let a = ((t0 * f64::from(SR)) as usize).min(buf.len());
+    let b = ((t1 * f64::from(SR)) as usize).min(buf.len());
+    assert!(b > a + 64, "window {t0}..{t1}");
+    let w = hann(&buf[a..b]);
+    goertzel_power(&w, SR as f32, f0 * 3.0)
+        + goertzel_power(&w, SR as f32, f0 * 5.0)
+        + goertzel_power(&w, SR as f32, f0 * 7.0)
+}
+
+#[test]
+fn fm_plucks_keep_serial_fm_bite_for_about_200ms() {
+    for id in ["ld-fm-pluck", "lead-fm-pluck"] {
+        let preset = load_factory(id).unwrap();
+        assert_eq!(preset.algorithm, Algorithm::Serial, "{id}");
+        let mods: Vec<_> = preset
+            .operators
+            .iter()
+            .skip(1)
+            .filter(|op| op.level > 1e-6)
+            .collect();
+        assert!(
+            mods.iter().any(|op| (0.15..=0.28).contains(&op.decay)),
+            "{id} modulator decay should last ~200ms, got {:?}",
+            mods.iter().map(|op| op.decay).collect::<Vec<_>>()
+        );
+        assert!(
+            mods.iter().all(|op| op.sustain < 0.05),
+            "{id} modulators must die after the attack (not become sustain carriers)"
+        );
+
+        let buf = render(&preset, &params(&preset, 0.9)).unwrap();
+        let f0 = midi_to_hz(48) as f32;
+        let early = fm_partial_energy(&buf, 0.04, 0.16, f0);
+        let late_attack = fm_partial_energy(&buf, 0.12, 0.22, f0);
+        let settled = fm_partial_energy(&buf, 0.40, 0.60, f0);
+        assert!(
+            early > settled * 3.0,
+            "{id} FM bite should be much brighter in the first 160ms than after 400ms (early={early}, settled={settled})"
+        );
+        assert!(
+            late_attack > settled * 1.6,
+            "{id} FM should still be audible near 200ms (late_attack={late_attack}, settled={settled})"
+        );
+    }
 }
 
 #[test]

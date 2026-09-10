@@ -235,7 +235,7 @@ fn factory_ld_leads_are_fifty_and_audible() {
     for id in ids {
         let preset = load_factory(id).unwrap();
         // Bank-count / audible smoke. Hold length is checked in
-        // `factory_ld_folder_holds_four_bars_at_120bpm` (default ~8 s).
+        // `factory_ld_folder_holds_three_wholes_at_130bpm` (default ~5.54 s).
         let buf = render(
             &preset,
             &RenderParams {
@@ -259,11 +259,11 @@ fn factory_ld_leads_are_fifty_and_audible() {
     }
 }
 
-/// 120 BPM, 4/4 → 1 bar = 2 s → 4 bars = 8 s held note.
+/// 130 BPM, 4/4 → 1 beat = 60/130 s. 3 whole notes = 12 beats = 720/130 ≈ 5.538 s.
 /// Short `default_duration` is not enough if amp ADSR dies in 0.4 s:
-/// the last 0.5 s of the default render must still have energy.
+/// the last 0.4 s of the default render must still have energy.
 #[test]
-fn factory_ld_folder_holds_four_bars_at_120bpm() {
+fn factory_ld_folder_holds_three_wholes_at_130bpm() {
     let ids = factory_ld_folder_ids();
     assert!(
         ids.len() >= 55,
@@ -272,14 +272,15 @@ fn factory_ld_folder_holds_four_bars_at_120bpm() {
     );
 
     const SR: u32 = 22_050;
-    const TAIL_SECS: f64 = 0.5;
+    const WHOLE_NOTES_3_AT_130: f64 = 12.0 * 60.0 / 130.0;
+    const TAIL_SECS: f64 = 0.4;
     let tail_n = ((TAIL_SECS * f64::from(SR)).round() as usize).max(1);
 
     for id in ids {
         let preset = load_factory(id).unwrap();
         assert!(
-            (8.0..=8.5).contains(&preset.default_duration),
-            "{id} default_duration {} must be ~8 s (4 bars @ 120 BPM)",
+            (preset.default_duration - WHOLE_NOTES_3_AT_130).abs() < 1e-6,
+            "{id} default_duration {} must be 3 whole notes @ 130 BPM ({WHOLE_NOTES_3_AT_130})",
             preset.default_duration
         );
 
@@ -310,15 +311,15 @@ fn factory_ld_folder_holds_four_bars_at_120bpm() {
         assert!(
             tail_rms > 0.01,
             "{id} last {TAIL_SECS}s is silence (rms={tail_rms}); \
-             carrier sustain must hold for the full 8 s key-down"
+             carrier sustain must hold for the full 3-whole-note key-down"
         );
 
-        // Tone still audible at t=7 s (well before the release tail).
-        let t7 = ((7.0 * f64::from(SR)).round() as usize).min(buf.len().saturating_sub(tail_n));
-        let at7 = rms(&buf[t7..t7 + tail_n]);
+        // Tone still audible near t=5 s (well before the release tail).
+        let t5 = ((5.0 * f64::from(SR)).round() as usize).min(buf.len().saturating_sub(tail_n));
+        let at5 = rms(&buf[t5..t5 + tail_n]);
         assert!(
-            at7 > 0.01,
-            "{id} silent at t=7s (rms={at7}); filter/amp env died too early"
+            at5 > 0.01,
+            "{id} silent at t=5s (rms={at5}); filter/amp env died too early"
         );
     }
 }
@@ -1417,8 +1418,9 @@ fn lead_fm_pluck_fundamental_is_c3_not_c4() {
     )
     .unwrap();
 
-    let start = (sr as usize) / 20;
-    let end = ((sr as usize) / 5).min(buf.len());
+    // After the ~200 ms FM attack window — body must still be C3, not a ratio-2 carrier.
+    let start = (sr as usize) * 9 / 20; // 0.45 s
+    let end = ((sr as usize) * 4 / 5).min(buf.len());
     let body = hann_window(&buf[start..end]);
     let c3 = goertzel_power(&body, sr as f32, f0);
     let c4 = goertzel_power(&body, sr as f32, f0 * 2.0);
