@@ -25,11 +25,11 @@ release = 0.18
 # 短いワイヤ／ヒス尾（クリックはオペレータ側）
 [noise]
 type = "white"
-level = 0.92
+level = 0.88
 attack = 0.00012
-decay = 0.52
-sustain = 0.0
-release = 0.26
+decay = 0.42
+sustain = 0.05
+release = 0.32
 vel_sens = 0.58
 
 [noise.filter]

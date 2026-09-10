@@ -26,9 +26,9 @@ release = 0.26
 type = "pink"
 level = 0.95
 attack = 0.0003
-decay = 0.85
-sustain = 0.0
-release = 0.34
+decay = 0.6
+sustain = 0.07
+release = 0.4
 vel_sens = 0.45
 
 [noise.filter]
