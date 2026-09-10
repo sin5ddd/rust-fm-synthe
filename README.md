@@ -57,6 +57,8 @@ cargo run -- render-all
 
 `ld-*` リードバンク（プラック、スーパーソー、フーバー、フレンチコア、303風、クワイアなど50種）も同じ。出力は `dist/ld-….wav`。トーンリードの既定は C3（MIDI 48）。高いキャラだけ C4（60）。**既定の長さは 120 BPM・4/4 の4小節ホールド（1小節=2秒 → 4小節=8秒。短いリリーステール込みで約8.2秒）**。プラック／スタブもキーを押さえている間は鳴り続ける（ワンショットで消えない）。`presets/ld/` の既存 `lead-fm-pluck` / `stab-fm-fifth` / `stab-fm-major` / `filter-pluck` / `stab-pluck` も同じ（リネームしない）。
 
+工場リードの `render` / `render-all` / `analyze` は、**同じ4OPパッチを基音ともう一度 +12（オクターブ上）でレンダして混ぜる**。分析でまだ薄い（正弦2本だけ、など）ときは +7（完全5度）も足す。オペレータの比を 2.0 に振り直したり、`[fx.chorus] intervals = octave-up` のディレイピッチシフトで厚くしたつもり、ではない。`--layers none` で単音。`--layers octave` / `--layers octave,fifth` で固定。プリセットに `render_layers = ["octave"]` または `["octave", "fifth"]`（`[]` で単音固定）を書ける。
+
 `fx-*` FXバンク（リバースシンバル、ライザー、インパクト、ダウンリフター、レーザー、ウーシュなど50種）も同じ。出力は `dist/fx-….wav`。ピッチのないノイズ／スイープが多い。リバースシンバルとライザーは長め（1.5–4秒、後で切る前提）。インパクトやヒットは短い。
 
 `bs-*` ベースバンク（808サブ、暗い／明るい／ニューロReese、ウォブル、アシッド、フレンチコア、ガバ、フーバー、歪みスクエア、タイトハウス、Amenサブ、グロウル2、正弦サブ、金属FMなど15種）も同じ。出力は `dist/bs-….wav`。TOMLは `presets/bass/`。C3付近（MIDI 36–48）。既存の `sub-bass` / `growl-bass` / `reese-mid` / `supersaw-bass` はそのまま（リネームしない追加バンク）。`reese-mid` の800–1200 Hz糊とは別。
@@ -94,7 +96,7 @@ cargo run -- render-all
 cargo run -- render-all -o /tmp/shots --duration 0.4 --note 36
 ```
 
-`--note` / `--duration` / `--hz` / `--velocity` / `--sample-rate` / `--bit-depth` は `render` と同じ。指定すると全プリセットに同じ値がかかる。
+`--note` / `--duration` / `--hz` / `--velocity` / `--sample-rate` / `--bit-depth` / `--layers` は `render` と同じ。指定すると全プリセットに同じ値がかかる。`--layers auto`（既定）は工場リードだけオクターブ重ね。ベースやキックは単音のまま。
 
 サブのワンショット（C2、約1.35秒、16-bit / 44.1 kHz）。`--output` 省略時は `dist/sub-bass.wav`:
 
@@ -184,7 +186,7 @@ cargo run --release -- analyze-all
 # → dist/<id>.png と dist/<id>.json（WAV は書かない）
 ```
 
-`--output` は PNG パス。JSON は同じ stem。プリセット指定時は同じ stem の WAV も書く。
+`--output` は PNG パス。JSON は同じ stem。プリセット指定時は同じ stem の WAV も書く。`--layers` は `render` と同じ（工場リードは既定でオクターブ重ね。JSON の `render_layers` に実際に混ぜた声が出る）。
 
 ## オペレータとアルゴリズム
 
@@ -740,7 +742,7 @@ write_wav(
 )?;
 ```
 
-公開APIの中心は `load_preset` / `load_factory` / `render` / `write_wav` / `read_wav` / `analyze_buffer`。一括書き出しは `render_all_factory`、一括分析は `analyze_all_factory`（工場バンクがソース。`presets/<category>/` の重複TOMLは見ない）。別ツールからエンジンだけ駆動する想定。
+公開APIの中心は `load_preset` / `load_factory` / `render` / `render_export` / `write_wav` / `read_wav` / `analyze_buffer`。`render` は単音の4OP。CLI と `render_all_factory` / `analyze_preset` は `render_export`（`--layers`）経由。一括書き出しは `render_all_factory`、一括分析は `analyze_all_factory`（工場バンクがソース。`presets/<category>/` の重複TOMLは見ない）。別ツールからエンジンだけ駆動する想定。
 
 ## テスト
 
@@ -748,4 +750,4 @@ write_wav(
 cargo test
 ```
 
-440 Hz 正弦の重心、ノイズの平坦度、ピッチ落下、`bd-808-boom` のサブと落下、PNG 寸法と JSON のパース、エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`ld-*` リードと `fx-*` FXがそれぞれちょうど50個で非無音、`bs-*` ベースがちょうど15個で非無音、`pc-*` パーカッションがちょうど50個で非無音、`dr-*` ドローンがちょうど50個で非無音、`pf-*` 爽やかパッドと `ps-*` キラキラパッドがそれぞれちょうど30個で非無音、`pl-*` プラックがちょうど30個で非無音かつ短い（既定は2秒未満。`pl-reverse-swell` だけ例外）、`ep-*` エレクトリックピアノがちょうど5個で非無音かつ1.2秒超（クリックではない）、`ep-rhodes-soft` のアタックに純正弦より強い2×/3×タインがあること、`presets/ld/` の既定レンダーが約8秒（120 BPM の4小節）で末尾0.5秒が無音でないこと、`dr-*` / `pf-*` / `ps-*` の既定レンダーが約16秒（120 BPM の8小節）で末尾1秒と t=14秒が無音でないこと、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。
+440 Hz 正弦の重心、ノイズの平坦度、ピッチ落下、`bd-808-boom` のサブと落下、PNG 寸法と JSON のパース、エンジンが無音でないこと、WAVヘッダとデータサイズ、工場プリセットのスモーク、`bd-*` キックと `sd-*` スネアがそれぞれちょうど20個で非無音、`ld-*` リードと `fx-*` FXがそれぞれちょうど50個で非無音、工場リードのレンダー時オクターブ重ね（`ld-fm-pluck` はアルゴリズム1のまま、遅延部の 2×f0 が第二声であること）、`bs-*` ベースがちょうど15個で非無音、`pc-*` パーカッションがちょうど50個で非無音、`dr-*` ドローンがちょうど50個で非無音、`pf-*` 爽やかパッドと `ps-*` キラキラパッドがそれぞれちょうど30個で非無音、`pl-*` プラックがちょうど30個で非無音かつ短い（既定は2秒未満。`pl-reverse-swell` だけ例外）、`ep-*` エレクトリックピアノがちょうど5個で非無音かつ1.2秒超（クリックではない）、`ep-rhodes-soft` のアタックに純正弦より強い2×/3×タインがあること、`presets/ld/` の既定レンダーが約8秒（120 BPM の4小節）で末尾0.5秒が無音でないこと、`dr-*` / `pf-*` / `ps-*` の既定レンダーが約16秒（120 BPM の8小節）で末尾1秒と t=14秒が無音でないこと、`render_all_factory` が工場IDの数だけ非無音WAVを出すこと、super-saw が正弦と違うこと、低いLPカットオフが高域を落とすことを見る。WAVは `/tmp/fm_synth_tests/` など一時ディレクトリへ出す（リポジトリの `dist/` には書かない）。

@@ -3,8 +3,8 @@ use fm_synth::{
     analyze_all_factory, analyze_buffer, analyze_preset, default_png_path, default_wav_path,
     factory_info, load_preset, load_preset_file, output_preset_id, read_wav, render_all_factory,
     render_preset_wav, write_analysis_bundle, write_wav, Algorithm, Analysis, AnalyzeOpts,
-    AnalyzeWriteReport, ExportParams, Result as SynthResult, WavRenderReport, WavSettings,
-    DEFAULT_OUTPUT_DIR,
+    AnalyzeWriteReport, ExportParams, LayerMode, Result as SynthResult, WavRenderReport,
+    WavSettings, DEFAULT_OUTPUT_DIR,
 };
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
@@ -57,6 +57,11 @@ enum Command {
         /// ビット深度 16 または 24
         #[arg(long, default_value_t = 16)]
         bit_depth: u16,
+        /// 同じ4OPパッチを別音程でもう一度レンダして混ぜる。
+        /// `auto`=工場リードはオクターブ（薄いとき5度も）。`none` / `octave` / `octave,fifth`。
+        /// `[fx.chorus] intervals` のピッチシフトではない。
+        #[arg(long, default_value = "auto")]
+        layers: String,
     },
     /// 工場バンクの全プリセットを WAV に書き出す（既定: dist/<id>.wav）
     RenderAll {
@@ -81,6 +86,10 @@ enum Command {
         /// ビット深度 16 または 24
         #[arg(long, default_value_t = 16)]
         bit_depth: u16,
+        /// 同じ4OPパッチを別音程でもう一度レンダして混ぜる。
+        /// `auto`=工場リードはオクターブ（薄いとき5度も）。`none` / `octave` / `octave,fifth`。
+        #[arg(long, default_value = "auto")]
+        layers: String,
     },
     /// WAV またはプリセットを分析し、スペクトログラム PNG と JSON を書く
     Analyze {
@@ -117,6 +126,10 @@ enum Command {
         /// ビット深度 16 または 24（プリセットをレンダするとき）
         #[arg(long, default_value_t = 16)]
         bit_depth: u16,
+        /// 同じ4OPパッチを別音程でもう一度レンダして混ぜる。
+        /// `auto`=工場リードはオクターブ（薄いとき5度も）。`none` / `octave` / `octave,fifth`。
+        #[arg(long, default_value = "auto")]
+        layers: String,
     },
     /// 工場バンクを分析して PNG / JSON を書く（既定: dist/<id>.png）
     AnalyzeAll {
@@ -144,6 +157,10 @@ enum Command {
         /// ビット深度 16 または 24
         #[arg(long, default_value_t = 16)]
         bit_depth: u16,
+        /// 同じ4OPパッチを別音程でもう一度レンダして混ぜる。
+        /// `auto`=工場リードはオクターブ（薄いとき5度も）。`none` / `octave` / `octave,fifth`。
+        #[arg(long, default_value = "auto")]
+        layers: String,
     },
 }
 
@@ -173,18 +190,20 @@ fn run() -> SynthResult<()> {
             velocity,
             sample_rate,
             bit_depth,
+            layers,
         } => cmd_render(
             preset,
             preset_file,
             output,
-            ExportParams {
+            export_params(
                 note,
                 hz,
                 duration,
                 velocity,
                 sample_rate,
                 bit_depth,
-            },
+                &layers,
+            )?,
         ),
         Command::RenderAll {
             output_dir,
@@ -194,16 +213,18 @@ fn run() -> SynthResult<()> {
             velocity,
             sample_rate,
             bit_depth,
+            layers,
         } => cmd_render_all(
             output_dir,
-            ExportParams {
+            export_params(
                 note,
                 hz,
                 duration,
                 velocity,
                 sample_rate,
                 bit_depth,
-            },
+                &layers,
+            )?,
         ),
         Command::Analyze {
             wav,
@@ -217,20 +238,22 @@ fn run() -> SynthResult<()> {
             velocity,
             sample_rate,
             bit_depth,
+            layers,
         } => cmd_analyze(
             wav,
             preset,
             preset_file,
             output,
             intent,
-            ExportParams {
+            export_params(
                 note,
                 hz,
                 duration,
                 velocity,
                 sample_rate,
                 bit_depth,
-            },
+                &layers,
+            )?,
         ),
         Command::AnalyzeAll {
             output_dir,
@@ -241,19 +264,41 @@ fn run() -> SynthResult<()> {
             velocity,
             sample_rate,
             bit_depth,
+            layers,
         } => cmd_analyze_all(
             output_dir,
             intent,
-            ExportParams {
+            export_params(
                 note,
                 hz,
                 duration,
                 velocity,
                 sample_rate,
                 bit_depth,
-            },
+                &layers,
+            )?,
         ),
     }
+}
+
+fn export_params(
+    note: Option<u8>,
+    hz: Option<f64>,
+    duration: Option<f64>,
+    velocity: f32,
+    sample_rate: u32,
+    bit_depth: u16,
+    layers: &str,
+) -> SynthResult<ExportParams> {
+    Ok(ExportParams {
+        note,
+        hz,
+        duration,
+        velocity,
+        sample_rate,
+        bit_depth,
+        layers: LayerMode::parse(layers)?,
+    })
 }
 
 fn cmd_list() -> SynthResult<()> {
@@ -314,8 +359,9 @@ fn cmd_render_all(output_dir: PathBuf, export: ExportParams) -> SynthResult<()> 
 }
 
 fn print_wrote(report: &WavRenderReport) {
+    let layers = format_layers(&report.layers);
     eprintln!(
-        "wrote {}  ({} Hz, {}-bit, {} samples, {} bytes PCM, preset `{}`, {:.2} Hz, {:.2}s)",
+        "wrote {}  ({} Hz, {}-bit, {} samples, {} bytes PCM, preset `{}`, {:.2} Hz, {:.2}s, layers {layers})",
         report.path.display(),
         report.sample_rate,
         report.bit_depth,
@@ -325,6 +371,22 @@ fn print_wrote(report: &WavRenderReport) {
         report.frequency_hz,
         report.duration_secs
     );
+}
+
+fn format_layers(semitones: &[i16]) -> String {
+    if matches!(semitones, [] | [0]) {
+        return "unison".into();
+    }
+    semitones
+        .iter()
+        .map(|st| match st {
+            0 => "0".into(),
+            12 => "+12".into(),
+            7 => "+7".into(),
+            other => format!("{other:+}"),
+        })
+        .collect::<Vec<_>>()
+        .join(",")
 }
 
 fn cmd_analyze(
@@ -411,8 +473,13 @@ fn print_analyzed(analysis: &Analysis, png: &Path, json: &Path, wav: Option<&Pat
         ),
         None => "n/a".into(),
     };
+    let layers = if r.render_layers.is_empty() {
+        String::new()
+    } else {
+        format!(", layers {}", r.render_layers.join("+"))
+    };
     eprintln!(
-        "analyzed {}  (png {}, json {}, centroid={:.0} Hz, flatness={:.3}, pitch={}, sub={:.2})",
+        "analyzed {}  (png {}, json {}, centroid={:.0} Hz, flatness={:.3}, pitch={}, sub={:.2}{layers})",
         r.preset_id.as_deref().unwrap_or("buffer"),
         png.display(),
         json.display(),

@@ -1127,6 +1127,7 @@ fn render_all_factory_writes_one_wav_per_preset() {
             velocity: 0.9,
             sample_rate: 22_050,
             bit_depth: 16,
+            ..ExportParams::default()
         },
     )
     .unwrap();
@@ -1173,6 +1174,7 @@ fn render_all_factory_applies_shared_overrides() {
             velocity: 0.8,
             sample_rate: 22_050,
             bit_depth: 16,
+            ..ExportParams::default()
         },
     )
     .unwrap()
