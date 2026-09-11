@@ -21,6 +21,25 @@ decay = 6.5
 sustain = 0.82
 release = 0.38
 
+[noise]
+type = "pink"
+level = 0.08
+attack = 1.6
+decay = 4.0
+sustain = 0.36
+release = 0.28
+vel_sens = 0.12
+
+[noise.filter]
+type = "bandpass"
+cutoff = 580.0
+resonance = 0.2
+env_amount = 0.12
+attack = 2.0
+decay = 4.0
+sustain = 0.34
+release = 0.26
+
 [fx.chorus]
 mix = 0.08
 rate_hz = 0.12
