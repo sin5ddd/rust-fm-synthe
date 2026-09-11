@@ -5,7 +5,7 @@ feedback = 0.38
 feedback_op = 4
 gain = 1.0
 default_note = 41
-default_duration = 1.05
+default_duration = 1.28
 
 [lfo]
 rate_hz = 6.4
@@ -16,33 +16,33 @@ start = 1.35
 end = 0.4
 
 [filter]
-type = "bandpass"
-cutoff = 620.0
-resonance = 0.42
-env_amount = 2.2
+type = "highpass"
+cutoff = 160.0
+resonance = 0.26
+env_amount = 0.55
 attack = 0.0008
-decay = 0.28
-sustain = 0.16
-release = 0.18
+decay = 0.42
+sustain = 0.2
+release = 0.28
 
 [noise]
-type = "pink"
-level = 0.82
+type = "white"
+level = 1.12
 attack = 0.0003
-decay = 0.55
+decay = 0.35
 sustain = 0.0
 release = 0.2
 vel_sens = 0.5
 
 [noise.filter]
-type = "bandpass"
-cutoff = 900.0
-resonance = 0.22
-env_amount = 0.8
+type = "highpass"
+cutoff = 2400.0
+resonance = 0.12
+env_amount = 0.7
 attack = 0.0004
-decay = 0.28
-sustain = 0.1
-release = 0.16
+decay = 0.21
+sustain = 0.05
+release = 0.12
 
 # OP1 グロウルキャリア
 [[operators]]
@@ -50,9 +50,9 @@ ratio = 1.8
 detune_cents = -6.0
 level = 1.0
 attack = 0.0005
-decay = 0.42
+decay = 0.58
 sustain = 0.0
-release = 0.18
+release = 0.26
 vel_sens = 0.32
 waveform = "saw"
 
@@ -86,8 +86,8 @@ ratio = 3.07
 detune_cents = 18.0
 level = 0.48
 attack = 0.0003
-decay = 0.55
+decay = 0.72
 sustain = 0.0
-release = 0.22
+release = 0.32
 vel_sens = 0.55
 waveform = "pulse"

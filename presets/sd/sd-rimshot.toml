@@ -1,75 +1,91 @@
 name = "rimshot"
-description = "リムショット。鋭いクリックと金属のリン。短い胴、リンの尾は残す。"
-algorithm = 6
-feedback = 0.28
+description = "リムショット。スティック側。短い pop-tight 胴に、乾いた木／プラスチックのスティッククリックを重ねる。金属リンは出さない。"
+algorithm = 5
+feedback = 0.12
 feedback_op = 4
-gain = 1.06
+gain = 1.08
 default_note = 48
-default_duration = 0.7
+default_duration = 0.55
 
 [pitch]
-start_semitones = 6.0
+start_semitones = 3.5
 end_semitones = 0.0
-curve = -12.0
+curve = -9.0
 
 [filter]
-type = "highpass"
-cutoff = 420.0
-resonance = 0.22
-env_amount = 0.8
-attack = 0.00015
-decay = 0.06
-sustain = 0.25
-release = 0.1
+type = "lowpass"
+cutoff = 8600.0
+resonance = 0.1
+env_amount = 0.5
+attack = 0.00012
+decay = 0.11
+sustain = 0.16
+release = 0.09
 
-# OP1 短いリム胴
-[[operators]]
-ratio = 2.5
-detune_cents = 0.0
-level = 0.85
-attack = 0.0002
-decay = 0.09
+# 短いワイヤ。リンではなくアタックの砂だけ（decay は据え置き）
+[noise]
+type = "white"
+level = 0.82
+attack = 0.00012
+decay = 0.105
 sustain = 0.0
 release = 0.08
-vel_sens = 0.4
+vel_sens = 0.58
+
+[noise.filter]
+type = "highpass"
+cutoff = 2600.0
+resonance = 0.12
+env_amount = 0.7
+attack = 0.00012
+decay = 0.065
+sustain = 0.02
+release = 0.045
+
+# OP1 短い pop 胴（sd-pop-tight OP1 の約半分）
+[[operators]]
+ratio = 2.0
+detune_cents = 0.0
+level = 0.92
+attack = 0.0003
+decay = 0.17
+sustain = 0.0
+release = 0.1
+vel_sens = 0.32
 waveform = "sine"
 
-# OP2 高域クリック
+# OP2 胴のFM（pop-tight の皮／胴モジュレータを短縮）
 [[operators]]
-ratio = 6.0
-detune_cents = 10.0
-level = 0.7
-attack = 0.00012
-decay = 0.045
+ratio = 4.5
+detune_cents = 7.0
+level = 0.34
+attack = 0.0002
+decay = 0.04
 sustain = 0.0
-release = 0.035
-vel_sens = 0.6
+release = 0.03
+vel_sens = 0.5
 waveform = "pulse"
 
-# OP3 金属リン
+# OP3 スティッククリック（キャリア）。三角の短い打撃。1980Hz固定の金属リンは使わない
 [[operators]]
-ratio = 1.0
-detune_cents = 0.0
-level = 0.58
-attack = 0.00018
-decay = 0.38
+ratio = 5.5
+detune_cents = 8.0
+level = 0.74
+attack = 0.00008
+decay = 0.018
 sustain = 0.0
-release = 0.2
-vel_sens = 0.45
-waveform = "sine"
-freq_mode = "fixed"
-fixed_hz = 1980.0
+release = 0.012
+vel_sens = 0.62
+waveform = "triangle"
 
-# OP4 共通モジュレータ（クリック＋リン）
+# OP4 スティックのモジュレータ。ブロードバンドの一打。2750Hz固定は使わない
 [[operators]]
-ratio = 1.0
-detune_cents = 0.0
-level = 0.4
-attack = 0.0001
-decay = 0.055
+ratio = 8.0
+detune_cents = 12.0
+level = 0.32
+attack = 0.00008
+decay = 0.012
 sustain = 0.0
-release = 0.04
+release = 0.009
 vel_sens = 0.65
-waveform = "abs-sine"
-freq_mode = "fixed"
-fixed_hz = 2750.0
+waveform = "pulse"

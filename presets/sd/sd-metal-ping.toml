@@ -5,7 +5,7 @@ feedback = 0.36
 feedback_op = 4
 gain = 1.03
 default_note = 48
-default_duration = 0.88
+default_duration = 1.12
 
 [pitch]
 start_semitones = 2.0
@@ -13,14 +13,33 @@ end_semitones = 0.0
 curve = -8.0
 
 [filter]
-type = "bandpass"
-cutoff = 2400.0
-resonance = 0.26
-env_amount = 1.0
+type = "highpass"
+cutoff = 280.0
+resonance = 0.16
+env_amount = 0.45
 attack = 0.00025
-decay = 0.2
-sustain = 0.2
-release = 0.16
+decay = 0.28
+sustain = 0.22
+release = 0.22
+
+[noise]
+type = "white"
+level = 0.82
+attack = 0.00015
+decay = 0.225
+sustain = 0.0
+release = 0.18
+vel_sens = 0.55
+
+[noise.filter]
+type = "highpass"
+cutoff = 2600.0
+resonance = 0.12
+env_amount = 0.55
+attack = 0.00015
+decay = 0.16
+sustain = 0.04
+release = 0.1
 
 # OP1 短いスネア胴
 [[operators]]
@@ -52,9 +71,9 @@ ratio = 1.0
 detune_cents = 0.0
 level = 0.68
 attack = 0.00022
-decay = 0.48
+decay = 0.68
 sustain = 0.0
-release = 0.22
+release = 0.3
 vel_sens = 0.42
 waveform = "sine"
 freq_mode = "fixed"
@@ -66,9 +85,9 @@ ratio = 1.0
 detune_cents = 0.0
 level = 0.38
 attack = 0.00015
-decay = 0.36
+decay = 0.55
 sustain = 0.0
-release = 0.18
+release = 0.26
 vel_sens = 0.6
 waveform = "pulse"
 freq_mode = "fixed"

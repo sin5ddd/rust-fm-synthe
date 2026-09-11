@@ -5,7 +5,7 @@ feedback = 0.22
 feedback_op = 4
 gain = 1.04
 default_note = 40
-default_duration = 0.75
+default_duration = 1.02
 
 [pitch]
 start_semitones = 3.0
@@ -18,28 +18,28 @@ cutoff = 180.0
 resonance = 0.12
 env_amount = 0.35
 attack = 0.0
-decay = 0.08
+decay = 0.14
 sustain = 0.35
-release = 0.12
+release = 0.18
 
 [noise]
 type = "white"
-level = 0.98
+level = 1.08
 attack = 0.0002
-decay = 0.42
+decay = 0.225
 sustain = 0.0
-release = 0.18
+release = 0.17
 vel_sens = 0.5
 
 [noise.filter]
 type = "highpass"
-cutoff = 1600.0
+cutoff = 1700.0
 resonance = 0.1
 env_amount = 0.5
 attack = 0.0002
-decay = 0.2
-sustain = 0.12
-release = 0.14
+decay = 0.16
+sustain = 0.06
+release = 0.1
 
 # OP1 808トーン下（加算キャリア）
 [[operators]]
@@ -71,9 +71,9 @@ ratio = 5.5
 detune_cents = 18.0
 level = 0.82
 attack = 0.0002
-decay = 0.38
+decay = 0.55
 sustain = 0.0
-release = 0.18
+release = 0.26
 vel_sens = 0.5
 waveform = "pulse"
 

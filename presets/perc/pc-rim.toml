@@ -1,5 +1,5 @@
 name = "wood rim"
-description = "木寄りのリム。sd-rimshot より金属リンが弱く、短いウッドクリック。スネア代用ではない。"
+description = "木寄りのリム。スネア胴なしの短いウッドクリック。sd-rimshot（スティック＋短い胴）の代用ではない。"
 algorithm = 8
 feedback = 0.08
 feedback_op = 4

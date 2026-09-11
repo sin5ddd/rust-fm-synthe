@@ -5,7 +5,7 @@ feedback = 0.22
 feedback_op = 4
 gain = 1.02
 default_note = 40
-default_duration = 1.55
+default_duration = 1.58
 
 [pitch]
 start_semitones = 1.5
@@ -14,32 +14,32 @@ curve = -5.0
 
 [filter]
 type = "highpass"
-cutoff = 280.0
-resonance = 0.16
-env_amount = 0.9
+cutoff = 260.0
+resonance = 0.14
+env_amount = 0.75
 attack = 0.0003
-decay = 0.55
-sustain = 0.28
-release = 0.35
+decay = 0.7
+sustain = 0.26
+release = 0.4
 
 [noise]
 type = "white"
-level = 1.08
+level = 1.15
 attack = 0.0003
-decay = 0.95
-sustain = 0.12
-release = 0.35
+decay = 0.55
+sustain = 0.0
+release = 0.2
 vel_sens = 0.45
 
 [noise.filter]
 type = "highpass"
-cutoff = 900.0
+cutoff = 1600.0
 resonance = 0.1
-env_amount = 0.7
+env_amount = 0.55
 attack = 0.0003
-decay = 0.5
-sustain = 0.22
-release = 0.3
+decay = 0.325
+sustain = 0.09
+release = 0.17
 
 # OP1 短い80s胴
 [[operators]]

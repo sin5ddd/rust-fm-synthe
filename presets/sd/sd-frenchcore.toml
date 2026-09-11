@@ -5,7 +5,7 @@ feedback = 0.26
 feedback_op = 4
 gain = 1.06
 default_note = 45
-default_duration = 0.68
+default_duration = 1.05
 
 [pitch]
 start_semitones = 5.0
@@ -19,41 +19,41 @@ end = 0.35
 [filter]
 type = "highpass"
 cutoff = 220.0
-resonance = 0.2
-env_amount = 1.1
+resonance = 0.18
+env_amount = 0.85
 attack = 0.0
-decay = 0.08
-sustain = 0.22
-release = 0.1
+decay = 0.14
+sustain = 0.24
+release = 0.16
 
 [noise]
 type = "white"
-level = 0.95
+level = 1.32
 attack = 0.00012
-decay = 0.36
+decay = 0.25
 sustain = 0.0
-release = 0.16
+release = 0.18
 vel_sens = 0.62
 
 [noise.filter]
 type = "highpass"
-cutoff = 1400.0
+cutoff = 2600.0
 resonance = 0.12
-env_amount = 0.6
+env_amount = 0.55
 attack = 0.00012
 decay = 0.14
-sustain = 0.12
-release = 0.12
+sustain = 0.05
+release = 0.1
 
 # OP1 攻撃的ミッド
 [[operators]]
 ratio = 2.4
 detune_cents = 0.0
-level = 1.0
+level = 0.82
 attack = 0.0002
-decay = 0.22
+decay = 0.32
 sustain = 0.0
-release = 0.12
+release = 0.18
 vel_sens = 0.36
 waveform = "pulse"
 
@@ -87,8 +87,8 @@ ratio = 9.5
 detune_cents = -20.0
 level = 0.46
 attack = 0.00012
-decay = 0.36
+decay = 0.62
 sustain = 0.0
-release = 0.18
+release = 0.28
 vel_sens = 0.68
 waveform = "pulse"
