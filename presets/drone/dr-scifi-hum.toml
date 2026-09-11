@@ -1,10 +1,10 @@
 name = "sci-fi space hum"
-description = "暗いスペースシンセのハム。D5≈587 Hzのミッドドローン。サブは出さない。"
+description = "暗いスペースシンセのハム。C5≈523 Hzのミッドドローン。サブは出さない。"
 algorithm = 8
 feedback = 0.04
 feedback_op = 4
 gain = 0.94
-default_note = 74
+default_note = 72
 default_duration = 16.6
 
 [lfo]
@@ -52,7 +52,7 @@ mix = 0.1
 room = 0.42
 damp = 0.5
 
-# OP1 — D5 ≈ 587 Hz
+# OP1 — C5 ≈ 523 Hz
 [[operators]]
 ratio = 1.0
 detune_cents = 0
@@ -88,7 +88,7 @@ release = 0.28
 vel_sens = 0.12
 waveform = "sine"
 
-# OP4 — mid haze around the 587 Hz body
+# OP4 — mid haze around the 523 Hz body
 [[operators]]
 ratio = 1.0
 detune_cents = 8
