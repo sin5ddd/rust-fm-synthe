@@ -1,89 +1,89 @@
 name = "abyss rumble"
-description = "深淵のランブル。0.5正弦に薄いノイズの砂。"
-algorithm = 7
-feedback = 0.18
+description = "深淵のランブル。E1正弦にごく薄いブラウンの砂。サブの床。"
+algorithm = 8
+feedback = 0.06
 feedback_op = 4
-gain = 0.98
-default_note = 24
-default_duration = 16.7
+gain = 1.0
+default_note = 28
+default_duration = 40.8
 
 [lfo]
-rate_hz = 0.11
-depth_cents = 8.0
+rate_hz = 0.09
+depth_cents = 5.0
 
 [filter]
 type = "lowpass"
-cutoff = 140
-resonance = 0.16
-env_amount = 1.0
-attack = 4.5
-decay = 7.5
-sustain = 0.74
-release = 0.35
+cutoff = 88
+resonance = 0.1
+env_amount = 0.25
+attack = 2.8
+decay = 10.0
+sustain = 0.9
+release = 0.4
 
 [noise]
 type = "brown"
-level = 0.42
-attack = 1.2
-decay = 4.0
-sustain = 0.45
-release = 0.32
-vel_sens = 0.14
+level = 0.18
+attack = 1.4
+decay = 6.0
+sustain = 0.4
+release = 0.35
+vel_sens = 0.12
 
 [noise.filter]
 type = "lowpass"
-cutoff = 160.0
-resonance = 0.1
-env_amount = 0.4
+cutoff = 72.0
+resonance = 0.08
+env_amount = 0.15
 attack = 2.0
-decay = 5.0
-sustain = 0.4
+decay = 6.0
+sustain = 0.38
 release = 0.3
 
 # OP1
 [[operators]]
-ratio = 0.5
-detune_cents = -2
+ratio = 1.0
+detune_cents = -1
 level = 1.0
-attack = 0.035
-decay = 2.4
-sustain = 0.94
-release = 0.34
-vel_sens = 0.12
+attack = 0.08
+decay = 3.0
+sustain = 0.95
+release = 0.4
+vel_sens = 0.1
 waveform = "sine"
 
 # OP2
 [[operators]]
 ratio = 1.0
-detune_cents = 4
-level = 0.32
-attack = 0.05
-decay = 2.0
-sustain = 0.86
-release = 0.28
-vel_sens = 0.14
-waveform = "pulse"
+detune_cents = 3
+level = 0.3
+attack = 0.12
+decay = 2.6
+sustain = 0.93
+release = 0.34
+vel_sens = 0.1
+waveform = "sine"
 
 # OP3
 [[operators]]
 ratio = 1.0
 detune_cents = 0
-level = 0.4
-attack = 0.04
-decay = 2.1
-sustain = 0.88
-release = 0.28
-vel_sens = 0.14
+level = 0.22
+attack = 0.14
+decay = 2.4
+sustain = 0.92
+release = 0.32
+vel_sens = 0.12
 waveform = "sine"
 
 # OP4
 [[operators]]
-ratio = 2.17
+ratio = 2.0
 detune_cents = 0
-level = 0.16
-attack = 0.03
-decay = 1.4
-sustain = 0.24
-release = 0.16
-vel_sens = 0.24
-waveform = "pulse"
+level = 0.055
+attack = 0.18
+decay = 2.0
+sustain = 0.86
+release = 0.26
+vel_sens = 0.14
+waveform = "sine"

@@ -1,74 +1,103 @@
-name = "sci-fi hum"
-description = "SFの電源ハム。固定60 Hz層＋ノートのサブ。"
+name = "sci-fi space hum"
+description = "暗いスペースシンセのハム。C5≈523 Hzのミッドドローン。サブは出さない。"
 algorithm = 8
-feedback = 0.06
+feedback = 0.04
 feedback_op = 4
-gain = 0.95
-default_note = 36
-default_duration = 16.5
+gain = 0.94
+default_note = 72
+default_duration = 16.6
 
 [lfo]
 rate_hz = 0.08
-depth_cents = 3.0
+depth_cents = 4.0
 
 [filter]
 type = "lowpass"
-cutoff = 240
-resonance = 0.18
-env_amount = 0.9
-attack = 3.5
-decay = 8.0
-sustain = 0.78
-release = 0.35
+cutoff = 1500
+resonance = 0.12
+env_amount = 0.3
+attack = 3.0
+decay = 7.0
+sustain = 0.84
+release = 0.38
 
-# OP1
+[noise]
+type = "pink"
+level = 0.1
+attack = 1.8
+decay = 4.0
+sustain = 0.4
+release = 0.3
+vel_sens = 0.1
+
+[noise.filter]
+type = "bandpass"
+cutoff = 620.0
+resonance = 0.24
+env_amount = 0.15
+attack = 2.2
+decay = 4.0
+sustain = 0.38
+release = 0.28
+
+[fx.chorus]
+mix = 0.1
+rate_hz = 0.14
+depth_ms = 3.2
+delay_ms = 18.0
+feedback = 0.08
+
+[fx.reverb]
+mix = 0.1
+room = 0.42
+damp = 0.5
+
+# OP1 — C5 ≈ 523 Hz
 [[operators]]
-ratio = 0.5
+ratio = 1.0
 detune_cents = 0
-level = 0.92
-attack = 0.03
+level = 1.0
+attack = 1.2
+decay = 2.4
+sustain = 0.93
+release = 0.34
+vel_sens = 0.12
+waveform = "sine"
+
+# OP2 — slow beat
+[[operators]]
+ratio = 1.0
+detune_cents = 4
+level = 0.42
+attack = 1.4
 decay = 2.2
-sustain = 0.92
+sustain = 0.9
 release = 0.3
 vel_sens = 0.12
 waveform = "sine"
 
-# OP2
+# OP3 — faint inharmonic space
 [[operators]]
-ratio = 1.0
-detune_cents = 2
-level = 0.4
-attack = 0.04
+ratio = 1.11
+detune_cents = -2
+level = 0.1
+attack = 1.6
 decay = 2.0
-sustain = 0.88
-release = 0.26
-vel_sens = 0.12
-waveform = "sine"
-
-# OP3
-[[operators]]
-ratio = 1.0
-detune_cents = 0
-level = 0.38
-attack = 0.035
-decay = 2.0
-sustain = 0.9
+sustain = 0.86
 release = 0.28
 vel_sens = 0.12
 waveform = "sine"
-freq_mode = "fixed"
-fixed_hz = 60.0
 
-# OP4
+# OP4 — mid haze around the 523 Hz body
 [[operators]]
-ratio = 2.0
-detune_cents = 0
-level = 0.12
-attack = 0.05
-decay = 1.6
-sustain = 0.84
-release = 0.22
+ratio = 1.0
+detune_cents = 8
+level = 0.22
+attack = 1.8
+decay = 1.8
+sustain = 0.82
+release = 0.24
 vel_sens = 0.14
-waveform = "sine"
-freq_mode = "fixed"
-fixed_hz = 120.0
+waveform = "super-saw"
+unison = 5
+unison_detune = 9.0

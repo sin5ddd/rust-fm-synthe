@@ -1,70 +1,70 @@
 name = "sub octave bed"
-description = "サブと1オクターブ上の正弦スタック。空洞のない重い床。"
+description = "C1正弦＋1オクターブ上（両方サブ帯）。空洞のない重い床。長いホールド。"
 algorithm = 8
 feedback = 0.0
 feedback_op = 4
-gain = 1.0
+gain = 1.02
 default_note = 24
-default_duration = 16.5
+default_duration = 40.5
 
 [lfo]
-rate_hz = 0.08
-depth_cents = 3.0
+rate_hz = 0.06
+depth_cents = 2.5
 
 [filter]
 type = "lowpass"
-cutoff = 220
-resonance = 0.08
-env_amount = 0.8
-attack = 4.0
-decay = 7.0
-sustain = 0.78
-release = 0.35
+cutoff = 86
+resonance = 0.06
+env_amount = 0.2
+attack = 2.6
+decay = 10.0
+sustain = 0.92
+release = 0.4
 
-# OP1
+# OP1 — C1 ≈ 32.7 Hz
 [[operators]]
 ratio = 1.0
-detune_cents = -2
-level = 0.95
-attack = 0.035
-decay = 2.0
-sustain = 0.92
-release = 0.3
-vel_sens = 0.12
+detune_cents = -1
+level = 1.0
+attack = 0.08
+decay = 2.8
+sustain = 0.96
+release = 0.38
+vel_sens = 0.1
 waveform = "sine"
 
-# OP2
+# OP2 — octave (65.4 Hz), still sub
 [[operators]]
 ratio = 2.0
-detune_cents = 3
-level = 0.38
-attack = 0.05
-decay = 1.8
-sustain = 0.88
-release = 0.26
-vel_sens = 0.12
-waveform = "sine"
-
-# OP3
-[[operators]]
-ratio = 0.5
-detune_cents = 0
-level = 0.88
-attack = 0.03
-decay = 2.3
-sustain = 0.94
+detune_cents = 2
+level = 0.52
+attack = 0.12
+decay = 2.4
+sustain = 0.92
 release = 0.32
 vel_sens = 0.1
 waveform = "sine"
 
-# OP4
+# OP3 — reinforce the 32 Hz body
 [[operators]]
-ratio = 4.0
-detune_cents = -1
-level = 0.08
+ratio = 1.0
+detune_cents = 2
+level = 0.55
 attack = 0.1
-decay = 1.4
-sustain = 0.82
-release = 0.22
-vel_sens = 0.14
+decay = 2.6
+sustain = 0.95
+release = 0.36
+vel_sens = 0.08
+waveform = "sine"
+
+# OP4 — barely-there 3rd (98 Hz) for a hint of bass
+[[operators]]
+ratio = 3.0
+detune_cents = -1
+level = 0.035
+attack = 0.2
+decay = 1.8
+sustain = 0.84
+release = 0.24
+vel_sens = 0.12
 waveform = "sine"

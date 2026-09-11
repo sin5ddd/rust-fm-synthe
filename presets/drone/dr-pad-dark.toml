@@ -1,70 +1,101 @@
 name = "dark pad drone"
-description = "暗いパッドドローン。ソーの芯に正弦のサブ。"
+description = "暗いシネマティックパッドドローン。C4付近のミッド。サブは出さない。"
 algorithm = 8
-feedback = 0.04
+feedback = 0.03
 feedback_op = 4
-gain = 0.92
-default_note = 36
-default_duration = 16.6
+gain = 0.94
+default_note = 60
+default_duration = 20.11
 
 [lfo]
-rate_hz = 0.1
-depth_cents = 7.0
+rate_hz = 0.09
+depth_cents = 6.0
 
 [filter]
 type = "lowpass"
-cutoff = 420
+cutoff = 600
 resonance = 0.1
-env_amount = 1.6
-attack = 6.0
+env_amount = 0.35
+attack = 4.0
 decay = 6.0
-sustain = 0.76
-release = 0.35
+sustain = 0.82
+release = 0.4
+
+[noise]
+type = "pink"
+level = 0.12
+attack = 2.0
+decay = 4.0
+sustain = 0.48
+release = 0.32
+vel_sens = 0.1
+
+[noise.filter]
+type = "bandpass"
+cutoff = 300.0
+resonance = 0.2
+env_amount = 0.12
+attack = 2.5
+decay = 4.0
+sustain = 0.45
+release = 0.28
+
+[fx.chorus]
+mix = 0.16
+rate_hz = 0.22
+depth_ms = 4.0
+delay_ms = 16.0
+feedback = 0.08
+
+[fx.reverb]
+mix = 0.1
+room = 0.48
+damp = 0.58
 
 # OP1
 [[operators]]
 ratio = 1.0
-detune_cents = -6
-level = 0.85
-attack = 0.05
-decay = 2.2
-sustain = 0.88
-release = 0.3
+detune_cents = -7
+level = 0.88
+attack = 1.6
+decay = 2.4
+sustain = 0.9
+release = 0.36
 vel_sens = 0.14
-waveform = "saw"
+waveform = "sine"
 
 # OP2
 [[operators]]
 ratio = 1.0
-detune_cents = 7
-level = 0.55
-attack = 0.06
-decay = 2.0
-sustain = 0.86
-release = 0.28
+detune_cents = 8
+level = 0.72
+attack = 1.8
+decay = 2.2
+sustain = 0.88
+release = 0.34
 vel_sens = 0.14
 waveform = "sine"
 
-# OP3
+# OP3 — 2nd harmonic, keeps centroid near 280
 [[operators]]
-ratio = 0.5
-detune_cents = 0
-level = 0.72
-attack = 0.04
-decay = 2.3
-sustain = 0.92
-release = 0.32
+ratio = 2.0
+detune_cents = 3
+level = 0.14
+attack = 2.0
+decay = 2.0
+sustain = 0.84
+release = 0.3
 vel_sens = 0.12
 waveform = "sine"
 
-# OP4
+# OP4 — fifth, thin
 [[operators]]
 ratio = 1.5
-detune_cents = 3
-level = 0.16
-attack = 0.08
-decay = 1.7
-sustain = 0.84
-release = 0.24
-vel_sens = 0.14
+detune_cents = -2
+level = 0.1
+attack = 2.2
+decay = 1.8
+sustain = 0.82
+release = 0.28
+vel_sens = 0.12
 waveform = "sine"

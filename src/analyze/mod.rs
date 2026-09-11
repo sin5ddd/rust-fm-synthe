@@ -389,7 +389,7 @@ pub fn category_hints_for_id(id: &str) -> Vec<String> {
         ]
     } else if id.starts_with("dr-") {
         vec![
-            "drone hold ~16s".into(),
+            "drone hold 16s+ (sub/pad beds may be ~20–41s)".into(),
             "energy at t=0.85 should remain".into(),
         ]
     } else if id.starts_with("pf-") {
