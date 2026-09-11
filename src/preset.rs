@@ -942,8 +942,8 @@ mod tests {
         for id in &ids {
             let p = load_factory(id).expect(id);
             assert!(
-                (16.2..=18.0).contains(&p.default_duration),
-                "{id} default_duration {} must be ~16 s+ (8 bars @ 120 BPM)",
+                (16.2..=42.0).contains(&p.default_duration),
+                "{id} default_duration {} must be 8 bars @ 120 BPM or a longer bed (16–41 s)",
                 p.default_duration
             );
         }

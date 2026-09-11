@@ -1,70 +1,82 @@
 name = "dark ambient pad"
-description = "暗いアンビエントパッド。ゆっくりしたLFO。サブを残したまま空気を足す。"
+description = "暗いアンビエントパッドドローン。ゆっくりしたLFO。C4ミッド、サブなし。"
 algorithm = 8
 feedback = 0.0
 feedback_op = 4
-gain = 0.94
-default_note = 36
-default_duration = 16.9
+gain = 0.95
+default_note = 60
+default_duration = 20.15
 
 [lfo]
-rate_hz = 0.07
-depth_cents = 10.0
+rate_hz = 0.06
+depth_cents = 8.0
 
 [filter]
 type = "lowpass"
-cutoff = 480
+cutoff = 640
 resonance = 0.08
-env_amount = 1.4
-attack = 7.0
+env_amount = 0.35
+attack = 5.0
 decay = 6.0
-sustain = 0.78
-release = 0.35
+sustain = 0.84
+release = 0.4
+
+[fx.chorus]
+mix = 0.2
+rate_hz = 0.18
+depth_ms = 5.0
+delay_ms = 18.0
+feedback = 0.1
+
+[fx.reverb]
+mix = 0.14
+room = 0.55
+damp = 0.62
 
 # OP1
 [[operators]]
 ratio = 1.0
-detune_cents = -8
-level = 0.88
-attack = 0.06
-decay = 2.4
-sustain = 0.9
-release = 0.34
+detune_cents = -9
+level = 0.9
+attack = 2.2
+decay = 2.6
+sustain = 0.92
+release = 0.4
 vel_sens = 0.12
 waveform = "sine"
 
 # OP2
 [[operators]]
 ratio = 1.0
-detune_cents = 9
-level = 0.82
-attack = 0.07
-decay = 2.2
-sustain = 0.9
-release = 0.32
+detune_cents = 10
+level = 0.84
+attack = 2.4
+decay = 2.4
+sustain = 0.92
+release = 0.38
 vel_sens = 0.12
 waveform = "sine"
 
 # OP3
 [[operators]]
-ratio = 0.5
-detune_cents = 2
-level = 0.62
-attack = 0.05
-decay = 2.5
-sustain = 0.92
-release = 0.34
+ratio = 2.0
+detune_cents = -3
+level = 0.12
+attack = 2.6
+decay = 2.0
+sustain = 0.86
+release = 0.32
 vel_sens = 0.1
 waveform = "sine"
 
 # OP4
 [[operators]]
-ratio = 2.0
-detune_cents = -3
-level = 0.18
-attack = 0.1
+ratio = 1.5
+detune_cents = 4
+level = 0.08
+attack = 2.8
 decay = 1.8
 sustain = 0.84
-release = 0.26
-vel_sens = 0.12
+release = 0.3
+vel_sens = 0.1
 waveform = "sine"

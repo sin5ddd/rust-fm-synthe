@@ -1,35 +1,47 @@
 name = "low choir drone"
-description = "低いクワイア寄りの重ねサイン。デチューンした加算。暗いホール。"
+description = "クワイア寄りの重ねサイン。C4の暗いホール。ミッドドローン、サブなし。"
 algorithm = 8
 feedback = 0.0
 feedback_op = 4
 gain = 0.96
-default_note = 36
-default_duration = 16.5
+default_note = 60
+default_duration = 20.1
 
 [lfo]
-rate_hz = 0.19
-depth_cents = 8.0
+rate_hz = 0.16
+depth_cents = 7.0
 
 [filter]
 type = "lowpass"
-cutoff = 900
+cutoff = 820
 resonance = 0.08
-env_amount = 1.0
-attack = 5.5
-decay = 6.5
-sustain = 0.76
-release = 0.35
+env_amount = 0.35
+attack = 3.8
+decay = 6.0
+sustain = 0.82
+release = 0.4
+
+[fx.chorus]
+mix = 0.14
+rate_hz = 0.24
+depth_ms = 3.8
+delay_ms = 14.0
+feedback = 0.07
+
+[fx.reverb]
+mix = 0.11
+room = 0.5
+damp = 0.52
 
 # OP1
 [[operators]]
 ratio = 1.0
 detune_cents = -11
 level = 0.94
-attack = 0.05
+attack = 1.7
 decay = 2.2
 sustain = 0.9
-release = 0.32
+release = 0.36
 vel_sens = 0.14
 waveform = "sine"
 
@@ -38,10 +50,10 @@ waveform = "sine"
 ratio = 1.0
 detune_cents = 10
 level = 0.88
-attack = 0.055
+attack = 1.9
 decay = 2.1
 sustain = 0.9
-release = 0.3
+release = 0.34
 vel_sens = 0.14
 waveform = "sine"
 
@@ -49,11 +61,11 @@ waveform = "sine"
 [[operators]]
 ratio = 2.0
 detune_cents = -6
-level = 0.28
-attack = 0.08
+level = 0.16
+attack = 2.2
 decay = 1.8
 sustain = 0.86
-release = 0.26
+release = 0.3
 vel_sens = 0.14
 waveform = "sine"
 
@@ -61,10 +73,10 @@ waveform = "sine"
 [[operators]]
 ratio = 1.5
 detune_cents = 5
-level = 0.2
-attack = 0.09
+level = 0.12
+attack = 2.3
 decay = 1.7
 sustain = 0.84
-release = 0.24
+release = 0.28
 vel_sens = 0.14
 waveform = "sine"

@@ -1,35 +1,47 @@
 name = "dark choir drone"
-description = "より暗いクワイア。短3度を薄く足す。ミッドドローン寄り。"
+description = "暗いクワイアパッドドローン。短3度を薄く。C4ミッド、サブなし。"
 algorithm = 8
 feedback = 0.0
 feedback_op = 4
 gain = 0.95
-default_note = 33
-default_duration = 16.7
+default_note = 60
+default_duration = 20.08
 
 [lfo]
-rate_hz = 0.16
-depth_cents = 9.0
+rate_hz = 0.14
+depth_cents = 8.0
 
 [filter]
 type = "lowpass"
-cutoff = 620
-resonance = 0.1
-env_amount = 1.1
-attack = 6.0
+cutoff = 780
+resonance = 0.09
+env_amount = 0.4
+attack = 4.2
 decay = 6.0
-sustain = 0.74
-release = 0.35
+sustain = 0.8
+release = 0.4
+
+[fx.chorus]
+mix = 0.18
+rate_hz = 0.2
+depth_ms = 4.5
+delay_ms = 15.0
+feedback = 0.08
+
+[fx.reverb]
+mix = 0.12
+room = 0.52
+damp = 0.55
 
 # OP1
 [[operators]]
 ratio = 1.0
 detune_cents = -13
 level = 0.92
-attack = 0.05
+attack = 1.8
 decay = 2.2
 sustain = 0.9
-release = 0.32
+release = 0.36
 vel_sens = 0.14
 waveform = "sine"
 
@@ -38,33 +50,33 @@ waveform = "sine"
 ratio = 1.0
 detune_cents = 12
 level = 0.86
-attack = 0.06
+attack = 2.0
 decay = 2.0
 sustain = 0.88
-release = 0.3
+release = 0.34
 vel_sens = 0.14
 waveform = "sine"
 
-# OP3
+# OP3 — minor third (6:5)
 [[operators]]
 ratio = 1.2
 detune_cents = -4
-level = 0.32
-attack = 0.08
+level = 0.22
+attack = 2.2
 decay = 1.9
 sustain = 0.86
-release = 0.26
+release = 0.3
 vel_sens = 0.14
 waveform = "sine"
 
-# OP4
+# OP4 — octave, thin
 [[operators]]
-ratio = 0.5
-detune_cents = 2
-level = 0.48
-attack = 0.04
-decay = 2.3
-sustain = 0.92
-release = 0.3
+ratio = 2.0
+detune_cents = 3
+level = 0.1
+attack = 2.4
+decay = 1.8
+sustain = 0.84
+release = 0.28
 vel_sens = 0.12
 waveform = "sine"

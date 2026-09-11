@@ -518,7 +518,7 @@ fn factory_dr_drones_are_fifty_and_audible() {
     for id in ids {
         let preset = load_factory(id).unwrap();
         // Bank-count / audible smoke. Hold length is checked in
-        // `factory_dr_drones_hold_eight_bars_at_120bpm` (default ~16 s).
+        // `factory_dr_drones_hold_eight_bars_at_120bpm` (16 s+, beds up to ~41 s).
         let buf = render(
             &preset,
             &RenderParams {
@@ -542,7 +542,8 @@ fn factory_dr_drones_are_fifty_and_audible() {
     }
 }
 
-/// 120 BPM, 4/4 → 1 bar = 2 s → 8 bars = 16 s held note.
+/// 120 BPM, 4/4 → 1 bar = 2 s → 8 bars = 16 s held note (minimum).
+/// Sub / cinematic pad beds may be longer (~20–41 s).
 /// Short `default_duration` is not enough if amp ADSR dies in 0.4 s:
 /// the last 1 s of the default render must still have energy, and
 /// carriers must still be audible at t=14 s.
@@ -566,8 +567,8 @@ fn factory_dr_drones_hold_eight_bars_at_120bpm() {
     for id in ids {
         let preset = load_factory(id).unwrap();
         assert!(
-            (16.2..=18.0).contains(&preset.default_duration),
-            "{id} default_duration {} must be ~16 s+ (8 bars @ 120 BPM)",
+            (16.2..=42.0).contains(&preset.default_duration),
+            "{id} default_duration {} must be 8 bars @ 120 BPM or a longer bed (16–41 s)",
             preset.default_duration
         );
 

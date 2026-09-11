@@ -1,70 +1,82 @@
-name = "cathedral low"
-description = "聖堂の低いドローバー。1+2+3+0.5。ミッドドローン（C3）。"
+name = "cathedral air"
+description = "聖堂の明るいドローバー。1+2+3+4。C5のトレーラーホールド。サブなし。"
 algorithm = 8
 feedback = 0.0
 feedback_op = 4
-gain = 0.96
-default_note = 48
-default_duration = 16.6
+gain = 0.94
+default_note = 72
+default_duration = 20.09
 
 [lfo]
-rate_hz = 0.09
-depth_cents = 5.0
+rate_hz = 0.08
+depth_cents = 4.0
 
 [filter]
 type = "lowpass"
-cutoff = 700
-resonance = 0.08
-env_amount = 1.0
-attack = 5.0
-decay = 7.0
-sustain = 0.78
-release = 0.35
+cutoff = 4500
+resonance = 0.07
+env_amount = 0.4
+attack = 3.2
+decay = 6.0
+sustain = 0.82
+release = 0.4
 
-# OP1
+[fx.chorus]
+mix = 0.12
+rate_hz = 0.15
+depth_ms = 3.5
+delay_ms = 14.0
+feedback = 0.06
+
+[fx.reverb]
+mix = 0.16
+room = 0.62
+damp = 0.34
+
+# OP1 — 523 Hz
 [[operators]]
 ratio = 1.0
 detune_cents = -2
-level = 0.9
-attack = 0.05
+level = 0.52
+attack = 1.5
 decay = 2.2
 sustain = 0.9
-release = 0.32
+release = 0.34
 vel_sens = 0.14
 waveform = "sine"
 
-# OP2
+# OP2 — 1046 Hz (centroid target)
 [[operators]]
 ratio = 2.0
 detune_cents = 2
-level = 0.42
-attack = 0.06
+level = 0.78
+attack = 1.6
 decay = 2.0
 sustain = 0.88
-release = 0.28
+release = 0.3
 vel_sens = 0.14
 waveform = "sine"
 
-# OP3
+# OP3 — 1569 Hz
 [[operators]]
 ratio = 3.0
 detune_cents = -1
-level = 0.18
-attack = 0.08
+level = 0.42
+attack = 1.8
 decay = 1.8
 sustain = 0.84
-release = 0.24
+release = 0.26
 vel_sens = 0.14
 waveform = "sine"
 
-# OP4
+# OP4 — 2093 Hz air
 [[operators]]
-ratio = 0.5
+ratio = 4.0
 detune_cents = 0
-level = 0.55
-attack = 0.04
-decay = 2.4
-sustain = 0.92
-release = 0.32
+level = 0.36
+attack = 2.0
+decay = 1.6
+sustain = 0.8
+release = 0.24
 vel_sens = 0.12
 waveform = "sine"

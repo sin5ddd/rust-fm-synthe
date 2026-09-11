@@ -1,70 +1,70 @@
 name = "void drone"
-description = "虚空。極端に暗いLP。ほぼサブだけの長い無。"
+description = "虚空。極端に暗いLP。E1の正弦だけが残る長い無。サブベッド。"
 algorithm = 8
 feedback = 0.0
 feedback_op = 4
-gain = 1.02
-default_note = 24
-default_duration = 17.0
+gain = 1.03
+default_note = 28
+default_duration = 40.6
 
 [lfo]
-rate_hz = 0.05
-depth_cents = 3.0
+rate_hz = 0.04
+depth_cents = 2.0
 
 [filter]
 type = "lowpass"
-cutoff = 90
-resonance = 0.08
-env_amount = 0.5
-attack = 5.0
-decay = 8.0
-sustain = 0.82
-release = 0.35
+cutoff = 68
+resonance = 0.06
+env_amount = 0.1
+attack = 3.0
+decay = 12.0
+sustain = 0.94
+release = 0.4
 
 # OP1
 [[operators]]
-ratio = 0.5
+ratio = 1.0
 detune_cents = 0
 level = 1.0
-attack = 0.04
-decay = 2.6
-sustain = 0.95
-release = 0.36
-vel_sens = 0.1
+attack = 0.1
+decay = 3.2
+sustain = 0.97
+release = 0.42
+vel_sens = 0.08
 waveform = "sine"
 
 # OP2
 [[operators]]
-ratio = 0.5
+ratio = 1.0
 detune_cents = 3
-level = 0.45
-attack = 0.05
-decay = 2.4
-sustain = 0.92
-release = 0.32
-vel_sens = 0.1
+level = 0.28
+attack = 0.14
+decay = 3.0
+sustain = 0.95
+release = 0.38
+vel_sens = 0.08
 waveform = "sine"
 
-# OP3
+# OP3 — keep out of the 16 Hz cellar
 [[operators]]
 ratio = 1.0
 detune_cents = -2
-level = 0.18
-attack = 0.08
-decay = 2.0
-sustain = 0.86
-release = 0.26
-vel_sens = 0.12
+level = 0.16
+attack = 0.18
+decay = 2.8
+sustain = 0.94
+release = 0.36
+vel_sens = 0.1
 waveform = "sine"
 
-# OP4
+# OP4 — whisper of 82 Hz
 [[operators]]
-ratio = 1.0
-detune_cents = 2
-level = 0.1
-attack = 0.09
-decay = 1.8
-sustain = 0.84
-release = 0.24
-vel_sens = 0.12
+ratio = 2.0
+detune_cents = 1
+level = 0.03
+attack = 0.22
+decay = 2.2
+sustain = 0.9
+release = 0.3
+vel_sens = 0.1
 waveform = "sine"

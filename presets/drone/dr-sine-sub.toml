@@ -1,70 +1,70 @@
 name = "sine sub bed"
-description = "シネマティックな正弦サブベッド。20–40 Hzの胴を長くホールド。レイヤーの床。"
+description = "シネマティックな正弦サブベッド。E1≈41 Hzの胴を長くホールド。ほぼサブだけの床。"
 algorithm = 8
-feedback = 0.02
+feedback = 0.01
 feedback_op = 4
-gain = 1.02
-default_note = 24
-default_duration = 16.4
+gain = 1.04
+default_note = 28
+default_duration = 41.0
 
 [lfo]
-rate_hz = 0.11
-depth_cents = 4.0
+rate_hz = 0.07
+depth_cents = 3.0
 
 [filter]
 type = "lowpass"
-cutoff = 160
-resonance = 0.06
-env_amount = 0.6
-attack = 3.5
-decay = 8.0
-sustain = 0.8
-release = 0.35
+cutoff = 78
+resonance = 0.05
+env_amount = 0.15
+attack = 2.5
+decay = 10.0
+sustain = 0.92
+release = 0.4
 
-# OP1
-[[operators]]
-ratio = 0.5
-detune_cents = 0
-level = 1.0
-attack = 0.03
-decay = 2.2
-sustain = 0.94
-release = 0.32
-vel_sens = 0.12
-waveform = "sine"
-
-# OP2
+# OP1 — 41 Hz body
 [[operators]]
 ratio = 1.0
-detune_cents = 2
-level = 0.42
-attack = 0.04
-decay = 2.0
-sustain = 0.9
-release = 0.28
-vel_sens = 0.12
-waveform = "sine"
-
-# OP3
-[[operators]]
-ratio = 0.5
-detune_cents = -3
-level = 0.55
-attack = 0.05
-decay = 2.4
-sustain = 0.92
-release = 0.3
+detune_cents = 0
+level = 1.0
+attack = 0.08
+decay = 3.0
+sustain = 0.96
+release = 0.4
 vel_sens = 0.1
 waveform = "sine"
 
-# OP4
+# OP2 — slow beat
+[[operators]]
+ratio = 1.0
+detune_cents = 2
+level = 0.38
+attack = 0.12
+decay = 2.8
+sustain = 0.94
+release = 0.36
+vel_sens = 0.1
+waveform = "sine"
+
+# OP3 — same body, opposite detune
+[[operators]]
+ratio = 1.0
+detune_cents = -2
+level = 0.32
+attack = 0.14
+decay = 2.6
+sustain = 0.94
+release = 0.36
+vel_sens = 0.1
+waveform = "sine"
+
+# OP4 — tiny 82 Hz so bass≈0.02
 [[operators]]
 ratio = 2.0
 detune_cents = 1
-level = 0.1
-attack = 0.08
-decay = 1.6
-sustain = 0.85
-release = 0.24
-vel_sens = 0.14
+level = 0.045
+attack = 0.2
+decay = 2.0
+sustain = 0.88
+release = 0.28
+vel_sens = 0.12
 waveform = "sine"
